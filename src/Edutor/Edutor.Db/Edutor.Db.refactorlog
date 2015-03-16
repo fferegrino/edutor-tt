@@ -1,0 +1,66 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Operations Version="1.0" xmlns="http://schemas.microsoft.com/sqlserver/dac/Serialization/2012/02">
+  <Operation Name="Rename Refactor" Key="2f111550-3fd9-46c6-80e4-7d0b24d8617c" ChangeDateTime="03/16/2015 05:58:43">
+    <Property Name="ElementName" Value="[dbo].[Users].[Id]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[Users]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="UserID" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="2cea8ed7-fbe4-4e45-b97d-e45be106cae3" ChangeDateTime="03/16/2015 05:58:46">
+    <Property Name="ElementName" Value="[dbo].[Users].[UserID]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[Users]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="UserId" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="db9520c7-cfd3-434f-9d53-cbc1248ff90a" ChangeDateTime="03/16/2015 06:16:55">
+    <Property Name="ElementName" Value="[dbo].[Students].[Id]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[Students]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="StudentId" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="5e3c1ef8-8d42-4401-a981-4a40632922aa" ChangeDateTime="03/16/2015 13:41:17">
+    <Property Name="ElementName" Value="[dbo].[Groups].[Id]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[Groups]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="GroupId" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="713892e4-e3a5-4116-b462-37d384540d72" ChangeDateTime="03/16/2015 13:43:55">
+    <Property Name="ElementName" Value="[dbo].[Enrollments].[Id]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[Enrollments]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="GroupId" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="f690ec56-4cf1-4320-a578-3ff99bd5a475" ChangeDateTime="03/16/2015 13:52:45">
+    <Property Name="ElementName" Value="[dbo].[Messages].[Id]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[Messages]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="MessageId" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="00def6f5-f6a3-4f69-87c9-23bd103ba8bd" ChangeDateTime="03/16/2015 14:00:31">
+    <Property Name="ElementName" Value="[dbo].[Notifications].[Id]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[Notifications]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="NotificationId" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="0c3da991-5bbd-4a14-b1e6-08ad7349f9d0" ChangeDateTime="03/16/2015 14:02:54">
+    <Property Name="ElementName" Value="[dbo].[SchoolUsers].[UserId]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[SchoolUsers]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="SchoolUserId" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="df2c6c05-6402-4a09-89ec-0388b06e6aeb" ChangeDateTime="03/16/2015 14:20:42">
+    <Property Name="ElementName" Value="[dbo].[Events].[Id]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[Events]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="EventId" />
+  </Operation>
+</Operations>

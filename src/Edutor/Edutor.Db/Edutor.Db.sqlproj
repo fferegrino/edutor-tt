@@ -57,5 +57,28 @@
   <Import Condition="'$(SQLDBExtensionsRefPath)' == ''" Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v$(VisualStudioVersion)\SSDT\Microsoft.Data.Tools.Schema.SqlTasks.targets" />
   <ItemGroup>
     <Folder Include="Properties" />
+    <Folder Include="Scripts" />
+    <Folder Include="Tables" />
+  </ItemGroup>
+  <ItemGroup>
+    <Build Include="Tables\Users.sql" />
+    <Build Include="Tables\Tutors.sql" />
+    <Build Include="Tables\SchoolUsers.sql" />
+    <Build Include="Tables\Students.sql" />
+    <Build Include="Tables\Groups.sql" />
+    <Build Include="Tables\Enrollments.sql" />
+    <Build Include="Tables\Teachings.sql" />
+    <Build Include="Tables\Messages.sql" />
+    <Build Include="Tables\Conversations.sql" />
+    <Build Include="Tables\Notifications.sql" />
+    <Build Include="Tables\NotificationDetails.sql" />
+    <Build Include="Tables\Events.sql" />
+    <Build Include="Tables\Invitations.sql" />
+    <Build Include="Tables\Questions.sql" />
+    <Build Include="Tables\Answers.sql" />
+    <Build Include="Tables\PossibleAnswers.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <RefactorLog Include="Edutor.Db.refactorlog" />
   </ItemGroup>
 </Project>
