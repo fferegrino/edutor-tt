@@ -13,6 +13,7 @@ using System.Threading.Tasks;
 using Ninject.Web.Common;
 using Mapping = Edutor.Data.SqlServer.Mapping;
 using NHibernate.Context;
+using Edutor.Web.Common;
 
 namespace Edutor.Web.Api
 {
@@ -26,7 +27,7 @@ namespace Edutor.Web.Api
         private void AddBindings(IKernel container)
         {
             ConfigureLog4Net(container);
-            ConfigureNHibernate();
+            ConfigureNHibernate(container);
             container.Bind<IDateTime>().To<DateTimeAdapter>().InSingletonScope();
         }
 
@@ -47,6 +48,9 @@ namespace Edutor.Web.Api
                 .BuildSessionFactory();
             container.Bind<ISessionFactory>().ToConstant(sessionFactory);
             container.Bind<ISession>().ToMethod(CreateSession).InRequestScope();
+
+            // Resolve IActionTransactionHelper at runtime:
+            container.Bind<IActionTransactionHelper>().To<ActionTransactionHelper>().InRequestScope();
         }
 
         private ISession CreateSession(Ninject.Activation.IContext arg)

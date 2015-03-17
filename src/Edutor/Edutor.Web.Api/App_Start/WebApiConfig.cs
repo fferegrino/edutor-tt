@@ -1,7 +1,11 @@
-﻿using System;
+﻿using Edutor.Common.Logging;
+using Edutor.Web.Common;
+using Edutor.Web.Common.ErrorHandling;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
+using System.Web.Http.ExceptionHandling;
 
 namespace Edutor.Web.Api
 {
@@ -19,6 +23,10 @@ namespace Edutor.Web.Api
                 routeTemplate: "api/{controller}/{id}",
                 defaults: new { id = RouteParameter.Optional }
             );
+
+            // TODO: Enable tracing page 88
+
+            config.Services.Add(typeof(IExceptionLogger), new SimpleExceptionLogger(WebContainerManager.Get<ILogManager>()));
         }
     }
 }

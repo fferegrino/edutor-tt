@@ -73,8 +73,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ErrorHandling\SimpleExceptionLogger.cs" />
+    <Compile Include="IActionTransactionHelper.cs" />
     <Compile Include="NinjectDependencyResolver.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UnitOfWorkActionFilterAttribute.cs" />
+    <Compile Include="WebContainerManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
