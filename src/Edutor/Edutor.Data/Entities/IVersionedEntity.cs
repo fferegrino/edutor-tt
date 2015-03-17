@@ -8,6 +8,6 @@ namespace Edutor.Data.Entities
 {
     public interface IVersionedEntity
     {
-        public byte[] Version { get; set; }
+        byte[] Version { get; set; }
     }
 }

@@ -11,7 +11,13 @@ namespace Edutor.Data.SqlServer.Mapping
     {
         protected VersionedClassMap()
         {
-            // TODO: Page 78
+
+            //// TODO: Page 78 implement versioning
+            //Version(x => x.Version)
+            //    .Column("ts")
+            //    .CustomSqlType("Rowversion")
+            //    .Generated.Always()
+            //    .UnsavedValue("null");
         }
     }
 }
