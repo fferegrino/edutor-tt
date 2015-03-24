@@ -51,6 +51,8 @@
     <Compile Include="IDateTime.cs" />
     <Compile Include="Logging\ILogManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Security\IUserSession.cs" />
+    <Compile Include="Security\IWebUserSession.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
