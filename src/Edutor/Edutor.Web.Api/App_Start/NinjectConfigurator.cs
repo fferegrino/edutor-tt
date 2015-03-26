@@ -16,6 +16,8 @@ using NHibernate.Context;
 using Edutor.Web.Common;
 using Edutor.Web.Common.Security;
 using Edutor.Common.Security;
+using QueryProcessors = Edutor.Data.QueryProcessors;
+using SqlProcessors = Edutor.Data.SqlServer.QueryProcessors;
 
 namespace Edutor.Web.Api
 {
@@ -31,7 +33,13 @@ namespace Edutor.Web.Api
             ConfigureLog4Net(container);
             ConfigureUserSession(container);
             ConfigureNHibernate(container);
+            ConfigureQueryProcessors(container);
             container.Bind<IDateTime>().To<DateTimeAdapter>().InSingletonScope();
+        }
+
+        private void ConfigureQueryProcessors(IKernel container)
+        {
+            container.Bind<QueryProcessors.IAddUserQueryProcessor>().To<SqlProcessors.AddUserQueryProcessor>().InRequestScope();
         }
 
         private void ConfigureLog4Net(IKernel container)
@@ -75,3 +83,4 @@ namespace Edutor.Web.Api
         }
     }
 }
+

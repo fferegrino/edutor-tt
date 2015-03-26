@@ -53,6 +53,8 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Security\IUserSession.cs" />
     <Compile Include="Security\IWebUserSession.cs" />
+    <Compile Include="TypeMapping\IAutoMapper.cs" />
+    <Compile Include="TypeMapping\IAutoMapperTypeConfigurator.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
