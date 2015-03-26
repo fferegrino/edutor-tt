@@ -18,6 +18,9 @@ using Edutor.Web.Common.Security;
 using Edutor.Common.Security;
 using QueryProcessors = Edutor.Data.QueryProcessors;
 using SqlProcessors = Edutor.Data.SqlServer.QueryProcessors;
+using TM = Edutor.Common.TypeMapping;
+using AMC = Edutor.Web.Api.AutoMappingConfigurator;
+using AMP = Edutor.Web.Api.MaintenanceProcessing;
 
 namespace Edutor.Web.Api
 {
@@ -34,12 +37,24 @@ namespace Edutor.Web.Api
             ConfigureUserSession(container);
             ConfigureNHibernate(container);
             ConfigureQueryProcessors(container);
+            ConfigureAutoMapper(container);
             container.Bind<IDateTime>().To<DateTimeAdapter>().InSingletonScope();
+        }
+
+        private void ConfigureAutoMapper(IKernel container)
+        {
+            container.Bind<TM.IAutoMapper>().To<TM.AutoMapperAdapter>().InSingletonScope();
+
+            container.Bind<TM.IAutoMapperTypeConfigurator>()
+                .To<AMC.NewUserToUserEntityAutoMapperTypeConfigurator>().InSingletonScope();
         }
 
         private void ConfigureQueryProcessors(IKernel container)
         {
             container.Bind<QueryProcessors.IAddUserQueryProcessor>().To<SqlProcessors.AddUserQueryProcessor>().InRequestScope();
+
+
+            container.Bind<AMP.IAddUserMaintenanceProcessor>().To<AMP.AddUserMaintenanceProcessor>().InRequestScope();
         }
 
         private void ConfigureLog4Net(IKernel container)

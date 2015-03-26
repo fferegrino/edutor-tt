@@ -1,4 +1,5 @@
 ﻿using Edutor.Common.Logging;
+using Edutor.Common.TypeMapping;
 using Edutor.Web.Common;
 using System;
 using System.Collections.Generic;
@@ -14,6 +15,9 @@ namespace Edutor.Web.Api
         protected void Application_Start()
         {
             GlobalConfiguration.Configure(WebApiConfig.Register);
+
+            new AutoMapperConfigurator().Configure(
+                WebContainerManager.GetAll<IAutoMapperTypeConfigurator>());
         }
 
         protected void Application_Error()
