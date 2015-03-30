@@ -32,7 +32,8 @@ namespace Edutor.Web.Api.MaintenanceProcessing
         {
             var userEntity = _autoMapper.Map<Data.Entities.User>(newUser);
             _qProc.AddUser(userEntity);
-            return new User();
+            var returnUser = _autoMapper.Map<Models.User>(userEntity);
+            return returnUser;
         }
     }
 }

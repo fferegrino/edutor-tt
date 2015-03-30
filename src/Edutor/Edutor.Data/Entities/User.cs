@@ -29,7 +29,7 @@ namespace Edutor.Data.Entities
         public virtual string Mobile { get; set; }
 
 
-        public virtual string Telephone { get; set; }
+        public virtual string Phone { get; set; }
 
         public virtual byte[] Version { get; set; }
     }

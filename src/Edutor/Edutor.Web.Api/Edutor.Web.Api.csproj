@@ -115,6 +115,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="AutoMapperConfigurator.cs" />
     <Compile Include="AutoMappingConfigurator\NewUserToUserEntityAutoMapperTypeConfigurator.cs" />
+    <Compile Include="AutoMappingConfigurator\UserEntityToUserModelAutoMapperTypeConfigurator.cs" />
     <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>

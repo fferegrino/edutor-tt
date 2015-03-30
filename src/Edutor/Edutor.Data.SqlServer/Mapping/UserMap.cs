@@ -11,6 +11,7 @@ namespace Edutor.Data.SqlServer.Mapping
     {
         public UserMap()
         {
+            Table("Users");
             Id(x => x.UserId);
             Map(x => x.Name).Not.Nullable();
             Map(x => x.Curp).Not.Nullable();
@@ -18,7 +19,7 @@ namespace Edutor.Data.SqlServer.Mapping
             Map(x => x.Type).Not.Nullable();
             Map(x => x.Address).Not.Nullable();
             Map(x => x.Mobile).Nullable();
-            Map(x => x.Telephone).Nullable();
+            Map(x => x.Phone).Nullable();
         }
     }
 }

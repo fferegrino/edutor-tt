@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Edutor.Web.Api.Models
 {
-    public class User
+    public class User : ILinkContaining
     {
         public int UserId { get; set; }
 
@@ -22,7 +22,7 @@ namespace Edutor.Web.Api.Models
 
         public string Mobile { get; set; }
 
-        public string Telephone { get; set; }
+        public string Phone { get; set; }
 
         private List<Link> _links;
 

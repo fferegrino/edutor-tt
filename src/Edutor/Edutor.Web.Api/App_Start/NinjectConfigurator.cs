@@ -47,6 +47,8 @@ namespace Edutor.Web.Api
 
             container.Bind<TM.IAutoMapperTypeConfigurator>()
                 .To<AMC.NewUserToUserEntityAutoMapperTypeConfigurator>().InSingletonScope();
+            container.Bind<TM.IAutoMapperTypeConfigurator>()
+                .To<AMC.UserEntityToUserModelAutoMapperTypeConfigurator>().InSingletonScope();
         }
 
         private void ConfigureQueryProcessors(IKernel container)
