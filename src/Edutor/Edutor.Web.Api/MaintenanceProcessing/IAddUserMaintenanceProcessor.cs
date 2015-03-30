@@ -35,7 +35,7 @@ namespace Edutor.Web.Api.MaintenanceProcessing
             var userEntity = _autoMapper.Map<Data.Entities.User>(newUser);
             _qProc.AddUser(userEntity);
             var returnUser = _autoMapper.Map<Models.User>(userEntity);
-
+            // TODO Implement link service here
             returnUser.AddLink(new Link { Rel = Constants.CommonLinkRelValues.Self, Method = HttpMethod.Get.Method, Href = "http://www.google.com" });
             return returnUser;
         }
