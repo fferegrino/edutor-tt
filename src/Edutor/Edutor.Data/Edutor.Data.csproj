@@ -39,7 +39,22 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Entities\Answer.cs" />
+    <Compile Include="Entities\Conversation.cs" />
+    <Compile Include="Entities\Enrollment.cs" />
+    <Compile Include="Entities\NotificationDetail.cs" />
+    <Compile Include="Entities\Question.cs" />
+    <Compile Include="Entities\Invitation.cs" />
     <Compile Include="Entities\IVersionedEntity.cs" />
+    <Compile Include="Entities\Message.cs" />
+    <Compile Include="Entities\PossibleAnswer.cs" />
+    <Compile Include="Entities\Student.cs" />
+    <Compile Include="Entities\Group.cs" />
+    <Compile Include="Entities\Event.cs" />
+    <Compile Include="Entities\Notification.cs" />
+    <Compile Include="Entities\SchoolUser.cs" />
+    <Compile Include="Entities\Teaching.cs" />
+    <Compile Include="Entities\Tutor.cs" />
     <Compile Include="Entities\User.cs" />
     <Compile Include="Exceptions\ObjectNotFoundException.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
