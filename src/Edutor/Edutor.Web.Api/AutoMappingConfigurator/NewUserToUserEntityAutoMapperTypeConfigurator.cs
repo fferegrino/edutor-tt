@@ -13,7 +13,7 @@ namespace Edutor.Web.Api.AutoMappingConfigurator
     {
         public void Configure()
         {
-            Mapper.CreateMap<NwModels.NewUser, Data.Entities.User>()
+            Mapper.CreateMap<NwModels.NewSchoolUser, Data.Entities.User>()
                 .ForMember(o => o.UserId, x => x.Ignore())
                 .ForMember(o => o.Type, x => x.UseValue('C'))
                 .ForMember(o => o.Version, x => x.Ignore());

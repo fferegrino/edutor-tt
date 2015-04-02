@@ -8,6 +8,13 @@ namespace Edutor.Data.Entities
 {
     public class SchoolUser : IVersionedEntity
     {
+
+        public virtual char Position { get; set; }
+
+        public virtual User User { get; set; }
+
+        public virtual int SchoolUserId { get; set; }
+
         public virtual byte[] Version { get; set; }
     }
 }

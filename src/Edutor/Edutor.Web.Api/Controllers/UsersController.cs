@@ -15,25 +15,12 @@ namespace Edutor.Web.Api.Controllers
     [UnitOfWorkActionFilter]
     public class UsersController : ApiController
     {
-        private readonly IAddUserMaintenanceProcessor _addUserQueryProcessor;
+        
 
-        public UsersController(IAddUserMaintenanceProcessor addUserQueryProcessor)
+        public UsersController()
         {
-            _addUserQueryProcessor = addUserQueryProcessor;
+            
         }
 
-        [HttpGet]
-        public int GetUser(int id)
-        {
-            return id;
-        }
-
-        [HttpPost]
-        public IHttpActionResult AddUser(HttpRequestMessage requestMessage, NewUser newUser)
-        {
-            var user = _addUserQueryProcessor.AddUser(newUser);
-            var result = new ModelCreatedActionResult<User>(requestMessage, user);
-            return result;
-        }
     }
 }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Edutor.Data.Entities
 {
-    public class User : IVersionedEntity
+    public class Tutor : IVersionedEntity
     {
         public virtual int UserId { get; set; }
 

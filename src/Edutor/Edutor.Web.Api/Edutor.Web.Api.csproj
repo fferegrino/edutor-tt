@@ -115,15 +115,17 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="AutoMapperConfigurator.cs" />
     <Compile Include="AutoMappingConfigurator\NewUserToUserEntityAutoMapperTypeConfigurator.cs" />
-    <Compile Include="AutoMappingConfigurator\UserEntityToUserModelAutoMapperTypeConfigurator.cs" />
+    <Compile Include="AutoMappingConfigurator\SchoolUserEntityToSimpleSchoolUserModelAutoMapperTypeConfigurator.cs" />
+    <Compile Include="Controllers\SchoolUsersController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="MaintenanceProcessing\IAddUserMaintenanceProcessor.cs" />
+    <Compile Include="MaintenanceProcessing\IAddSchoolUserMaintenanceProcessor.cs" />
     <Compile Include="MaintenanceProcessing\LocationLinkCalculator.cs" />
     <Compile Include="MaintenanceProcessing\ModelCreatedActionResult.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="QueryProcessing\IGetSchoolUsersQueryProcessor.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

@@ -81,4 +81,10 @@
   <ItemGroup>
     <RefactorLog Include="Edutor.Db.refactorlog" />
   </ItemGroup>
+  <ItemGroup>
+    <PostDeploy Include="Scripts\SampleData.PostDeployment.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Edutor.Db.Test.publish.xml" />
+  </ItemGroup>
 </Project>

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Edutor.Data.Entities
 {
-    public class Tutor : IVersionedEntity
+    public class Student : IVersionedEntity
     {
         public virtual byte[] Version { get; set; }
     }

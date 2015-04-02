@@ -21,6 +21,7 @@ using SqlProcessors = Edutor.Data.SqlServer.QueryProcessors;
 using TM = Edutor.Common.TypeMapping;
 using AMC = Edutor.Web.Api.AutoMappingConfigurator;
 using AMP = Edutor.Web.Api.MaintenanceProcessing;
+using AQP = Edutor.Web.Api.QueryProcessing;
 
 namespace Edutor.Web.Api
 {
@@ -48,15 +49,16 @@ namespace Edutor.Web.Api
             container.Bind<TM.IAutoMapperTypeConfigurator>()
                 .To<AMC.NewUserToUserEntityAutoMapperTypeConfigurator>().InSingletonScope();
             container.Bind<TM.IAutoMapperTypeConfigurator>()
-                .To<AMC.UserEntityToUserModelAutoMapperTypeConfigurator>().InSingletonScope();
+                .To<AMC.SchoolUserEntityToSimpleSchoolUserModelAutoMapperTypeConfigurator>().InSingletonScope();
         }
 
         private void ConfigureQueryProcessors(IKernel container)
         {
             container.Bind<QueryProcessors.IAddUserQueryProcessor>().To<SqlProcessors.AddUserQueryProcessor>().InRequestScope();
+            container.Bind<QueryProcessors.IGetSchoolUsersQueryProcessors>().To<SqlProcessors.GetSchoolUsersQueryProcesors>().InRequestScope();
 
-
-            container.Bind<AMP.IAddUserMaintenanceProcessor>().To<AMP.AddUserMaintenanceProcessor>().InRequestScope();
+            container.Bind<AQP.IGetSchoolUsersQueryProcessor>().To<AQP.SchoolUsersQueryProcessor>().InRequestScope();
+            container.Bind<AMP.IPostSchoolUserMaintenanceProcessor>().To<AMP.PostSchoolUserMaintenanceProcessor>().InRequestScope();
         }
 
         private void ConfigureLog4Net(IKernel container)

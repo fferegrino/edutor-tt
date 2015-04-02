@@ -9,13 +9,13 @@ using System.Web.Http;
 
 namespace Edutor.Web.Api.MaintenanceProcessing
 {
-    public class ModelCreatedActionResult<T> : IHttpActionResult 
+    public class ModelPostedActionResult<T> : IHttpActionResult 
         where T : ILinkContaining
     {
         private readonly T _created;
         private readonly HttpRequestMessage _requestMessage;
 
-        public ModelCreatedActionResult(HttpRequestMessage requestMessage, T created)
+        public ModelPostedActionResult(HttpRequestMessage requestMessage, T created)
         {
             _created = created;
             _requestMessage = requestMessage;
