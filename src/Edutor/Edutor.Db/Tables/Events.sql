@@ -6,5 +6,5 @@
     [Date] DATETIME NOT NULL, 
     [CreationDate] DATETIME NOT NULL, 
     [Description] VARCHAR(255) NOT NULL, 
-    CONSTRAINT [FK_Events_ToSchoolUsers] FOREIGN KEY ([SchoolUserId]) REFERENCES [SchoolUsers]([SchoolUserId])
+    CONSTRAINT [FK_Events_ToSchoolUsers] FOREIGN KEY ([SchoolUserId]) REFERENCES [Users]([UserId])
 )

@@ -6,8 +6,9 @@ using System.Threading.Tasks;
 
 namespace Edutor.Data.Entities
 {
-    public class SchoolUser : IVersionedEntity
+    public class SchoolUser : User
     {
+        private new int UserId;
 
         public virtual char Position { get; set; }
 

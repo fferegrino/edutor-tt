@@ -6,23 +6,23 @@ using System.Threading.Tasks;
 
 namespace Edutor.Data.Entities
 {
-    public class Tutor : IVersionedEntity
+    public class Tutor : User
     {
         public virtual int UserId { get; set; }
 
 
         public virtual string Name { get; set; }
 
-        
+
         public virtual string Curp { get; set; }
 
 
         public virtual string Email { get; set; }
 
-        
+
         public virtual char Type { get; set; }
 
-        
+
         public virtual string Address { get; set; }
 
 

@@ -62,8 +62,6 @@
   </ItemGroup>
   <ItemGroup>
     <Build Include="Tables\Users.sql" />
-    <Build Include="Tables\Tutors.sql" />
-    <Build Include="Tables\SchoolUsers.sql" />
     <Build Include="Tables\Students.sql" />
     <Build Include="Tables\Groups.sql" />
     <Build Include="Tables\Enrollments.sql" />
