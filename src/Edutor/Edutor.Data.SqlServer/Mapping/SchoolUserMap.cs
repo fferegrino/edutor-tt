@@ -13,6 +13,8 @@ namespace Edutor.Data.SqlServer.Mapping
         {
             Table("SchoolUsers");
             Id(x => x.SchoolUserId);
+            Map(x => x.Position).Not.Nullable();
+            
             References<User>(x => x.User).Column("SchoolUserId");
         }
     }

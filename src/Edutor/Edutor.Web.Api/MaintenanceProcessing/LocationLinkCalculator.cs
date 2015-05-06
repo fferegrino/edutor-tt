@@ -12,9 +12,13 @@ namespace Edutor.Web.Api.MaintenanceProcessing
     {
         public static Uri GetLocationLink(this ILinkContaining linkContaining)
         {
-            var locationLink = linkContaining.Links.FirstOrDefault
-                (l => Constants.CommonLinkRelValues.Self.Equals(l.Rel));
-            return locationLink == null ? null : new Uri(locationLink.Href);
+            if (linkContaining != null && linkContaining.Links != null)
+            {
+                var locationLink = linkContaining.Links.FirstOrDefault
+                    (l => Constants.CommonLinkRelValues.Self.Equals(l.Rel));
+                return locationLink == null ? null : new Uri(locationLink.Href);
+            }
+            return null;
         }
     }
 }

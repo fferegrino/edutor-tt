@@ -49,12 +49,15 @@ namespace Edutor.Web.Api
             container.Bind<TM.IAutoMapperTypeConfigurator>()
                 .To<AMC.NewUserToUserEntityAutoMapperTypeConfigurator>().InSingletonScope();
             container.Bind<TM.IAutoMapperTypeConfigurator>()
+                .To<AMC.NewUserToSchoolUserEntityAutoMapperTypeConfigurator>().InSingletonScope();
+            container.Bind<TM.IAutoMapperTypeConfigurator>()
                 .To<AMC.SchoolUserEntityToSimpleSchoolUserModelAutoMapperTypeConfigurator>().InSingletonScope();
         }
 
         private void ConfigureQueryProcessors(IKernel container)
         {
             container.Bind<QueryProcessors.IAddUserQueryProcessor>().To<SqlProcessors.AddUserQueryProcessor>().InRequestScope();
+            container.Bind<QueryProcessors.IAddSchoolUserQueryProcessor>().To<SqlProcessors.AddSchoolUserQueryProcessor>().InRequestScope();
             container.Bind<QueryProcessors.IGetSchoolUsersQueryProcessors>().To<SqlProcessors.GetSchoolUsersQueryProcesors>().InRequestScope();
 
             container.Bind<AQP.IGetSchoolUsersQueryProcessor>().To<AQP.SchoolUsersQueryProcessor>().InRequestScope();

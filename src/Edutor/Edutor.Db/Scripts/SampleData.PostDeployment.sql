@@ -11,11 +11,11 @@ Post-Deployment Script Template
 */
 
 
-DECLARE @SUid INT
-INSERT INTO Users([Type],[Name],[Curp],[Email],[Address],[Mobile],[Phone])
-VALUES ('C', 'Antonio Feregrino', 'FEBA911206HDFRLN09', 'antonio.feregrino@hotmail.es', '13220', '5540841160', '58503735')
+--DECLARE @SUid INT
+--INSERT INTO Users([Type],[Name],[Curp],[Email],[Address],[Mobile],[Phone])
+--VALUES ('C', 'Antonio Feregrino', 'FEBA911206HDFRLN09', 'antonio.feregrino@hotmail.es', '13220', '5540841160', '58503735')
 
-SET @SUid = SCOPE_IDENTITY()
+--SET @SUid = SCOPE_IDENTITY()
 
-INSERT INTO SchoolUsers([Position],[SchoolUserId])
-VALUES ('P', @SUid)
+--INSERT INTO SchoolUsers([Position],[SchoolUserId])
+--VALUES ('P', @SUid)

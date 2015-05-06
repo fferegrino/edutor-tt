@@ -21,6 +21,7 @@ namespace Edutor.Web.Api.Models.NewModels
 
         public string Address { get; set; }
 
+        public char Position { get; set; }
 
         public string Mobile { get; set; }
 
