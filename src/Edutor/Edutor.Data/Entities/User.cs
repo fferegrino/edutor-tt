@@ -23,8 +23,10 @@ namespace Edutor.Data.Entities
         public virtual byte[] Version { get; set; }
 
         #region User types
-        public const char SchoolUserType = 'S';
+        public const char SchoolUserType = 'E';
         public const char TutorType = 'T';
+        public const char ProfessorPosition = 'P'; 
+        public const char AdministrativePosition = 'A';
         #endregion
     }
 }
