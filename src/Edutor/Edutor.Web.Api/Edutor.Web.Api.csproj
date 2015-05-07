@@ -130,6 +130,8 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="LinkServices\ICommonLinkService.cs" />
+    <Compile Include="LinkServices\IUsersLinkServices.cs" />
     <Compile Include="MaintenanceProcessing\IPostSchoolUserMaintenanceProcessor.cs" />
     <Compile Include="MaintenanceProcessing\IPostTutorMaintenanceProcessor.cs" />
     <Compile Include="MaintenanceProcessing\LocationLinkCalculator.cs" />

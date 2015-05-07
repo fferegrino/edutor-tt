@@ -1,6 +1,7 @@
 ﻿using Edutor.Common;
 using Edutor.Common.TypeMapping;
 using Edutor.Data.QueryProcessors;
+using Edutor.Web.Api.LinkServices;
 using Edutor.Web.Api.Models;
 using Edutor.Web.Api.Models.NewModels;
 using System;
@@ -21,11 +22,13 @@ namespace Edutor.Web.Api.MaintenanceProcessing
 
         private readonly IAutoMapper _autoMapper;
         private readonly IAddUserQueryProcessor _addUserQueryProcessor;
+        private readonly IUsersLinkService _linkServices;
 
-        public PostTutorMaintenanceProcessor(IAutoMapper autoMapper, IAddUserQueryProcessor addUserQueryProcessor, IAddSchoolUserQueryProcessor a)
+        public PostTutorMaintenanceProcessor(IAutoMapper autoMapper, IAddUserQueryProcessor addUserQueryProcessor, IUsersLinkService linkServices)
         {
             _autoMapper = autoMapper;
-            _addUserQueryProcessor = addUserQueryProcessor; ;
+            _addUserQueryProcessor = addUserQueryProcessor;
+            _linkServices = linkServices;
         }
 
 
@@ -35,10 +38,13 @@ namespace Edutor.Web.Api.MaintenanceProcessing
             _addUserQueryProcessor.AddUser(userEntity);
             var returnUser = _autoMapper.Map<NewTutor>(userEntity);
 
-            // TODO Implement link service here
-            returnUser.AddLink(new Link { Rel = Constants.CommonLinkRelValues.Self, Method = HttpMethod.Get.Method, Href = "http://www.google.com" });
+            newUser.UserId = userEntity.UserId;
+            newUser.Type = userEntity.Type;
 
-            return returnUser;
+            // TODO Implement link service here
+            _linkServices.AddSelfLink(newUser);
+
+            return newUser;
         }
     }
 }

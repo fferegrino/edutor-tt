@@ -39,6 +39,11 @@ namespace Edutor.Common
             public const string NextPage = "nextPage";
         }
 
+        public static class CommonRoutingDefinitions
+        {
+            public const string ApiSegmentName = "";
+        }
+
         public static class RoleNames
         {
             public const string Teacher = "Teacher";

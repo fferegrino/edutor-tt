@@ -22,6 +22,7 @@ using TM = Edutor.Common.TypeMapping;
 using AMC = Edutor.Web.Api.AutoMappingConfigurator;
 using AMP = Edutor.Web.Api.MaintenanceProcessing;
 using AQP = Edutor.Web.Api.QueryProcessing;
+using LS = Edutor.Web.Api.LinkServices;
 
 namespace Edutor.Web.Api
 {
@@ -39,7 +40,14 @@ namespace Edutor.Web.Api
             ConfigureNHibernate(container);
             ConfigureQueryProcessors(container);
             ConfigureAutoMapper(container);
+            ConfigureLinkServices(container);
             container.Bind<IDateTime>().To<DateTimeAdapter>().InSingletonScope();
+        }
+
+        private void ConfigureLinkServices(IKernel container)
+        {
+            container.Bind<LS.ICommonLinkService>().To<LS.CommonLinkService>();
+            container.Bind<LS.IUsersLinkService>().To<LS.UsersLinkService>();
         }
 
         private void ConfigureAutoMapper(IKernel container)
