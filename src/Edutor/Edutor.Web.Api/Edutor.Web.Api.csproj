@@ -117,6 +117,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="AutoMapperConfigurator.cs" />
     <Compile Include="AutoMappingConfigurator\NewSchoolUserToUserEntityAutoMapperTypeConfigurator.cs" />
+    <Compile Include="AutoMappingConfigurator\NewTutorToUserEntityAutoMapperTypeConfigurator.cs" />
     <Compile Include="Controllers\ConversationsController.cs" />
     <Compile Include="Controllers\EventsController.cs" />
     <Compile Include="Controllers\GroupsController.cs" />
@@ -129,7 +130,8 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="MaintenanceProcessing\IAddSchoolUserMaintenanceProcessor.cs" />
+    <Compile Include="MaintenanceProcessing\IPostSchoolUserMaintenanceProcessor.cs" />
+    <Compile Include="MaintenanceProcessing\IPostTutorMaintenanceProcessor.cs" />
     <Compile Include="MaintenanceProcessing\LocationLinkCalculator.cs" />
     <Compile Include="MaintenanceProcessing\ModelCreatedActionResult.cs" />
     <Compile Include="MaintenanceProcessing\ModelPostedActionResult.cs" />

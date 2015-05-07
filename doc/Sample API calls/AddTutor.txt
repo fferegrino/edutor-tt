@@ -1,0 +1,16 @@
+POST http://localhost:12441/tutors HTTP/1.1
+User-Agent: Fiddler
+Content-Type: application/json
+Host: localhost:12441
+Content-Length: 221
+
+{
+	name:"Antonio Feregrino Bolaños",
+	curp:"FEBA911206HDFRLN06",
+	email:"antonio.feregrino@gmaill.fi",
+	address:"Payasos #197",
+	mobile:"5540841160",
+	phone:"5540841160",
+	job:"Wood worker",
+	jobtelephone:"5540841160"
+}

@@ -1,0 +1,14 @@
+POST http://localhost:12441/schoolusers HTTP/1.1
+User-Agent: Fiddler
+Content-Type: application/json
+Host: localhost:12441
+
+{
+	name:"Antonio Feregrino Bolaños",
+	curp:"FEBA911206HDFRLN07",
+	email:"antonio.feregrino@gmaill.com",
+	address:"Payasos #197",
+	position:"T",
+	mobile:"5540841160",
+	phone:"5540841160"
+}

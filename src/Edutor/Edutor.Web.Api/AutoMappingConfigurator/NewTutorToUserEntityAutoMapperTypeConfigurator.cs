@@ -10,25 +10,24 @@ using Ent = Edutor.Data.Entities;
 
 namespace Edutor.Web.Api.AutoMappingConfigurator
 {
-    public class NewSchoolUserToUserEntityAutoMapperTypeConfigurator : IAutoMapperTypeConfigurator
+    public class NewTutorToUserEntityAutoMapperTypeConfigurator : IAutoMapperTypeConfigurator
     { 
         public void Configure()
         {
-            Mapper.CreateMap<NwModels.NewSchoolUser, Ent.User>()
+            Mapper.CreateMap<NwModels.NewTutor, Ent.User>()
                 .ForMember(o => o.UserId, opt => opt.Ignore())
-                .ForMember(o => o.Type, opt => opt.UseValue(Ent.User.SchoolUserType))
-                .ForMember(o => o.Job, opt => opt.Ignore())
-                .ForMember(o => o.JobTelephone, opt => opt.Ignore())
+                .ForMember(o => o.Type, opt => opt.UseValue(Ent.User.TutorType))
+                .ForMember(o => o.Position, opt => opt.Ignore())
                 .ForMember(o => o.Version, x => x.Ignore())
                 ;
         }
     }
 
-    public class UserEntityToNewSchoolUserAutoMapperTypeConfigurator : IAutoMapperTypeConfigurator
+    public class UserEntityToNewTutorAutoMapperTypeConfigurator : IAutoMapperTypeConfigurator
     {
         public void Configure()
         {
-            Mapper.CreateMap<Ent.User,NwModels.NewSchoolUser>()
+            Mapper.CreateMap<Ent.User,NwModels.NewTutor>()
                 .ForMember(x=> x.Links, opt=> opt.Ignore())
                 ;
         }

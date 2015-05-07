@@ -21,25 +21,24 @@ namespace Edutor.Web.Api.MaintenanceProcessing
     {
 
         private readonly IAutoMapper _autoMapper;
-        private readonly IAddUserQueryProcessor _qProc;
-        private readonly IAddSchoolUserQueryProcessor _schUsrQor;
+        private readonly IAddUserQueryProcessor _addUserQueryProcessor;
 
-        public PostSchoolUserMaintenanceProcessor(IAutoMapper autoMapper, IAddUserQueryProcessor qProc, IAddSchoolUserQueryProcessor a)
+        public PostSchoolUserMaintenanceProcessor(IAutoMapper autoMapper, IAddUserQueryProcessor addUserQueryProcessor, IAddSchoolUserQueryProcessor a)
         {
             _autoMapper = autoMapper;
-            _qProc = qProc;
-            _schUsrQor = a;
+            _addUserQueryProcessor = addUserQueryProcessor;;
         }
 
 
         public NewSchoolUser AddUser(NewSchoolUser newUser)
         {
             var userEntity = _autoMapper.Map<Data.Entities.User>(newUser);
-            _qProc.AddUser(userEntity);
-            //schUserEntity.SchoolUserId = userEntity.UserId;
+            _addUserQueryProcessor.AddUser(userEntity);
             var returnUser = _autoMapper.Map<NewSchoolUser>(userEntity);
-            //// TODO Implement link service here
-            //returnUser.AddLink(new Link { Rel = Constants.CommonLinkRelValues.Self, Method = HttpMethod.Get.Method, Href = "http://www.google.com" });
+
+            // TODO Implement link service here
+            returnUser.AddLink(new Link { Rel = Constants.CommonLinkRelValues.Self, Method = HttpMethod.Get.Method, Href = "http://www.google.com" });
+
             return returnUser;
         }
     }

@@ -21,5 +21,10 @@ namespace Edutor.Data.Entities
         public virtual string JobTelephone { get; set; }
 
         public virtual byte[] Version { get; set; }
+
+        #region User types
+        public const char SchoolUserType = 'S';
+        public const char TutorType = 'T';
+        #endregion
     }
 }

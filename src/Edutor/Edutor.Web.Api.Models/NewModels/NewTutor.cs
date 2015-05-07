@@ -6,14 +6,15 @@ using System.Threading.Tasks;
 
 namespace Edutor.Web.Api.Models.NewModels
 {
-    public class NewSchoolUser : ILinkContaining
+    public class NewTutor : ILinkContaining
     {
         public int UserId { get; set; }
         public string Name { get; set; }
         public string Curp { get; set; }
         public string Email { get; set; }
         public string Address { get; set; }
-        public char Position { get; set; }
+        public string Job { get; set; }
+        public string JobTelephone { get; set; }
         public string Mobile { get; set; }
         public string Phone { get; set; }
 

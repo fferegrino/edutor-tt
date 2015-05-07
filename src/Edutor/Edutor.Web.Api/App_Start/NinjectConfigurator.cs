@@ -50,6 +50,11 @@ namespace Edutor.Web.Api
                 .To<AMC.NewSchoolUserToUserEntityAutoMapperTypeConfigurator>().InSingletonScope();
             container.Bind<TM.IAutoMapperTypeConfigurator>()
                 .To<AMC.UserEntityToNewSchoolUserAutoMapperTypeConfigurator>().InSingletonScope();
+
+            container.Bind<TM.IAutoMapperTypeConfigurator>()
+                .To<AMC.NewTutorToUserEntityAutoMapperTypeConfigurator>().InSingletonScope();
+            container.Bind<TM.IAutoMapperTypeConfigurator>()
+                .To<AMC.UserEntityToNewTutorAutoMapperTypeConfigurator>().InSingletonScope();
         }
 
         private void ConfigureQueryProcessors(IKernel container)
@@ -59,7 +64,9 @@ namespace Edutor.Web.Api
             container.Bind<QueryProcessors.IGetSchoolUsersQueryProcessors>().To<SqlProcessors.GetSchoolUsersQueryProcesors>().InRequestScope();
 
             container.Bind<AQP.IGetSchoolUsersQueryProcessor>().To<AQP.SchoolUsersQueryProcessor>().InRequestScope();
+
             container.Bind<AMP.IPostSchoolUserMaintenanceProcessor>().To<AMP.PostSchoolUserMaintenanceProcessor>().InRequestScope();
+            container.Bind<AMP.IPostTutorMaintenanceProcessor>().To<AMP.PostTutorMaintenanceProcessor>().InRequestScope();
         }
 
         private void ConfigureLog4Net(IKernel container)
