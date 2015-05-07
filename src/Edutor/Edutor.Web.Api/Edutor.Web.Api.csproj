@@ -116,9 +116,7 @@
     <Compile Include="App_Start\NinjectWebCommon.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="AutoMapperConfigurator.cs" />
-    <Compile Include="AutoMappingConfigurator\NewUserToSchoolUserEntityAutoMapperTypeConfigurator.cs" />
-    <Compile Include="AutoMappingConfigurator\NewUserToUserEntityAutoMapperTypeConfigurator.cs" />
-    <Compile Include="AutoMappingConfigurator\SchoolUserEntityToSimpleSchoolUserModelAutoMapperTypeConfigurator.cs" />
+    <Compile Include="AutoMappingConfigurator\NewSchoolUserToUserEntityAutoMapperTypeConfigurator.cs" />
     <Compile Include="Controllers\ConversationsController.cs" />
     <Compile Include="Controllers\EventsController.cs" />
     <Compile Include="Controllers\GroupsController.cs" />

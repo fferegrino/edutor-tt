@@ -14,7 +14,7 @@ namespace Edutor.Web.Api.MaintenanceProcessing
 {
     public interface IPostSchoolUserMaintenanceProcessor 
     {
-        SimpleSchoolUser AddUser(NewSchoolUser newUser);
+        NewSchoolUser AddUser(NewSchoolUser newUser);
     }
 
     public class PostSchoolUserMaintenanceProcessor : IPostSchoolUserMaintenanceProcessor
@@ -30,21 +30,17 @@ namespace Edutor.Web.Api.MaintenanceProcessing
             _qProc = qProc;
             _schUsrQor = a;
         }
-    
 
-        public SimpleSchoolUser AddUser(NewSchoolUser newUser)
+
+        public NewSchoolUser AddUser(NewSchoolUser newUser)
         {
             var userEntity = _autoMapper.Map<Data.Entities.User>(newUser);
             _qProc.AddUser(userEntity);
-            var schUserEntity = _autoMapper.Map<Data.Entities.SchoolUser>(newUser);
-            schUserEntity.User = userEntity;
-            schUserEntity.SchoolUserId = userEntity.UserId;
-            _schUsrQor.AddSchoolUser(schUserEntity);
             //schUserEntity.SchoolUserId = userEntity.UserId;
-            //var returnUser = _autoMapper.Map<SimpleSchoolUser>(schUserEntity);
+            var returnUser = _autoMapper.Map<NewSchoolUser>(userEntity);
             //// TODO Implement link service here
             //returnUser.AddLink(new Link { Rel = Constants.CommonLinkRelValues.Self, Method = HttpMethod.Get.Method, Href = "http://www.google.com" });
-            return null;
+            return returnUser;
         }
     }
 }

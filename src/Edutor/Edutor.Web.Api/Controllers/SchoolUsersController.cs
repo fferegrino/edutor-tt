@@ -26,7 +26,7 @@ namespace Edutor.Web.Api.Controllers
         }
 
         [HttpGet]
-        public SimpleSchoolUser GetSchoolUser(int id)
+        public NewSchoolUser GetSchoolUser(int id)
         {
             return _getQueryProcessor.GetById(id);
         }
@@ -35,7 +35,7 @@ namespace Edutor.Web.Api.Controllers
         public IHttpActionResult AddSchoolUser(HttpRequestMessage requestMessage, NewSchoolUser newUser)
         {
             var user = _addUserQueryProcessor.AddUser(newUser);
-            var result = new ModelPostedActionResult<SimpleSchoolUser>(requestMessage, user);
+            var result = new ModelPostedActionResult<NewSchoolUser>(requestMessage, user);
             return result;
         }
     }

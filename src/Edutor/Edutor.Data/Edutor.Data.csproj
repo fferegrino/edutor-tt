@@ -52,9 +52,7 @@
     <Compile Include="Entities\Group.cs" />
     <Compile Include="Entities\Event.cs" />
     <Compile Include="Entities\Notification.cs" />
-    <Compile Include="Entities\SchoolUser.cs" />
     <Compile Include="Entities\Teaching.cs" />
-    <Compile Include="Entities\Tutor.cs" />
     <Compile Include="Entities\User.cs" />
     <Compile Include="Exceptions\ObjectNotFoundException.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

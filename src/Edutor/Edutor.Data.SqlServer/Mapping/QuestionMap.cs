@@ -13,7 +13,7 @@ namespace Edutor.Data.SqlServer.Mapping
         {
             Table("Questions");
             Id(x => x.QuestionId);
-            References<SchoolUser>(x => x.SchoolUser);
+            References<User>(x => x.SchoolUserId);
         }
     }
 }

@@ -9,6 +9,6 @@ namespace Edutor.Data.QueryProcessors
 {
     public interface IGetSchoolUsersQueryProcessors
     {
-        SchoolUser GetById(int id);
+        User GetById(int id);
     }
 }

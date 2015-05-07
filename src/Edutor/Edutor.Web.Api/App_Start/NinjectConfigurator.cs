@@ -47,11 +47,9 @@ namespace Edutor.Web.Api
             container.Bind<TM.IAutoMapper>().To<TM.AutoMapperAdapter>().InSingletonScope();
 
             container.Bind<TM.IAutoMapperTypeConfigurator>()
-                .To<AMC.NewUserToUserEntityAutoMapperTypeConfigurator>().InSingletonScope();
+                .To<AMC.NewSchoolUserToUserEntityAutoMapperTypeConfigurator>().InSingletonScope();
             container.Bind<TM.IAutoMapperTypeConfigurator>()
-                .To<AMC.NewUserToSchoolUserEntityAutoMapperTypeConfigurator>().InSingletonScope();
-            container.Bind<TM.IAutoMapperTypeConfigurator>()
-                .To<AMC.SchoolUserEntityToSimpleSchoolUserModelAutoMapperTypeConfigurator>().InSingletonScope();
+                .To<AMC.UserEntityToNewSchoolUserAutoMapperTypeConfigurator>().InSingletonScope();
         }
 
         private void ConfigureQueryProcessors(IKernel container)

@@ -24,9 +24,9 @@ namespace Edutor.Data.SqlServer.QueryProcessors
             _session = session;
         }
 
-        public SchoolUser GetById(int id)
+        public User GetById(int id)
         {
-            return _session.QueryOver<SchoolUser>().Where(x => x.SchoolUserId == id).SingleOrDefault();
+            return _session.QueryOver<User>().Where(x => x.UserId == id).SingleOrDefault();
         }
     }
 }

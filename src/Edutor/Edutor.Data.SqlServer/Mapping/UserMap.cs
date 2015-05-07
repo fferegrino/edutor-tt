@@ -13,13 +13,17 @@ namespace Edutor.Data.SqlServer.Mapping
         {
             Table("Users");
             Id(x => x.UserId);
+            Map(x => x.Type).Not.Nullable();
             Map(x => x.Name).Not.Nullable();
             Map(x => x.Curp).Not.Nullable();
             Map(x => x.Email).Not.Nullable();
-            Map(x => x.Type).Not.Nullable();
             Map(x => x.Address).Not.Nullable();
             Map(x => x.Mobile).Nullable();
             Map(x => x.Phone).Nullable();
+            Map(x => x.Position).Nullable();
+            Map(x => x.Job).Nullable();
+            Map(x => x.JobTelephone).Nullable();
+            
         }
     }
 }

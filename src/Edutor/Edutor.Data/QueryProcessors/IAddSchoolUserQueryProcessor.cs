@@ -9,6 +9,6 @@ namespace Edutor.Data.QueryProcessors
 {
     public interface IAddSchoolUserQueryProcessor
     {
-        void AddSchoolUser(SchoolUser user);
+        void AddSchoolUser(User user);
     }
 }

@@ -12,7 +12,7 @@ namespace Edutor.Data.Entities
 
         public virtual int SchoolUserId { get; set; }
 
-        public virtual SchoolUser SchoolUser { get; set; }
+        public virtual User SchoolUser { get; set; }
 
         public virtual string Text { get; set; }
 

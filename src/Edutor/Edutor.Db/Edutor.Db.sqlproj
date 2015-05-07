@@ -85,5 +85,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Edutor.Db.Test.publish.xml" />
+    <None Include="Edutor.Db.local.publish.xml" />
   </ItemGroup>
 </Project>

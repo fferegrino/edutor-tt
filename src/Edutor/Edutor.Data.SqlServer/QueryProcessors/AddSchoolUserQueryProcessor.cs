@@ -24,7 +24,7 @@ namespace Edutor.Data.SqlServer.QueryProcessors
             _session = session;
         }
 
-        public void AddSchoolUser(Entities.SchoolUser user)
+        public void AddSchoolUser(Entities.User user)
         {
             _session.SaveOrUpdate(user);
         }
