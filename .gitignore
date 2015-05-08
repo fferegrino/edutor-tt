@@ -219,4 +219,7 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 
-
+# Weird windows 10 files:
+*.chk
+*.jrs
+*.ide
