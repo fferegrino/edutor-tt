@@ -100,6 +100,7 @@ namespace Edutor.Web.Api
                 // TODO: add new mappings
                 .Mappings(m => m.FluentMappings.AddFromAssemblyOf<Mapping.UserMap>())
                 .Mappings(m => m.FluentMappings.AddFromAssemblyOf<Mapping.StudentMap>())
+                .Mappings(m => m.FluentMappings.AddFromAssemblyOf<Mapping.GroupMap>())
                 .BuildSessionFactory();
             container.Bind<ISessionFactory>().ToConstant(sessionFactory);
             container.Bind<ISession>().ToMethod(CreateSession).InRequestScope();

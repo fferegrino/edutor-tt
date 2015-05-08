@@ -48,6 +48,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Mapping\GroupMap.cs" />
     <Compile Include="Mapping\QuestionMap.cs" />
     <Compile Include="Mapping\StudentMap.cs" />
     <Compile Include="Mapping\UserMap.cs" />
