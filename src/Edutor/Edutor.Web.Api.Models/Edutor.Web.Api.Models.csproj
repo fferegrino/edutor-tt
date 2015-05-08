@@ -42,6 +42,7 @@
     <Compile Include="ILinkContaining.cs" />
     <Compile Include="Link.cs" />
     <Compile Include="NewModels\NewSchoolUser.cs" />
+    <Compile Include="NewModels\NewStudent.cs" />
     <Compile Include="NewModels\NewTutor.cs" />
     <Compile Include="NewModels\NewUser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

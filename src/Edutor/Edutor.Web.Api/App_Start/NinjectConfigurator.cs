@@ -48,6 +48,7 @@ namespace Edutor.Web.Api
         {
             container.Bind<LS.ICommonLinkService>().To<LS.CommonLinkService>();
             container.Bind<LS.IUsersLinkService>().To<LS.UsersLinkService>();
+            container.Bind<LS.IStudentsLinkService>().To<LS.StudentsLinkService>();
         }
 
         private void ConfigureAutoMapper(IKernel container)
@@ -60,6 +61,12 @@ namespace Edutor.Web.Api
                 .To<AMC.UserEntityToNewSchoolUserAutoMapperTypeConfigurator>().InSingletonScope();
 
             container.Bind<TM.IAutoMapperTypeConfigurator>()
+                .To<AMC.NewStudentToStudentEntityAutoMapperTypeConfigurator>().InSingletonScope();
+            container.Bind<TM.IAutoMapperTypeConfigurator>()
+                .To<AMC.StudentEntityToNewStudentAutoMapperTypeConfigurator>().InSingletonScope();
+
+
+            container.Bind<TM.IAutoMapperTypeConfigurator>()
                 .To<AMC.NewTutorToUserEntityAutoMapperTypeConfigurator>().InSingletonScope();
             container.Bind<TM.IAutoMapperTypeConfigurator>()
                 .To<AMC.UserEntityToNewTutorAutoMapperTypeConfigurator>().InSingletonScope();
@@ -68,12 +75,13 @@ namespace Edutor.Web.Api
         private void ConfigureQueryProcessors(IKernel container)
         {
             container.Bind<QueryProcessors.IAddUserQueryProcessor>().To<SqlProcessors.AddUserQueryProcessor>().InRequestScope();
-            container.Bind<QueryProcessors.IAddSchoolUserQueryProcessor>().To<SqlProcessors.AddSchoolUserQueryProcessor>().InRequestScope();
+            container.Bind<QueryProcessors.IAddStudentQueryProcessor>().To<SqlProcessors.AddStudentQueryProcessor>().InRequestScope();
             container.Bind<QueryProcessors.IGetSchoolUsersQueryProcessors>().To<SqlProcessors.GetSchoolUsersQueryProcesors>().InRequestScope();
 
             container.Bind<AQP.IGetSchoolUsersQueryProcessor>().To<AQP.SchoolUsersQueryProcessor>().InRequestScope();
 
             container.Bind<AMP.IPostSchoolUserMaintenanceProcessor>().To<AMP.PostSchoolUserMaintenanceProcessor>().InRequestScope();
+            container.Bind<AMP.IPostStudentMaintenanceProcessor>().To<AMP.PostStudentMaintenanceProcessor>().InRequestScope();
             container.Bind<AMP.IPostTutorMaintenanceProcessor>().To<AMP.PostTutorMaintenanceProcessor>().InRequestScope();
         }
 
@@ -91,6 +99,7 @@ namespace Edutor.Web.Api
                 .CurrentSessionContext("web")
                 // TODO: add new mappings
                 .Mappings(m => m.FluentMappings.AddFromAssemblyOf<Mapping.UserMap>())
+                .Mappings(m => m.FluentMappings.AddFromAssemblyOf<Mapping.StudentMap>())
                 .BuildSessionFactory();
             container.Bind<ISessionFactory>().ToConstant(sessionFactory);
             container.Bind<ISession>().ToMethod(CreateSession).InRequestScope();
