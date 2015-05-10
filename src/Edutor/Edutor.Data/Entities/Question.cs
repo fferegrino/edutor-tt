@@ -17,7 +17,10 @@ namespace Edutor.Data.Entities
         public virtual string Text { get; set; }
 
         public virtual DateTime ExpirationDate { get; set; }
+        
+        public List<PossibleAnswer> PossibleAnswers { get; set; }
 
+        public List<Answer> Answers { get; set; }
         public virtual byte[] Version { get; set; }
     }
 }
