@@ -116,6 +116,7 @@
     <Compile Include="App_Start\NinjectWebCommon.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="AutoMapperConfigurator.cs" />
+    <Compile Include="AutoMappingConfigurator\NewGroupToGroupEntityAutoMapperTypeConfigurator.cs" />
     <Compile Include="AutoMappingConfigurator\NewSchoolUserToUserEntityAutoMapperTypeConfigurator.cs" />
     <Compile Include="AutoMappingConfigurator\NewStudentToStudentEntityAutoMapperTypeConfigurator.cs" />
     <Compile Include="AutoMappingConfigurator\NewTutorToUserEntityAutoMapperTypeConfigurator.cs" />
@@ -128,13 +129,14 @@
     <Compile Include="Controllers\StudentsController.cs" />
     <Compile Include="Controllers\TutorsController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
-    <Compile Include="Edutor\Data\SqlServer\QueryProcessors\AddStudentQueryProcessor.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="LinkServices\ICommonLinkService.cs" />
+    <Compile Include="LinkServices\IGroupsLinkService.cs" />
     <Compile Include="LinkServices\IStudentsLinkService.cs" />
     <Compile Include="LinkServices\IUsersLinkService.cs" />
+    <Compile Include="MaintenanceProcessing\IPostGroupMaintenanceProcessor.cs" />
     <Compile Include="MaintenanceProcessing\IPostSchoolUserMaintenanceProcessor.cs" />
     <Compile Include="MaintenanceProcessing\IPostStudentMaintenanceProcessor.cs" />
     <Compile Include="MaintenanceProcessing\IPostTutorMaintenanceProcessor.cs" />

@@ -3,6 +3,6 @@
 	[GroupId] INT NOT NULL PRIMARY KEY IDENTITY, 
     [Name] VARCHAR(10) NOT NULL,
 	[Subject] VARCHAR(20) NOT NULL,
-	[From] DATE NOT NULL,
-	[To] DATE  NULL
+	[FromDate] DATE NOT NULL,
+	[ToDate] DATE  NULL
 )

@@ -49,6 +49,7 @@ namespace Edutor.Web.Api
             container.Bind<LS.ICommonLinkService>().To<LS.CommonLinkService>();
             container.Bind<LS.IUsersLinkService>().To<LS.UsersLinkService>();
             container.Bind<LS.IStudentsLinkService>().To<LS.StudentsLinkService>();
+            container.Bind<LS.IGroupsLinkService>().To<LS.GroupsLinkService>();
         }
 
         private void ConfigureAutoMapper(IKernel container)
@@ -70,12 +71,19 @@ namespace Edutor.Web.Api
                 .To<AMC.NewTutorToUserEntityAutoMapperTypeConfigurator>().InSingletonScope();
             container.Bind<TM.IAutoMapperTypeConfigurator>()
                 .To<AMC.UserEntityToNewTutorAutoMapperTypeConfigurator>().InSingletonScope();
+
+            container.Bind<TM.IAutoMapperTypeConfigurator>()
+                .To<AMC.NewGroupToGroupEntityAutoMapperTypeConfigurator>().InSingletonScope();
+            container.Bind<TM.IAutoMapperTypeConfigurator>()
+                .To<AMC.GroupEntityToNewGroupAutoMapperTypeConfigurator>().InSingletonScope();
         }
 
         private void ConfigureQueryProcessors(IKernel container)
         {
             container.Bind<QueryProcessors.IAddUserQueryProcessor>().To<SqlProcessors.AddUserQueryProcessor>().InRequestScope();
             container.Bind<QueryProcessors.IAddStudentQueryProcessor>().To<SqlProcessors.AddStudentQueryProcessor>().InRequestScope();
+            container.Bind<QueryProcessors.IAddGroupQueryProcessor>().To<SqlProcessors.AddGroupQueryProcessor>().InRequestScope();
+
             container.Bind<QueryProcessors.IGetSchoolUsersQueryProcessors>().To<SqlProcessors.GetSchoolUsersQueryProcesors>().InRequestScope();
 
             container.Bind<AQP.IGetSchoolUsersQueryProcessor>().To<AQP.SchoolUsersQueryProcessor>().InRequestScope();
@@ -83,6 +91,7 @@ namespace Edutor.Web.Api
             container.Bind<AMP.IPostSchoolUserMaintenanceProcessor>().To<AMP.PostSchoolUserMaintenanceProcessor>().InRequestScope();
             container.Bind<AMP.IPostStudentMaintenanceProcessor>().To<AMP.PostStudentMaintenanceProcessor>().InRequestScope();
             container.Bind<AMP.IPostTutorMaintenanceProcessor>().To<AMP.PostTutorMaintenanceProcessor>().InRequestScope();
+            container.Bind<AMP.IPostGroupMaintenanceProcessor>().To<AMP.PostGroupMaintenanceProcessor>().InRequestScope();
         }
 
         private void ConfigureLog4Net(IKernel container)

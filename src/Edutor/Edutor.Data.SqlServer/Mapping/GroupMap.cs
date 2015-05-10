@@ -15,8 +15,8 @@ namespace Edutor.Data.SqlServer.Mapping
             Id(x => x.GroupId);
             Map(x => x.Name);
             Map(x => x.Subject);
-            Map(x => x.From);
-            Map(x => x.To);
+            Map(x => x.FromDate);
+            Map(x => x.ToDate);
 
             // TODO Add references and mappings
         }

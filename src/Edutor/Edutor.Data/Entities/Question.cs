@@ -18,9 +18,9 @@ namespace Edutor.Data.Entities
 
         public virtual DateTime ExpirationDate { get; set; }
         
-        public List<PossibleAnswer> PossibleAnswers { get; set; }
+        public virtual List<PossibleAnswer> PossibleAnswers { get; set; }
 
-        public List<Answer> Answers { get; set; }
+        public virtual List<Answer> Answers { get; set; }
         public virtual byte[] Version { get; set; }
     }
 }

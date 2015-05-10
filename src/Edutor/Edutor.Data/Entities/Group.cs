@@ -7,8 +7,8 @@ namespace Edutor.Data.Entities
         public virtual int GroupId { get; set; }
         public virtual string Name { get; set; }
         public virtual string Subject { get; set; }
-        public virtual DateTime From { get; set; }
-        public virtual DateTime? To { get; set; }
+        public virtual DateTime FromDate { get; set; }
+        public virtual DateTime? ToDate { get; set; }
         public virtual byte[] Version { get; set; }
     }
 }
