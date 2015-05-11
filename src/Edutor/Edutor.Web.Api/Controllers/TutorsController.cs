@@ -3,6 +3,7 @@ using Edutor.Web.Api.Models.NewModels;
 using Edutor.Web.Api.QueryProcessing;
 using System.Net.Http;
 using System.Web.Http;
+using System.Web.Http.Description;
 
 namespace Edutor.Web.Api.Controllers
 {
@@ -18,11 +19,17 @@ namespace Edutor.Web.Api.Controllers
             _addUserQueryProcessor = addUserQueryProcessor;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="newUser"></param>
+        /// <returns></returns>
         [HttpPost]
-        public IHttpActionResult AddTutor(HttpRequestMessage requestMessage, NewTutor newUser)
+        [ResponseType(typeof(NewTutor))]
+        public IHttpActionResult AddTutor(/*HttpRequestMessage requestMessage, */NewTutor newUser)
         {
             var user = _addUserQueryProcessor.AddUser(newUser);
-            var result = new ModelPostedActionResult<NewTutor>(requestMessage, user);
+            var result = new ModelPostedActionResult<NewTutor>(Request, user);
             return result;
         }
     }
