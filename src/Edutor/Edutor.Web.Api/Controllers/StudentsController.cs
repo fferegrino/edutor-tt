@@ -11,13 +11,9 @@ namespace Edutor.Web.Api.Controllers
     public class StudentsController : ApiController
     {
         private readonly IPostStudentMaintenanceProcessor _addUserQueryProcessor;
-        private readonly IPostEnrollmentMaintenanceProcessor _postEnrollmentMaintenanceProcessor;
-        //private readonly IGetSchoolUsersQueryProcessor _getQueryProcessor;
 
-        public StudentsController(IPostStudentMaintenanceProcessor addUserQueryProcessor
-            , IPostEnrollmentMaintenanceProcessor postEnrollmentMaintenanceProcessor)
+        public StudentsController(IPostStudentMaintenanceProcessor addUserQueryProcessor)
         {
-            _postEnrollmentMaintenanceProcessor = postEnrollmentMaintenanceProcessor;
             _addUserQueryProcessor = addUserQueryProcessor;
         }
 
@@ -37,25 +33,5 @@ namespace Edutor.Web.Api.Controllers
             return result;
         }
 
-        [HttpGet]
-        [Route("students/{studentId:int}/groups")]
-        public string GetGroupsFromStudent(int studentId)
-        {
-            return "xD";
-        }
-
-        /// <summary>
-        /// Add the student to a group
-        /// </summary>
-        /// <param name="studentId"></param>
-        /// <param name="groupId"></param>
-        /// <returns></returns>
-        [HttpPost]
-        [Route("students/{studentId:int}/groups/{groupId:int}")]
-        public string AddStudentToGroup(int studentId, int groupId)
-        {
-            _postEnrollmentMaintenanceProcessor.AddEnrollment(studentId, groupId);
-            return "Group " + studentId;
-        }
     }
 }

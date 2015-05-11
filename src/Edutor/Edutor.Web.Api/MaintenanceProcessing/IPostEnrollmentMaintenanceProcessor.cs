@@ -22,7 +22,6 @@ namespace Edutor.Web.Api.MaintenanceProcessing
     {
 
         private readonly IAutoMapper _autoMapper;
-
         private readonly IAddEnrollmentQueryProcessor _addUserQueryProcessor;
 
         public PostEnrollmentMaintenanceProcessor(IAutoMapper autoMapper, IAddEnrollmentQueryProcessor addUserQueryProcessor)

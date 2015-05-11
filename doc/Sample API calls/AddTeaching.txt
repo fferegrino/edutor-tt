@@ -1,0 +1,6 @@
+POST http://localhost:12441/students/1/schoolusers/1 HTTP/1.1
+User-Agent: Fiddler
+Content-Type: application/json
+Host: localhost:12441
+Content-Length: 0
+

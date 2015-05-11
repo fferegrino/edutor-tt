@@ -1,0 +1,10 @@
+POST http://localhost:12441/groups HTTP/1.1
+User-Agent: Fiddler
+Content-Type: application/json
+Host: localhost:12441
+
+{
+	name:"Español I",
+	subject: "Grupo de español 1",
+	fromdate: "2014-01-01"
+}]

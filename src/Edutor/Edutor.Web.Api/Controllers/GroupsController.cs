@@ -11,10 +11,16 @@ namespace Edutor.Web.Api.Controllers
     {
 
         private readonly IPostGroupMaintenanceProcessor _addUserQueryProcessor;
+        private readonly IPostEnrollmentMaintenanceProcessor _postEnrollmentMaintenanceProcessor;
+        private readonly IPostTeachingMaintenanceProcessor _postTeachingMaintenanceProcessor;
 
-        public GroupsController(IPostGroupMaintenanceProcessor addUserQueryProcessor)
+        public GroupsController(IPostGroupMaintenanceProcessor addUserQueryProcessor,
+           IPostEnrollmentMaintenanceProcessor postEnrollmentMaintenanceProcessor,
+           IPostTeachingMaintenanceProcessor postTeachingMaintenanceProcessor)
         {
             _addUserQueryProcessor = addUserQueryProcessor;
+            _postEnrollmentMaintenanceProcessor = postEnrollmentMaintenanceProcessor;
+            _postTeachingMaintenanceProcessor = postTeachingMaintenanceProcessor;
         }
 
 
@@ -25,6 +31,35 @@ namespace Edutor.Web.Api.Controllers
             var user = _addUserQueryProcessor.AddGroup(newUser);
             var result = new ModelPostedActionResult<NewGroup>(requestMessage, user);
             return result;
+        }
+
+        [HttpGet]
+        [Route("students/{studentId:int}/groups")]
+        public string GetGroupsFromStudent(int studentId)
+        {
+            return "xD";
+        }
+
+        /// <summary>
+        /// Add the student to a group
+        /// </summary>
+        /// <param name="studentId"></param>
+        /// <param name="groupId"></param>
+        /// <returns></returns>
+        [HttpPost]
+        [Route("groups/{groupId:int}/students/{studentId:int}")]
+        public string AddStudentToGroup(int groupId, int studentId)
+        {
+            _postEnrollmentMaintenanceProcessor.AddEnrollment(studentId, groupId);
+            return "Group " + studentId;
+        }
+
+        [HttpPost]
+        [Route("groups/{groupId:int}/schoolusers/{schoolUserId:int}")]
+        public string AddTeacherToGroup(int groupId, int schoolUserId)
+        {
+            _postTeachingMaintenanceProcessor.AddTeaching(schoolUserId, groupId);
+            return "Group " + schoolUserId;
         }
     }
 }

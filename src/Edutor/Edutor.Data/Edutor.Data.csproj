@@ -59,6 +59,7 @@
     <Compile Include="QueryProcessors\IAddEnrollmentQueryProcessor.cs" />
     <Compile Include="QueryProcessors\IAddGroupQueryProcessor.cs" />
     <Compile Include="QueryProcessors\IAddStudentQueryProcessor.cs" />
+    <Compile Include="QueryProcessors\IAddTeachingQueryProcessor.cs" />
     <Compile Include="QueryProcessors\IAddUserQueryProcessor.cs" />
     <Compile Include="QueryProcessors\IGetSchoolUsersQueryProcessors.cs" />
   </ItemGroup>
