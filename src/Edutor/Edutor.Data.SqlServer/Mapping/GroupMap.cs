@@ -18,6 +18,16 @@ namespace Edutor.Data.SqlServer.Mapping
             Map(x => x.FromDate);
             Map(x => x.ToDate);
 
+
+            HasManyToMany(x => x.Teachers).Table("Teachings")
+                       .ParentKeyColumn("UserId")
+                       .ChildKeyColumn("GroupId");
+                       //.Inverse();
+
+            HasManyToMany(x => x.Students).Table("Enrollments")
+                       .ParentKeyColumn("StudentId")
+                       .ChildKeyColumn("GroupId");
+                       //.Inverse();
             // TODO Add references and mappings
         }
     }

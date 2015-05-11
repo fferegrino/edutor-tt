@@ -23,6 +23,12 @@ namespace Edutor.Data.SqlServer.Mapping
             Map(x => x.Position).Nullable();
             Map(x => x.Job).Nullable();
             Map(x => x.JobTelephone).Nullable();
+
+
+            HasManyToMany(x => x.Groups).Table("Teachings")
+                                   .ParentKeyColumn("GroupId")
+                                   .ChildKeyColumn("SchoolUserId");
+                                   //.Inverse();
             
         }
     }

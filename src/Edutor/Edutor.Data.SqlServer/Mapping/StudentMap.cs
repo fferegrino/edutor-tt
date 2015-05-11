@@ -23,6 +23,11 @@ namespace Edutor.Data.SqlServer.Mapping
             Map(x => x.Token).Not.Nullable();
 
             References<User>(x => x.Tutor).Column("TutorId");
+
+            HasManyToMany(x => x.Groups).Table("Enrollments")
+                                   .ParentKeyColumn("GroupId")
+                                   .ChildKeyColumn("StudentId");
+                                   //.Inverse();
         }
 
     }

@@ -112,6 +112,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Global.asax" />
+    <EmbeddedResource Include="SwaggerStuff\Html\index.html" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -124,6 +125,7 @@
     <Compile Include="AutoMapperConfigurator.cs" />
     <Compile Include="AutoMappingConfigurator\NewGroupToGroupEntityAutoMapperTypeConfigurator.cs" />
     <Compile Include="AutoMappingConfigurator\NewSchoolUserToUserEntityAutoMapperTypeConfigurator.cs" />
+    <Compile Include="AutoMappingConfigurator\NewEnrollmentToEnrollmentEntityAutoMapperTypeConfigurator.cs" />
     <Compile Include="AutoMappingConfigurator\NewStudentToStudentEntityAutoMapperTypeConfigurator.cs" />
     <Compile Include="AutoMappingConfigurator\NewTutorToUserEntityAutoMapperTypeConfigurator.cs" />
     <Compile Include="Controllers\ConversationsController.cs" />
@@ -143,6 +145,7 @@
     <Compile Include="LinkServices\IStudentsLinkService.cs" />
     <Compile Include="LinkServices\IUsersLinkService.cs" />
     <Compile Include="MaintenanceProcessing\IPostGroupMaintenanceProcessor.cs" />
+    <Compile Include="MaintenanceProcessing\IPostEnrollmentMaintenanceProcessor.cs" />
     <Compile Include="MaintenanceProcessing\IPostSchoolUserMaintenanceProcessor.cs" />
     <Compile Include="MaintenanceProcessing\IPostStudentMaintenanceProcessor.cs" />
     <Compile Include="MaintenanceProcessing\IPostTutorMaintenanceProcessor.cs" />
@@ -161,6 +164,7 @@
     <None Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
+    <Content Include="connections.config" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

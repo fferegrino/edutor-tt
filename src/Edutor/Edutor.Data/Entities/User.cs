@@ -16,9 +16,18 @@ namespace Edutor.Data.Entities
         public virtual string Address { get; set; }
         public virtual string Mobile { get; set; }
         public virtual string Phone { get; set; }
+
+        #region SchoolUser
         public virtual Nullable<char> Position { get; set; }
+        public virtual IList<Group> Groups { get; set; }
+        #endregion
+
+        #region Tutor
+        public virtual IList<Student> Students { get; set; }
         public virtual string Job { get; set; }
         public virtual string JobTelephone { get; set; }
+        #endregion
+
 
         public virtual byte[] Version { get; set; }
 

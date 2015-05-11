@@ -11,24 +11,18 @@ using Ent = Edutor.Data.Entities;
 namespace Edutor.Web.Api.AutoMappingConfigurator
 {
     public class NewGroupToGroupEntityAutoMapperTypeConfigurator : IAutoMapperTypeConfigurator
-    { 
+    {
         public void Configure()
         {
             Mapper.CreateMap<NwModels.NewGroup, Ent.Group>()
                 //.ForMember(o => o.GroupId, opt => opt.Ignore())
                 .ForMember(o => o.Version, x => x.Ignore())
+                .ForMember(s => s.Students, x => x.Ignore())
+                .ForMember(s => s.Teachers, x => x.Ignore())
                 ;
-        }
-    }
 
-    public class GroupEntityToNewGroupAutoMapperTypeConfigurator : IAutoMapperTypeConfigurator
-    {
-        public void Configure()
-        {
-            Mapper.CreateMap<Ent.Group,NwModels.NewGroup>()
+            Mapper.CreateMap<Ent.Group, NwModels.NewGroup>()
                 .ForMember(x => x.Links, opt => opt.Ignore())
-                //.ForMember(x => x.GroupId, opt => opt.MapFrom(s => s.Type))
-                //.ForMember(x => x.UserId, opt => opt.MapFrom(s => s.UserId))
                 ;
         }
     }

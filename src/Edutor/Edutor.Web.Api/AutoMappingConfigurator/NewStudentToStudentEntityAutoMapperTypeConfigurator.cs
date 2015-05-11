@@ -20,17 +20,14 @@ namespace Edutor.Web.Api.AutoMappingConfigurator
                 .ForMember(o => o.Tutor, opt => opt.Ignore())
                 .ForMember(o => o.IsActive, opt => opt.Ignore())
                 .ForMember(o => o.Version, x => x.Ignore())
+                .ForMember(s => s.Groups, x => x.Ignore())
                 ;
-        }
-    }
 
-    public class StudentEntityToNewStudentAutoMapperTypeConfigurator : IAutoMapperTypeConfigurator
-    {
-        public void Configure()
-        {
+
             Mapper.CreateMap<Ent.Student, NwModels.NewStudent>()
                 .ForMember(x => x.Links, opt => opt.Ignore())
                 ;
         }
     }
+
 }

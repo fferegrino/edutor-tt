@@ -20,15 +20,12 @@ namespace Edutor.Web.Api.AutoMappingConfigurator
                 .ForMember(o => o.Job, opt => opt.Ignore())
                 .ForMember(o => o.JobTelephone, opt => opt.Ignore())
                 .ForMember(o => o.Version, x => x.Ignore())
+                .ForMember(s => s.Groups, x => x.Ignore())
+                .ForMember(s => s.Students, x => x.Ignore())
                 ;
-        }
-    }
 
-    public class UserEntityToNewSchoolUserAutoMapperTypeConfigurator : IAutoMapperTypeConfigurator
-    {
-        public void Configure()
-        {
-            Mapper.CreateMap<Ent.User,NwModels.NewSchoolUser>()
+
+            Mapper.CreateMap<Ent.User, NwModels.NewSchoolUser>()
                 .ForMember(x => x.Links, opt => opt.Ignore())
                 .ForMember(x => x.Type, opt => opt.MapFrom(s => s.Type))
                 .ForMember(x => x.UserId, opt => opt.MapFrom(s => s.UserId))
