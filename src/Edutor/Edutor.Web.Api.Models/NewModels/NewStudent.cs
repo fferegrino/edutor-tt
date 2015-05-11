@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Edutor.Web.Api.Models.NewModels
 {
-    public class NewStudent : ILinkContaining
+    public class NewStudent : LinkContaining
     {
 
         public int StudentId { get; set; }
@@ -19,16 +19,5 @@ namespace Edutor.Web.Api.Models.NewModels
         public string Name { get; set; }
         //public string Token { get; set; }
 
-        private List<Link> _links;
-        public List<Link> Links
-        {
-            get { return _links ?? (_links = new List<Link>()); }
-            set { _links = value; }
-        }
-
-        public void AddLink(Link link)
-        {
-            Links.Add(link);
-        }
     }
 }
