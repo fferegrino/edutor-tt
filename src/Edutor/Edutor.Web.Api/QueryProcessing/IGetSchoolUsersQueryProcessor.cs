@@ -1,7 +1,7 @@
 ﻿using Edutor.Common.TypeMapping;
 using Edutor.Data.QueryProcessors;
 using Edutor.Web.Api.Models;
-using Edutor.Web.Api.Models.NewModels;
+using Edutor.Web.Api.Models.ReturnTypes;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,7 +12,7 @@ namespace Edutor.Web.Api.QueryProcessing
 {
     public interface IGetSchoolUsersQueryProcessor 
     {
-        NewSchoolUser GetById(int id);
+        SchoolUser GetById(int id);
     }
 
     public class SchoolUsersQueryProcessor : IGetSchoolUsersQueryProcessor
@@ -29,9 +29,9 @@ namespace Edutor.Web.Api.QueryProcessing
         }
 
 
-        public NewSchoolUser GetById(int id)
+        public SchoolUser GetById(int id)
         {
-            return _autoMapper.Map<NewSchoolUser>(_qProc.GetById(id));
+            return _autoMapper.Map<SchoolUser>(_qProc.GetById(id));
         }
     }
 }

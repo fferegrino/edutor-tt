@@ -2,6 +2,7 @@
 using Edutor.Web.Api.MaintenanceProcessing;
 using Edutor.Web.Api.Models;
 using Edutor.Web.Api.Models.NewModels;
+using Edutor.Web.Api.Models.ReturnTypes;
 using Edutor.Web.Api.QueryProcessing;
 using Edutor.Web.Common;
 using System;
@@ -26,7 +27,7 @@ namespace Edutor.Web.Api.Controllers
         }
 
         [HttpGet]
-        public NewSchoolUser GetSchoolUser(int id)
+        public SchoolUser GetSchoolUser(int id)
         {
             return _getQueryProcessor.GetById(id);
         }
@@ -35,7 +36,7 @@ namespace Edutor.Web.Api.Controllers
         public IHttpActionResult AddSchoolUser(HttpRequestMessage requestMessage, NewSchoolUser newUser)
         {
             var user = _addUserQueryProcessor.AddUser(newUser);
-            var result = new ModelPostedActionResult<NewSchoolUser>(requestMessage, user);
+            var result = new ModelPostedActionResult<SchoolUser>(requestMessage, user);
             return result;
         }
     }

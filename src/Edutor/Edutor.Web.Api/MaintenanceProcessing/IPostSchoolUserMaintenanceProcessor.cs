@@ -4,6 +4,7 @@ using Edutor.Data.QueryProcessors;
 using Edutor.Web.Api.LinkServices;
 using Edutor.Web.Api.Models;
 using Edutor.Web.Api.Models.NewModels;
+using Edutor.Web.Api.Models.ReturnTypes;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,7 +16,7 @@ namespace Edutor.Web.Api.MaintenanceProcessing
 {
     public interface IPostSchoolUserMaintenanceProcessor 
     {
-        NewSchoolUser AddUser(NewSchoolUser newUser);
+        SchoolUser AddUser(NewSchoolUser newUser);
     }
 
     public class PostSchoolUserMaintenanceProcessor : IPostSchoolUserMaintenanceProcessor
@@ -34,18 +35,15 @@ namespace Edutor.Web.Api.MaintenanceProcessing
         }
 
 
-        public NewSchoolUser AddUser(NewSchoolUser newUser)
+        public SchoolUser AddUser(NewSchoolUser newUser)
         {
             var userEntity = _autoMapper.Map<Data.Entities.User>(newUser);
             _addUserQueryProcessor.AddUser(userEntity);
-
-            newUser.UserId = userEntity.UserId;
-            newUser.Type = userEntity.Type;
-
+            var returnType = _autoMapper.Map<SchoolUser>(userEntity);
             // TODO Implement link service here
-            _linkServices.AddSelfLink(newUser);
+            _linkServices.AddSelfLink(returnType);
 
-            return newUser;
+            return returnType;
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using Edutor.Common;
 using Edutor.Web.Api.Models;
 using Edutor.Web.Api.Models.NewModels;
+using Edutor.Web.Api.Models.ReturnTypes;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,7 +13,7 @@ namespace Edutor.Web.Api.LinkServices
 {
     public interface IUsersLinkService
     {
-        void AddSelfLink(NewUser user);
+        void AddSelfLink(User user);
     }
 
     public class UsersLinkService : IUsersLinkService
@@ -24,12 +25,12 @@ namespace Edutor.Web.Api.LinkServices
             _commonLinkService = commonLinkService;
         }
 
-        public void AddSelfLink(NewUser user)
+        public void AddSelfLink(User user)
         {
             user.AddLink(GetSelfLink(user));
         }
 
-        public virtual Link GetSelfLink(NewUser user)
+        public virtual Link GetSelfLink(User user)
         {
             var pathFragment = String.Format((user.Type == Edutor.Data.Entities.User.TutorType ? "tutors/" : "schoolusers/" )+ "{0}",user.UserId);
             var link = _commonLinkService.GetLink(pathFragment, Constants.CommonLinkRelValues.Self, HttpMethod.Get);

@@ -1,5 +1,6 @@
 ﻿using Edutor.Web.Api.MaintenanceProcessing;
 using Edutor.Web.Api.Models.NewModels;
+using Edutor.Web.Api.Models.ReturnTypes;
 using Edutor.Web.Api.QueryProcessing;
 using System.Net.Http;
 using System.Web.Http;
@@ -25,11 +26,11 @@ namespace Edutor.Web.Api.Controllers
         /// <param name="newUser"></param>
         /// <returns></returns>
         [HttpPost]
-        [ResponseType(typeof(NewTutor))]
+        [ResponseType(typeof(Tutor))]
         public IHttpActionResult AddTutor(/*HttpRequestMessage requestMessage, */NewTutor newUser)
         {
             var user = _addUserQueryProcessor.AddUser(newUser);
-            var result = new ModelPostedActionResult<NewTutor>(Request, user);
+            var result = new ModelPostedActionResult<Tutor>(Request, user);
             return result;
         }
     }

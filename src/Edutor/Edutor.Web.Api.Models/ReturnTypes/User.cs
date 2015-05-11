@@ -4,10 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Edutor.Web.Api.Models.NewModels
+namespace Edutor.Web.Api.Models.ReturnTypes
 {
-    public class NewUser 
+    public class User : LinkContaining
     {
+        public int UserId { get; set; }
         public string Name { get; set; }
         public string Curp { get; set; }
         public string Email { get; set; }

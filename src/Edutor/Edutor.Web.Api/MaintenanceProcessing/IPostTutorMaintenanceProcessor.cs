@@ -10,12 +10,13 @@ using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using Edutor.Web.Api.Models.ReturnTypes;
 
 namespace Edutor.Web.Api.MaintenanceProcessing
 {
     public interface IPostTutorMaintenanceProcessor
     {
-        NewTutor AddUser(NewTutor newTutor);
+        Tutor AddUser(NewTutor newTutor);
     }
     public class PostTutorMaintenanceProcessor : IPostTutorMaintenanceProcessor
     {
@@ -32,19 +33,15 @@ namespace Edutor.Web.Api.MaintenanceProcessing
         }
 
 
-        public NewTutor AddUser(NewTutor newUser)
+        public Tutor AddUser(NewTutor newUser)
         {
             var userEntity = _autoMapper.Map<Data.Entities.User>(newUser);
             _addUserQueryProcessor.AddUser(userEntity);
-            var returnUser = _autoMapper.Map<NewTutor>(userEntity);
+            var returnUser = _autoMapper.Map<Tutor>(userEntity);
 
-            newUser.UserId = userEntity.UserId;
-            newUser.Type = userEntity.Type;
+            _linkServices.AddSelfLink(returnUser);
 
-            // TODO Implement link service here
-            _linkServices.AddSelfLink(newUser);
-
-            return newUser;
+            return returnUser;
         }
     }
 }
