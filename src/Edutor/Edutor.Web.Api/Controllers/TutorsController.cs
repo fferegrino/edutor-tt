@@ -27,7 +27,7 @@ namespace Edutor.Web.Api.Controllers
         /// <returns></returns>
         [HttpPost]
         [ResponseType(typeof(Tutor))]
-        public IHttpActionResult AddTutor(/*HttpRequestMessage requestMessage, */NewTutor newUser)
+        public IHttpActionResult AddTutor(NewTutor newUser)
         {
             var user = _addUserQueryProcessor.AddUser(newUser);
             var result = new ModelPostedActionResult<Tutor>(Request, user);

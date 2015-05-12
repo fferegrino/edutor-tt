@@ -128,6 +128,7 @@
     <Compile Include="AutoMappingConfigurator\NewSchoolUserToUserEntityAutoMapperTypeConfigurator.cs" />
     <Compile Include="AutoMappingConfigurator\NewEnrollmentToEnrollmentEntityAutoMapperTypeConfigurator.cs" />
     <Compile Include="AutoMappingConfigurator\NewStudentToStudentEntityAutoMapperTypeConfigurator.cs" />
+    <Compile Include="AutoMappingConfigurator\NewEventToEventEntityAutoMapperTypeConfigurator.cs" />
     <Compile Include="AutoMappingConfigurator\NewTutorToUserEntityAutoMapperTypeConfigurator.cs" />
     <Compile Include="Controllers\ConversationsController.cs" />
     <Compile Include="Controllers\EventsController.cs" />
@@ -142,9 +143,11 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="LinkServices\ICommonLinkService.cs" />
+    <Compile Include="LinkServices\IEventsLinkService.cs" />
     <Compile Include="LinkServices\IGroupsLinkService.cs" />
     <Compile Include="LinkServices\IStudentsLinkService.cs" />
     <Compile Include="LinkServices\IUsersLinkService.cs" />
+    <Compile Include="MaintenanceProcessing\IPostEventMaintenanceProcessor.cs" />
     <Compile Include="MaintenanceProcessing\IPostGroupMaintenanceProcessor.cs" />
     <Compile Include="MaintenanceProcessing\IPostEnrollmentMaintenanceProcessor.cs" />
     <Compile Include="MaintenanceProcessing\IPostSchoolUserMaintenanceProcessor.cs" />

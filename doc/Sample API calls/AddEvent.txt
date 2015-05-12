@@ -1,0 +1,12 @@
+POST http://localhost:12441/events HTTP/1.1
+User-Agent: Fiddler
+Content-Type: application/json
+Host: localhost:12441
+
+{
+	name:"Junta con padres de familia",
+	description: "Revisión de los planes de estudio",
+date:"2014-01-01",
+creationdate:"2014-01-01",
+schooluserid:1
+}
