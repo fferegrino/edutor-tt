@@ -2,8 +2,8 @@
 (
 	[StudentId] INT NOT NULL,
 	[QuestionId] INT NOT NULL,
-	[ActualAnswerId] INT NOT NULL, 
-	[Date] DATE NOT NULL, 
+	[ActualAnswerId] INT NULL, 
+	[Date] DATE NULL, 
     CONSTRAINT [PK_Answers] PRIMARY KEY (StudentId, [QuestionId]), 
     CONSTRAINT [FK_Answers_ToQuestions] FOREIGN KEY ([QuestionId]) REFERENCES [Questions]([QuestionId]),
     CONSTRAINT [FK_Answers_ToStudents] FOREIGN KEY ([StudentId]) REFERENCES [Students]([StudentId]),

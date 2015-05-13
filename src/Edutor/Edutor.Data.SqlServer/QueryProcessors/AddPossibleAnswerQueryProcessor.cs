@@ -25,7 +25,7 @@ namespace Edutor.Data.SqlServer.QueryProcessors
 
         public void AddPossibleAnswer(Entities.PossibleAnswer p)
         {
-
+            throw new NotImplementedException();
             //var ev = _session.QueryOver<Entities.Event>().Where(g => g.EventId == invitation.EventId).SingleOrDefault();
             //var student = _session.QueryOver<Entities.Student>().Where(g => g.StudentId == invitation.StudentId).SingleOrDefault();
             //invitation.Student = student;
@@ -36,16 +36,14 @@ namespace Edutor.Data.SqlServer.QueryProcessors
 
         public void AddPossibleAnswers(IList<Entities.PossibleAnswer> ps)
         {
-            //var x = invitations[0];
-            //var ev = _session.QueryOver<Entities.Event>().Where(g => g.EventId == x.EventId).SingleOrDefault();
+            var x = ps[0];
+            var qestuion = _session.QueryOver<Entities.Question>().Where(g => g.QuestionId == x.QuestionId).SingleOrDefault();
 
-            //foreach (var invitation in invitations)
-            //{
-            //    var student = _session.QueryOver<Entities.Student>().Where(g => g.StudentId == invitation.StudentId).SingleOrDefault();
-            //    invitation.Student = student;
-            //    invitation.Event = ev;
-            //    _session.Save(invitation);
-            //};
+            foreach (var p in ps)
+            {
+                p.Question = qestuion;
+                _session.Save(p);
+            };
         }
     }
 }

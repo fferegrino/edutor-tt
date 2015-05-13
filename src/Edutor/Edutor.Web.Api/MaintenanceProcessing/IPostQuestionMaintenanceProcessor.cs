@@ -20,7 +20,7 @@ namespace Edutor.Web.Api.MaintenanceProcessing
     {
         private readonly IAutoMapper _autoMapper;
         private readonly IAddQuestionQueryProcessor _addQuestionQP;
-        private readonly IAddPossibleAnswerQueryProcessor _addInvitationQP;
+        private readonly IAddPossibleAnswerQueryProcessor _addPossibleAnswerQP;
         private readonly IAddAnswerQueryProcessor _addAns;
         private readonly IEventsLinkService _linkServices;
 
@@ -34,7 +34,7 @@ namespace Edutor.Web.Api.MaintenanceProcessing
             _addQuestionQP = addUserQueryProcessor;
             _addAns = addAns;
             _linkServices = linkServices;
-            _addInvitationQP = addInvitationsQueryProcessor;
+            _addPossibleAnswerQP = addInvitationsQueryProcessor;
         }
 
         public Ret.Question AddQuestion(NewQuestion q)
@@ -42,35 +42,30 @@ namespace Edutor.Web.Api.MaintenanceProcessing
             var eventEntity = _autoMapper.Map<Data.Entities.Question>(q);
             _addQuestionQP.AddQuestion(eventEntity);
             var ret = _autoMapper.Map<Ret.Question>(eventEntity);
+
+            var students = eventEntity.Group.Students;
+
+            int i = 0;
+            var possibleAnswers = from popssibleAnswerText in q.PossibleAnswers
+                                  select new Data.Entities.PossibleAnswer
+                                  {
+                                      Text = popssibleAnswerText,
+                                      QuestionId = eventEntity.QuestionId,
+                                      PossibleAnswerId = i++,
+                                  };
+            _addPossibleAnswerQP.AddPossibleAnswers(possibleAnswers.ToList());
+
+            var answersStudents = from student in students
+                                  select new Data.Entities.Answer
+                                  {
+                                      ActualAnswerId = null,
+                                      QuestionId = eventEntity.QuestionId,
+                                      StudentId = student.StudentId
+                                  };
+
+            _addAns.AddAnswers(answersStudents.ToList());
             return ret;
         }
 
-        //public Ret.Event AddEvent(NewEvent ev)
-        //{
-
-        //    var eventEntity = _autoMapper.Map<Data.Entities.Event>(ev);
-        //    _addEventQueryProcessor.AddEvent(eventEntity);
-        //    var ret = _autoMapper.Map<Ret.Event>(eventEntity);
-
-        //    var students = eventEntity.Group.Students;
-        //    //for (int i = 0; i < students.Count; i++)
-        //    //{
-        //    //    _addInvitationsQueryProcessor.AddInvitation(new Data.Entities.Invitation { Rsvp = null, EventId = eventEntity.EventId, StudentId = students[i].StudentId });
-        //    //}
-
-        //    var invitations = from s in students
-        //                      select new Data.Entities.Invitation
-        //                      {
-        //                          Rsvp = null,
-        //                          EventId = eventEntity.EventId,
-        //                          StudentId = s.StudentId
-        //                      };
-
-        //    _addInvitationsQueryProcessor.AddInvitations(invitations.ToList());
-
-        //    _linkServices.AddSelfLink(ret);
-
-        //    return ret;
-        //}
     }
 }

@@ -38,7 +38,7 @@ namespace Edutor.Data.SqlServer.QueryProcessors
         public void AddQuestion(Entities.Question q)
         {
             q.SchoolUser = _session.QueryOver<Entities.User>().Where(u => u.UserId == q.SchoolUserId).SingleOrDefault();
-
+            q.Group = _session.QueryOver<Entities.Group>().Where(u => u.GroupId == q.GroupId).SingleOrDefault();
             _session.Save(q);
         }
     }

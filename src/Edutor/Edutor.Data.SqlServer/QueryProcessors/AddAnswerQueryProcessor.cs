@@ -31,20 +31,21 @@ namespace Edutor.Data.SqlServer.QueryProcessors
             //invitation.Event = ev;
 
             //_session.Save(invitation);
+            throw new NotImplementedException();
         }
 
         public void AddAnswers(IList<Entities.Answer> aS)
         {
-            //var x = invitations[0];
-            //var ev = _session.QueryOver<Entities.Event>().Where(g => g.EventId == x.EventId).SingleOrDefault();
+            var x = aS[0];
+            var ev = _session.QueryOver<Entities.Question>().Where(g => g.QuestionId == x.QuestionId).SingleOrDefault();
 
-            //foreach (var invitation in invitations)
-            //{
-            //    var student = _session.QueryOver<Entities.Student>().Where(g => g.StudentId == invitation.StudentId).SingleOrDefault();
-            //    invitation.Student = student;
-            //    invitation.Event = ev;
-            //    _session.Save(invitation);
-            //}
+            foreach (var answer in aS)
+            {
+                var student = _session.QueryOver<Entities.Student>().Where(g => g.StudentId == answer.StudentId).SingleOrDefault();
+                answer.Student = student;
+                answer.Question = ev;
+                _session.Save(answer);
+            }
         }
     }
 }

@@ -10,7 +10,8 @@ namespace Edutor.Data.Entities
     {
         public virtual int StudentId { get; set; }
         public virtual int QuestionId { get; set; }
-        public virtual int ActualAnswerId { get; set; }
+        public virtual int? ActualAnswerId { get; set; }
+        public virtual DateTime? AnswerDate { get; set; }
         //public virtual bool? Rsvp { get; set; }
 
         public override bool Equals(object obj)
