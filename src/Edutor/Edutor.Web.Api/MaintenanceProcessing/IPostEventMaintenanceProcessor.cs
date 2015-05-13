@@ -36,8 +36,6 @@ namespace Edutor.Web.Api.MaintenanceProcessing
             var userEntity = _autoMapper.Map<Data.Entities.Event>(ev);
             _addUserQueryProcessor.AddEvent(userEntity);
             var ret = _autoMapper.Map<Ret.Event>(userEntity);
-
-            // TODO Implement link service here
             _linkServices.AddSelfLink(ret);
 
             return ret;

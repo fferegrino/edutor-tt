@@ -25,6 +25,7 @@ namespace Edutor.Data.SqlServer.QueryProcessors
         public void AddEvent(Entities.Event ev)
         {
             ev.SchoolUser = _session.QueryOver<Entities.User>().Where(x => x.UserId == ev.SchoolUserId).SingleOrDefault();
+            ev.CreationDate = _dateTime.UtcNow;
             _session.SaveOrUpdate(ev);
         }
     }

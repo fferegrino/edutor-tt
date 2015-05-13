@@ -2,6 +2,7 @@
 (
 	[EventId] INT NOT NULL PRIMARY KEY IDENTITY, 
     [SchoolUserId] INT NOT NULL, 
+	[GroupId] INT NOT NULL, 
     [Name] VARCHAR(30) NOT NULL, 
     [Date] DATETIME NOT NULL, 
     [CreationDate] DATETIME NOT NULL, 

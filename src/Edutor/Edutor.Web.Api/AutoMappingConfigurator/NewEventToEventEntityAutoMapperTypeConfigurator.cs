@@ -17,6 +17,7 @@ namespace Edutor.Web.Api.AutoMappingConfigurator
         {
             Mapper.CreateMap<NwModels.NewEvent, Ent.Event>()
                 .ForMember(o => o.EventId, opt => opt.Ignore())
+                .ForMember(o => o.CreationDate, opt => opt.Ignore())
                 .ForMember(o => o.SchoolUser, opt => opt.Ignore())
                 .ForMember(o => o.Version, x => x.Ignore())
                 ;

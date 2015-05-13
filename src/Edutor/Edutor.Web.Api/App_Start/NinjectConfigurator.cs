@@ -115,6 +115,7 @@ namespace Edutor.Web.Api
                 .Mappings(m => m.FluentMappings.AddFromAssemblyOf<Mapping.TeachingMap>())
                 .Mappings(m => m.FluentMappings.AddFromAssemblyOf<Mapping.EnrollmentMap>())
                 .Mappings(m => m.FluentMappings.AddFromAssemblyOf<Mapping.EventMap>())
+                .Mappings(m => m.FluentMappings.AddFromAssemblyOf<Mapping.InvitationMap>())
                 .BuildSessionFactory();
             container.Bind<ISessionFactory>().ToConstant(sessionFactory);
             container.Bind<ISession>().ToMethod(CreateSession).InRequestScope();
