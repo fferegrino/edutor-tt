@@ -10,9 +10,11 @@ Post-Deployment Script Template
 --------------------------------------------------------------------------------------
 */
 
-DECLARE @DummyUsers BIT = 1
-DECLARE @DummyStudents BIT = 1
-DECLARE @DummyGroups BIT = 1
+DECLARE @DummyUsers BIT = 1,
+		@DummyStudents BIT = 1,
+		@DummyGroups BIT = 1,
+		@DummyEnrollments BIT = 1,
+		@DummyTeachings BIT = 1
 
 IF(@DummyUsers = 1)
 BEGIN
@@ -103,4 +105,29 @@ BEGIN
 	INSERT INTO Groups([Name],[Subject],[FromDate]) VALUES('odio. Aliquam','scelerisque neque sed','02/01/2016'),('orci luctus','Morbi neque tellus,','06/06/2015'),('urna justo','laoreet ipsum. Curabitur','01/17/2016'),('iaculis, lacus','Nunc ullamcorper, velit','03/30/2015'),('Sed auctor','at, egestas a,','11/06/2014'),('vulputate velit','Quisque nonummy ipsum','10/03/2015'),('nunc risus','tincidunt tempus risus.','02/18/2015'),('penatibus et','nisl. Nulla eu','07/30/2015'),('pede blandit','ipsum. Donec sollicitudin','03/08/2016'),('tortor. Integer','Phasellus at augue','01/04/2016');
 	INSERT INTO Groups([Name],[Subject],[FromDate]) VALUES('arcu. Curabitur','erat. Vivamus nisi.','09/20/2015'),('ante lectus','lectus, a sollicitudin','08/04/2014'),('non, feugiat','Mauris blandit enim','01/19/2015'),('mattis semper,','malesuada id, erat.','02/09/2015'),('nisi dictum','eget laoreet posuere,','08/01/2014'),('Aliquam auctor,','Morbi quis urna.','07/14/2015'),('et risus.','convallis, ante lectus','03/16/2016'),('Vivamus non','erat. Sed nunc','10/24/2015'),('Nunc mauris','porttitor vulputate, posuere','03/12/2016'),('Sed diam','auctor quis, tristique','03/31/2016');
 
+END
+
+IF(@DummyEnrollments = 1)
+BEGIN
+	INSERT INTO Enrollments(GroupId, StudentId)
+	SELECT DISTINCT G.GroupId,S.StudentId 
+	FROM Students S
+		INNER JOIN Groups G
+		ON StudentId = GroupId
+			OR StudentId % 50 = GroupId
+			OR StudentId *3 % 50 = GroupId
+			OR StudentId *9 % 50 = GroupId
+			OR StudentId * 123 % 50 = GroupId
+			OR StudentId * 352 % 50 = GroupId
+END
+
+IF(@DummyTeachings = 1)
+BEGIN
+	INSERT INTO Teachings
+	SELECT  G.GroupId, U.UserId
+	FROM Groups G
+		INNER JOIN Users U
+			ON G.GroupId = U.UserId
+				OR G.GroupId * 123  % 89 = U.UserId
+	WHERE U.[Type] = 'S'
 END

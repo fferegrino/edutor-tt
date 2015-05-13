@@ -17,21 +17,11 @@ namespace Edutor.Data.SqlServer.Mapping
             Map(x => x.Date).Not.Nullable();
             Map(x => x.CreationDate).Not.Nullable();
             Map(x => x.Description).Not.Nullable();
+            HasMany<Invitation>(ev => ev.Invitations).KeyColumn("EventId");
             References<User>(x => x.SchoolUser).Column("SchoolUserId");
             References<Group>(x => x.Group).Column("GroupId");
 
             // TODO Add references and mappings
-        }
-    }
-
-    public class InvitationMap :VersionedClassMap<Invitation>
-    {
-        public InvitationMap()
-        {
-            Table("Invitations");
-            Map(i => i.Rsvp);
-            CompositeId().KeyReference(l => l.Student, "StudentId");
-            CompositeId().KeyReference(l => l.Event, "EventId");
         }
     }
 }

@@ -19,23 +19,42 @@ namespace Edutor.Web.Api.MaintenanceProcessing
     public class PostEventMaintenanceProcessor : IPostEventMaintenanceProcessor
     {
         private readonly IAutoMapper _autoMapper;
-        private readonly IAddEventQueryProcessor _addUserQueryProcessor;
+        private readonly IAddEventQueryProcessor _addEventQueryProcessor;
+        private readonly IAddInvitationQueryProcessor _addInvitationsQueryProcessor;
         private readonly IEventsLinkService _linkServices;
 
-        public PostEventMaintenanceProcessor(IAutoMapper autoMapper, IAddEventQueryProcessor addUserQueryProcessor, IEventsLinkService linkServices)
+        public PostEventMaintenanceProcessor(IAutoMapper autoMapper, IAddEventQueryProcessor addUserQueryProcessor, IAddInvitationQueryProcessor addInvitationsQueryProcessor, IEventsLinkService linkServices)
         {
             _autoMapper = autoMapper;
-            _addUserQueryProcessor = addUserQueryProcessor;
+            _addEventQueryProcessor = addUserQueryProcessor;
             _linkServices = linkServices;
+            _addInvitationsQueryProcessor = addInvitationsQueryProcessor;
         }
 
 
         public Ret.Event AddEvent(NewEvent ev)
         {
 
-            var userEntity = _autoMapper.Map<Data.Entities.Event>(ev);
-            _addUserQueryProcessor.AddEvent(userEntity);
-            var ret = _autoMapper.Map<Ret.Event>(userEntity);
+            var eventEntity = _autoMapper.Map<Data.Entities.Event>(ev);
+            _addEventQueryProcessor.AddEvent(eventEntity);
+            var ret = _autoMapper.Map<Ret.Event>(eventEntity);
+
+            var students = eventEntity.Group.Students;
+            //for (int i = 0; i < students.Count; i++)
+            //{
+            //    _addInvitationsQueryProcessor.AddInvitation(new Data.Entities.Invitation { Rsvp = null, EventId = eventEntity.EventId, StudentId = students[i].StudentId });
+            //}
+
+            var invitations = from s in students
+                              select new Data.Entities.Invitation
+                              {
+                                  Rsvp = null,
+                                  EventId = eventEntity.EventId,
+                                  StudentId = s.StudentId
+                              };
+
+            _addInvitationsQueryProcessor.AddInvitations(invitations.ToList());
+
             _linkServices.AddSelfLink(ret);
 
             return ret;

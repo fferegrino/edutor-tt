@@ -18,6 +18,7 @@ namespace Edutor.Data.Entities
 
         public virtual User SchoolUser { get; set; }
         public virtual Group Group { get; set; }
+        public virtual IList<Invitation> Invitations { get; set; }
         public virtual byte[] Version { get; set; }
     }
 }

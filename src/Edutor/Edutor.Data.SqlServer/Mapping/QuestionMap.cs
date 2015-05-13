@@ -13,7 +13,11 @@ namespace Edutor.Data.SqlServer.Mapping
         {
             Table("Questions");
             Id(x => x.QuestionId);
-            References<User>(x => x.SchoolUserId);
+            Map(x => x.Text);
+            Map(x => x.ExpirationDate);
+            References<User>(x => x.SchoolUserId).Column("SchoolUserId");
+            HasMany<PossibleAnswer>(ev => ev.PossibleAnswers).KeyColumn("QuestionId");
+            HasMany<Answer>(ev => ev.Answers).KeyColumn("QuestionId");
         }
     }
 }

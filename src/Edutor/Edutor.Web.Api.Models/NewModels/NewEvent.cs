@@ -9,6 +9,7 @@ namespace Edutor.Web.Api.Models.NewModels
     public class NewEvent
     {
         public int SchoolUserId { get; set; }
+        public int GroupId { get; set; }
         public string Name { get; set; }
         public DateTime Date { get; set; }
         public string Description { get; set; }

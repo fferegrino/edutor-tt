@@ -82,6 +82,7 @@ namespace Edutor.Web.Api
             container.Bind<QueryProcessors.IAddEnrollmentQueryProcessor>().To<SqlProcessors.AddEnrollmentQueryProcessor>().InRequestScope();
             container.Bind<QueryProcessors.IAddTeachingQueryProcessor>().To<SqlProcessors.AddTeachingQueryProcessor>().InRequestScope();
             container.Bind<QueryProcessors.IAddEventQueryProcessor>().To<SqlProcessors.AddEventQueryProcessor>().InRequestScope();
+            container.Bind<QueryProcessors.IAddInvitationQueryProcessor>().To<SqlProcessors.AddInvitationQueryProcessor>().InRequestScope();
 
             container.Bind<QueryProcessors.IGetSchoolUsersQueryProcessors>().To<SqlProcessors.GetSchoolUsersQueryProcesors>().InRequestScope();
 
@@ -114,8 +115,14 @@ namespace Edutor.Web.Api
                 .Mappings(m => m.FluentMappings.AddFromAssemblyOf<Mapping.GroupMap>())
                 .Mappings(m => m.FluentMappings.AddFromAssemblyOf<Mapping.TeachingMap>())
                 .Mappings(m => m.FluentMappings.AddFromAssemblyOf<Mapping.EnrollmentMap>())
+        
                 .Mappings(m => m.FluentMappings.AddFromAssemblyOf<Mapping.EventMap>())
                 .Mappings(m => m.FluentMappings.AddFromAssemblyOf<Mapping.InvitationMap>())
+
+                //.Mappings(m => m.FluentMappings.AddFromAssemblyOf<Mapping.QuestionMap>())
+                //.Mappings(m => m.FluentMappings.AddFromAssemblyOf<Mapping.PossibleAnswerMap>())
+
+                //.Mappings(m => m.FluentMappings.AddFromAssemblyOf<Mapping.AnswerMap>())
                 .BuildSessionFactory();
             container.Bind<ISessionFactory>().ToConstant(sessionFactory);
             container.Bind<ISession>().ToMethod(CreateSession).InRequestScope();

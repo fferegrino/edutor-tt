@@ -50,6 +50,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Mapping\EventMap.cs" />
+    <Compile Include="Mapping\PossibleAnswerMap.cs" />
+    <Compile Include="Mapping\InvitationMap.cs" />
     <Compile Include="Mapping\TeachingMap.cs" />
     <Compile Include="Mapping\EnrollmentMap.cs" />
     <Compile Include="Mapping\GroupMap.cs" />
@@ -58,6 +60,7 @@
     <Compile Include="Mapping\UserMap.cs" />
     <Compile Include="Mapping\VersionedClassMap.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="QueryProcessors\AddInvitationQueryProcessor.cs" />
     <Compile Include="QueryProcessors\AddEventQueryProcessor.cs" />
     <Compile Include="QueryProcessors\AddTeachingQueryProcessor.cs" />
     <Compile Include="QueryProcessors\AddEnrollmentQueryProcessor.cs" />
