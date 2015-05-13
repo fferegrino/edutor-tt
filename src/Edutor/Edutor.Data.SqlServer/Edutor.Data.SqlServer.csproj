@@ -49,6 +49,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Mapping\NotificationDetailMap.cs" />
+    <Compile Include="Mapping\NotificationMap.cs" />
     <Compile Include="Mapping\EventMap.cs" />
     <Compile Include="Mapping\AnswerMap.cs" />
     <Compile Include="Mapping\PossibleAnswerMap.cs" />
