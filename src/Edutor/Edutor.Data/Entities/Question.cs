@@ -12,11 +12,12 @@ namespace Edutor.Data.Entities
 
         public virtual int SchoolUserId { get; set; }
 
-
+        public virtual int GroupId { get; set; }
         public virtual string Text { get; set; }
 
         public virtual DateTime ExpirationDate { get; set; }
 
+        public virtual Group Group { get; set; }
         public virtual User SchoolUser { get; set; }
         public virtual List<PossibleAnswer> PossibleAnswers { get; set; }
         public virtual List<Answer> Answers { get; set; }

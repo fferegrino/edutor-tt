@@ -43,6 +43,7 @@
     <Compile Include="Link.cs" />
     <Compile Include="LinkContaining.cs" />
     <Compile Include="NewModels\NewEnrollment.cs" />
+    <Compile Include="NewModels\NewQuestion.cs" />
     <Compile Include="NewModels\NewEvent.cs" />
     <Compile Include="NewModels\NewGroup.cs" />
     <Compile Include="NewModels\NewSchoolUser.cs" />
@@ -53,6 +54,8 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ReturnTypes\Event.cs" />
     <Compile Include="ReturnTypes\Group.cs" />
+    <Compile Include="ReturnTypes\PossibleAnswer.cs" />
+    <Compile Include="ReturnTypes\Question.cs" />
     <Compile Include="ReturnTypes\SchoolUser.cs" />
     <Compile Include="ReturnTypes\Tutor.cs" />
     <Compile Include="ReturnTypes\User.cs" />

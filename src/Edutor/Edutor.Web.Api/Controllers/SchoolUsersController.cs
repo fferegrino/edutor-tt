@@ -33,10 +33,10 @@ namespace Edutor.Web.Api.Controllers
         }
 
         [HttpPost]
-        public IHttpActionResult AddSchoolUser(HttpRequestMessage requestMessage, NewSchoolUser newUser)
+        public IHttpActionResult AddSchoolUser( NewSchoolUser newUser)
         {
             var user = _addUserQueryProcessor.AddUser(newUser);
-            var result = new ModelPostedActionResult<SchoolUser>(requestMessage, user);
+            var result = new ModelPostedActionResult<SchoolUser>(Request, user);
             return result;
         }
     }

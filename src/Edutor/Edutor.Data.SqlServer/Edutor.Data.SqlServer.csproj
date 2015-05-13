@@ -61,6 +61,9 @@
     <Compile Include="Mapping\UserMap.cs" />
     <Compile Include="Mapping\VersionedClassMap.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="QueryProcessors\AddPossibleAnswerQueryProcessor.cs" />
+    <Compile Include="QueryProcessors\AddAnswerQueryProcessor.cs" />
+    <Compile Include="QueryProcessors\AddQuestionQueryProcessor.cs" />
     <Compile Include="QueryProcessors\AddInvitationQueryProcessor.cs" />
     <Compile Include="QueryProcessors\AddEventQueryProcessor.cs" />
     <Compile Include="QueryProcessors\AddTeachingQueryProcessor.cs" />

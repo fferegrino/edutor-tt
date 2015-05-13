@@ -123,6 +123,7 @@
     <Compile Include="App_Start\SwaggerConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="AutoMapperConfigurator.cs" />
+    <Compile Include="AutoMappingConfigurator\NewQuestionToQuestionEntityAutoMapperTypeConfigurator.cs" />
     <Compile Include="AutoMappingConfigurator\NewTeachingToTeachingEntityAutoMapperTypeConfigurator.cs" />
     <Compile Include="AutoMappingConfigurator\NewGroupToGroupEntityAutoMapperTypeConfigurator.cs" />
     <Compile Include="AutoMappingConfigurator\NewSchoolUserToUserEntityAutoMapperTypeConfigurator.cs" />
@@ -147,6 +148,7 @@
     <Compile Include="LinkServices\IGroupsLinkService.cs" />
     <Compile Include="LinkServices\IStudentsLinkService.cs" />
     <Compile Include="LinkServices\IUsersLinkService.cs" />
+    <Compile Include="MaintenanceProcessing\IPostQuestionMaintenanceProcessor.cs" />
     <Compile Include="MaintenanceProcessing\IPostEventMaintenanceProcessor.cs" />
     <Compile Include="MaintenanceProcessing\IPostGroupMaintenanceProcessor.cs" />
     <Compile Include="MaintenanceProcessing\IPostEnrollmentMaintenanceProcessor.cs" />

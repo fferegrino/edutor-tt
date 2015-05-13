@@ -72,6 +72,10 @@ namespace Edutor.Web.Api
                 .To<AMC.NewTeachingToTeachingEntityAutoMapperTypeConfigurator>().InSingletonScope();
             container.Bind<TM.IAutoMapperTypeConfigurator>()
                 .To<AMC.NewEventToEventEntityAutoMapperTypeConfigurator>().InSingletonScope();
+
+            container.Bind<TM.IAutoMapperTypeConfigurator>()
+                .To<AMC.NewQuestionToQuestionEntityAutoMapperTypeConfigurator>().InSingletonScope();
+            
         }
 
         private void ConfigureQueryProcessors(IKernel container)
@@ -83,6 +87,9 @@ namespace Edutor.Web.Api
             container.Bind<QueryProcessors.IAddTeachingQueryProcessor>().To<SqlProcessors.AddTeachingQueryProcessor>().InRequestScope();
             container.Bind<QueryProcessors.IAddEventQueryProcessor>().To<SqlProcessors.AddEventQueryProcessor>().InRequestScope();
             container.Bind<QueryProcessors.IAddInvitationQueryProcessor>().To<SqlProcessors.AddInvitationQueryProcessor>().InRequestScope();
+            container.Bind<QueryProcessors.IAddQuestionQueryProcessor>().To<SqlProcessors.AddQuestionQueryProcessor>().InRequestScope();
+            container.Bind<QueryProcessors.IAddPossibleAnswerQueryProcessor>().To<SqlProcessors.AddPossibleAnswerQueryProcessor>().InRequestScope();
+            container.Bind<QueryProcessors.IAddAnswerQueryProcessor>().To<SqlProcessors.AddAnswerQueryProcessor>().InRequestScope();
 
             container.Bind<QueryProcessors.IGetSchoolUsersQueryProcessors>().To<SqlProcessors.GetSchoolUsersQueryProcesors>().InRequestScope();
 
@@ -95,6 +102,7 @@ namespace Edutor.Web.Api
             container.Bind<AMP.IPostEnrollmentMaintenanceProcessor>().To<AMP.PostEnrollmentMaintenanceProcessor>().InRequestScope();
             container.Bind<AMP.IPostTeachingMaintenanceProcessor>().To<AMP.PostTeachingMaintenanceProcessor>().InRequestScope();
             container.Bind<AMP.IPostEventMaintenanceProcessor>().To<AMP.PostEventMaintenanceProcessor>().InRequestScope();
+            container.Bind<AMP.IPostQuestionMaintenanceProcessor>().To<AMP.PostQuestionMaintenanceProcessor>().InRequestScope();
         }
 
         private void ConfigureLog4Net(IKernel container)
@@ -150,4 +158,5 @@ namespace Edutor.Web.Api
         }
     }
 }
+
 

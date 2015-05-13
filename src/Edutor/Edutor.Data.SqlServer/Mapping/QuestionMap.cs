@@ -15,7 +15,7 @@ namespace Edutor.Data.SqlServer.Mapping
             Id(x => x.QuestionId);
             Map(x => x.Text);
             Map(x => x.ExpirationDate);
-            References<User>(x => x.SchoolUserId).Column("SchoolUserId");
+            References<User>(x => x.SchoolUser).Column("SchoolUserId");
             HasMany<PossibleAnswer>(ev => ev.PossibleAnswers).KeyColumn("QuestionId");
             HasMany<Answer>(ev => ev.Answers).KeyColumn("QuestionId");
         }
