@@ -50,6 +50,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Mapping\EventMap.cs" />
+    <Compile Include="Mapping\AnswerMap.cs" />
     <Compile Include="Mapping\PossibleAnswerMap.cs" />
     <Compile Include="Mapping\InvitationMap.cs" />
     <Compile Include="Mapping\TeachingMap.cs" />

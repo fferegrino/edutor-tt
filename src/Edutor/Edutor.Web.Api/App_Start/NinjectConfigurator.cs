@@ -119,10 +119,10 @@ namespace Edutor.Web.Api
                 .Mappings(m => m.FluentMappings.AddFromAssemblyOf<Mapping.EventMap>())
                 .Mappings(m => m.FluentMappings.AddFromAssemblyOf<Mapping.InvitationMap>())
 
-                //.Mappings(m => m.FluentMappings.AddFromAssemblyOf<Mapping.QuestionMap>())
-                //.Mappings(m => m.FluentMappings.AddFromAssemblyOf<Mapping.PossibleAnswerMap>())
+                .Mappings(m => m.FluentMappings.AddFromAssemblyOf<Mapping.QuestionMap>())
+                .Mappings(m => m.FluentMappings.AddFromAssemblyOf<Mapping.PossibleAnswerMap>())
+                .Mappings(m => m.FluentMappings.AddFromAssemblyOf<Mapping.AnswerMap>())
 
-                //.Mappings(m => m.FluentMappings.AddFromAssemblyOf<Mapping.AnswerMap>())
                 .BuildSessionFactory();
             container.Bind<ISessionFactory>().ToConstant(sessionFactory);
             container.Bind<ISession>().ToMethod(CreateSession).InRequestScope();

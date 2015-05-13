@@ -7,13 +7,13 @@ using System.Threading.Tasks;
 
 namespace Edutor.Data.SqlServer.Mapping
 {
-    public class PossibleAnswerMap : VersionedClassMap<PossibleAnswer>
+    public class AnswerMap : VersionedClassMap<Answer>
     {
-        public PossibleAnswerMap()
+        public AnswerMap()
         {
-            Table("PossibleAnswers");
-            Map(entityName => entityName.Text);
-            CompositeId().KeyReference(l => l.Question, "QuestionID").KeyProperty(q=> q.PossibleAnswerId);
+            Table("Answers");
+            References<PossibleAnswer>(x=> x.ActualAnswer).Columns("QuestionId", "ActualAnswerId");
+            CompositeId().KeyReference(l => l.Student, "StudentId").KeyReference(l => l.Question, "QuestionId");
             //References<Event>(x => x.Event).Column("EventId");
             //References<Student>(x => x.Student).Column("StudentId");
         }
