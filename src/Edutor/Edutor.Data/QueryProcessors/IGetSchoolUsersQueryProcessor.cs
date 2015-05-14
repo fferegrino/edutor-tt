@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 
 namespace Edutor.Data.QueryProcessors
 {
-    public interface IGetSchoolUsersQueryProcessors
+    public interface IGetSchoolUsersQueryProcessor
     {
-        User GetById(int id);
+        QueryResult<User> GetSchoolUsers(PagedDataRequest requestInfo);
     }
 }

@@ -20,9 +20,9 @@ namespace Edutor.Web.Api.QueryProcessing
 
         
         private readonly IAutoMapper _autoMapper;
-        private readonly IGetSchoolUsersQueryProcessors _qProc;
+        private readonly IGetSchoolUsersQueryProcessor _qProc;
 
-        public SchoolUsersQueryProcessor(IAutoMapper autoMapper, IGetSchoolUsersQueryProcessors qProc)
+        public SchoolUsersQueryProcessor(IAutoMapper autoMapper, IGetSchoolUsersQueryProcessor qProc)
         {
             _autoMapper = autoMapper;
             _qProc = qProc;

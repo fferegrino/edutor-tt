@@ -144,6 +144,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="InquiryProcessing\IPagedDataRequestFactory.cs" />
     <Compile Include="LinkServices\ICommonLinkService.cs" />
     <Compile Include="LinkServices\INotificationsLinkService.cs" />
     <Compile Include="LinkServices\IQuestionsLinkService.cs" />
@@ -164,7 +165,6 @@
     <Compile Include="MaintenanceProcessing\ModelCreatedActionResult.cs" />
     <Compile Include="MaintenanceProcessing\ModelPostedActionResult.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="QueryProcessing\IGetSchoolUsersQueryProcessor.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

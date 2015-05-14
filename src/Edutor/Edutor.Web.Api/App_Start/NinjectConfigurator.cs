@@ -21,8 +21,9 @@ using SqlProcessors = Edutor.Data.SqlServer.QueryProcessors;
 using TM = Edutor.Common.TypeMapping;
 using AMC = Edutor.Web.Api.AutoMappingConfigurator;
 using AMP = Edutor.Web.Api.MaintenanceProcessing;
-using AQP = Edutor.Web.Api.QueryProcessing;
+//using AQP = Edutor.Web.Api.QueryProcessing;
 using LS = Edutor.Web.Api.LinkServices;
+using Edutor.Web.Api.InquiryProcessing;
 
 namespace Edutor.Web.Api
 {
@@ -42,6 +43,7 @@ namespace Edutor.Web.Api
             ConfigureAutoMapper(container);
             ConfigureLinkServices(container);
             container.Bind<IDateTime>().To<DateTimeAdapter>().InSingletonScope();
+            container.Bind<IPagedDataRequestFactory>().To<PagedDataRequestFactory>().InSingletonScope();
         }
 
         private void ConfigureLinkServices(IKernel container)
@@ -83,6 +85,8 @@ namespace Edutor.Web.Api
 
         private void ConfigureQueryProcessors(IKernel container)
         {
+            #region Post binding
+            
             container.Bind<QueryProcessors.IAddUserQueryProcessor>().To<SqlProcessors.AddUserQueryProcessor>().InRequestScope();
             container.Bind<QueryProcessors.IAddStudentQueryProcessor>().To<SqlProcessors.AddStudentQueryProcessor>().InRequestScope();
             container.Bind<QueryProcessors.IAddGroupQueryProcessor>().To<SqlProcessors.AddGroupQueryProcessor>().InRequestScope();
@@ -96,10 +100,6 @@ namespace Edutor.Web.Api
             container.Bind<QueryProcessors.IAddNotificationQueryProcessor>().To<SqlProcessors.AddNotificationQueryProcessor>().InRequestScope();
             container.Bind<QueryProcessors.IAddNotificationDetailQueryProcessor>().To<SqlProcessors.AddNotificationDetailQueryProcessor>().InRequestScope();
 
-            container.Bind<QueryProcessors.IGetSchoolUsersQueryProcessors>().To<SqlProcessors.GetSchoolUsersQueryProcesors>().InRequestScope();
-
-            container.Bind<AQP.IGetSchoolUsersQueryProcessor>().To<AQP.SchoolUsersQueryProcessor>().InRequestScope();
-
             container.Bind<AMP.IPostSchoolUserMaintenanceProcessor>().To<AMP.PostSchoolUserMaintenanceProcessor>().InRequestScope();
             container.Bind<AMP.IPostStudentMaintenanceProcessor>().To<AMP.PostStudentMaintenanceProcessor>().InRequestScope();
             container.Bind<AMP.IPostTutorMaintenanceProcessor>().To<AMP.PostTutorMaintenanceProcessor>().InRequestScope();
@@ -109,6 +109,17 @@ namespace Edutor.Web.Api
             container.Bind<AMP.IPostEventMaintenanceProcessor>().To<AMP.PostEventMaintenanceProcessor>().InRequestScope();
             container.Bind<AMP.IPostQuestionMaintenanceProcessor>().To<AMP.PostQuestionMaintenanceProcessor>().InRequestScope();
             container.Bind<AMP.IPostNotificationMaintenanceProcessor>().To<AMP.PostNotificationMaintenanceProcessor>().InRequestScope();
+
+            #endregion
+
+            #region Get binding
+
+            container.Bind<QueryProcessors.IGetSchoolUsersQueryProcessor>().To<SqlProcessors.GetSchoolUsersQueryProcesors>().InRequestScope();
+            //container.Bind<AQP.IGetSchoolUsersQueryProcessor>().To<AQP.SchoolUsersQueryProcessor>().InRequestScope();
+            
+            #endregion
+
+
         }
 
         private void ConfigureLog4Net(IKernel container)
