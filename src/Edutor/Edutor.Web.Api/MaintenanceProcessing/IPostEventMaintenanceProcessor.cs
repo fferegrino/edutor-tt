@@ -40,10 +40,6 @@ namespace Edutor.Web.Api.MaintenanceProcessing
             var ret = _autoMapper.Map<Ret.Event>(eventEntity);
 
             var students = eventEntity.Group.Students;
-            //for (int i = 0; i < students.Count; i++)
-            //{
-            //    _addInvitationsQueryProcessor.AddInvitation(new Data.Entities.Invitation { Rsvp = null, EventId = eventEntity.EventId, StudentId = students[i].StudentId });
-            //}
 
             var invitations = from s in students
                               select new Data.Entities.Invitation

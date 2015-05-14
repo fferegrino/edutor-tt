@@ -22,13 +22,13 @@ namespace Edutor.Web.Api.MaintenanceProcessing
         private readonly IAddQuestionQueryProcessor _addQuestionQP;
         private readonly IAddPossibleAnswerQueryProcessor _addPossibleAnswerQP;
         private readonly IAddAnswerQueryProcessor _addAns;
-        private readonly IEventsLinkService _linkServices;
+        private readonly IQuestionsLinkService _linkServices;
 
         public PostQuestionMaintenanceProcessor(IAutoMapper autoMapper,
             IAddQuestionQueryProcessor addUserQueryProcessor,
             IAddPossibleAnswerQueryProcessor addInvitationsQueryProcessor,
             IAddAnswerQueryProcessor addAns,
-            IEventsLinkService linkServices)
+            IQuestionsLinkService linkServices)
         {
             _autoMapper = autoMapper;
             _addQuestionQP = addUserQueryProcessor;
@@ -64,6 +64,9 @@ namespace Edutor.Web.Api.MaintenanceProcessing
                                   };
 
             _addAns.AddAnswers(answersStudents.ToList());
+            
+            _linkServices.AddSelfLink(ret);
+
             return ret;
         }
 

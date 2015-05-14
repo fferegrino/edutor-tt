@@ -20,8 +20,6 @@ namespace Edutor.Data.SqlServer.Mapping
             HasMany<Invitation>(ev => ev.Invitations).KeyColumn("EventId");
             References<User>(x => x.SchoolUser).Column("SchoolUserId");
             References<Group>(x => x.Group).Column("GroupId");
-
-            // TODO Add references and mappings
         }
     }
 }

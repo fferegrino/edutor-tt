@@ -1,0 +1,10 @@
+POST http://localhost:12441/notifications HTTP/1.1
+User-Agent: Fiddler
+Content-Type: application/json
+Host: localhost:12441
+
+{
+	text:"Tarea de español para mañana",
+	schooluserid:1,
+	groupid: 3
+}
