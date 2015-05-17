@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using NwModels = Edutor.Web.Api.Models.NewModels;
+using RetModels = Edutor.Web.Api.Models.ReturnTypes;
 using Ent = Edutor.Data.Entities;
 
 namespace Edutor.Web.Api.AutoMappingConfigurator
@@ -24,7 +25,7 @@ namespace Edutor.Web.Api.AutoMappingConfigurator
                 ;
 
 
-            Mapper.CreateMap<Ent.Student, NwModels.NewStudent>()
+            Mapper.CreateMap<Ent.Student, RetModels.Student>()
                 .ForMember(x => x.Links, opt => opt.Ignore())
                 ;
         }

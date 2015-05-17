@@ -58,13 +58,13 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ReturnTypes\Event.cs" />
     <Compile Include="ReturnTypes\Group.cs" />
+    <Compile Include="ReturnTypes\Student.cs" />
     <Compile Include="ReturnTypes\Notification.cs" />
     <Compile Include="ReturnTypes\PossibleAnswer.cs" />
     <Compile Include="ReturnTypes\Question.cs" />
     <Compile Include="ReturnTypes\SchoolUser.cs" />
     <Compile Include="ReturnTypes\Tutor.cs" />
     <Compile Include="ReturnTypes\User.cs" />
-    <Compile Include="Student.cs" />
     <Compile Include="SimpleSchoolUser.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

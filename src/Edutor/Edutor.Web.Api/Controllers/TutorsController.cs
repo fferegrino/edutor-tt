@@ -1,4 +1,5 @@
-﻿using Edutor.Web.Api.MaintenanceProcessing;
+﻿using Edutor.Web.Api.InquiryProcessing;
+using Edutor.Web.Api.MaintenanceProcessing;
 using Edutor.Web.Api.Models.NewModels;
 using Edutor.Web.Api.Models.ReturnTypes;
 //using Edutor.Web.Api.QueryProcessing;
@@ -12,11 +13,21 @@ namespace Edutor.Web.Api.Controllers
     public class TutorsController : ApiController
     {
         private readonly IPostTutorMaintenanceProcessor _addUserQueryProcessor;
+        private readonly IGetTutorsInquiryProcessor _getQueryProcessor;
 
-        public TutorsController(IPostTutorMaintenanceProcessor addUserQueryProcessor)
+        public TutorsController(IPostTutorMaintenanceProcessor addUserQueryProcessor, IGetTutorsInquiryProcessor getQueryProcessor)
         {
             _addUserQueryProcessor = addUserQueryProcessor;
+            _getQueryProcessor = getQueryProcessor;
         }
+
+        [HttpGet]
+        public Tutor GetSchoolUser(int id)
+        {
+            var s = _getQueryProcessor.GetTutor(id);
+            return s;
+        }
+
 
         /// <summary>
         /// 

@@ -41,7 +41,8 @@ namespace Edutor.Web.Api.Controllers
         [HttpGet]
         public SchoolUser GetSchoolUser(int id)
         {
-            return null;
+            var s = _getQueryProcessor.GetSchoolUser(id);
+            return s;
         }
 
         /// <summary>

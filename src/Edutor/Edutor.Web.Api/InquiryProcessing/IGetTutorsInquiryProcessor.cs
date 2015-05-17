@@ -17,6 +17,7 @@ namespace Edutor.Web.Api.InquiryProcessing
     {
 
         PagedDataInquiryResponse<Return.Tutor> GetAllTutors(PagedDataRequest request);
+        Return.Tutor GetTutor(int id);
     }
 
     public class GetTutorsInquiryProcessor : IGetTutorsInquiryProcessor
@@ -60,5 +61,12 @@ namespace Edutor.Web.Api.InquiryProcessing
             x.ForEach(t => _tutorsLinkService.AddSelfLink(t));
             return x;
         }
+
+        public Return.Tutor GetTutor(int id) {
+            var t = _autoMapper.Map<Return.Tutor>(_queryProcessor.GetTutor(id));
+            _tutorsLinkService.AddSelfLink(t);
+            return t;
+        }
+
     }
 }
