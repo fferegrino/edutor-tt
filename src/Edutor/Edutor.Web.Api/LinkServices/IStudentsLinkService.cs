@@ -13,6 +13,8 @@ namespace Edutor.Web.Api.LinkServices
 {
     public interface IStudentsLinkService
     {
+
+        void AddAllLinks(Student user);
         void AddSelfLink(Student user);
         void AddTutorLink(Student user);
     }
@@ -47,6 +49,12 @@ namespace Edutor.Web.Api.LinkServices
             var pathFragment = String.Format("students/{0}", user.StudentId);
             var link = _commonLinkService.GetLink(pathFragment, Constants.CommonLinkRelValues.Self, HttpMethod.Get);
             return link;
+        }
+
+        public void AddAllLinks(Student user)
+        {
+            AddSelfLink(user);
+            AddTutorLink(user);
         }
     }
 }

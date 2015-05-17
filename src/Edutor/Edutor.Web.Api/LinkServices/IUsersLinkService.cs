@@ -13,7 +13,7 @@ namespace Edutor.Web.Api.LinkServices
 {
     public interface IUsersLinkService
     {
-        void AddSelfLink(User user);
+        void AddAllLinks(User user);
     }
 
     public class UsersLinkService : IUsersLinkService
@@ -25,14 +25,15 @@ namespace Edutor.Web.Api.LinkServices
             _commonLinkService = commonLinkService;
         }
 
-        public void AddSelfLink(User user)
+        public void AddAllLinks(User user)
         {
             user.AddLink(GetSelfLink(user));
         }
 
         public virtual Link GetSelfLink(User user)
         {
-            var pathFragment = String.Format((user.Type == Edutor.Data.Entities.User.TutorType ? "tutors/" : "schoolusers/" )+ "{0}",user.UserId);
+            var kind = (user.Type == Edutor.Data.Entities.User.TutorType ? "tutors/" : "schoolusers/");
+            var pathFragment = String.Format(kind + "{0}", user.UserId);
             var link = _commonLinkService.GetLink(pathFragment, Constants.CommonLinkRelValues.Self, HttpMethod.Get);
             return link;
         }

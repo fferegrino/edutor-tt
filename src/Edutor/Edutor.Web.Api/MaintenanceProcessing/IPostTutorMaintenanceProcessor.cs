@@ -39,7 +39,7 @@ namespace Edutor.Web.Api.MaintenanceProcessing
             _addUserQueryProcessor.AddUser(userEntity);
             var returnUser = _autoMapper.Map<Tutor>(userEntity);
 
-            _linkServices.AddSelfLink(returnUser);
+            _linkServices.AddAllLinks(returnUser);
 
             return returnUser;
         }

@@ -74,7 +74,7 @@ namespace Edutor.Web.Api.InquiryProcessing
         private List<Return.SchoolUser> GetSchoolUsers(QueryResult<Data.Entities.User> qresult)
         {
             var x = qresult.QueriedItems.Select(r => _autoMapper.Map<Return.SchoolUser>(r)).ToList();
-            x.ForEach(t => _tutorsLinkService.AddSelfLink(t));
+            x.ForEach(t => _tutorsLinkService.AddAllLinks(t));
             return x;
         }
 
@@ -83,7 +83,7 @@ namespace Edutor.Web.Api.InquiryProcessing
         {
             var s = _queryProcessor.GetSchoolUser(userId);
             var returnType = _autoMapper.Map<Return.SchoolUser>(s);
-            _tutorsLinkService.AddSelfLink(returnType);
+            _tutorsLinkService.AddAllLinks(returnType);
             return returnType;
         }
     }

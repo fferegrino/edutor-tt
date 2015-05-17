@@ -38,7 +38,7 @@ namespace Edutor.Web.Api.MaintenanceProcessing
             var returnT = _autoMapper.Map<Group>(userEntity);
 
             // TODO Implement link service here
-            _linkServices.AddSelfLink(returnT);
+            _linkServices.AddAllLinks(returnT);
 
             return returnT;
         }

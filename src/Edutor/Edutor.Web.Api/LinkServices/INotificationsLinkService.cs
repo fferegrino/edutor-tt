@@ -11,7 +11,7 @@ namespace Edutor.Web.Api.LinkServices
 {
     public interface INotificationsLinkService
     {
-        void AddSelfLink(Notification ev);
+        void AddAllLinks(Notification ev);
     }
 
     public class NotificationsLinkService : INotificationsLinkService
@@ -23,7 +23,7 @@ namespace Edutor.Web.Api.LinkServices
         {
             _cLinkService = cLinkService;
         }
-        public void AddSelfLink(Notification ev)
+        public void AddAllLinks(Notification ev)
         {
             var pathFragment = String.Format("notifications/{0}", ev.NotificationId);
             ev.AddLink(_cLinkService.GetLink(pathFragment, Constants.CommonLinkRelValues.Self, HttpMethod.Get));

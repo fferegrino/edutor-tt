@@ -21,13 +21,18 @@ namespace Edutor.Web.Api.Controllers
     {
         private readonly IPostSchoolUserMaintenanceProcessor _addUserQueryProcessor;
         private readonly IGetSchoolUsersInquiryProcessor _getQueryProcessor;
+        private readonly IGetGroupsInquiryProcessor _getGroupsProcessor;
         private readonly IPagedDataRequestFactory _pagedDataRequestFactory;
 
-        public SchoolUsersController(IPostSchoolUserMaintenanceProcessor addUserQueryProcessor, IGetSchoolUsersInquiryProcessor getQueryProcessor, IPagedDataRequestFactory pagedDataRequestFactory)
+        public SchoolUsersController(IPostSchoolUserMaintenanceProcessor addUserQueryProcessor,
+            IGetSchoolUsersInquiryProcessor getQueryProcessor, 
+            IPagedDataRequestFactory pagedDataRequestFactory,
+            IGetGroupsInquiryProcessor getGroupsProcessor)
         {
             _getQueryProcessor = getQueryProcessor;
             _addUserQueryProcessor = addUserQueryProcessor;
             _pagedDataRequestFactory = pagedDataRequestFactory;
+            _getGroupsProcessor = getGroupsProcessor;
         }
 
         [HttpGet]
@@ -37,6 +42,17 @@ namespace Edutor.Web.Api.Controllers
             var tasks = _getQueryProcessor.GetAllSchoolUsers(request);
             return tasks;
         }
+
+
+        [HttpGet]
+        [Route("schoolusers/{schoolUserId:int}/groups")]
+        public PagedDataInquiryResponse<Group> GetGroupsForSchoolUser(int schoolUserId)
+        {
+            var request = _pagedDataRequestFactory.Create(Request.RequestUri);
+            var tasks = _getGroupsProcessor.GetGroupsForSchoolUser(schoolUserId, request);
+            return tasks;
+        }
+
 
         [HttpGet]
         public SchoolUser GetSchoolUser(int id)

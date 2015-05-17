@@ -11,7 +11,7 @@ namespace Edutor.Web.Api.LinkServices
 {
     public interface IEventsLinkService
     {
-        void AddSelfLink(Event ev);
+        void AddAllLinks(Event ev);
     }
 
     public class EventsLinkService : IEventsLinkService
@@ -22,7 +22,7 @@ namespace Edutor.Web.Api.LinkServices
         {
             _cLinkService = cLinkService;
         }
-        public void AddSelfLink(Event ev)
+        public void AddAllLinks(Event ev)
         {
             var pathFragment = String.Format("events/{0}", ev.EventId);
             ev.AddLink(_cLinkService.GetLink(pathFragment, Constants.CommonLinkRelValues.Self, HttpMethod.Get));

@@ -58,13 +58,13 @@ namespace Edutor.Web.Api.InquiryProcessing
         private List<Return.Tutor> GetTutors(QueryResult<Data.Entities.User> qresult)
         {
             var x = qresult.QueriedItems.Select(r => _autoMapper.Map<Return.Tutor>(r)).ToList();
-            x.ForEach(t => _tutorsLinkService.AddSelfLink(t));
+            x.ForEach(t => _tutorsLinkService.AddAllLinks(t));
             return x;
         }
 
         public Return.Tutor GetTutor(int id) {
             var t = _autoMapper.Map<Return.Tutor>(_queryProcessor.GetTutor(id));
-            _tutorsLinkService.AddSelfLink(t);
+            _tutorsLinkService.AddAllLinks(t);
             return t;
         }
 

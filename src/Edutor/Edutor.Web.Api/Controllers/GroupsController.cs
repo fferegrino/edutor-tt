@@ -6,6 +6,7 @@ using Edutor.Web.Api.Models.ReturnTypes;
 //using Edutor.Web.Api.QueryProcessing;
 using System.Net.Http;
 using System.Web.Http;
+using System.Web.Http.Description;
 
 namespace Edutor.Web.Api.Controllers
 {
@@ -18,6 +19,7 @@ namespace Edutor.Web.Api.Controllers
         private readonly IPostTeachingMaintenanceProcessor _postTeachingMaintenanceProcessor;
         private readonly IGetSchoolUsersInquiryProcessor _schoolUsersIP;
         private readonly IGetStudentsInquiryProcessor _studentsIP;
+        private readonly IGetGroupsInquiryProcessor _getGroups;
         private readonly IPagedDataRequestFactory _pagedDataRequestFactory;
 
         public GroupsController(IPostGroupMaintenanceProcessor addUserQueryProcessor,
@@ -25,7 +27,8 @@ namespace Edutor.Web.Api.Controllers
            IPostTeachingMaintenanceProcessor postTeachingMaintenanceProcessor,
             IGetSchoolUsersInquiryProcessor schoolUsersIP,
             IGetStudentsInquiryProcessor studentsIP,
-            IPagedDataRequestFactory pagedDataRequestFactory)
+            IPagedDataRequestFactory pagedDataRequestFactory,
+            IGetGroupsInquiryProcessor getGroups)
         {
             _addUserQueryProcessor = addUserQueryProcessor;
             _postEnrollmentMaintenanceProcessor = postEnrollmentMaintenanceProcessor;
@@ -33,6 +36,7 @@ namespace Edutor.Web.Api.Controllers
             _schoolUsersIP = schoolUsersIP;
             _pagedDataRequestFactory = pagedDataRequestFactory;
             _studentsIP = studentsIP;
+            _getGroups = getGroups;
         }
 
 
@@ -72,6 +76,27 @@ namespace Edutor.Web.Api.Controllers
             var r = _studentsIP.GetStudentsForGroup(groupId, request);
             return r;
         }
+
+
+        [HttpGet]
+        [ResponseType(typeof(Group))]
+        [Route("groups/{groupId:int}")]
+        public Group GetGroup(int groupId)
+        {
+            var tasks = _getGroups.GetGroup(groupId);
+            return tasks;
+
+        }
+
+        [HttpGet]
+        public PagedDataInquiryResponse<Group> GetGroups()
+        {
+            var request = _pagedDataRequestFactory.Create(Request.RequestUri);
+            var tasks = _getGroups.GetAllGroups(request);
+            return tasks;
+        }
+
+
 
         /// <summary>
         /// Add the student to a group

@@ -20,14 +20,19 @@ namespace Edutor.Data.SqlServer.Mapping
 
 
             HasManyToMany(x => x.Teachers).Table("Teachings")
-                       .ParentKeyColumn("UserId")
-                       .ChildKeyColumn("GroupId");
-                       //.Inverse();
+                       //.ParentKeyColumn("SchoolUserId")
+                       //.ChildKeyColumn("GroupId")
+                       .ParentKeyColumn("GroupId")
+                       .ChildKeyColumn("SchoolUserId")
+                       .Inverse();
 
             HasManyToMany(x => x.Students).Table("Enrollments")
-                       .ParentKeyColumn("StudentId")
-                       .ChildKeyColumn("GroupId");
-                       //.Inverse();
+                       //.ParentKeyColumn("StudentId")
+                       //.ChildKeyColumn("GroupId")
+                       .ParentKeyColumn("GroupId")
+                       .ChildKeyColumn("StudentId")
+                       .Inverse();
+
             // TODO Add references and mappings
         }
     }

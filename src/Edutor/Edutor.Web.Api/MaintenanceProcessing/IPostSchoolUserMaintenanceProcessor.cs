@@ -41,7 +41,7 @@ namespace Edutor.Web.Api.MaintenanceProcessing
             _addUserQueryProcessor.AddUser(userEntity);
             var returnType = _autoMapper.Map<SchoolUser>(userEntity);
             // TODO Implement link service here
-            _linkServices.AddSelfLink(returnType);
+            _linkServices.AddAllLinks(returnType);
 
             return returnType;
         }

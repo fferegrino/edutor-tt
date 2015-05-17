@@ -13,6 +13,8 @@ namespace Edutor.Web.Api.LinkServices
     public interface IGroupsLinkService
     {
 
+        void AddAllLinks(Group group);
+
         void AddSelfLink(Group group);
         //void AddTutorLink(NewGroup group);
     }
@@ -28,8 +30,19 @@ namespace Edutor.Web.Api.LinkServices
         }
         public void AddSelfLink(Group group)
         {
-            var pathFragment = String.Format("groups/{0}", group.GroupId);
+        }
+
+        public void AddAllLinks(Group group)
+        {
+
+            string pathFragment = String.Format("groups/{0}", group.GroupId);
             group.AddLink(_commonLinkService.GetLink(pathFragment, Constants.CommonLinkRelValues.Self, HttpMethod.Get));
+
+            pathFragment = String.Format("groups/{0}/students", group.GroupId);
+            group.AddLink(_commonLinkService.GetLink(pathFragment, Constants.CommonLinkRelValues.StudentsRel, HttpMethod.Get));
+
+            pathFragment = String.Format("groups/{0}/schoolusers", group.GroupId);
+            group.AddLink(_commonLinkService.GetLink(pathFragment, Constants.CommonLinkRelValues.SchoolUsersRel, HttpMethod.Get));
         }
     }
 }

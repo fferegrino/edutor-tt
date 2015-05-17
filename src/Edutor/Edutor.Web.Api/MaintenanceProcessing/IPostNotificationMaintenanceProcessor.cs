@@ -50,7 +50,7 @@ namespace Edutor.Web.Api.MaintenanceProcessing
                               };
             _addNotificationDetailQueryProcessor.AddNotificationDetails(invitations.ToList());
 
-            _linkServices.AddSelfLink(ret);
+            _linkServices.AddAllLinks(ret);
 
             return ret;
         }

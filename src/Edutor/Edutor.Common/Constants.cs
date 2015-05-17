@@ -38,6 +38,15 @@ namespace Edutor.Common
             public const string CurrentPage = "currentPage";
             public const string PreviousPage = "previousPage";
             public const string NextPage = "nextPage";
+
+            public const string StudentsRel = "students";
+            public const string TeachersRel = "teacher";
+            public const string TutorRel = "tutor";
+            public const string SchoolUsersRel = "schoolusers";
+            public const string QuestionsRel = "questions";
+            public const string NotificationsRel = "notifications";
+            public const string EventsRel = "events";
+            public const string ConversationsRel = "conversations";
         }
 
         public static class CommonRoutingDefinitions

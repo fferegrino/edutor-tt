@@ -11,7 +11,7 @@ namespace Edutor.Web.Api.LinkServices
 {
     public interface IQuestionsLinkService
     {
-        void AddSelfLink(Question ev);
+        void AddAllLinks(Question ev);
     }
 
     public class QuestionsLinkService : IQuestionsLinkService
@@ -23,7 +23,7 @@ namespace Edutor.Web.Api.LinkServices
         {
             _cLinkService = cLinkService;
         }
-        public void AddSelfLink(Question ev)
+        public void AddAllLinks(Question ev)
         {
             var pathFragment = String.Format("questions/{0}", ev.QuestionId);
             ev.AddLink(_cLinkService.GetLink(pathFragment, Constants.CommonLinkRelValues.Self, HttpMethod.Get));

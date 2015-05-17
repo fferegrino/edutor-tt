@@ -100,8 +100,7 @@ namespace Edutor.Web.Api.InquiryProcessing
             var x = qresult.QueriedItems.Select(r => _autoMapper.Map<Return.Student>(r)).ToList();
             x.ForEach(t =>
             {
-                _linkServices.AddSelfLink(t);
-                _linkServices.AddTutorLink(t);
+                _linkServices.AddAllLinks(t);
             });
             return x;
         }
@@ -111,8 +110,7 @@ namespace Edutor.Web.Api.InquiryProcessing
         {
             var r = _queryProcessor.GetStudent(id);
             var t = _autoMapper.Map<Return.Student>(r);
-            _linkServices.AddSelfLink(t);
-            _linkServices.AddTutorLink(t);
+            _linkServices.AddAllLinks(t);
             return t;
         }
     }

@@ -42,8 +42,7 @@ namespace Edutor.Web.Api.MaintenanceProcessing
             //newUser.Type = userEntity.Type;
 
             // TODO Implement link service here
-            _linkServices.AddSelfLink(returnUser);
-            _linkServices.AddTutorLink(returnUser);
+            _linkServices.AddAllLinks(returnUser);
 
             return returnUser;
         }

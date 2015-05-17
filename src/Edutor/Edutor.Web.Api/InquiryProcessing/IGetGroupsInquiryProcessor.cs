@@ -60,7 +60,7 @@ namespace Edutor.Web.Api.InquiryProcessing
         private List<Return.Group> GetCollection(QueryResult<Data.Entities.Group> qresult)
         {
             var x = qresult.QueriedItems.Select(r => _autoMapper.Map<Return.Group>(r)).ToList();
-            x.ForEach(t => _groupsLinkServicces.AddSelfLink(t));
+            x.ForEach(t => _groupsLinkServicces.AddAllLinks(t));
             return x;
         }
 
@@ -86,7 +86,7 @@ namespace Edutor.Web.Api.InquiryProcessing
         {
             var s = _queryProcessor.GetGroup(groupId);
             var returnType = _autoMapper.Map<Return.Group>(s);
-            _groupsLinkServicces.AddSelfLink(returnType);
+            _groupsLinkServicces.AddAllLinks(returnType);
             return returnType;
         }
 

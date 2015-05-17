@@ -65,7 +65,7 @@ namespace Edutor.Web.Api.MaintenanceProcessing
 
             _addAns.AddAnswers(answersStudents.ToList());
             
-            _linkServices.AddSelfLink(ret);
+            _linkServices.AddAllLinks(ret);
 
             return ret;
         }
