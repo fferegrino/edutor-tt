@@ -76,6 +76,7 @@
     <Compile Include="QueryProcessors\AddStudentQueryProcessor.cs" />
     <Compile Include="QueryProcessors\AddUserQueryProcessor.cs" />
     <Compile Include="QueryProcessors\GetStudentsQueryProcessor.cs" />
+    <Compile Include="QueryProcessors\GetGroupsQueryProcessor.cs" />
     <Compile Include="QueryProcessors\GetUsersQueryProcessors.cs" />
   </ItemGroup>
   <ItemGroup>

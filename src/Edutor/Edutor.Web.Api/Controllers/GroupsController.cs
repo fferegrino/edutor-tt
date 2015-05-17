@@ -38,10 +38,10 @@ namespace Edutor.Web.Api.Controllers
 
 
         [HttpPost]
-        public IHttpActionResult AddGroup(HttpRequestMessage requestMessage, NewGroup newUser)
+        public IHttpActionResult AddGroup(HttpRequestMessage requestMessage, NewGroup group)
         {
-            var user = _addUserQueryProcessor.AddGroup(newUser);
-            var result = new ModelPostedActionResult<NewGroup>(requestMessage, user);
+            var user = _addUserQueryProcessor.AddGroup(group);
+            var result = new ModelPostedActionResult<Group>(requestMessage, user);
             return result;
         }
 

@@ -1,5 +1,6 @@
 ﻿using Edutor.Common;
 using Edutor.Web.Api.Models.NewModels;
+using Edutor.Web.Api.Models.ReturnTypes;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,7 +13,7 @@ namespace Edutor.Web.Api.LinkServices
     public interface IGroupsLinkService
     {
 
-        void AddSelfLink(NewGroup group);
+        void AddSelfLink(Group group);
         //void AddTutorLink(NewGroup group);
     }
 
@@ -25,7 +26,7 @@ namespace Edutor.Web.Api.LinkServices
         {
             _commonLinkService = commonLinkService;
         }
-        public void AddSelfLink(NewGroup group)
+        public void AddSelfLink(Group group)
         {
             var pathFragment = String.Format("groups/{0}", group.GroupId);
             group.AddLink(_commonLinkService.GetLink(pathFragment, Constants.CommonLinkRelValues.Self, HttpMethod.Get));
