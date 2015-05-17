@@ -55,6 +55,25 @@ namespace Edutor.Data.SqlServer.QueryProcessors
             return qResult;
         }
 
+        public QueryResult<User> GetSchoolUsersForGroup(int groupId, PagedDataRequest requestInfo)
+        {
+            var teachings = _session.QueryOver<Teaching>().Where(t => t.Group.GroupId == groupId);
+
+
+            var totalItemCount = teachings.ToRowCountQuery().RowCount();
+
+            var startIndex = ResultsPagingUtility.CalculateStartIndex(requestInfo.PageNumber, requestInfo.PageSize);
+
+            var selected = teachings.Skip(startIndex).Take(requestInfo.PageSize).List();
+
+            var teachers = new List<User>();
+            foreach (var t in selected)
+                teachers.Add(_session.QueryOver<User>().Where(u => u.UserId == t.SchoolUser.UserId).SingleOrDefault());
+
+            var qResult = new QueryResult<User>(teachers, totalItemCount, requestInfo.PageSize);
+
+            return qResult;
+        }
 
         public User GetSchoolUser(int userId)
         {
@@ -64,7 +83,7 @@ namespace Edutor.Data.SqlServer.QueryProcessors
 
         public User GetTutor(int userId)
         {
-            var q = _session.QueryOver<User>().Where(user => user.Type == User.SchoolUserType && user.UserId == userId).SingleOrDefault();
+            var q = _session.QueryOver<User>().Where(user => user.Type == User.TutorType && user.UserId == userId).SingleOrDefault();
             return q;
         }
     }

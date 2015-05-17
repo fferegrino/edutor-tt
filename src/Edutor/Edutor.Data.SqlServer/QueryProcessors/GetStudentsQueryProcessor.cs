@@ -24,9 +24,23 @@ namespace Edutor.Data.SqlServer.QueryProcessors
             _session = session;
         }
 
+        public QueryResult<Student> GetStudentsForTutor(int tutorId, PagedDataRequest requestInfo)
+        {
+            var q = _session.QueryOver<Student>().Where(s => s.Tutor.UserId == tutorId);
 
+            var totalItemCount = q.ToRowCountQuery().RowCount();
 
-        QueryResult<Student> IGetStudentsQueryProcessor.GetStudents(PagedDataRequest requestInfo)
+            var startIndex = ResultsPagingUtility.CalculateStartIndex(requestInfo.PageNumber, requestInfo.PageSize);
+
+            var users = q.Skip(startIndex).Take(requestInfo.PageSize).List();
+
+            var qResult = new QueryResult<Student>(users, totalItemCount, requestInfo.PageSize);
+
+            return qResult;
+
+        }
+
+        public QueryResult<Student> GetStudents(PagedDataRequest requestInfo)
         {
             var q = _session.QueryOver<Student>();
 
@@ -41,9 +55,29 @@ namespace Edutor.Data.SqlServer.QueryProcessors
             return qResult;
         }
 
+
+        public QueryResult<Student> GetStudentsForGroup(int groupId, PagedDataRequest requestInfo)
+        {
+            var teachings = _session.QueryOver<Enrollment>().Where(t => t.Group.GroupId == groupId);
+
+            var totalItemCount = teachings.ToRowCountQuery().RowCount();
+
+            var startIndex = ResultsPagingUtility.CalculateStartIndex(requestInfo.PageNumber, requestInfo.PageSize);
+
+            var selected = teachings.Skip(startIndex).Take(requestInfo.PageSize).List();
+
+            var teachers = new List<Student>();
+            foreach (var t in selected)
+                teachers.Add(_session.QueryOver<Student>().Where(u => u.StudentId == t.Student.StudentId).SingleOrDefault());
+
+            var qResult = new QueryResult<Student>(teachers, totalItemCount, requestInfo.PageSize);
+
+            return qResult;
+        }
+
         public Student GetStudent(int studentId)
         {
-            var q = _session.QueryOver<Student>().Where(user =>user.StudentId== studentId).SingleOrDefault();
+            var q = _session.QueryOver<Student>().Where(user => user.StudentId == studentId).SingleOrDefault();
             return q;
         }
 
@@ -52,5 +86,6 @@ namespace Edutor.Data.SqlServer.QueryProcessors
             var q = _session.QueryOver<Student>().Where(user => user.Token.Equals(token)).SingleOrDefault();
             return q;
         }
+
     }
 }

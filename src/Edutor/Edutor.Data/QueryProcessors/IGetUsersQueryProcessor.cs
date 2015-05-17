@@ -16,5 +16,7 @@ namespace Edutor.Data.QueryProcessors
         User GetSchoolUser(int userId);
 
         User GetTutor(int userId);
+
+        QueryResult<User> GetSchoolUsersForGroup(int groupId, PagedDataRequest requestInfo);
     }
 }

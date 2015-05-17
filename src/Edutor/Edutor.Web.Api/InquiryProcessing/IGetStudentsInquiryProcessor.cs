@@ -18,6 +18,10 @@ namespace Edutor.Web.Api.InquiryProcessing
 
         PagedDataInquiryResponse<Return.Student> GetAllStudents(PagedDataRequest request);
 
+        PagedDataInquiryResponse<Return.Student> GetStudentsForGroup(int groupId, PagedDataRequest requestInfo);
+
+        PagedDataInquiryResponse<Return.Student> GetStudentsForTutor(int tutorId, PagedDataRequest requestInfo);
+
         Return.Student GetStudent(int id);
     }
 
@@ -42,6 +46,41 @@ namespace Edutor.Web.Api.InquiryProcessing
         public PagedDataInquiryResponse<Return.Student> GetAllStudents(PagedDataRequest request)
         {
             var qresult = _queryProcessor.GetStudents(request);
+            var returnUsers = GetTutors(qresult);
+            var inquiryResponse = new PagedDataInquiryResponse<Return.Student>
+            {
+                Items = returnUsers,
+                PageCount = qresult.TotalPageCount,
+                PageNumber = request.PageNumber,
+                PageSize = request.PageSize
+            };
+
+            _commonLinkService.AddPageLinks(inquiryResponse);
+
+            return inquiryResponse;
+        }
+
+        public PagedDataInquiryResponse<Return.Student> GetStudentsForTutor(int tutorId, PagedDataRequest requestInfo)
+        {
+            var qresult = _queryProcessor.GetStudentsForTutor(tutorId, requestInfo);
+            var returnUsers = GetTutors(qresult);
+            var inquiryResponse = new PagedDataInquiryResponse<Return.Student>
+            {
+                Items = returnUsers,
+                PageCount = qresult.TotalPageCount,
+                PageNumber = requestInfo.PageNumber,
+                PageSize = requestInfo.PageSize
+            };
+
+            _commonLinkService.AddPageLinks(inquiryResponse);
+
+            return inquiryResponse;
+        
+        }
+
+        public PagedDataInquiryResponse<Return.Student> GetStudentsForGroup(int groupId,PagedDataRequest request)
+        {
+            var qresult = _queryProcessor.GetStudentsForGroup(groupId,request);
             var returnUsers = GetTutors(qresult);
             var inquiryResponse = new PagedDataInquiryResponse<Return.Student>
             {

@@ -129,5 +129,12 @@ BEGIN
 		INNER JOIN Users U
 			ON G.GroupId = U.UserId
 				OR G.GroupId * 123  % 89 = U.UserId
+				OR G.GroupId * 12325  % 89 = U.UserId
+				OR G.GroupId * 321  % 89 = U.UserId
+				OR G.GroupId * 567  % 89 = U.UserId
+				OR G.GroupId * 98  % 89 = U.UserId
+				OR G.GroupId * 89  % 89 = U.UserId
+				OR G.GroupId * 6  % 89 = U.UserId
+				OR G.GroupId * 99  % 89 = U.UserId
 	WHERE U.[Type] = 'S'
 END

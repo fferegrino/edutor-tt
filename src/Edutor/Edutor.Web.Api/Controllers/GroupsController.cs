@@ -1,5 +1,8 @@
-﻿using Edutor.Web.Api.MaintenanceProcessing;
+﻿using Edutor.Web.Api.InquiryProcessing;
+using Edutor.Web.Api.MaintenanceProcessing;
+using Edutor.Web.Api.Models;
 using Edutor.Web.Api.Models.NewModels;
+using Edutor.Web.Api.Models.ReturnTypes;
 //using Edutor.Web.Api.QueryProcessing;
 using System.Net.Http;
 using System.Web.Http;
@@ -13,14 +16,23 @@ namespace Edutor.Web.Api.Controllers
         private readonly IPostGroupMaintenanceProcessor _addUserQueryProcessor;
         private readonly IPostEnrollmentMaintenanceProcessor _postEnrollmentMaintenanceProcessor;
         private readonly IPostTeachingMaintenanceProcessor _postTeachingMaintenanceProcessor;
+        private readonly IGetSchoolUsersInquiryProcessor _schoolUsersIP;
+        private readonly IGetStudentsInquiryProcessor _studentsIP;
+        private readonly IPagedDataRequestFactory _pagedDataRequestFactory;
 
         public GroupsController(IPostGroupMaintenanceProcessor addUserQueryProcessor,
            IPostEnrollmentMaintenanceProcessor postEnrollmentMaintenanceProcessor,
-           IPostTeachingMaintenanceProcessor postTeachingMaintenanceProcessor)
+           IPostTeachingMaintenanceProcessor postTeachingMaintenanceProcessor,
+            IGetSchoolUsersInquiryProcessor schoolUsersIP,
+            IGetStudentsInquiryProcessor studentsIP,
+            IPagedDataRequestFactory pagedDataRequestFactory)
         {
             _addUserQueryProcessor = addUserQueryProcessor;
             _postEnrollmentMaintenanceProcessor = postEnrollmentMaintenanceProcessor;
             _postTeachingMaintenanceProcessor = postTeachingMaintenanceProcessor;
+            _schoolUsersIP = schoolUsersIP;
+            _pagedDataRequestFactory = pagedDataRequestFactory;
+            _studentsIP = studentsIP;
         }
 
 
@@ -33,11 +45,32 @@ namespace Edutor.Web.Api.Controllers
             return result;
         }
 
+        /// <summary>
+        /// Obtiene los profesores del grupo indicado
+        /// </summary>
+        /// <param name="groupId">El grupo del que se desea conocer los profesores</param>
+        /// <returns>Una lista con los profesores asignados a cada grupo</returns>
         [HttpGet]
-        [Route("students/{studentId:int}/groups")]
-        public string GetGroupsFromStudent(int studentId)
+        [Route("groups/{groupId:int}/schoolusers")]
+        public PagedDataInquiryResponse<SchoolUser> GetSchoolUsersForGroup(int groupId)
         {
-            return "xD";
+            var request = _pagedDataRequestFactory.Create(Request.RequestUri);
+            var r = _schoolUsersIP.GetSchoolUsersForGroup(groupId, request);
+            return r;
+        }
+
+        /// <summary>
+        /// Obtiene los estudiantes del grupo indicado
+        /// </summary>
+        /// <param name="groupId">El grupo del que se desea conocer los estudiantes</param>
+        /// <returns>Una lista con los estudiantes asignados a cada grupo</returns>
+        [HttpGet]
+        [Route("groups/{groupId:int}/students")]
+        public PagedDataInquiryResponse<Student> GetStudentsForGroup(int groupId)
+        {
+            var request = _pagedDataRequestFactory.Create(Request.RequestUri);
+            var r = _studentsIP.GetStudentsForGroup(groupId, request);
+            return r;
         }
 
         /// <summary>

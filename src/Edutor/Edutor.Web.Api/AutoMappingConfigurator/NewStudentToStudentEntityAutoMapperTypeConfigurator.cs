@@ -27,6 +27,7 @@ namespace Edutor.Web.Api.AutoMappingConfigurator
 
             Mapper.CreateMap<Ent.Student, RetModels.Student>()
                 .ForMember(x => x.Links, opt => opt.Ignore())
+                 .ForMember(x => x.TutorId, opt => opt.MapFrom(src => src.Tutor.UserId))
                 ;
         }
     }
