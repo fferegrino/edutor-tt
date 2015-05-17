@@ -14,6 +14,7 @@ namespace Edutor.Data.SqlServer.Mapping
             Table("Notifications");
             Id(x => x.NotificationId);
             Map(x => x.Text).Not.Nullable();
+            Map(x => x.CreationDate).Not.Nullable();
             HasMany<NotificationDetail>(ev => ev.Details).KeyColumn("NotificationId");
             References<User>(x => x.SchoolUser).Column("SchoolUserId");
             References<Group>(x => x.Group).Column("GroupId");

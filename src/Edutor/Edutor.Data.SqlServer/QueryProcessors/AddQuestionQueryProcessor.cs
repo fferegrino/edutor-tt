@@ -39,6 +39,7 @@ namespace Edutor.Data.SqlServer.QueryProcessors
         {
             q.SchoolUser = _session.QueryOver<Entities.User>().Where(u => u.UserId == q.SchoolUserId).SingleOrDefault();
             q.Group = _session.QueryOver<Entities.Group>().Where(u => u.GroupId == q.GroupId).SingleOrDefault();
+            q.CreationDate = _dateTime.UtcNow;
             _session.Save(q);
         }
     }

@@ -21,6 +21,7 @@ namespace Edutor.Web.Api.AutoMappingConfigurator
                 .ForMember(o => o.Group, opt => opt.Ignore())
                 .ForMember(o => o.Version, x => x.Ignore())
                 .ForMember(o => o.Answers, x => x.Ignore())
+                .ForMember(o => o.CreationDate, x => x.Ignore())
                 .ForMember(o => o.PossibleAnswers, x => x.Ignore())
                 .ForMember(s => s.SchoolUser, x => x.Ignore())
                 ;

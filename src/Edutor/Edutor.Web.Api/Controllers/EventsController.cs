@@ -32,7 +32,6 @@ namespace Edutor.Web.Api.Controllers
         /// <param name="newEvent">El nuevo evento</param>
         /// <returns></returns>
         [HttpPost]
-        [Authorize(Roles = Constants.RoleNames.Teacher)]
         [ResponseType(typeof(Event))]
         public IHttpActionResult AddTutor(NewEvent newEvent)
         {

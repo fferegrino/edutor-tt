@@ -145,6 +145,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="InquiryProcessing\IGetGroupsInquiryProcessor.cs" />
+    <Compile Include="InquiryProcessing\IGetNotificationsInquiryProcessor.cs" />
     <Compile Include="InquiryProcessing\IGetStudentsInquiryProcessor.cs" />
     <Compile Include="InquiryProcessing\IGetTutorsInquiryProcessor.cs" />
     <Compile Include="InquiryProcessing\IGetSchoolUsersInquiryProcessor.cs" />

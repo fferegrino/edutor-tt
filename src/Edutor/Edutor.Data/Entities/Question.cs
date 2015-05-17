@@ -16,6 +16,7 @@ namespace Edutor.Data.Entities
         public virtual string Text { get; set; }
 
         public virtual DateTime ExpirationDate { get; set; }
+        public virtual DateTime CreationDate { get; set; }
 
         public virtual Group Group { get; set; }
         public virtual User SchoolUser { get; set; }

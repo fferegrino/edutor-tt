@@ -125,6 +125,8 @@ namespace Edutor.Web.Api
 
             container.Bind<QueryProcessors.IGetGroupsQueryProcessor>().To<SqlProcessors.GetGroupsQueryProcessor>().InRequestScope();
             container.Bind<InquiryProcessing.IGetGroupsInquiryProcessor>().To<InquiryProcessing.GetGroupsInquiryProcessor>().InRequestScope();
+
+            container.Bind<QueryProcessors.IGetNotificationsQueryProcessor>().To<SqlProcessors.GetNotificationsQueryProcessor>().InRequestScope();
             #endregion
 
 
