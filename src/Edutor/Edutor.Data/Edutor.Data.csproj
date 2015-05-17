@@ -69,7 +69,7 @@
     <Compile Include="QueryProcessors\IAddStudentQueryProcessor.cs" />
     <Compile Include="QueryProcessors\IAddTeachingQueryProcessor.cs" />
     <Compile Include="QueryProcessors\IAddUserQueryProcessor.cs" />
-    <Compile Include="QueryProcessors\IGetSchoolUsersQueryProcessor.cs" />
+    <Compile Include="QueryProcessors\IGetUsersQueryProcessor.cs" />
     <Compile Include="QueryResult.cs" />
     <Compile Include="ResultsPagingUtility.cs" />
   </ItemGroup>

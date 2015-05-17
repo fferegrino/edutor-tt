@@ -1,4 +1,5 @@
-﻿using Edutor.Web.Api.MaintenanceProcessing;
+﻿using Edutor.Common;
+using Edutor.Web.Api.MaintenanceProcessing;
 using Edutor.Web.Api.Models.NewModels;
 using Edutor.Web.Api.Models.ReturnTypes;
 using System;
@@ -31,6 +32,7 @@ namespace Edutor.Web.Api.Controllers
         /// <param name="newEvent"></param>
         /// <returns></returns>
         [HttpPost]
+        [Authorize(Roles = Constants.RoleNames.Teacher)]
         [ResponseType(typeof(Event))]
         public IHttpActionResult AddTutor(NewEvent newEvent)
         {

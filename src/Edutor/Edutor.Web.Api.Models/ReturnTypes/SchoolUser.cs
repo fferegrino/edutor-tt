@@ -8,7 +8,6 @@ namespace Edutor.Web.Api.Models.ReturnTypes
 {
     public class SchoolUser : User
     {
-        public string Job { get; set; }
-        public string JobTelephone { get; set; }
+        public string Position { get; set; }
     }
 }

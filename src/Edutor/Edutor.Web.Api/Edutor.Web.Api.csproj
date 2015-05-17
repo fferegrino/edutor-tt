@@ -144,6 +144,8 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="InquiryProcessing\IGetTutorsInquiryProcessor.cs" />
+    <Compile Include="InquiryProcessing\IGetSchoolUsersInquiryProcessor.cs" />
     <Compile Include="InquiryProcessing\IPagedDataRequestFactory.cs" />
     <Compile Include="LinkServices\ICommonLinkService.cs" />
     <Compile Include="LinkServices\INotificationsLinkService.cs" />
@@ -165,10 +167,14 @@
     <Compile Include="MaintenanceProcessing\ModelCreatedActionResult.cs" />
     <Compile Include="MaintenanceProcessing\ModelPostedActionResult.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Securitiy\BasicAuthenticationMessageHandler.cs" />
+    <Compile Include="Securitiy\IBasicSecurityService.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
+    <None Include="Properties\PublishProfiles\apiedutor.pubxml" />
     <None Include="Properties\PublishProfiles\Default Settings.pubxml" />
+    <None Include="Properties\PublishProfiles\Publishing.pubxml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -27,6 +27,7 @@ namespace Edutor.Web.Api.Controllers
         /// <param name="newNotification"></param>
         /// <returns></returns>
         [HttpPost]
+        [Authorize]
         [ResponseType(typeof(Notification))]
         public IHttpActionResult AddNotification(NewNotification newNotification)
         {

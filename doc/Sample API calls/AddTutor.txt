@@ -1,4 +1,4 @@
-POST http://localhost:12441/tutors HTTP/1.1
+POST http://apiedutor.azurewebsites.net/tutors HTTP/1.1
 User-Agent: Fiddler
 Content-Type: application/json
 Host: localhost:12441

@@ -21,13 +21,14 @@ namespace Edutor.Common
             public const int MinPageSize = 1;
             public const int MinPageNumber = 1;
             public const int DefaultPageNumber = 1;
+            public const string PagedQueryStringFormat = "pageNumber={0}&pageSize={1}";
         }
 
 
         public static class CommonParameterNames
         {
             public const string PageNumber = "pageNumber";
-            public const string PageSize = "pageNumber";
+            public const string PageSize = "pageSize";
         }
 
         public static class CommonLinkRelValues
@@ -42,13 +43,19 @@ namespace Edutor.Common
         public static class CommonRoutingDefinitions
         {
             public const string ApiSegmentName = "";
+
+        }
+
+        public static class SchemeTypes
+        {
+            public const string Basic = "basic";
         }
 
         public static class RoleNames
         {
             public const string Teacher = "Teacher";
             public const string Administrator = "Administrator";
-            public const string Parent = "Parent";
+            public const string Tutor = "Tutor";
         }
     }
 }

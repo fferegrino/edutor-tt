@@ -21,6 +21,7 @@ using SqlProcessors = Edutor.Data.SqlServer.QueryProcessors;
 using TM = Edutor.Common.TypeMapping;
 using AMC = Edutor.Web.Api.AutoMappingConfigurator;
 using AMP = Edutor.Web.Api.MaintenanceProcessing;
+using Security = Edutor.Web.Api.Securitiy;
 //using AQP = Edutor.Web.Api.QueryProcessing;
 using LS = Edutor.Web.Api.LinkServices;
 using Edutor.Web.Api.InquiryProcessing;
@@ -44,6 +45,7 @@ namespace Edutor.Web.Api
             ConfigureLinkServices(container);
             container.Bind<IDateTime>().To<DateTimeAdapter>().InSingletonScope();
             container.Bind<IPagedDataRequestFactory>().To<PagedDataRequestFactory>().InSingletonScope();
+            container.Bind<Securitiy.IBasicSecurityService>().To<Securitiy.BasicSecurityService>().InRequestScope();
         }
 
         private void ConfigureLinkServices(IKernel container)
@@ -55,7 +57,7 @@ namespace Edutor.Web.Api
             container.Bind<LS.IEventsLinkService>().To<LS.EventsLinkService>();
             container.Bind<LS.IQuestionsLinkService>().To<LS.QuestionsLinkService>();
             container.Bind<LS.INotificationsLinkService>().To<LS.NotificationsLinkService>();
-            
+
         }
 
         private void ConfigureAutoMapper(IKernel container)
@@ -80,13 +82,13 @@ namespace Edutor.Web.Api
                 .To<AMC.NewQuestionToQuestionEntityAutoMapperTypeConfigurator>().InSingletonScope();
             container.Bind<TM.IAutoMapperTypeConfigurator>()
                 .To<AMC.NewNotificationToNotificationEntityAutoMapperTypeConfigurator>().InSingletonScope();
-            
+
         }
 
         private void ConfigureQueryProcessors(IKernel container)
         {
             #region Post binding
-            
+
             container.Bind<QueryProcessors.IAddUserQueryProcessor>().To<SqlProcessors.AddUserQueryProcessor>().InRequestScope();
             container.Bind<QueryProcessors.IAddStudentQueryProcessor>().To<SqlProcessors.AddStudentQueryProcessor>().InRequestScope();
             container.Bind<QueryProcessors.IAddGroupQueryProcessor>().To<SqlProcessors.AddGroupQueryProcessor>().InRequestScope();
@@ -114,9 +116,10 @@ namespace Edutor.Web.Api
 
             #region Get binding
 
-            container.Bind<QueryProcessors.IGetSchoolUsersQueryProcessor>().To<SqlProcessors.GetSchoolUsersQueryProcesors>().InRequestScope();
+            container.Bind<QueryProcessors.IGetUsersQueryProcessor>().To<SqlProcessors.GetUsersQueryProcessor>().InRequestScope();
+            container.Bind<InquiryProcessing.IGetSchoolUsersInquiryProcessor>().To<InquiryProcessing.GetSchoolUsersInquiryProcessor>().InRequestScope();
             //container.Bind<AQP.IGetSchoolUsersQueryProcessor>().To<AQP.SchoolUsersQueryProcessor>().InRequestScope();
-            
+
             #endregion
 
 
@@ -131,16 +134,22 @@ namespace Edutor.Web.Api
 
         private void ConfigureNHibernate(IKernel container)
         {
+#if DEBUG
+            var sessionFactory = Fluently.Configure()
+                .Database(MsSqlConfiguration.MsSql2012.ConnectionString(c => c.FromConnectionStringWithKey("edutorDbTest")))
+                .CurrentSessionContext("web")
+#else
             var sessionFactory = Fluently.Configure()
                 .Database(MsSqlConfiguration.MsSql2012.ConnectionString(c => c.FromConnectionStringWithKey("edutorDb")))
                 .CurrentSessionContext("web")
+#endif
                 // TODO: add new mappings
                 .Mappings(m => m.FluentMappings.AddFromAssemblyOf<Mapping.UserMap>())
                 .Mappings(m => m.FluentMappings.AddFromAssemblyOf<Mapping.StudentMap>())
                 .Mappings(m => m.FluentMappings.AddFromAssemblyOf<Mapping.GroupMap>())
                 .Mappings(m => m.FluentMappings.AddFromAssemblyOf<Mapping.TeachingMap>())
                 .Mappings(m => m.FluentMappings.AddFromAssemblyOf<Mapping.EnrollmentMap>())
-        
+
                 .Mappings(m => m.FluentMappings.AddFromAssemblyOf<Mapping.EventMap>())
                 .Mappings(m => m.FluentMappings.AddFromAssemblyOf<Mapping.InvitationMap>())
 
@@ -172,7 +181,8 @@ namespace Edutor.Web.Api
         }
 
 
-        private void ConfigureUserSession(IKernel container) {
+        private void ConfigureUserSession(IKernel container)
+        {
             var userSession = new UserSession();
             container.Bind<IUserSession>().ToConstant(userSession).InSingletonScope();
             container.Bind<IWebUserSession>().ToConstant(userSession).InSingletonScope();

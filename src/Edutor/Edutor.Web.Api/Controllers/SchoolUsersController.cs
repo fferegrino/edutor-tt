@@ -1,4 +1,5 @@
 ﻿using Edutor.Data.QueryProcessors;
+using Edutor.Web.Api.InquiryProcessing;
 using Edutor.Web.Api.MaintenanceProcessing;
 using Edutor.Web.Api.Models;
 using Edutor.Web.Api.Models.NewModels;
@@ -11,6 +12,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using System.Web.Http.Description;
 
 namespace Edutor.Web.Api.Controllers
 {
@@ -18,12 +20,22 @@ namespace Edutor.Web.Api.Controllers
     public class SchoolUsersController : ApiController
     {
         private readonly IPostSchoolUserMaintenanceProcessor _addUserQueryProcessor;
-        private readonly IGetSchoolUsersQueryProcessor _getQueryProcessor;
+        private readonly IGetSchoolUsersInquiryProcessor _getQueryProcessor;
+        private readonly IPagedDataRequestFactory _pagedDataRequestFactory;
 
-        public SchoolUsersController(IPostSchoolUserMaintenanceProcessor addUserQueryProcessor, IGetSchoolUsersQueryProcessor getQueryProcessor)
+        public SchoolUsersController(IPostSchoolUserMaintenanceProcessor addUserQueryProcessor, IGetSchoolUsersInquiryProcessor getQueryProcessor, IPagedDataRequestFactory pagedDataRequestFactory)
         {
             _getQueryProcessor = getQueryProcessor;
             _addUserQueryProcessor = addUserQueryProcessor;
+            _pagedDataRequestFactory = pagedDataRequestFactory;
+        }
+
+        [HttpGet]
+        public PagedDataInquiryResponse<SchoolUser> GetSchoolUsers()
+        {
+            var request = _pagedDataRequestFactory.Create(Request.RequestUri);
+            var tasks = _getQueryProcessor.GetAllSchoolUsers(request);
+            return tasks;
         }
 
         [HttpGet]
@@ -32,8 +44,16 @@ namespace Edutor.Web.Api.Controllers
             return null;
         }
 
+        /// <summary>
+        /// Agrega usuario escolar
+        /// </summary>
+        /// <remarks>Agrega un nuevo usuario escolar al sistem</remarks>
+        /// <param name="newUser">El nuevo usuario a agregar</param>
+        /// <returns></returns>
+        /// <response code="201">Usuario escolar creado</response>
         [HttpPost]
-        public IHttpActionResult AddSchoolUser( NewSchoolUser newUser)
+        [ResponseType(typeof(SchoolUser))]
+        public IHttpActionResult AddSchoolUser(NewSchoolUser newUser)
         {
             var user = _addUserQueryProcessor.AddUser(newUser);
             var result = new ModelPostedActionResult<SchoolUser>(Request, user);

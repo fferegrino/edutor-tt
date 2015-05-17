@@ -7,8 +7,14 @@ using System.Threading.Tasks;
 
 namespace Edutor.Data.QueryProcessors
 {
-    public interface IGetSchoolUsersQueryProcessor
+    public interface IGetUsersQueryProcessor
     {
         QueryResult<User> GetSchoolUsers(PagedDataRequest requestInfo);
+
+        QueryResult<User> GetTutors(PagedDataRequest requestInfo);
+
+        User GetSchoolUser(int userId);
+
+        User GetTutor(int userId);
     }
 }
