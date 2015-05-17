@@ -1,4 +1,6 @@
-﻿using Edutor.Web.Api.MaintenanceProcessing;
+﻿using Edutor.Web.Api.InquiryProcessing;
+using Edutor.Web.Api.MaintenanceProcessing;
+using Edutor.Web.Api.Models;
 using Edutor.Web.Api.Models.NewModels;
 using Edutor.Web.Api.Models.ReturnTypes;
 using System;
@@ -15,10 +17,24 @@ namespace Edutor.Web.Api.Controllers
     public class NotificationsController : ApiController
     {
         private readonly IPostNotificationMaintenanceProcessor _notificationMaintenanceProcessor;
+        private readonly IGetNotificationsInquiryProcessor _getNotifications;
 
-        public NotificationsController(IPostNotificationMaintenanceProcessor notificationMaintenanceProcessor)
+        public NotificationsController(IPostNotificationMaintenanceProcessor notificationMaintenanceProcessor,
+            IGetNotificationsInquiryProcessor getNotifications)
         {
             _notificationMaintenanceProcessor = notificationMaintenanceProcessor;
+            _getNotifications = getNotifications;
+        }
+
+        /// <summary>
+        /// Obtiene la notificación indicada
+        /// </summary>
+        /// <param name="notificationId">El id de la notificación deseada</param>
+        /// <returns></returns>
+        [HttpGet]
+        public Notification GetNotification(int notificationId)
+        {
+            return _getNotifications.GetNotification(notificationId);
         }
 
         /// <summary>
