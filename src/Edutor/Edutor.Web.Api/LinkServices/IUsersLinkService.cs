@@ -27,12 +27,12 @@ namespace Edutor.Web.Api.LinkServices
 
         public void AddAllLinks(User user)
         {
-            user.AddLink(GetSelfLink(user));
+            var kind = (user.Type == Edutor.Data.Entities.User.TutorType ? "tutors/" : "schoolusers/");
+            user.AddLink(GetSelfLink(kind, user));
         }
 
-        public virtual Link GetSelfLink(User user)
+        public virtual Link GetSelfLink(string kind, User user)
         {
-            var kind = (user.Type == Edutor.Data.Entities.User.TutorType ? "tutors/" : "schoolusers/");
             var pathFragment = String.Format(kind + "{0}", user.UserId);
             var link = _commonLinkService.GetLink(pathFragment, Constants.CommonLinkRelValues.Self, HttpMethod.Get);
             return link;
