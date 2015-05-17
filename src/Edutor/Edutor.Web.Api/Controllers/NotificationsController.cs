@@ -18,6 +18,7 @@ namespace Edutor.Web.Api.Controllers
     {
         private readonly IPostNotificationMaintenanceProcessor _notificationMaintenanceProcessor;
         private readonly IGetNotificationsInquiryProcessor _getNotifications;
+        private readonly IGetStudentsInquiryProcessor _getStudentsInquiryProcessor;
 
         public NotificationsController(IPostNotificationMaintenanceProcessor notificationMaintenanceProcessor,
             IGetNotificationsInquiryProcessor getNotifications)

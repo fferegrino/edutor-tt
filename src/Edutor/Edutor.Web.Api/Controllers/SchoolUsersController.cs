@@ -22,17 +22,20 @@ namespace Edutor.Web.Api.Controllers
         private readonly IPostSchoolUserMaintenanceProcessor _addUserQueryProcessor;
         private readonly IGetSchoolUsersInquiryProcessor _getQueryProcessor;
         private readonly IGetGroupsInquiryProcessor _getGroupsProcessor;
+        private readonly IGetNotificationsInquiryProcessor _getNotifications;
         private readonly IPagedDataRequestFactory _pagedDataRequestFactory;
 
         public SchoolUsersController(IPostSchoolUserMaintenanceProcessor addUserQueryProcessor,
-            IGetSchoolUsersInquiryProcessor getQueryProcessor, 
+            IGetSchoolUsersInquiryProcessor getQueryProcessor,
             IPagedDataRequestFactory pagedDataRequestFactory,
+            IGetNotificationsInquiryProcessor getNotifications,
             IGetGroupsInquiryProcessor getGroupsProcessor)
         {
             _getQueryProcessor = getQueryProcessor;
             _addUserQueryProcessor = addUserQueryProcessor;
             _pagedDataRequestFactory = pagedDataRequestFactory;
             _getGroupsProcessor = getGroupsProcessor;
+            _getNotifications = getNotifications;
         }
 
         [HttpGet]
@@ -67,6 +70,21 @@ namespace Edutor.Web.Api.Controllers
         {
             var s = _getQueryProcessor.GetSchoolUser(schoolUserId);
             return s;
+        }
+
+
+        /// <summary>
+        /// Obtiene una lista de las notificaciones creadas por el usuario escolar
+        /// </summary>
+        /// <param name="schoolUserid">El id del usuario escolar del que se desea conocer sus notificaciones</param>
+        /// <returns>Una lista con las notificaciones creadas por el usuario escolar</returns>
+        [HttpGet]
+        [Route("schoolusers/{schoolUserId:int}/notifications")]
+        public PagedDataInquiryResponse<Notification> GetNotificationsForSchoolUser(int schoolUserid)
+        {
+            var request = _pagedDataRequestFactory.Create(Request.RequestUri);
+            var r = _getNotifications.GetNotificationsForSchoolUser(schoolUserid, request);
+            return r;
         }
 
         /// <summary>
