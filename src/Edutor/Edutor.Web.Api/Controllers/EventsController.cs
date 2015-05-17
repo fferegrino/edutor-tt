@@ -27,9 +27,9 @@ namespace Edutor.Web.Api.Controllers
 
 
         /// <summary>
-        /// Adds an event to the system
+        /// Agrega un evento al sistema
         /// </summary>
-        /// <param name="newEvent"></param>
+        /// <param name="newEvent">El nuevo evento</param>
         /// <returns></returns>
         [HttpPost]
         [Authorize(Roles = Constants.RoleNames.Teacher)]

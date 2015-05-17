@@ -22,12 +22,11 @@ namespace Edutor.Web.Api.Controllers
         }
 
         /// <summary>
-        /// Adds an event to the system
+        /// Agrega una nueva notificación al sistema
         /// </summary>
-        /// <param name="newNotification"></param>
+        /// <param name="newNotification">La nueva notificación</param>
         /// <returns></returns>
         [HttpPost]
-        [Authorize]
         [ResponseType(typeof(Notification))]
         public IHttpActionResult AddNotification(NewNotification newNotification)
         {

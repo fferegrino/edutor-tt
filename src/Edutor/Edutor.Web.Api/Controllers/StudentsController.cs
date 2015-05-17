@@ -24,24 +24,28 @@ namespace Edutor.Web.Api.Controllers
         /// <summary>
         /// Adds a new Tutor to the system
         /// </summary>
-        /// <param name="newTutor">The tutor to be added</param>
+        /// <param name="newStudent">The tutor to be added</param>
         /// <returns></returns>
         [HttpPost]
         [ResponseType(typeof(Student))]
-        public IHttpActionResult AddTutor(/*HttpRequestMessage requestMessage, */NewStudent newTutor)
+        public IHttpActionResult AddStudent(NewStudent newStudent)
         {
 
-            var user = _addUserQueryProcessor.AddStudent(newTutor);
+            var user = _addUserQueryProcessor.AddStudent(newStudent);
             var result = new ModelPostedActionResult<Student>(Request, user);
             return result;
         }
 
+        /// <summary>
+        /// Obtiene obtiene el estudiante indicado
+        /// </summary>
+        /// <param name="studentId">El id del estudiante a recuperar</param>
+        /// <returns></returns>
         [HttpGet]
-        //[Authorize]
         [ResponseType(typeof(Student))]
-        public Student GetStudentById(int id)
+        public Student GetStudentById(int studentId)
         {
-            return _getStudentsInquiryProcessor.GetStudent(id);
+            return _getStudentsInquiryProcessor.GetStudent(studentId);
         }
 
     }

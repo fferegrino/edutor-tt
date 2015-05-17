@@ -43,7 +43,11 @@ namespace Edutor.Web.Api.Controllers
             return tasks;
         }
 
-
+        /// <summary>
+        /// Obtiene los grupos asignados al usuario escolar indicado
+        /// </summary>
+        /// <param name="schoolUserId">El id del usuario escolar</param>
+        /// <returns></returns>
         [HttpGet]
         [Route("schoolusers/{schoolUserId:int}/groups")]
         public PagedDataInquiryResponse<Group> GetGroupsForSchoolUser(int schoolUserId)
@@ -53,11 +57,15 @@ namespace Edutor.Web.Api.Controllers
             return tasks;
         }
 
-
+        /// <summary>
+        /// Obtiene el usuario escolar indicado
+        /// </summary>
+        /// <param name="schoolUserId">El id del usuario escolar</param>
+        /// <returns></returns>
         [HttpGet]
-        public SchoolUser GetSchoolUser(int id)
+        public SchoolUser GetSchoolUser(int schoolUserId)
         {
-            var s = _getQueryProcessor.GetSchoolUser(id);
+            var s = _getQueryProcessor.GetSchoolUser(schoolUserId);
             return s;
         }
 

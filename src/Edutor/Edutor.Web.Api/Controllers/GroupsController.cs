@@ -40,12 +40,16 @@ namespace Edutor.Web.Api.Controllers
         }
 
 
-
+        /// <summary>
+        /// Agrega un nuevo grupo al sistema
+        /// </summary>
+        /// <param name="newGroup">El nuevo grupo a ingresar</param>
+        /// <returns></returns>
         [HttpPost]
-        public IHttpActionResult AddGroup(HttpRequestMessage requestMessage, NewGroup group)
+        public IHttpActionResult AddGroup( NewGroup newGroup)
         {
-            var user = _addUserQueryProcessor.AddGroup(group);
-            var result = new ModelPostedActionResult<Group>(requestMessage, user);
+            var user = _addUserQueryProcessor.AddGroup(newGroup);
+            var result = new ModelPostedActionResult<Group>(Request, user);
             return result;
         }
 
@@ -77,7 +81,11 @@ namespace Edutor.Web.Api.Controllers
             return r;
         }
 
-
+        /// <summary>
+        /// Obtiene el grupo indicado
+        /// </summary>
+        /// <param name="groupId">El id del grupo indicado</param>
+        /// <returns></returns>
         [HttpGet]
         [ResponseType(typeof(Group))]
         [Route("groups/{groupId:int}")]
@@ -88,6 +96,10 @@ namespace Edutor.Web.Api.Controllers
 
         }
 
+        /// <summary>
+        /// Obtiene todos los grupos del sistema
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public PagedDataInquiryResponse<Group> GetGroups()
         {
@@ -96,13 +108,11 @@ namespace Edutor.Web.Api.Controllers
             return tasks;
         }
 
-
-
         /// <summary>
-        /// Add the student to a group
+        /// Agrega un estudiante al grupo indicado
         /// </summary>
-        /// <param name="studentId"></param>
-        /// <param name="groupId"></param>
+        /// <param name="groupId">El id del grupo al que se agregará el estudiante</param>
+        /// <param name="studentId">El id del estudiante que se agregará al grupo</param>
         /// <returns></returns>
         [HttpPost]
         [Route("groups/{groupId:int}/students/{studentId:int}")]
@@ -112,6 +122,12 @@ namespace Edutor.Web.Api.Controllers
             return "Group " + studentId;
         }
 
+        /// <summary>
+        /// Agrega un usuario escolar al grupo indicado
+        /// </summary>
+        /// <param name="groupId">El id del grupo al que se agregará el usuario escolar</param>
+        /// <param name="schoolUserId">El id del usuario escolar que se agregará al grupo</param>
+        /// <returns></returns>
         [HttpPost]
         [Route("groups/{groupId:int}/schoolusers/{schoolUserId:int}")]
         public string AddTeacherToGroup(int groupId, int schoolUserId)

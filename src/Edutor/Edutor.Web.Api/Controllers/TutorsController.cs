@@ -28,11 +28,16 @@ namespace Edutor.Web.Api.Controllers
             _pagedDataRequestFactory = pagedDataRequestFactory;
         }
 
+        /// <summary>
+        /// Obtiene el tutor indicado
+        /// </summary>
+        /// <param name="tutorId">El id del tutor a recuperar</param>
+        /// <returns></returns>
         [HttpGet]
         [ResponseType(typeof(Tutor))]
-        public Tutor GetSchoolUser(int id)
+        public Tutor GetSchoolUser(int tutorId)
         {
-            var s = _getQueryProcessor.GetTutor(id);
+            var s = _getQueryProcessor.GetTutor(tutorId);
             return s;
         }
 
@@ -52,15 +57,15 @@ namespace Edutor.Web.Api.Controllers
 
 
         /// <summary>
-        /// 
+        /// Agrega un nuevo tutor al sistema
         /// </summary>
-        /// <param name="newUser"></param>
+        /// <param name="newTutor">El nuevo tutor a ingresar</param>
         /// <returns></returns>
         [HttpPost]
         [ResponseType(typeof(Tutor))]
-        public IHttpActionResult AddTutor(NewTutor newUser)
+        public IHttpActionResult AddTutor(NewTutor newTutor)
         {
-            var user = _addUserQueryProcessor.AddUser(newUser);
+            var user = _addUserQueryProcessor.AddUser(newTutor);
             var result = new ModelPostedActionResult<Tutor>(Request, user);
             return result;
         }

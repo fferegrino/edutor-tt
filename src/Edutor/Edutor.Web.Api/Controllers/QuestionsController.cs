@@ -7,6 +7,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using System.Web.Http.Description;
 
 namespace Edutor.Web.Api.Controllers
 {
@@ -19,10 +20,16 @@ namespace Edutor.Web.Api.Controllers
             _postQuestion = postQuestion;
         }
 
+
+        /// <summary>
+        /// Agrega una nueva pregunta al sistema
+        /// </summary>
+        /// <param name="newQuestion">La nueva pregunta a agregar</param>
+        /// <returns></returns>
         [HttpPost]
-        public IHttpActionResult AddQuestion(NewQuestion q)
+        public IHttpActionResult AddQuestion(NewQuestion newQuestion)
         {
-            var ret = _postQuestion.AddQuestion(q);
+            var ret = _postQuestion.AddQuestion(newQuestion);
             var result = new ModelPostedActionResult<Question>(Request, ret);
             return result;
         }
