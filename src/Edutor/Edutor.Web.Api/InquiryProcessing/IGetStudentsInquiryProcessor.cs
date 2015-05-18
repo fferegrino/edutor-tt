@@ -22,11 +22,11 @@ namespace Edutor.Web.Api.InquiryProcessing
 
         PagedDataInquiryResponse<Return.Student> GetStudentsForTutor(int tutorId, PagedDataRequest requestInfo);
 
-        PagedDataInquiryResponse<Return.Student> GetStudentsForNotification(int notificationId, PagedDataRequest requestInfo);
+        PagedDataInquiryResponse<Return.StudentNotification> GetStudentsForNotification(int notificationId, PagedDataRequest requestInfo);
 
-        PagedDataInquiryResponse<Return.Student> GetStudentsForEvent(int eventId, PagedDataRequest request);
+        PagedDataInquiryResponse<Return.StudentInvitation> GetStudentsForEvent(int eventId, PagedDataRequest request);
 
-        PagedDataInquiryResponse<Return.Student> GetStudentsForQuestion(int questionId, PagedDataRequest request);
+        PagedDataInquiryResponse<Return.StudentAnswer> GetStudentsForQuestion(int questionId, PagedDataRequest request);
 
         Return.Student GetStudent(int id);
 
@@ -40,16 +40,19 @@ namespace Edutor.Web.Api.InquiryProcessing
         private readonly IAutoMapper _autoMapper;
         private readonly IGetStudentsQueryProcessor _queryProcessor;
         private readonly IStudentsLinkService _linkServices;
+        private readonly IElementsLinkService _linkBasicServices;
         private readonly ICommonLinkService _commonLinkService;
         public GetStudentsInquiryProcessor(IAutoMapper autoMapper,
             IGetStudentsQueryProcessor queryProcessor,
             ICommonLinkService commonLinkService,
+            IElementsLinkService linkBasicServices,
             IStudentsLinkService tutorsLinkService)
         {
             _autoMapper = autoMapper;
             _queryProcessor = queryProcessor;
             _commonLinkService = commonLinkService;
             _linkServices = tutorsLinkService;
+            _linkBasicServices = linkBasicServices;
         }
 
         public PagedDataInquiryResponse<Return.Student> GetAllStudents(PagedDataRequest request)
@@ -87,11 +90,11 @@ namespace Edutor.Web.Api.InquiryProcessing
         
         }
 
-        public PagedDataInquiryResponse<Return.Student> GetStudentsForNotification(int notificationId, PagedDataRequest requestInfo)
+        public PagedDataInquiryResponse<Return.StudentNotification> GetStudentsForNotification(int notificationId, PagedDataRequest requestInfo)
         {
             var qresult = _queryProcessor.GetStudentsForNotification(notificationId, requestInfo);
-            var returnUsers = GetCollection(qresult);
-            var inquiryResponse = new PagedDataInquiryResponse<Return.Student>
+            var returnUsers = GetStudentNotifications(qresult);
+            var inquiryResponse = new PagedDataInquiryResponse<Return.StudentNotification>
             {
                 Items = returnUsers,
                 PageCount = qresult.TotalPageCount,
@@ -121,11 +124,11 @@ namespace Edutor.Web.Api.InquiryProcessing
 
             return inquiryResponse;
         }
-        public PagedDataInquiryResponse<Return.Student> GetStudentsForQuestion(int questionId, PagedDataRequest request)
+        public PagedDataInquiryResponse<Return.StudentAnswer> GetStudentsForQuestion(int questionId, PagedDataRequest request)
         {
             var qresult = _queryProcessor.GetStudentsForQuestion(questionId, request);
-            var returnUsers = GetCollection(qresult);
-            var inquiryResponse = new PagedDataInquiryResponse<Return.Student>
+            var returnUsers = GetStudentAnswers(qresult);
+            var inquiryResponse = new PagedDataInquiryResponse<Return.StudentAnswer>
             {
                 Items = returnUsers,
                 PageCount = qresult.TotalPageCount,
@@ -138,11 +141,11 @@ namespace Edutor.Web.Api.InquiryProcessing
             return inquiryResponse;
         }
 
-        public PagedDataInquiryResponse<Return.Student> GetStudentsForEvent(int eventId, PagedDataRequest request)
+        public PagedDataInquiryResponse<Return.StudentInvitation> GetStudentsForEvent(int eventId, PagedDataRequest request)
         {
             var qresult = _queryProcessor.GetStudentsForEvent(eventId, request);
-            var returnUsers = GetCollection(qresult);
-            var inquiryResponse = new PagedDataInquiryResponse<Return.Student>
+            var returnUsers = GetStudentInvitations(qresult);
+            var inquiryResponse = new PagedDataInquiryResponse<Return.StudentInvitation>
             {
                 Items = returnUsers,
                 PageCount = qresult.TotalPageCount,
@@ -153,6 +156,36 @@ namespace Edutor.Web.Api.InquiryProcessing
             _commonLinkService.AddPageLinks(inquiryResponse);
 
             return inquiryResponse;
+        }
+
+        private List<Return.StudentAnswer> GetStudentAnswers(QueryResult<Data.Entities.Answer> qresult)
+        {
+            var x = qresult.QueriedItems.Select(r => _autoMapper.Map<Return.StudentAnswer>(r)).ToList();
+            x.ForEach(t =>
+            {
+                _linkBasicServices.AddAllLinks(t);
+            });
+            return x;
+        }
+
+        private List<Return.StudentNotification> GetStudentNotifications(QueryResult<Data.Entities.NotificationDetail> qresult)
+        {
+            var x = qresult.QueriedItems.Select(r => _autoMapper.Map<Return.StudentNotification>(r)).ToList();
+            x.ForEach(t =>
+            {
+                _linkBasicServices.AddAllLinks(t);
+            });
+            return x;
+        }
+
+        private List<Return.StudentInvitation> GetStudentInvitations(QueryResult<Data.Entities.Invitation> qresult)
+        {
+            var x = qresult.QueriedItems.Select(r => _autoMapper.Map<Return.StudentInvitation>(r)).ToList();
+            x.ForEach(t =>
+            {
+                _linkBasicServices.AddAllLinks(t);
+            });
+            return x;
         }
 
         private List<Return.Student> GetCollection(QueryResult<Data.Entities.Student> qresult)

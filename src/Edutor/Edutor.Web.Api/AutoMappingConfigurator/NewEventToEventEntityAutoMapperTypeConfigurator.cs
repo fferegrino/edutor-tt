@@ -28,7 +28,18 @@ namespace Edutor.Web.Api.AutoMappingConfigurator
             Mapper.CreateMap<Ent.Event, RetModels.Event>()
                 .ForMember(x => x.Links, opt => opt.Ignore())
                 .ForMember(x => x.SchoolUserId, opt => opt.MapFrom(src => src.SchoolUser.UserId))
+                ;
 
+            Mapper.CreateMap<Ent.Invitation, RetModels.StudentInvitation>()
+                .ForMember(x => x.Links, opt => opt.Ignore())
+                .ForMember(d => d.EventName, x => x.MapFrom(s => s.Event.Name))
+                .ForMember(d => d.EventId, x => x.MapFrom(s => s.Event.EventId))
+                .ForMember(d => d.Description, x => x.MapFrom(s => s.Event.Description))
+                .ForMember(d => d.GroupId, x => x.MapFrom(s => s.Event.GroupId))
+                .ForMember(d => d.SchoolUserId, x => x.MapFrom(s => s.Event.SchoolUserId))
+                .ForMember(d => d.StudentId, x => x.MapFrom(s => s.Student.StudentId))
+                .ForMember(d => d.Name, x => x.MapFrom(s => s.Student.Name))
+                .ForMember(d => d.Curp, x => x.MapFrom(s => s.Student.Curp))
                 ;
         }
     }

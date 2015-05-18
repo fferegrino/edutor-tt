@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Edutor.Web.Api.Models.ReturnTypes
 {
-    public class StudentAnswer : Student
+    public class StudentAnswer : BasicStudent
     {
         public int SchoolUserId { get; set; }
         public int QuestionId { get; set; }

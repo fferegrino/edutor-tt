@@ -56,6 +56,7 @@
     <Compile Include="NewModels\NewUser.cs" />
     <Compile Include="PagedDataInquiryResponse.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ReturnTypes\BasicStudent.cs" />
     <Compile Include="ReturnTypes\StudentNotification.cs" />
     <Compile Include="ReturnTypes\StudentInvitation.cs" />
     <Compile Include="ReturnTypes\Event.cs" />

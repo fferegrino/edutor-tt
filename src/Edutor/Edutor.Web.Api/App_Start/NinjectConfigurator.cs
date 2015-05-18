@@ -58,7 +58,8 @@ namespace Edutor.Web.Api
             container.Bind<LS.IEventsLinkService>().To<LS.EventsLinkService>();
             container.Bind<LS.IQuestionsLinkService>().To<LS.QuestionsLinkService>();
             container.Bind<LS.INotificationsLinkService>().To<LS.NotificationsLinkService>();
-
+            container.Bind<LS.IElementsLinkService>().To<LS.ElementsLinkService>();
+            
         }
 
         private void ConfigureAutoMapper(IKernel container)

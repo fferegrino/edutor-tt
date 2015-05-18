@@ -40,6 +40,7 @@ namespace Edutor.Common
             public const string NextPage = "nextPage";
 
             public const string StudentsRel = "students";
+            public const string StudentRel = "student";
             public const string TeachersRel = "teacher";
             public const string TutorRel = "tutor";
             public const string SchoolUsersRel = "schoolusers";
@@ -52,6 +53,9 @@ namespace Edutor.Common
             public const string NotificationDetailsRel = "details";
             public const string GroupsRel = "groups";
             public const string AnswersRel = "answers";
+            public const string AnswerRel = "answer";
+            public const string RsvpRel = "rsvp";
+            public const string SeenRel = "seen";
         }
 
         public static class CommonRoutingDefinitions

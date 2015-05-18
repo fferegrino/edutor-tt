@@ -21,10 +21,10 @@ namespace Edutor.Data.QueryProcessors
 
         Student GetStudentByToken(string token);
 
-        QueryResult<Student> GetStudentsForEvent(int eventId, PagedDataRequest request);
+        QueryResult<Invitation> GetStudentsForEvent(int eventId, PagedDataRequest request);
 
-        QueryResult<Student> GetStudentsForQuestion(int eventId, PagedDataRequest requestInfo);
+        QueryResult<Answer> GetStudentsForQuestion(int eventId, PagedDataRequest requestInfo);
 
-        QueryResult<Student> GetStudentsForNotification(int notificationId, PagedDataRequest requestInfo);
+        QueryResult<NotificationDetail> GetStudentsForNotification(int notificationId, PagedDataRequest requestInfo);
     }
 }

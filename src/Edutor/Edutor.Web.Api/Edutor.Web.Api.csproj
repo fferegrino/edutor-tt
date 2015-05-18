@@ -157,6 +157,7 @@
     <Compile Include="LinkServices\IQuestionsLinkService.cs" />
     <Compile Include="LinkServices\IEventsLinkService.cs" />
     <Compile Include="LinkServices\IGroupsLinkService.cs" />
+    <Compile Include="LinkServices\IElementsLinkService.cs" />
     <Compile Include="LinkServices\IStudentsLinkService.cs" />
     <Compile Include="LinkServices\ITutorsLinkService.cs" />
     <Compile Include="LinkServices\ISchoolUsersLinkService.cs" />

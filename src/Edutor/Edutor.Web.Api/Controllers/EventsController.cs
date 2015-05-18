@@ -56,9 +56,9 @@ namespace Edutor.Web.Api.Controllers
         /// <param name="eventId">El id del evento que se desea obtener</param>
         /// <returns></returns>
         [HttpGet]
-        [ResponseType(typeof(PagedDataInquiryResponse<Student>))]
+        [ResponseType(typeof(PagedDataInquiryResponse<StudentInvitation>))]
         [Route("events/{eventId:int}/attendees")]
-        public PagedDataInquiryResponse<Student> GetEventAttendees(int eventId)
+        public PagedDataInquiryResponse<StudentInvitation> GetEventAttendees(int eventId)
         {
             var request = _pagedDataRequestFactory.Create(Request.RequestUri);
             return _getStudents.GetStudentsForEvent(eventId, request);

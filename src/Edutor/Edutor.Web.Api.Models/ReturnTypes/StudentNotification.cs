@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Edutor.Web.Api.Models.ReturnTypes
 {
-    public class StudentNotification : Student
+    public class StudentNotification : BasicStudent
     {
         public int NotificationId { get; set; }
         public int SchoolUserId { get; set; }
