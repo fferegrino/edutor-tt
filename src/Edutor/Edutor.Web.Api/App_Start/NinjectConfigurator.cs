@@ -21,6 +21,7 @@ using SqlProcessors = Edutor.Data.SqlServer.QueryProcessors;
 using TM = Edutor.Common.TypeMapping;
 using AMC = Edutor.Web.Api.AutoMappingConfigurator;
 using AMP = Edutor.Web.Api.MaintenanceProcessing;
+using AUP = Edutor.Web.Api.UpdateProcessing;
 using Security = Edutor.Web.Api.Securitiy;
 //using AQP = Edutor.Web.Api.QueryProcessing;
 using LS = Edutor.Web.Api.LinkServices;
@@ -136,6 +137,17 @@ namespace Edutor.Web.Api
 
             container.Bind<QueryProcessors.IGetQuestionsQueryProcessor>().To<SqlProcessors.GetQuestionsQueryProcessor>().InRequestScope();
             container.Bind<InquiryProcessing.IGetQuestionsInquiryProcessor>().To<InquiryProcessing.GetQuestionsInquiryProcessor>().InRequestScope();
+            #endregion
+
+            #region Put region
+            container.Bind<QueryProcessors.IUpdateEventsQueryProcessor>().To<SqlProcessors.UpdateEventsQueryProcessor>().InRequestScope();
+            container.Bind<UpdateProcessing.IPutEventsUpdateProcessor>().To<UpdateProcessing.PutEventsUpdateProcessor>().InRequestScope();
+
+            container.Bind<QueryProcessors.IUpdateNotificationsQueryProcessor>().To<SqlProcessors.UpdateNotificationsQueryProcessor>().InRequestScope();
+            container.Bind<UpdateProcessing.IPutNotificationsUpdateProcessor>().To<UpdateProcessing.PutNotificationsUpdateProcessor>().InRequestScope();
+
+            container.Bind<QueryProcessors.IUpdateQuestionsQueryProcessor>().To<SqlProcessors.UpdateQuestionsQueryProcessor>().InRequestScope();
+            container.Bind<UpdateProcessing.IPutQuestionsUpdateProcessor>().To<UpdateProcessing.PutQuestionsUpdateProcessor>().InRequestScope();
             #endregion
         }
 

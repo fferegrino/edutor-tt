@@ -3,6 +3,7 @@ using Edutor.Web.Api.MaintenanceProcessing;
 using Edutor.Web.Api.Models;
 using Edutor.Web.Api.Models.NewModels;
 using Edutor.Web.Api.Models.ReturnTypes;
+using Edutor.Web.Api.UpdateProcessing;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,6 +18,7 @@ namespace Edutor.Web.Api.Controllers
     public class NotificationsController : ApiController
     {
         private readonly IPostNotificationMaintenanceProcessor _notificationMaintenanceProcessor;
+        private readonly IPutNotificationsUpdateProcessor _updateNotifications;
         private readonly IGetNotificationsInquiryProcessor _getNotifications;
         private readonly IGetStudentsInquiryProcessor _getStudents;
         private readonly IPagedDataRequestFactory _pagedDataRequestFactory;
@@ -24,12 +26,14 @@ namespace Edutor.Web.Api.Controllers
         public NotificationsController(IPostNotificationMaintenanceProcessor notificationMaintenanceProcessor,
             IGetNotificationsInquiryProcessor getNotifications,
              IGetStudentsInquiryProcessor getStudents,
+            IPutNotificationsUpdateProcessor updateNotifications,
             IPagedDataRequestFactory pagedDataRequestFactory)
         {
             _notificationMaintenanceProcessor = notificationMaintenanceProcessor;
             _getNotifications = getNotifications;
             _getStudents = getStudents;
             _pagedDataRequestFactory = pagedDataRequestFactory;
+            _updateNotifications = updateNotifications;
         }
 
         /// <summary>
@@ -43,7 +47,7 @@ namespace Edutor.Web.Api.Controllers
         {
             return _getNotifications.GetNotification(notificationId);
         }
-        
+
         /// <summary>
         /// Obtiene el una lista de los estudiantes notificados
         /// </summary>
@@ -70,6 +74,21 @@ namespace Edutor.Web.Api.Controllers
         public StudentNotification GetNotifiedUsers(int notificationId, int studentId)
         {
             return _getStudents.GetStudentsForNotification(notificationId, studentId);
+        }
+
+        /// <summary>
+        /// Una simple llamada a este extremo ocasionará que la notificación sea marcada como vista
+        /// </summary>
+        /// <param name="notificationId">El id de la notificación que se desea marcar como vista</param>
+        /// <param name="studentId">El id del estudiante que vió la notificación/param>
+        /// <returns></returns>
+        [HttpPut]
+        [ResponseType(typeof(int))]
+        [Route("notifications/{notificationId:int}/details/{studentId:int}")]
+        public int MarkNotificationAsSeen(int notificationId, int studentId)
+        {
+            _updateNotifications.MarkAsSeen(new NewSeenNotification { NotificationId = notificationId, StudentId = studentId });
+            return 0;
         }
 
         /// <summary>

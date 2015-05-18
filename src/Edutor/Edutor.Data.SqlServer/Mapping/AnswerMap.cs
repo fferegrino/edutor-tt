@@ -12,8 +12,11 @@ namespace Edutor.Data.SqlServer.Mapping
         public AnswerMap()
         {
             Table("Answers");
-            //References<PossibleAnswer>(x=> x.ActualAnswer).Columns("QuestionId", "ActualAnswerId");
+            Map(entityName => entityName.AnswerDate);
+            Map(entityName => entityName.ActualAnswerId);
             CompositeId().KeyReference(l => l.Student, "StudentId").KeyReference(l => l.Question, "QuestionId");
+            //HasOne<PossibleAnswer>(x => x.ActualAnswer);
+            //References<PossibleAnswer>(x => x.ActualAnswer).Columns("ActualAnswerId");
             //References<Event>(x => x.Event).Column("EventId");
             //References<Student>(x => x.Student).Column("StudentId");
         }

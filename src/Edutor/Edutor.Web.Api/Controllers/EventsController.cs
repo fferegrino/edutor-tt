@@ -4,6 +4,7 @@ using Edutor.Web.Api.MaintenanceProcessing;
 using Edutor.Web.Api.Models;
 using Edutor.Web.Api.Models.NewModels;
 using Edutor.Web.Api.Models.ReturnTypes;
+using Edutor.Web.Api.UpdateProcessing;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,10 +24,12 @@ namespace Edutor.Web.Api.Controllers
         private readonly IPostEventMaintenanceProcessor _addQueryProcessor;
         private readonly IGetStudentsInquiryProcessor _getStudents;
         private readonly IGetEventsInquiryProcessor _getEvents;
+        private readonly IPutEventsUpdateProcessor _updateEvents;
         private readonly IPagedDataRequestFactory _pagedDataRequestFactory;
 
         public EventsController(IPostEventMaintenanceProcessor addQueryProcessor,
             IGetEventsInquiryProcessor getEvents,
+            IPutEventsUpdateProcessor updateEvents,
             IPagedDataRequestFactory pagedDataRequestFactory,
             IGetStudentsInquiryProcessor getStudents)
         {
@@ -34,8 +37,9 @@ namespace Edutor.Web.Api.Controllers
             _addQueryProcessor = addQueryProcessor;
             _pagedDataRequestFactory = pagedDataRequestFactory;
             _getStudents = getStudents;
+            _updateEvents = updateEvents;
         }
-        
+
 
         /// <summary>
         /// Obtiene el evento indicado
@@ -75,7 +79,24 @@ namespace Edutor.Web.Api.Controllers
         [Route("events/{eventId:int}/attendees/{studentId:int}")]
         public StudentInvitation GetEventAttendees(int eventId, int studentId)
         {
-            return _getStudents.GetStudentsForEvent(eventId,studentId);
+            return _getStudents.GetStudentsForEvent(eventId, studentId);
+        }
+
+        /// <summary>
+        /// Indica si se asistirá al evento
+        /// </summary>
+        /// <param name="eventId">El id del evento que se desea responder</param>
+        /// <param name="studentId">El id del estudiante que responde</param>
+        /// <returns></returns>
+        [HttpPut]
+        [ResponseType(typeof(int))]
+        [Route("events/{eventId:int}/attendees/{studentId:int}")]
+        public int GetEventAttendees(int eventId, int studentId, NewRsvp rsvp)
+        {
+            rsvp.EventId = eventId;
+            rsvp.StudentId = studentId;
+            _updateEvents.Rsvp(rsvp);
+            return 0;
         }
 
 

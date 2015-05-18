@@ -46,7 +46,7 @@ namespace Edutor.Web.Api.AutoMappingConfigurator
                 if (ob.ActualAnswer == null)
                     return 0;
                 else
-                    return ob.ActualAnswer.PossibleAnswerId;
+                    return ob.ActualAnswerId;
             };
 
             Mapper.CreateMap<Ent.Answer, RetModels.StudentAnswer>()
@@ -60,6 +60,16 @@ namespace Edutor.Web.Api.AutoMappingConfigurator
                 .ForMember(d => d.StudentId, x => x.MapFrom(s => s.Student.StudentId))
                 .ForMember(d => d.Name, x => x.MapFrom(s => s.Student.Name))
                 .ForMember(d => d.Curp, x => x.MapFrom(s => s.Student.Curp))
+                ;
+
+
+            Mapper.CreateMap<NwModels.NewAnswer, Ent.Answer>()
+                .ForMember(o => o.ActualAnswerId, x => x.MapFrom(xx => xx.SelectedAnswerId))
+                .ForMember(o => o.AnswerDate, x => x.Ignore())
+                .ForMember(o => o.ActualAnswer, x => x.Ignore())
+                .ForMember(o => o.Question, x => x.Ignore())
+                .ForMember(o => o.Student, x => x.Ignore())
+                .ForMember(o => o.Version, x => x.Ignore())
                 ;
         }
     }

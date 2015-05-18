@@ -178,6 +178,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Securitiy\BasicAuthenticationMessageHandler.cs" />
     <Compile Include="Securitiy\IBasicSecurityService.cs" />
+    <Compile Include="UpdateProcessing\IPutQuestionsUpdateProcessor.cs" />
+    <Compile Include="UpdateProcessing\IPutNotificationsUpdateProcessor.cs" />
+    <Compile Include="UpdateProcessing\IPutEventsUpdateProcessor.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

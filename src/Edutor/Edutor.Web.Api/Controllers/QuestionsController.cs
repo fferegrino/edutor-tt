@@ -3,6 +3,7 @@ using Edutor.Web.Api.MaintenanceProcessing;
 using Edutor.Web.Api.Models;
 using Edutor.Web.Api.Models.NewModels;
 using Edutor.Web.Api.Models.ReturnTypes;
+using Edutor.Web.Api.UpdateProcessing;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,6 +18,7 @@ namespace Edutor.Web.Api.Controllers
     public class QuestionsController : ApiController
     {
         private readonly IPostQuestionMaintenanceProcessor _postQuestion;
+        private readonly IPutQuestionsUpdateProcessor _updateQuestion;
         private readonly IGetQuestionsInquiryProcessor _getQuestions;
         private readonly IGetStudentsInquiryProcessor _getStudents;
         private readonly IPagedDataRequestFactory _pagedDataRequestFactory;
@@ -24,12 +26,14 @@ namespace Edutor.Web.Api.Controllers
         public QuestionsController(IPostQuestionMaintenanceProcessor postQuestion,
             IGetQuestionsInquiryProcessor getQuestions,
             IGetStudentsInquiryProcessor getStudents,
+            IPutQuestionsUpdateProcessor updateQuestion,
             IPagedDataRequestFactory pagedDataRequestFactory)
         {
             _postQuestion = postQuestion;
             _getQuestions = getQuestions;
             _getStudents = getStudents;
             _pagedDataRequestFactory = pagedDataRequestFactory;
+            _updateQuestion = updateQuestion;
         }
 
         /// <summary>
@@ -72,6 +76,24 @@ namespace Edutor.Web.Api.Controllers
         {
             var r = _getStudents.GetStudentsForQuestion(questionId,studentId);
             return r;
+        } 
+        
+        /// <summary>
+        /// Responde a la pregunta con la respuesta seleccionada
+        /// </summary>
+        /// <param name="newAnswer"></param>
+        /// <param name="questionId">El id de la pregunta deseada</param>
+        /// <param name="studentId">El id del estudiante</param>
+        /// <returns></returns>
+        [HttpPut]
+        [Route("questions/{questionId:int}/answers/{studentId}")]
+        [ResponseType(typeof(int))]
+        public int GetAnswerers(NewAnswer newAnswer, int questionId, int studentId)
+        {
+            newAnswer.QuestionId = questionId;
+            newAnswer.StudentId = studentId;
+            _updateQuestion.AnswerQuestion(newAnswer);
+            return 0;
         }
 
         /// <summary>

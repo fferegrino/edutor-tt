@@ -125,6 +125,8 @@ namespace Edutor.Data.SqlServer.QueryProcessors
             //var teachers = new List<Student>();
             //foreach (var t in selected)
             //    teachers.Add(_session.QueryOver<Student>().Where(u => u.StudentId == t.Student.StudentId).SingleOrDefault());
+            foreach (var ans in selected)
+                ans.ActualAnswer = _session.QueryOver<PossibleAnswer>().Where(v => v.PossibleAnswerId == ans.ActualAnswerId && v.Question.QuestionId == ans.Question.QuestionId).SingleOrDefault();
 
             var qResult = new QueryResult<Answer>(selected, totalItemCount, requestInfo.PageSize);
 

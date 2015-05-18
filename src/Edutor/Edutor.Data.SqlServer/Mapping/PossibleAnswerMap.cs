@@ -13,7 +13,7 @@ namespace Edutor.Data.SqlServer.Mapping
         {
             Table("PossibleAnswers");
             Map(entityName => entityName.Text);
-            CompositeId().KeyReference(l => l.Question, "QuestionID").KeyProperty(q=> q.PossibleAnswerId);
+            CompositeId().KeyReference(l => l.Question, "QuestionId").KeyProperty(q=> q.PossibleAnswerId);
             //References<Event>(x => x.Event).Column("EventId");
             //References<Student>(x => x.Student).Column("StudentId");
         }

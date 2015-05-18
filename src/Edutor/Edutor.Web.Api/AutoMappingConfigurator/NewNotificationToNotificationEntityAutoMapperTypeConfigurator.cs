@@ -40,6 +40,14 @@ namespace Edutor.Web.Api.AutoMappingConfigurator
                 .ForMember(d => d.StudentId, x => x.MapFrom(s => s.Student.StudentId))
                 .ForMember(d => d.Curp, x => x.MapFrom(s => s.Student.Curp))
                 ;
+
+
+            Mapper.CreateMap<NwModels.NewSeenNotification, Ent.NotificationDetail>()
+                .ForMember(o => o.Seen, opt => opt.Ignore())
+                .ForMember(o => o.Notification, x => x.Ignore())
+                .ForMember(o => o.Student, x => x.Ignore())
+                .ForMember(o => o.Version, x => x.Ignore())
+                ;
         }
     }
 }

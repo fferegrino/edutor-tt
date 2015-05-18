@@ -41,6 +41,14 @@ namespace Edutor.Web.Api.AutoMappingConfigurator
                 .ForMember(d => d.Name, x => x.MapFrom(s => s.Student.Name))
                 .ForMember(d => d.Curp, x => x.MapFrom(s => s.Student.Curp))
                 ;
+
+            Mapper.CreateMap<NwModels.NewRsvp, Ent.Invitation>()
+                .ForMember(o => o.Rsvp, opt => opt.MapFrom(s => s.Rsvp))
+                .ForMember(o => o.Event, x => x.Ignore())
+                .ForMember(o => o.Student, x => x.Ignore())
+                .ForMember(o => o.Version, x => x.Ignore())
+                ;
         }
     }
 }
+

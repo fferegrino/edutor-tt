@@ -59,7 +59,7 @@ namespace Edutor.Web.Api.LinkServices
 
         public void AddAllLinks(StudentInvitation s)
         {
-            var studentAnswerLinks = String.Format("events/{0}/attendee/{1}", s.EventId, s.StudentId);
+            var studentAnswerLinks = String.Format("events/{0}/attendees/{1}", s.EventId, s.StudentId);
             s.AddLink(_commonLinkService.GetLink(studentAnswerLinks, Constants.CommonLinkRelValues.Self, HttpMethod.Get));
             s.AddLink(_commonLinkService.GetLink(studentAnswerLinks, Constants.CommonLinkRelValues.RsvpRel, HttpMethod.Put));
         }

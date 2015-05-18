@@ -49,6 +49,9 @@
     <Compile Include="NewModels\NewQuestion.cs" />
     <Compile Include="NewModels\NewEvent.cs" />
     <Compile Include="NewModels\NewGroup.cs" />
+    <Compile Include="NewModels\NewAnswer.cs" />
+    <Compile Include="NewModels\NewSeenNotification.cs" />
+    <Compile Include="NewModels\NewRsvp.cs" />
     <Compile Include="NewModels\NewSchoolUser.cs" />
     <Compile Include="NewModels\NewStudent.cs" />
     <Compile Include="NewModels\NewTeaching.cs" />
