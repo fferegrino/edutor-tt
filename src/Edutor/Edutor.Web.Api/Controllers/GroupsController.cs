@@ -39,7 +39,7 @@ namespace Edutor.Web.Api.Controllers
             _getGroups = getGroups;
         }
 
-
+         
         /// <summary>
         /// Agrega un nuevo grupo al sistema
         /// </summary>

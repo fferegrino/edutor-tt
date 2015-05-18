@@ -8,9 +8,10 @@
     [Address] VARCHAR(512) NOT NULL, 
     [Mobile] VARCHAR(10) NULL, 
     [Phone] VARCHAR(10) NULL, 
+    [Job] VARCHAR(20) NULL,  
+    [JobTelephone] VARCHAR(10) NULL, 
 	[Position] CHAR(1) NULL, 
-    [Job] VARCHAR(20) NULL, 
-    [JobTelephone] VARCHAR(10) NULL
+	[Password] CHAR(64) NULL
 )
 
 GO

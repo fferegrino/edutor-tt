@@ -16,6 +16,9 @@ DECLARE @DummyUsers BIT = 1,
 		@DummyEnrollments BIT = 1,
 		@DummyTeachings BIT = 1
 
+--INSERT Users([Type],[Name],[Curp],[Email],[Address],[Mobile],[Phone])
+-- 7d0d12aa8d0e2ef983e1b1ab8585b205f439ffcd08092e92f709bbcec9790835
+
 IF(@DummyUsers = 1)
 BEGIN
 	INSERT INTO Users([Type],[Name],[Curp],[Email],[Address],[Mobile],[Phone]) VALUES('S','Odysseus T. Wade','ETUQ990265LNNWPY72','pellentesque.a@facilisisloremtristique.ca','287-5801 Neque Road','0234303453','5021998354'),('S','Benedict H. Paul','CIBY457198YTWKRU65','diam.Pellentesque@Praesenteunulla.com','P.O. Box 377, 1776 Libero. Rd.','0818980771','2899729854'),('S','Brenden Patterson','GLBQ347762JXVITH87','vel.arcu.Curabitur@suscipitnonummy.org','P.O. Box 476, 3591 Eu Street','0288105994','7073928185'),('T','Michelle E. Albert','NTBG104976GFPBYM42','Praesent.luctus.Curabitur@Aliquamerat.net','P.O. Box 740, 9199 Nunc St.','0684001896','1347304070'),('T','Ginger Valdez','PQSN921058EHISWM18','torquent.per@interdum.ca','511-6583 Justo Rd.','0043498056','2581432966'),('S','Whitney G. Ball','DORD624610QZZEVN99','ante.blandit.viverra@arcuSedeu.net','770-6722 Est St.','0208353883','1476367123'),('S','Tad Owens','EJLT584234JIWUNZ66','mi.Duis.risus@rutrumFusce.org','481-5545 Maecenas Road','0689739785','8381569380'),('S','Lesley Sweet','EVDI600621MLNQSE58','dolor@dui.ca','3546 Integer Av.','0032894654','1437797157'),('S','Benjamin H. Dudley','FRQI281577CHOHHF74','velit.dui.semper@etmagnisdis.edu','881-766 Nullam Street','0222115319','4055461445'),('S','Ahmed K. Miles','JSVS640375CPZCRZ32','dapibus.gravida.Aliquam@et.edu','Ap #894-7750 Lectus Rd.','0178327795','4923519365');
