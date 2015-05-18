@@ -159,7 +159,7 @@
     <Compile Include="LinkServices\IGroupsLinkService.cs" />
     <Compile Include="LinkServices\IStudentsLinkService.cs" />
     <Compile Include="LinkServices\ITutorsLinkService.cs" />
-    <Compile Include="LinkServices\IUsersLinkService.cs" />
+    <Compile Include="LinkServices\ISchoolUsersLinkService.cs" />
     <Compile Include="MaintenanceProcessing\IPostNotificationMaintenanceProcessor.cs" />
     <Compile Include="MaintenanceProcessing\IPostQuestionMaintenanceProcessor.cs" />
     <Compile Include="MaintenanceProcessing\IPostEventMaintenanceProcessor.cs" />
@@ -171,6 +171,8 @@
     <Compile Include="MaintenanceProcessing\IPostTutorMaintenanceProcessor.cs" />
     <Compile Include="MaintenanceProcessing\LocationLinkCalculator.cs" />
     <Compile Include="MaintenanceProcessing\ModelCreatedActionResult.cs" />
+    <Compile Include="MaintenanceProcessing\ModelDeletedActionResult.cs" />
+    <Compile Include="MaintenanceProcessing\ModelsLinkedActionResult.cs" />
     <Compile Include="MaintenanceProcessing\ModelPostedActionResult.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Securitiy\BasicAuthenticationMessageHandler.cs" />

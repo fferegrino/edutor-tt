@@ -136,8 +136,6 @@ namespace Edutor.Web.Api
             container.Bind<QueryProcessors.IGetQuestionsQueryProcessor>().To<SqlProcessors.GetQuestionsQueryProcessor>().InRequestScope();
             container.Bind<InquiryProcessing.IGetQuestionsInquiryProcessor>().To<InquiryProcessing.GetQuestionsInquiryProcessor>().InRequestScope();
             #endregion
-
-
         }
 
         private void ConfigureLog4Net(IKernel container)

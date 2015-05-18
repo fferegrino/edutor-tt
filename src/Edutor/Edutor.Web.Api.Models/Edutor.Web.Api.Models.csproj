@@ -65,7 +65,6 @@
     <Compile Include="ReturnTypes\SchoolUser.cs" />
     <Compile Include="ReturnTypes\Tutor.cs" />
     <Compile Include="ReturnTypes\User.cs" />
-    <Compile Include="SimpleSchoolUser.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

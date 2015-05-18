@@ -115,12 +115,12 @@ namespace Edutor.Web.Api.Controllers
         /// <param name="groupId">El id del grupo al que se agregará el estudiante</param>
         /// <param name="studentId">El id del estudiante que se agregará al grupo</param>
         /// <returns></returns>
-        [HttpPost]
+        [HttpPut]
         [Route("groups/{groupId:int}/students/{studentId:int}")]
-        public string AddStudentToGroup(int groupId, int studentId)
+        public IHttpActionResult AddStudentToGroup(int groupId, int studentId)
         {
             _postEnrollmentMaintenanceProcessor.AddEnrollment(studentId, groupId);
-            return "Group " + studentId;
+            return new ModelsLinkedActionResult(Request);
         }
 
         /// <summary>
@@ -129,12 +129,42 @@ namespace Edutor.Web.Api.Controllers
         /// <param name="groupId">El id del grupo al que se agregará el usuario escolar</param>
         /// <param name="schoolUserId">El id del usuario escolar que se agregará al grupo</param>
         /// <returns></returns>
-        [HttpPost]
+        [HttpPut]
         [Route("groups/{groupId:int}/schoolusers/{schoolUserId:int}")]
-        public string AddTeacherToGroup(int groupId, int schoolUserId)
+        public IHttpActionResult AddTeacherToGroup(int groupId, int schoolUserId)
         {
             _postTeachingMaintenanceProcessor.AddTeaching(schoolUserId, groupId);
-            return "Group " + schoolUserId;
+            return new ModelsLinkedActionResult(Request);
         }
+
+        /// <summary>
+        /// Agrega un estudiante al grupo indicado
+        /// </summary>
+        /// <param name="groupId">El id del grupo al que se agregará el estudiante</param>
+        /// <param name="studentId">El id del estudiante que se agregará al grupo</param>
+        /// <returns></returns>
+        [HttpDelete]
+        [Route("groups/{groupId:int}/students/{studentId:int}")]
+        public IHttpActionResult DeleteStudentFromGroup(int groupId, int studentId)
+        {
+            _postEnrollmentMaintenanceProcessor.AddEnrollment(studentId, groupId);
+            return new ModelDeletedActionResult(Request);
+        }
+
+        /// <summary>
+        /// Agrega un usuario escolar al grupo indicado
+        /// </summary>
+        /// <param name="groupId">El id del grupo al que se agregará el usuario escolar</param>
+        /// <param name="schoolUserId">El id del usuario escolar que se agregará al grupo</param>
+        /// <returns></returns>
+        [HttpDelete]
+        [Route("groups/{groupId:int}/schoolusers/{schoolUserId:int}")]
+        public IHttpActionResult DeleteTeacherFromGroup(int groupId, int schoolUserId)
+        {
+            _postTeachingMaintenanceProcessor.AddTeaching(schoolUserId, groupId);
+            return new ModelDeletedActionResult(Request);
+        }
+
+
     }
 }
