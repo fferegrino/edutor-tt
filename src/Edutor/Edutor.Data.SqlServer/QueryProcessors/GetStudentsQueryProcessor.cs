@@ -55,7 +55,6 @@ namespace Edutor.Data.SqlServer.QueryProcessors
             return qResult;
         }
 
-
         public QueryResult<Student> GetStudentsForGroup(int groupId, PagedDataRequest requestInfo)
         {
             var teachings = _session.QueryOver<Enrollment>().Where(t => t.Group.GroupId == groupId);
@@ -78,6 +77,44 @@ namespace Edutor.Data.SqlServer.QueryProcessors
         public QueryResult<Student> GetStudentsForNotification(int notificationId, PagedDataRequest requestInfo)
         {
             var teachings = _session.QueryOver<NotificationDetail>().Where(t => t.Notification.NotificationId == notificationId);
+
+            var totalItemCount = teachings.ToRowCountQuery().RowCount();
+
+            var startIndex = ResultsPagingUtility.CalculateStartIndex(requestInfo.PageNumber, requestInfo.PageSize);
+
+            var selected = teachings.Skip(startIndex).Take(requestInfo.PageSize).List();
+
+            var teachers = new List<Student>();
+            foreach (var t in selected)
+                teachers.Add(_session.QueryOver<Student>().Where(u => u.StudentId == t.Student.StudentId).SingleOrDefault());
+
+            var qResult = new QueryResult<Student>(teachers, totalItemCount, requestInfo.PageSize);
+
+            return qResult;
+        }
+
+        public QueryResult<Student> GetStudentsForEvent(int eventId, PagedDataRequest requestInfo)
+        {
+            var teachings = _session.QueryOver<Invitation>().Where(t => t.Event.EventId == eventId);
+
+            var totalItemCount = teachings.ToRowCountQuery().RowCount();
+
+            var startIndex = ResultsPagingUtility.CalculateStartIndex(requestInfo.PageNumber, requestInfo.PageSize);
+
+            var selected = teachings.Skip(startIndex).Take(requestInfo.PageSize).List();
+
+            var teachers = new List<Student>();
+            foreach (var t in selected)
+                teachers.Add(_session.QueryOver<Student>().Where(u => u.StudentId == t.Student.StudentId).SingleOrDefault());
+
+            var qResult = new QueryResult<Student>(teachers, totalItemCount, requestInfo.PageSize);
+
+            return qResult;
+        }
+
+        public QueryResult<Student> GetStudentsForQuestion(int questionId, PagedDataRequest requestInfo)
+        {
+            var teachings = _session.QueryOver<Answer>().Where(t => t.Question.QuestionId== questionId);
 
             var totalItemCount = teachings.ToRowCountQuery().RowCount();
 

@@ -138,30 +138,30 @@ namespace Edutor.Web.Api.Controllers
         }
 
         /// <summary>
-        /// Agrega un estudiante al grupo indicado
+        /// Elimina un estudiante escolar del grupo indicado
         /// </summary>
-        /// <param name="groupId">El id del grupo al que se agregará el estudiante</param>
-        /// <param name="studentId">El id del estudiante que se agregará al grupo</param>
+        /// <param name="groupId">El id del grupo del que se eliminará el estudiante</param>
+        /// <param name="studentId">El id del estudiante que se eliminará del grupo</param>
         /// <returns></returns>
         [HttpDelete]
         [Route("groups/{groupId:int}/students/{studentId:int}")]
         public IHttpActionResult DeleteStudentFromGroup(int groupId, int studentId)
         {
-            _postEnrollmentMaintenanceProcessor.AddEnrollment(studentId, groupId);
+            //_postEnrollmentMaintenanceProcessor.AddEnrollment(studentId, groupId);
             return new ModelDeletedActionResult(Request);
         }
 
         /// <summary>
-        /// Agrega un usuario escolar al grupo indicado
+        /// Elimina un usuario escolar del grupo indicado
         /// </summary>
-        /// <param name="groupId">El id del grupo al que se agregará el usuario escolar</param>
-        /// <param name="schoolUserId">El id del usuario escolar que se agregará al grupo</param>
+        /// <param name="groupId">El id del grupo del que se eliminará el usuario escolar</param>
+        /// <param name="schoolUserId">El id del usuario escolar que se eliminará del grupo</param>
         /// <returns></returns>
         [HttpDelete]
         [Route("groups/{groupId:int}/schoolusers/{schoolUserId:int}")]
         public IHttpActionResult DeleteTeacherFromGroup(int groupId, int schoolUserId)
         {
-            _postTeachingMaintenanceProcessor.AddTeaching(schoolUserId, groupId);
+            //_postTeachingMaintenanceProcessor.AddTeaching(schoolUserId, groupId);
             return new ModelDeletedActionResult(Request);
         }
 

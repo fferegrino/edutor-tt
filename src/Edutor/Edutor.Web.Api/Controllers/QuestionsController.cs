@@ -1,5 +1,6 @@
 ﻿using Edutor.Web.Api.InquiryProcessing;
 using Edutor.Web.Api.MaintenanceProcessing;
+using Edutor.Web.Api.Models;
 using Edutor.Web.Api.Models.NewModels;
 using Edutor.Web.Api.Models.ReturnTypes;
 using System;
@@ -17,11 +18,18 @@ namespace Edutor.Web.Api.Controllers
     {
         private readonly IPostQuestionMaintenanceProcessor _postQuestion;
         private readonly IGetQuestionsInquiryProcessor _getQuestions;
+        private readonly IGetStudentsInquiryProcessor _getStudents;
+        private readonly IPagedDataRequestFactory _pagedDataRequestFactory;
+
         public QuestionsController(IPostQuestionMaintenanceProcessor postQuestion,
-            IGetQuestionsInquiryProcessor getQuestions)
+            IGetQuestionsInquiryProcessor getQuestions,
+            IGetStudentsInquiryProcessor getStudents,
+            IPagedDataRequestFactory pagedDataRequestFactory)
         {
             _postQuestion = postQuestion;
             _getQuestions = getQuestions;
+            _getStudents = getStudents;
+            _pagedDataRequestFactory = pagedDataRequestFactory;
         }
 
         /// <summary>
@@ -34,6 +42,20 @@ namespace Edutor.Web.Api.Controllers
         public Question GetQuestion(int questionId)
         {
             return _getQuestions.GetQuestion(questionId);
+        }
+
+        /// <summary>
+        /// Obtiene las respuestas a la pregunta especificada
+        /// </summary>
+        /// <param name="questionId">El id de la pregunta deseada</param>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("questions/{questionId:int}/answerers")]
+        public PagedDataInquiryResponse<Student> GetAnswerers(int questionId)
+        {
+            var request = _pagedDataRequestFactory.Create(Request.RequestUri);
+            var r = _getStudents.GetStudentsForQuestion(questionId, request);
+            return r;
         }
 
         /// <summary>

@@ -24,9 +24,14 @@ namespace Edutor.Web.Api.InquiryProcessing
 
         PagedDataInquiryResponse<Return.Student> GetStudentsForNotification(int notificationId, PagedDataRequest requestInfo);
 
+        PagedDataInquiryResponse<Return.Student> GetStudentsForEvent(int eventId, PagedDataRequest request);
+
+        PagedDataInquiryResponse<Return.Student> GetStudentsForQuestion(int questionId, PagedDataRequest request);
+
         Return.Student GetStudent(int id);
 
         Return.Student GetStudent(string curp);
+
     }
 
     public class GetStudentsInquiryProcessor : IGetStudentsInquiryProcessor
@@ -50,7 +55,7 @@ namespace Edutor.Web.Api.InquiryProcessing
         public PagedDataInquiryResponse<Return.Student> GetAllStudents(PagedDataRequest request)
         {
             var qresult = _queryProcessor.GetStudents(request);
-            var returnUsers = GetTutors(qresult);
+            var returnUsers = GetCollection(qresult);
             var inquiryResponse = new PagedDataInquiryResponse<Return.Student>
             {
                 Items = returnUsers,
@@ -67,7 +72,7 @@ namespace Edutor.Web.Api.InquiryProcessing
         public PagedDataInquiryResponse<Return.Student> GetStudentsForTutor(int tutorId, PagedDataRequest requestInfo)
         {
             var qresult = _queryProcessor.GetStudentsForTutor(tutorId, requestInfo);
-            var returnUsers = GetTutors(qresult);
+            var returnUsers = GetCollection(qresult);
             var inquiryResponse = new PagedDataInquiryResponse<Return.Student>
             {
                 Items = returnUsers,
@@ -85,7 +90,7 @@ namespace Edutor.Web.Api.InquiryProcessing
         public PagedDataInquiryResponse<Return.Student> GetStudentsForNotification(int notificationId, PagedDataRequest requestInfo)
         {
             var qresult = _queryProcessor.GetStudentsForNotification(notificationId, requestInfo);
-            var returnUsers = GetTutors(qresult);
+            var returnUsers = GetCollection(qresult);
             var inquiryResponse = new PagedDataInquiryResponse<Return.Student>
             {
                 Items = returnUsers,
@@ -103,7 +108,23 @@ namespace Edutor.Web.Api.InquiryProcessing
         public PagedDataInquiryResponse<Return.Student> GetStudentsForGroup(int groupId,PagedDataRequest request)
         {
             var qresult = _queryProcessor.GetStudentsForGroup(groupId,request);
-            var returnUsers = GetTutors(qresult);
+            var returnUsers = GetCollection(qresult);
+            var inquiryResponse = new PagedDataInquiryResponse<Return.Student>
+            {
+                Items = returnUsers,
+                PageCount = qresult.TotalPageCount,
+                PageNumber = request.PageNumber,
+                PageSize = request.PageSize
+            };
+
+            _commonLinkService.AddPageLinks(inquiryResponse);
+
+            return inquiryResponse;
+        }
+        public PagedDataInquiryResponse<Return.Student> GetStudentsForQuestion(int questionId, PagedDataRequest request)
+        {
+            var qresult = _queryProcessor.GetStudentsForQuestion(questionId, request);
+            var returnUsers = GetCollection(qresult);
             var inquiryResponse = new PagedDataInquiryResponse<Return.Student>
             {
                 Items = returnUsers,
@@ -117,7 +138,24 @@ namespace Edutor.Web.Api.InquiryProcessing
             return inquiryResponse;
         }
 
-        private List<Return.Student> GetTutors(QueryResult<Data.Entities.Student> qresult)
+        public PagedDataInquiryResponse<Return.Student> GetStudentsForEvent(int eventId, PagedDataRequest request)
+        {
+            var qresult = _queryProcessor.GetStudentsForEvent(eventId, request);
+            var returnUsers = GetCollection(qresult);
+            var inquiryResponse = new PagedDataInquiryResponse<Return.Student>
+            {
+                Items = returnUsers,
+                PageCount = qresult.TotalPageCount,
+                PageNumber = request.PageNumber,
+                PageSize = request.PageSize
+            };
+
+            _commonLinkService.AddPageLinks(inquiryResponse);
+
+            return inquiryResponse;
+        }
+
+        private List<Return.Student> GetCollection(QueryResult<Data.Entities.Student> qresult)
         {
             var x = qresult.QueriedItems.Select(r => _autoMapper.Map<Return.Student>(r)).ToList();
             x.ForEach(t =>

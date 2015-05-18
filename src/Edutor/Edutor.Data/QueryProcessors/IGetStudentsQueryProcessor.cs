@@ -15,12 +15,16 @@ namespace Edutor.Data.QueryProcessors
 
         QueryResult<Student> GetStudentsForTutor(int tutorId, PagedDataRequest requestInfo);
 
-        QueryResult<Student> GetStudentsForNotification(int notificationId, PagedDataRequest requestInfo);
-
         Student GetStudent(int studentId);
 
         Student GetStudent(string curp);
 
         Student GetStudentByToken(string token);
+
+        QueryResult<Student> GetStudentsForEvent(int eventId, PagedDataRequest request);
+
+        QueryResult<Student> GetStudentsForQuestion(int eventId, PagedDataRequest requestInfo);
+
+        QueryResult<Student> GetStudentsForNotification(int notificationId, PagedDataRequest requestInfo);
     }
 }
