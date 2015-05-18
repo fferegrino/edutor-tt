@@ -60,6 +60,21 @@ namespace Edutor.Web.Api.Controllers
         }
 
         /// <summary>
+        /// Obtiene la respuesta escogida por este estudiante
+        /// </summary>
+        /// <param name="questionId">El id de la pregunta deseada</param>
+        /// <param name="studentId">El id del estudiante</param>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("questions/{questionId:int}/answers/{studentId}")]
+        [ResponseType(typeof(StudentAnswer))]
+        public StudentAnswer GetAnswerers(int questionId, int studentId)
+        {
+            var r = _getStudents.GetStudentsForQuestion(questionId,studentId);
+            return r;
+        }
+
+        /// <summary>
         /// Agrega una nueva pregunta al sistema
         /// </summary>
         /// <param name="newQuestion">La nueva pregunta a agregar</param>

@@ -59,6 +59,20 @@ namespace Edutor.Web.Api.Controllers
         }
 
         /// <summary>
+        /// Obtienen el detalle de notifricación indicado
+        /// </summary>
+        /// <param name="notificationId">El id de la notificación que se desea obtener</param>
+        /// <param name="studentId">El id del estudiante con la notificación</param>
+        /// <returns></returns>
+        [HttpGet]
+        [ResponseType(typeof(StudentNotification))]
+        [Route("notifications/{notificationId:int}/details/{studentId:int}")]
+        public StudentNotification GetNotifiedUsers(int notificationId, int studentId)
+        {
+            return _getStudents.GetStudentsForNotification(notificationId, studentId);
+        }
+
+        /// <summary>
         /// Agrega una nueva notificación al sistema
         /// </summary>
         /// <param name="newNotification">La nueva notificación</param>

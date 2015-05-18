@@ -64,6 +64,20 @@ namespace Edutor.Web.Api.Controllers
             return _getStudents.GetStudentsForEvent(eventId, request);
         }
 
+        /// <summary>
+        /// Obtiene la invitación del estudiante indicado al evento
+        /// </summary>
+        /// <param name="eventId">El id del evento que se desea obtener</param>
+        /// <param name="studentId">El id del estudiante deseado</param>
+        /// <returns></returns>
+        [HttpGet]
+        [ResponseType(typeof(StudentInvitation))]
+        [Route("events/{eventId:int}/attendees/{studentId:int}")]
+        public StudentInvitation GetEventAttendees(int eventId, int studentId)
+        {
+            return _getStudents.GetStudentsForEvent(eventId,studentId);
+        }
+
 
         /// <summary>
         /// Agrega un evento al sistema

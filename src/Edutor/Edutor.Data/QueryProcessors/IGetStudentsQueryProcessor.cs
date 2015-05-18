@@ -26,5 +26,11 @@ namespace Edutor.Data.QueryProcessors
         QueryResult<Answer> GetStudentsForQuestion(int eventId, PagedDataRequest requestInfo);
 
         QueryResult<NotificationDetail> GetStudentsForNotification(int notificationId, PagedDataRequest requestInfo);
+
+        Invitation GetStudentsForEvent(int eventId, int studentId);
+
+        Answer GetStudentsForQuestion(int questionID, int studentId);
+
+        NotificationDetail GetStudentsForNotification(int notificationId, int studentId);
     }
 }

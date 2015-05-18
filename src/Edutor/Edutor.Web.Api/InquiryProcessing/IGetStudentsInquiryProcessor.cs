@@ -32,6 +32,12 @@ namespace Edutor.Web.Api.InquiryProcessing
 
         Return.Student GetStudent(string curp);
 
+        Return.StudentInvitation GetStudentsForEvent(int eventId, int studentId);
+
+        Return.StudentAnswer GetStudentsForQuestion(int eventId, int studentId);
+
+        Return.StudentNotification GetStudentsForNotification(int notificationId, int studentId);
+
     }
 
     public class GetStudentsInquiryProcessor : IGetStudentsInquiryProcessor
@@ -212,6 +218,31 @@ namespace Edutor.Web.Api.InquiryProcessing
             var r = _queryProcessor.GetStudent(curp);
             var t = _autoMapper.Map<Return.Student>(r);
             _linkServices.AddAllLinks(t);
+            return t;
+        }
+
+
+        public Return.StudentInvitation GetStudentsForEvent(int eventId, int studentId)
+        {
+            var r = _queryProcessor.GetStudentsForEvent(eventId, studentId);
+            var t = _autoMapper.Map<Return.StudentInvitation>(r);
+            _linkBasicServices.AddAllLinks(t);
+            return t;
+        }
+
+        public Return.StudentAnswer GetStudentsForQuestion(int questionId, int studentId)
+        {
+            var r = _queryProcessor.GetStudentsForQuestion(questionId, studentId);
+            var t = _autoMapper.Map<Return.StudentAnswer>(r);
+            _linkBasicServices.AddAllLinks(t);
+            return t;
+        }
+
+        public Return.StudentNotification GetStudentsForNotification(int notificationId, int studentId)
+        {
+            var r = _queryProcessor.GetStudentsForNotification(notificationId, studentId);
+            var t = _autoMapper.Map<Return.StudentNotification>(r);
+            _linkBasicServices.AddAllLinks(t);
             return t;
         }
     }
