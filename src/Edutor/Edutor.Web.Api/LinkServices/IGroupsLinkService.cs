@@ -43,6 +43,10 @@ namespace Edutor.Web.Api.LinkServices
 
             pathFragment = String.Format("groups/{0}/schoolusers", group.GroupId);
             group.AddLink(_commonLinkService.GetLink(pathFragment, Constants.CommonLinkRelValues.SchoolUsersRel, HttpMethod.Get));
+
+
+            pathFragment = String.Format("groups/{0}/schoolusers/{{1}}", group.GroupId);
+            group.AddLink(_commonLinkService.GetLink(pathFragment, Constants.CommonLinkRelValues.SchoolUsersRel, HttpMethod.Post));
         }
     }
 }

@@ -60,6 +60,7 @@ namespace Edutor.Web.Api.Controllers
         /// <returns>Una lista con los profesores asignados a cada grupo</returns>
         [HttpGet]
         [Route("groups/{groupId:int}/schoolusers")]
+        [ResponseType(typeof(PagedDataInquiryResponse<SchoolUser>))]
         public PagedDataInquiryResponse<SchoolUser> GetSchoolUsersForGroup(int groupId)
         {
             var request = _pagedDataRequestFactory.Create(Request.RequestUri);

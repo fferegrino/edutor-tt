@@ -43,10 +43,14 @@ namespace Edutor.Common
             public const string TeachersRel = "teacher";
             public const string TutorRel = "tutor";
             public const string SchoolUsersRel = "schoolusers";
+            public const string SchoolUserRel = "schooluser";
             public const string QuestionsRel = "questions";
             public const string NotificationsRel = "notifications";
             public const string EventsRel = "events";
             public const string ConversationsRel = "conversations";
+            public const string AttendeesRel = "attendees";
+            public const string NotificationDetailsRel = "details";
+            public const string AnswersRel = "answers";
         }
 
         public static class CommonRoutingDefinitions

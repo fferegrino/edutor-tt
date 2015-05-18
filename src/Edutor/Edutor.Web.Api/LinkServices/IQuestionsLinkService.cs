@@ -17,16 +17,20 @@ namespace Edutor.Web.Api.LinkServices
     public class QuestionsLinkService : IQuestionsLinkService
     {
 
-        private readonly ICommonLinkService _cLinkService;
+        private readonly ICommonLinkService _l;
 
         public QuestionsLinkService(ICommonLinkService cLinkService)
         {
-            _cLinkService = cLinkService;
+            _l = cLinkService;
         }
         public void AddAllLinks(Question ev)
         {
             var pathFragment = String.Format("questions/{0}", ev.QuestionId);
-            ev.AddLink(_cLinkService.GetLink(pathFragment, Constants.CommonLinkRelValues.Self, HttpMethod.Get));
+            ev.AddLink(_l.GetLink(pathFragment, Constants.CommonLinkRelValues.Self, HttpMethod.Get));
+
+            ev.AddLink(_l.GetLink(pathFragment + "/answers", Constants.CommonLinkRelValues.AnswersRel, HttpMethod.Get));
+
+            ev.AddLink(_l.GetLink(String.Format("schoolusers/{0}", ev.SchoolUserId), Constants.CommonLinkRelValues.SchoolUserRel, HttpMethod.Get));
         }
     }
 }

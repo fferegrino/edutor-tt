@@ -17,16 +17,20 @@ namespace Edutor.Web.Api.LinkServices
     public class NotificationsLinkService : INotificationsLinkService
     {
 
-        private readonly ICommonLinkService _cLinkService;
+        private readonly ICommonLinkService _l;
 
         public NotificationsLinkService(ICommonLinkService cLinkService)
         {
-            _cLinkService = cLinkService;
+            _l = cLinkService;
         }
         public void AddAllLinks(Notification ev)
         {
             var pathFragment = String.Format("notifications/{0}", ev.NotificationId);
-            ev.AddLink(_cLinkService.GetLink(pathFragment, Constants.CommonLinkRelValues.Self, HttpMethod.Get));
+            ev.AddLink(_l.GetLink(pathFragment, Constants.CommonLinkRelValues.Self, HttpMethod.Get));
+
+            ev.AddLink(_l.GetLink(pathFragment + "/details", Constants.CommonLinkRelValues.NotificationDetailsRel, HttpMethod.Get));
+
+            ev.AddLink(_l.GetLink(String.Format("schoolusers/{0}", ev.SchoolUserId), Constants.CommonLinkRelValues.SchoolUserRel, HttpMethod.Get));
         }
     }
 }
