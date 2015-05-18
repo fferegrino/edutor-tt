@@ -4,7 +4,7 @@ using Edutor.Web.Api;
 using Swashbuckle.Application;
 using System;
 
-//[assembly: PreApplicationStartMethod(typeof(SwaggerConfig), "Register")]
+[assembly: PreApplicationStartMethod(typeof(SwaggerConfig), "Register")]
 namespace Edutor.Web.Api
 {
     public class SwaggerConfig

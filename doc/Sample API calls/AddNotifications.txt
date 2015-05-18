@@ -1,4 +1,4 @@
-POST http://apiedutor.azurewebsites.net/notifications HTTP/1.1
+POST http://localhost:12441/notifications HTTP/1.1
 User-Agent: Fiddler
 Content-Type: application/json
 Host: localhost:12441

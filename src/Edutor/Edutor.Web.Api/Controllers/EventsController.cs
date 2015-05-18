@@ -1,4 +1,5 @@
 ﻿using Edutor.Common;
+using Edutor.Web.Api.InquiryProcessing;
 using Edutor.Web.Api.MaintenanceProcessing;
 using Edutor.Web.Api.Models.NewModels;
 using Edutor.Web.Api.Models.ReturnTypes;
@@ -19,10 +20,27 @@ namespace Edutor.Web.Api.Controllers
     public class EventsController : ApiController
     {
         private readonly IPostEventMaintenanceProcessor _addQueryProcessor;
+        private readonly IGetEventsInquiryProcessor _getEvents;
 
-        public EventsController(IPostEventMaintenanceProcessor addQueryProcessor)
+        public EventsController(IPostEventMaintenanceProcessor addQueryProcessor,
+            IGetEventsInquiryProcessor getEvents)
         {
+            _getEvents = getEvents;
             _addQueryProcessor = addQueryProcessor;
+        }
+
+        /// <summary>
+        /// Obtiene el evento indicado
+        /// </summary>
+        /// <param name="eventId">El id del evento que se desea obtener</param>
+        /// <returns></returns>
+        [HttpGet]
+        [ResponseType(typeof(Event))]
+        [Route("events/{eventId:int}")]
+        public Event GetEvent(int eventId)
+        {
+            return _getEvents.GetEvent(eventId);
+
         }
 
 
@@ -33,7 +51,7 @@ namespace Edutor.Web.Api.Controllers
         /// <returns></returns>
         [HttpPost]
         [ResponseType(typeof(Event))]
-        public IHttpActionResult AddTutor(NewEvent newEvent)
+        public IHttpActionResult AddEvent(NewEvent newEvent)
         {
             var user = _addQueryProcessor.AddEvent(newEvent);
             var result = new ModelPostedActionResult<Event>(Request, user);

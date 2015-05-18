@@ -30,6 +30,7 @@ namespace Edutor.Web.Api.AutoMappingConfigurator
             Mapper.CreateMap<Ent.Question, RetModels.Question>()
                 .ForMember(x => x.Links, opt => opt.Ignore())
                 .ForMember(s => s.PossibleAnswers, x => x.Ignore())
+                 .ForMember(x => x.SchoolUserId, opt => opt.MapFrom(src => src.SchoolUser.UserId))
                 ;
         }
     }

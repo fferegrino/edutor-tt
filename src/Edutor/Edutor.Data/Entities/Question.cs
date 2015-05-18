@@ -20,8 +20,8 @@ namespace Edutor.Data.Entities
 
         public virtual Group Group { get; set; }
         public virtual User SchoolUser { get; set; }
-        public virtual List<PossibleAnswer> PossibleAnswers { get; set; }
-        public virtual List<Answer> Answers { get; set; }
+        public virtual IList<PossibleAnswer> PossibleAnswers { get; set; }
+        public virtual IList<Answer> Answers { get; set; }
         public virtual byte[] Version { get; set; }
     }
 }

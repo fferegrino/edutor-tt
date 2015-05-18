@@ -16,16 +16,22 @@ namespace Edutor.Web.Api.Controllers
         private readonly IGetStudentsInquiryProcessor _getStudentsInquiryProcessor;
         private readonly IGetNotificationsInquiryProcessor _getNotifications;
         private readonly IPagedDataRequestFactory _pagedDataRequestFactory;
+        private readonly IGetEventsInquiryProcessor _getEvents;
+        private readonly IGetQuestionsInquiryProcessor _getQuestions;
 
         public StudentsController(IPostStudentMaintenanceProcessor addUserQueryProcessor, 
             IGetStudentsInquiryProcessor getStudents,
             IGetNotificationsInquiryProcessor getNotifications,
-            IPagedDataRequestFactory pagedDataRequest)
+            IPagedDataRequestFactory pagedDataRequest,
+            IGetEventsInquiryProcessor getEvents,
+            IGetQuestionsInquiryProcessor getQuestions)
         {
             _addUserQueryProcessor = addUserQueryProcessor;
             _getStudentsInquiryProcessor = getStudents;
             _getNotifications = getNotifications;
             _pagedDataRequestFactory = pagedDataRequest;
+            _getEvents = getEvents;
+            _getQuestions = getQuestions;
         }
 
 
@@ -71,5 +77,33 @@ namespace Edutor.Web.Api.Controllers
             return r;
         }
 
+        /// <summary>
+        /// Obtiene una lista de los eventos para el estudiante
+        /// </summary>
+        /// <param name="studentId">El id del estudiante del que se desea conocer sus eventos</param>
+        /// <returns>Una lista con los eventos del estudiante</returns>
+        [HttpGet]
+        [Route("students/{studentId:int}/events")]
+        public PagedDataInquiryResponse<Event> GetEventsForStudent(int studentId)
+        {
+            var request = _pagedDataRequestFactory.Create(Request.RequestUri);
+            var r = _getEvents.GetEventsForStudent(studentId, request);
+            return r;
+        }
+
+
+        /// <summary>
+        /// Obtiene una lista de las preguntas para el estudiante
+        /// </summary>
+        /// <param name="studentId">El id del estudiante del que se desea conocer sus preguntas</param>
+        /// <returns>Una lista con las preguntas del estudiante</returns>
+        [HttpGet]
+        [Route("students/{studentId:int}/questions")]
+        public PagedDataInquiryResponse<Question> GetQuestionsForStudent(int studentId)
+        {
+            var request = _pagedDataRequestFactory.Create(Request.RequestUri);
+            var r = _getQuestions.GetQuestionsForStudent(studentId, request);
+            return r;
+        }
     }
 }

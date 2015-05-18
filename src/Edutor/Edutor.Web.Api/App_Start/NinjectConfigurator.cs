@@ -128,6 +128,12 @@ namespace Edutor.Web.Api
 
             container.Bind<QueryProcessors.IGetNotificationsQueryProcessor>().To<SqlProcessors.GetNotificationsQueryProcessor>().InRequestScope();
             container.Bind<InquiryProcessing.IGetNotificationsInquiryProcessor>().To<InquiryProcessing.GetNotificationsInquiryProcessor>().InRequestScope();
+
+            container.Bind<QueryProcessors.IGetEventsQueryProcessor>().To<SqlProcessors.GetEventsQueryProcessor>().InRequestScope();
+            container.Bind<InquiryProcessing.IGetEventsInquiryProcessor>().To<InquiryProcessing.GetEventsInquiryProcessor>().InRequestScope();
+
+            container.Bind<QueryProcessors.IGetQuestionsQueryProcessor>().To<SqlProcessors.GetQuestionsQueryProcessor>().InRequestScope();
+            container.Bind<InquiryProcessing.IGetQuestionsInquiryProcessor>().To<InquiryProcessing.GetQuestionsInquiryProcessor>().InRequestScope();
             #endregion
 
 

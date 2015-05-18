@@ -33,6 +33,7 @@ namespace Edutor.Web.Api.Controllers
         /// <param name="notificationId">El id de la notificación deseada</param>
         /// <returns></returns>
         [HttpGet]
+        [Route("notifications/{notificationId:int}")]
         public Notification GetNotification(int notificationId)
         {
             return _getNotifications.GetNotification(notificationId);

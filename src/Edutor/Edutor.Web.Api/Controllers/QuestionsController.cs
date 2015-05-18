@@ -1,4 +1,5 @@
-﻿using Edutor.Web.Api.MaintenanceProcessing;
+﻿using Edutor.Web.Api.InquiryProcessing;
+using Edutor.Web.Api.MaintenanceProcessing;
 using Edutor.Web.Api.Models.NewModels;
 using Edutor.Web.Api.Models.ReturnTypes;
 using System;
@@ -15,11 +16,25 @@ namespace Edutor.Web.Api.Controllers
     public class QuestionsController : ApiController
     {
         private readonly IPostQuestionMaintenanceProcessor _postQuestion;
-        public QuestionsController(IPostQuestionMaintenanceProcessor postQuestion)
+        private readonly IGetQuestionsInquiryProcessor _getQuestions;
+        public QuestionsController(IPostQuestionMaintenanceProcessor postQuestion,
+            IGetQuestionsInquiryProcessor getQuestions)
         {
             _postQuestion = postQuestion;
+            _getQuestions = getQuestions;
         }
 
+        /// <summary>
+        /// Obtiene la pregunta indicada
+        /// </summary>
+        /// <param name="questionId">El id de la notificación deseada</param>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("questions/{questionId:int}")]
+        public Question GetQuestion(int questionId)
+        {
+            return _getQuestions.GetQuestion(questionId);
+        }
 
         /// <summary>
         /// Agrega una nueva pregunta al sistema

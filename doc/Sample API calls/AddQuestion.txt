@@ -1,0 +1,12 @@
+POST http://localhost:12441/questions HTTP/1.1
+User-Agent: Fiddler
+Content-Type: application/json
+Host: localhost:12441
+
+{
+	text:"¿Qué le parecen los nuevos horarios escolares?",
+	expirationdate:"2014-01-01",
+	schooluserid:1,
+	groupid: 3,
+	possibleanswers: ["Bueno","Más o menos", "Malo"]
+}

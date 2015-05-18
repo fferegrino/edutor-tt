@@ -10,9 +10,12 @@ namespace Edutor.Data.QueryProcessors
     public interface IGetStudentsQueryProcessor
     {
         QueryResult<Student> GetStudents(PagedDataRequest requestInfo);
+
         QueryResult<Student> GetStudentsForGroup(int groupId, PagedDataRequest requestInfo);
 
         QueryResult<Student> GetStudentsForTutor(int tutorId, PagedDataRequest requestInfo);
+
+        QueryResult<Student> GetStudentsForNotification(int notificationId, PagedDataRequest requestInfo);
 
         Student GetStudent(int studentId);
 

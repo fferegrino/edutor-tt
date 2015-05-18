@@ -27,6 +27,7 @@ namespace Edutor.Web.Api.AutoMappingConfigurator
 
             Mapper.CreateMap<Ent.Notification, RetModels.Notification>()
                 .ForMember(x => x.Links, opt => opt.Ignore())
+                 .ForMember(x => x.SchoolUserId, opt => opt.MapFrom(src => src.SchoolUser.UserId))
                 ;
         }
     }

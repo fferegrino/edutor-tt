@@ -22,6 +22,8 @@ namespace Edutor.Web.Api.InquiryProcessing
 
         PagedDataInquiryResponse<Return.Student> GetStudentsForTutor(int tutorId, PagedDataRequest requestInfo);
 
+        PagedDataInquiryResponse<Return.Student> GetStudentsForNotification(int notificationId, PagedDataRequest requestInfo);
+
         Return.Student GetStudent(int id);
     }
 
@@ -76,6 +78,24 @@ namespace Edutor.Web.Api.InquiryProcessing
 
             return inquiryResponse;
         
+        }
+
+        public PagedDataInquiryResponse<Return.Student> GetStudentsForNotification(int notificationId, PagedDataRequest requestInfo)
+        {
+            var qresult = _queryProcessor.GetStudentsForNotification(notificationId, requestInfo);
+            var returnUsers = GetTutors(qresult);
+            var inquiryResponse = new PagedDataInquiryResponse<Return.Student>
+            {
+                Items = returnUsers,
+                PageCount = qresult.TotalPageCount,
+                PageNumber = requestInfo.PageNumber,
+                PageSize = requestInfo.PageSize
+            };
+
+            _commonLinkService.AddPageLinks(inquiryResponse);
+
+            return inquiryResponse;
+
         }
 
         public PagedDataInquiryResponse<Return.Student> GetStudentsForGroup(int groupId,PagedDataRequest request)

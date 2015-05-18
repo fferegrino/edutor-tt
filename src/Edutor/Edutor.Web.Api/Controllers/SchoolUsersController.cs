@@ -24,18 +24,37 @@ namespace Edutor.Web.Api.Controllers
         private readonly IGetGroupsInquiryProcessor _getGroupsProcessor;
         private readonly IGetNotificationsInquiryProcessor _getNotifications;
         private readonly IPagedDataRequestFactory _pagedDataRequestFactory;
+        private readonly IGetEventsInquiryProcessor _getEvents;
+        private readonly IGetQuestionsInquiryProcessor _getQuestions;
 
         public SchoolUsersController(IPostSchoolUserMaintenanceProcessor addUserQueryProcessor,
             IGetSchoolUsersInquiryProcessor getQueryProcessor,
             IPagedDataRequestFactory pagedDataRequestFactory,
             IGetNotificationsInquiryProcessor getNotifications,
-            IGetGroupsInquiryProcessor getGroupsProcessor)
+            IGetGroupsInquiryProcessor getGroupsProcessor, 
+            IGetEventsInquiryProcessor getEvents,
+            IGetQuestionsInquiryProcessor getQuestions)
         {
             _getQueryProcessor = getQueryProcessor;
             _addUserQueryProcessor = addUserQueryProcessor;
             _pagedDataRequestFactory = pagedDataRequestFactory;
             _getGroupsProcessor = getGroupsProcessor;
             _getNotifications = getNotifications;
+            _getEvents = getEvents;
+            _getQuestions = getQuestions;
+        }
+
+        /// <summary>
+        /// Obtiene el usuario escolar indicado
+        /// </summary>
+        /// <param name="schoolUserId">El id del usuario escolar</param>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("schoolusers/{schoolUserId:int}")]
+        public SchoolUser GetSchoolUser(int schoolUserId)
+        {
+            var s = _getQueryProcessor.GetSchoolUser(schoolUserId);
+            return s;
         }
 
         [HttpGet]
@@ -60,18 +79,6 @@ namespace Edutor.Web.Api.Controllers
             return tasks;
         }
 
-        /// <summary>
-        /// Obtiene el usuario escolar indicado
-        /// </summary>
-        /// <param name="schoolUserId">El id del usuario escolar</param>
-        /// <returns></returns>
-        [HttpGet]
-        public SchoolUser GetSchoolUser(int schoolUserId)
-        {
-            var s = _getQueryProcessor.GetSchoolUser(schoolUserId);
-            return s;
-        }
-
 
         /// <summary>
         /// Obtiene una lista de las notificaciones creadas por el usuario escolar
@@ -86,6 +93,35 @@ namespace Edutor.Web.Api.Controllers
             var r = _getNotifications.GetNotificationsForSchoolUser(schoolUserid, request);
             return r;
         }
+
+        /// <summary>
+        /// Obtiene una lista de los eventos creados por el usuario escolar
+        /// </summary>
+        /// <param name="schoolUserid">El id del usuario escolar del que se desea conocer sus eventos</param>
+        /// <returns>Una lista con los eventos creados por el usuario escolar</returns>
+        [HttpGet]
+        [Route("schoolusers/{schoolUserId:int}/events")]
+        public PagedDataInquiryResponse<Event> GetEventsForSchoolUser(int schoolUserid)
+        {
+            var request = _pagedDataRequestFactory.Create(Request.RequestUri);
+            var r  =_getEvents.GetEventsForSchoolUser(schoolUserid, request);
+            return r;
+        }
+
+        /// <summary>
+        /// Obtiene una lista de las preguntas creadas por el usuario escolar
+        /// </summary>
+        /// <param name="schoolUserid">El id del usuario escolar del que se desea conocer sus preguntas</param>
+        /// <returns>Una lista con las preguntas creadas por el usuario escolar</returns>
+        [HttpGet]
+        [Route("schoolusers/{schoolUserId:int}/questions")]
+        public PagedDataInquiryResponse<Question> GetQuestionsForSchoolUser(int schoolUserid)
+        {
+            var request = _pagedDataRequestFactory.Create(Request.RequestUri);
+            var r = _getQuestions.GetQuestionsForSchoolUser(schoolUserid, request);
+            return r;
+        }
+
 
         /// <summary>
         /// Agrega usuario escolar
