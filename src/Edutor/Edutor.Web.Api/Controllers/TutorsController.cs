@@ -35,9 +35,38 @@ namespace Edutor.Web.Api.Controllers
         /// <returns></returns>
         [HttpGet]
         [ResponseType(typeof(Tutor))]
-        public Tutor GetSchoolUser(int tutorId)
+        [Route("tutors/{tutorId:int}")]
+        public Tutor GetTutor(int tutorId)
         {
             var s = _getQueryProcessor.GetTutor(tutorId);
+            return s;
+        }
+
+        /// <summary>
+        /// Obtiene el tutor indicado
+        /// </summary>
+        /// <param name="curp">La Clave Única de Registro de Población del tutor</param>
+        /// <returns></returns>
+        [HttpGet]
+        [ResponseType(typeof(Tutor))]
+        [Route("tutors/{curp:regex(^[A-Za-z0-9]+$)}")]
+        public Tutor GetTutor(string curp)
+        {
+            var s = _getQueryProcessor.GetTutor(curp);
+            return s;
+        }
+
+        /// <summary>
+        /// Obtiene todos los tutores registrados en el sistema
+        /// </summary>
+        /// <returns>Una respuesta paginada de todos los tutores en el sistema</returns>
+        [HttpGet]
+        [ResponseType(typeof(PagedDataInquiryResponse<Tutor>))]
+        [Route("tutors")]
+        public PagedDataInquiryResponse<Tutor> GetTutors()
+        {
+            var request = _pagedDataRequestFactory.Create(Request.RequestUri);
+            var s = _getQueryProcessor.GetAllTutors(request);
             return s;
         }
 
@@ -48,6 +77,7 @@ namespace Edutor.Web.Api.Controllers
         /// <returns>Una lista con los profesores asignados a cada grupo</returns>
         [HttpGet]
         [Route("tutors/{tutorId:int}/students")]
+        [ResponseType(typeof(PagedDataInquiryResponse<Tutor>))]
         public PagedDataInquiryResponse<Student> GetStudentsForTutor(int tutorId)
         {
             var request = _pagedDataRequestFactory.Create(Request.RequestUri);

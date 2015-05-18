@@ -57,6 +57,20 @@ namespace Edutor.Web.Api.Controllers
             return s;
         }
 
+        /// <summary>
+        /// Obtiene el usuario escolar indicado
+        /// </summary>
+        /// <param name="curp">La Clave Única de Registro de Población del usuario escolar</param>
+        /// <returns></returns>
+        [HttpGet]
+        [ResponseType(typeof(SchoolUser))]
+        [Route("schoolusers/{curp:regex(^[A-Za-z0-9]+$)}")]
+        public SchoolUser GetSchoolUser(string curp)
+        {
+            var s = _getQueryProcessor.GetSchoolUser(curp);
+            return s;
+        }
+
         [HttpGet]
         public PagedDataInquiryResponse<SchoolUser> GetSchoolUsers()
         {

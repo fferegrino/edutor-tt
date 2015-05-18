@@ -19,6 +19,8 @@ namespace Edutor.Data.QueryProcessors
 
         Student GetStudent(int studentId);
 
-        Student GetStudent(string token);
+        Student GetStudent(string curp);
+
+        Student GetStudentByToken(string token);
     }
 }

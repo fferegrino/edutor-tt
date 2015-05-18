@@ -100,9 +100,16 @@ namespace Edutor.Data.SqlServer.QueryProcessors
             return q;
         }
 
-        public Student GetStudent(string token)
+
+        public Student GetStudent(string curp)
         {
-            var q = _session.QueryOver<Student>().Where(user => user.Token.Equals(token)).SingleOrDefault();
+            var q = _session.QueryOver<Student>().Where(user => user.Curp == (curp)).SingleOrDefault();
+            return q;
+        }
+
+        public Student GetStudentByToken(string token)
+        {
+            var q = _session.QueryOver<Student>().Where(user => user.Token == (token)).SingleOrDefault();
             return q;
         }
 

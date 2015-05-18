@@ -50,6 +50,7 @@ namespace Edutor.Common
             public const string ConversationsRel = "conversations";
             public const string AttendeesRel = "attendees";
             public const string NotificationDetailsRel = "details";
+            public const string GroupsRel = "groups";
             public const string AnswersRel = "answers";
         }
 

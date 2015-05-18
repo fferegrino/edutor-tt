@@ -20,9 +20,10 @@ namespace Edutor.Data.SqlServer.Mapping
             Map(x => x.Address).Not.Nullable();
             Map(x => x.Mobile).Nullable();
             Map(x => x.Phone).Nullable();
-            Map(x => x.Position).Nullable();
             Map(x => x.Job).Nullable();
             Map(x => x.JobTelephone).Nullable();
+            Map(x => x.Position).Nullable();
+            Map(x => x.Password).Nullable();
 
 
             HasManyToMany(x => x.Groups).Table("Teachings")

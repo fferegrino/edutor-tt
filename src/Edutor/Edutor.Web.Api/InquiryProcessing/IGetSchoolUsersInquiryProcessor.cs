@@ -18,6 +18,8 @@ namespace Edutor.Web.Api.InquiryProcessing
         PagedDataInquiryResponse<Return.SchoolUser> GetAllSchoolUsers(PagedDataRequest request);
         PagedDataInquiryResponse<Return.SchoolUser> GetSchoolUsersForGroup(int groupId, PagedDataRequest request);
         Return.SchoolUser GetSchoolUser(int userId);
+
+        Return.SchoolUser GetSchoolUser(string curp);
     }
 
     public class GetSchoolUsersInquiryProcessor : IGetSchoolUsersInquiryProcessor
@@ -25,10 +27,10 @@ namespace Edutor.Web.Api.InquiryProcessing
 
         private readonly IAutoMapper _autoMapper;
         private readonly IGetUsersQueryProcessor _queryProcessor;
-        private readonly IUsersLinkService _tutorsLinkService;
+        private readonly ISchoolUsersLinkService _tutorsLinkService;
         private readonly ICommonLinkService _commonLinkService;
         public GetSchoolUsersInquiryProcessor(IAutoMapper autoMapper, 
-            IUsersLinkService tutorsLinkService,
+            ISchoolUsersLinkService tutorsLinkService,
             IGetUsersQueryProcessor queryProcessor, 
             ICommonLinkService commonLinkService)
         {
@@ -82,6 +84,14 @@ namespace Edutor.Web.Api.InquiryProcessing
         public Return.SchoolUser GetSchoolUser(int userId)
         {
             var s = _queryProcessor.GetSchoolUser(userId);
+            var returnType = _autoMapper.Map<Return.SchoolUser>(s);
+            _tutorsLinkService.AddAllLinks(returnType);
+            return returnType;
+        }
+
+        public Return.SchoolUser GetSchoolUser(string curp)
+        {
+            var s = _queryProcessor.GetSchoolUser(curp);
             var returnType = _autoMapper.Map<Return.SchoolUser>(s);
             _tutorsLinkService.AddAllLinks(returnType);
             return returnType;

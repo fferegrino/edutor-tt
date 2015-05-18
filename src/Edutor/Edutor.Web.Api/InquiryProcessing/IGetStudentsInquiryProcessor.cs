@@ -25,6 +25,8 @@ namespace Edutor.Web.Api.InquiryProcessing
         PagedDataInquiryResponse<Return.Student> GetStudentsForNotification(int notificationId, PagedDataRequest requestInfo);
 
         Return.Student GetStudent(int id);
+
+        Return.Student GetStudent(string curp);
     }
 
     public class GetStudentsInquiryProcessor : IGetStudentsInquiryProcessor
@@ -129,6 +131,14 @@ namespace Edutor.Web.Api.InquiryProcessing
         public Return.Student GetStudent(int id)
         {
             var r = _queryProcessor.GetStudent(id);
+            var t = _autoMapper.Map<Return.Student>(r);
+            _linkServices.AddAllLinks(t);
+            return t;
+        }
+
+        public Return.Student GetStudent(string curp)
+        {
+            var r = _queryProcessor.GetStudent(curp);
             var t = _autoMapper.Map<Return.Student>(r);
             _linkServices.AddAllLinks(t);
             return t;

@@ -19,6 +19,7 @@ namespace Edutor.Data.Entities
 
         #region SchoolUser
         public virtual Nullable<char> Position { get; set; }
+        public virtual string Password { get; set; }
         public virtual IList<Group> Groups { get; set; }
         #endregion
 
@@ -37,5 +38,6 @@ namespace Edutor.Data.Entities
         public const char ProfessorPosition = 'P'; 
         public const char AdministrativePosition = 'A';
         #endregion
+
     }
 }

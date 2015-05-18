@@ -57,11 +57,39 @@ namespace Edutor.Web.Api.Controllers
         /// <returns></returns>
         [HttpGet]
         [ResponseType(typeof(Student))]
+        [Route("students/{studentId:int}")]
         public Student GetStudentById(int studentId)
         {
             return _getStudentsInquiryProcessor.GetStudent(studentId);
         }
 
+        /// <summary>
+        /// Obtiene el tutor indicado
+        /// </summary>
+        /// <param name="tutorId">El id del tutor a recuperar</param>
+        /// <returns></returns>
+        [HttpGet]
+        [ResponseType(typeof(Student))]
+        [Route("students/{curp:regex(^[A-Za-z0-9]+$)}")]
+        public Student GetTutor(string curp)
+        {
+            var s = _getStudentsInquiryProcessor.GetStudent(curp);
+            return s;
+        }
+
+        /// <summary>
+        /// Obtiene todos los tutores registrados en el sistema
+        /// </summary>
+        /// <returns>Una respuesta paginada de todos los tutores en el sistema</returns>
+        [HttpGet]
+        [ResponseType(typeof(PagedDataInquiryResponse<Student>))]
+        [Route("students")]
+        public PagedDataInquiryResponse<Student> GetTutors()
+        {
+            var request = _pagedDataRequestFactory.Create(Request.RequestUri);
+            var s  =_getStudentsInquiryProcessor.GetAllStudents(request);
+            return s;
+        }
 
         /// <summary>
         /// Obtiene una lista de las notificaciones para el estudiante

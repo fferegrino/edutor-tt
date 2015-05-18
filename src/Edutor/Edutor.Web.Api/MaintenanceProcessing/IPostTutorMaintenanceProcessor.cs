@@ -23,9 +23,9 @@ namespace Edutor.Web.Api.MaintenanceProcessing
 
         private readonly IAutoMapper _autoMapper;
         private readonly IAddUserQueryProcessor _addUserQueryProcessor;
-        private readonly IUsersLinkService _linkServices;
+        private readonly ITutorsLinkService _linkServices;
 
-        public PostTutorMaintenanceProcessor(IAutoMapper autoMapper, IAddUserQueryProcessor addUserQueryProcessor, IUsersLinkService linkServices)
+        public PostTutorMaintenanceProcessor(IAutoMapper autoMapper, IAddUserQueryProcessor addUserQueryProcessor, ITutorsLinkService linkServices)
         {
             _autoMapper = autoMapper;
             _addUserQueryProcessor = addUserQueryProcessor;

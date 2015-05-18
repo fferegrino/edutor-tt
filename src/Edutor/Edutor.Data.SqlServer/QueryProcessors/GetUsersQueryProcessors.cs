@@ -86,5 +86,17 @@ namespace Edutor.Data.SqlServer.QueryProcessors
             var q = _session.QueryOver<User>().Where(user => user.Type == User.TutorType && user.UserId == userId).SingleOrDefault();
             return q;
         }
+
+        public User GetSchoolUser(string curp)
+        {
+            var q = _session.QueryOver<User>().Where(user => user.Type == User.SchoolUserType && user.Curp == (curp)).SingleOrDefault();
+            return q;
+        }
+
+        public User GetTutor(string curp)
+        {
+            var q = _session.QueryOver<User>().Where(user => user.Type == User.TutorType && user.Curp == (curp)).SingleOrDefault();
+            return q;
+        }
     }
 }

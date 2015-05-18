@@ -158,6 +158,7 @@
     <Compile Include="LinkServices\IEventsLinkService.cs" />
     <Compile Include="LinkServices\IGroupsLinkService.cs" />
     <Compile Include="LinkServices\IStudentsLinkService.cs" />
+    <Compile Include="LinkServices\ITutorsLinkService.cs" />
     <Compile Include="LinkServices\IUsersLinkService.cs" />
     <Compile Include="MaintenanceProcessing\IPostNotificationMaintenanceProcessor.cs" />
     <Compile Include="MaintenanceProcessing\IPostQuestionMaintenanceProcessor.cs" />

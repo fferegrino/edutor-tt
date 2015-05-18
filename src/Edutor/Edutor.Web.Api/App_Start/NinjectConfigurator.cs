@@ -51,7 +51,8 @@ namespace Edutor.Web.Api
         private void ConfigureLinkServices(IKernel container)
         {
             container.Bind<LS.ICommonLinkService>().To<LS.CommonLinkService>();
-            container.Bind<LS.IUsersLinkService>().To<LS.UsersLinkService>();
+            container.Bind<LS.ISchoolUsersLinkService>().To<LS.SchoolUsersLinkService>();
+            container.Bind<LS.ITutorsLinkService>().To<LS.TutorsLinkService>();
             container.Bind<LS.IStudentsLinkService>().To<LS.StudentsLinkService>();
             container.Bind<LS.IGroupsLinkService>().To<LS.GroupsLinkService>();
             container.Bind<LS.IEventsLinkService>().To<LS.EventsLinkService>();

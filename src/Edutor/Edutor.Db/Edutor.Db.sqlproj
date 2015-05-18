@@ -88,5 +88,6 @@
     <None Include="Edutor.Db.local.publish.xml" />
     <None Include="Edutor.Db.publish.xml" />
     <None Include="Edutor.Db.Azure.publish.xml" />
+    <None Include="Edutor.Db.HSXD.publish.xml" />
   </ItemGroup>
 </Project>
