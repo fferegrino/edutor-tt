@@ -20,7 +20,7 @@ namespace Edutor.Web.Api.Controllers
         private readonly IGetEventsInquiryProcessor _getEvents;
         private readonly IGetQuestionsInquiryProcessor _getQuestions;
 
-        public StudentsController(IPostStudentMaintenanceProcessor addUserQueryProcessor, 
+        public StudentsController(IPostStudentMaintenanceProcessor addUserQueryProcessor,
             IGetStudentsInquiryProcessor getStudents,
             IGetNotificationsInquiryProcessor getNotifications,
             IPagedDataRequestFactory pagedDataRequest,
@@ -43,6 +43,7 @@ namespace Edutor.Web.Api.Controllers
         /// <returns></returns>
         [HttpPost]
         [ResponseType(typeof(Student))]
+        [Route("students")]
         public IHttpActionResult AddStudent(NewStudent newStudent)
         {
 
@@ -88,7 +89,7 @@ namespace Edutor.Web.Api.Controllers
         public PagedDataInquiryResponse<Student> GetTutors()
         {
             var request = _pagedDataRequestFactory.Create(Request.RequestUri);
-            var s  =_getStudentsInquiryProcessor.GetAllStudents(request);
+            var s = _getStudentsInquiryProcessor.GetAllStudents(request);
             return s;
         }
 

@@ -15,9 +15,10 @@ namespace Edutor.Web.Api.InquiryProcessing
     public interface IGetConversationsInquiryProcessor
     {
 
-        //PagedDataInquiryResponse<Return.Group> GetAllGroups(PagedDataRequest request);
+        Return.Message GetMessagesForConversation(int conversationId, int messageId);
 
         PagedDataInquiryResponse<Return.Message> GetMessagesForConversation(int conversationId, PagedDataRequest request);
+
         Return.Conversation GetConversation(int conversationId);
     }
 
@@ -57,6 +58,14 @@ namespace Edutor.Web.Api.InquiryProcessing
             return inquiryResponse;
         }
 
+        public Return.Message GetMessagesForConversation(int conversationId, int messageId)
+        {
+            var ret = _queryProcessor.GetMessagesForConversation(conversationId, messageId);
+            var s = _autoMapper.Map<Return.Message>(ret);
+            _linkServices.AddAllLinks(s);
+
+            return s;
+        }
 
         private List<Return.Message> GetCollection(QueryResult<Data.Entities.Message> qresult)
         {
@@ -64,7 +73,7 @@ namespace Edutor.Web.Api.InquiryProcessing
             x.ForEach(t => _linkServices.AddAllLinks(t));
             return x;
         }
-        
+
         public Return.Message GetMessage(int conversationId, int messageId)
         {
             var s = _queryProcessor.GetMessagesForConversation(conversationId, messageId);
@@ -73,22 +82,21 @@ namespace Edutor.Web.Api.InquiryProcessing
             return returnType;
         }
 
-
-
-
         public Return.Conversation GetConversation(int conversationId)
         {
             var convo = _queryProcessor.GetConversation(conversationId);
             var ret = _autoMapper.Map<Return.Conversation>(convo);
-            ret.LastMessages = MapMessages(_queryProcessor.GetLastMessagesForConversation(conversationId,5));
+            ret.LastMessages = MapMessages(_queryProcessor.GetLastMessagesForConversation(conversationId, 5));
+            _linkServices.AddAllLinks(ret);
             return ret;
         }
 
         private IList<Return.Message> MapMessages(IList<Data.Entities.Message> list)
         {
             var l = new List<Return.Message>();
-            foreach (var msg in list) {
-                var s  = _autoMapper.Map<Return.Message>(msg);
+            foreach (var msg in list)
+            {
+                var s = _autoMapper.Map<Return.Message>(msg);
                 _linkServices.AddAllLinks(s);
                 l.Add(s);
             }

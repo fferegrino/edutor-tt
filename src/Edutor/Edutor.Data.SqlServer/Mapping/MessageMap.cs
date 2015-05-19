@@ -18,7 +18,7 @@ namespace Edutor.Data.SqlServer.Mapping
             Map(x => x.SeenDate);
             References<User>(x => x.To).Column("ToId");
             References<User>(x => x.From).Column("FromId");
-            References<Conversation>(c=> c.Conversation).Column("ConversationId");
+            References<Conversation>(c => c.Conversation).Column("ConversationId");
         }
     }
 }

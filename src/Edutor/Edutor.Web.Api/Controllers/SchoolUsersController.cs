@@ -73,6 +73,7 @@ namespace Edutor.Web.Api.Controllers
         }
 
         [HttpGet]
+        [Route("schoolusers")]
         public PagedDataInquiryResponse<SchoolUser> GetSchoolUsers()
         {
             var request = _pagedDataRequestFactory.Create(Request.RequestUri);
@@ -147,6 +148,7 @@ namespace Edutor.Web.Api.Controllers
         /// <response code="201">Usuario escolar creado</response>
         [HttpPost]
         [ResponseType(typeof(SchoolUser))]
+        [Route("schoolusers")]
         public IHttpActionResult AddSchoolUser(NewSchoolUser newUser)
         {
             var user = _addUserQueryProcessor.AddUser(newUser);

@@ -33,7 +33,7 @@ namespace Edutor.Data.SqlServer.QueryProcessors
 
         public Message GetMessagesForConversation(int conversationId, int messageId)
         {
-            var q = _session.QueryOver<Message>().Where(m => m.ConversationId == conversationId && m.MessageId == messageId).SingleOrDefault();
+            var q = _session.QueryOver<Message>().Where(m => m.Conversation.ConversationId == conversationId && m.MessageId == messageId).SingleOrDefault();
             return q;
         }
 

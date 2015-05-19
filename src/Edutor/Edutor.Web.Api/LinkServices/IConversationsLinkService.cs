@@ -14,6 +14,7 @@ namespace Edutor.Web.Api.LinkServices
     public interface IConversationsLinkService
     {
         void AddAllLinks(Message msg);
+        void AddAllLinks(Conversation msg);
     }
 
     public class ConversationsLinkService : IConversationsLinkService
@@ -24,11 +25,21 @@ namespace Edutor.Web.Api.LinkServices
         {
             _commonLinkService = commonLinkService;
         }
-        
+
         public void AddAllLinks(Message msg)
         {
-            var studentAnswerLinks = String.Format("conversation/{0}/message/{1}", msg.ConversationId, msg.MessageId);
+            var studentAnswerLinks = String.Format("conversations/{0}/messages/{1}", msg.ConversationId, msg.MessageId);
             msg.AddLink(_commonLinkService.GetLink(studentAnswerLinks, Constants.CommonLinkRelValues.Self, HttpMethod.Get));
+
+            msg.AddLink(_commonLinkService.GetLink(String.Format("conversations/{0}", msg.ConversationId), Constants.CommonLinkRelValues.ConversationRel, HttpMethod.Get));
+        }
+
+
+        public void AddAllLinks(Conversation msg)
+        {
+            var studentAnswerLinks = String.Format("conversations/{0}", msg.ConversationId);
+            msg.AddLink(_commonLinkService.GetLink(studentAnswerLinks, Constants.CommonLinkRelValues.Self, HttpMethod.Get));
+            msg.AddLink(_commonLinkService.GetLink(studentAnswerLinks + "/messages", Constants.CommonLinkRelValues.MessagesRel, HttpMethod.Get));
         }
     }
 }
