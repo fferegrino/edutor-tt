@@ -2,6 +2,7 @@
 using Edutor.Common.Security;
 using Edutor.Data.QueryProcessors;
 using NHibernate;
+using NHibernate.Exceptions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,7 +27,14 @@ namespace Edutor.Data.SqlServer.QueryProcessors
 
         public void AddUser(Entities.User user)
         {
-            _session.SaveOrUpdate(user);
+            try
+            {
+                _session.SaveOrUpdate(user);
+            }
+            catch (GenericADOException ex)
+            {
+                throw new Edutor.Data.Exceptions.DuplicateEntityException("This is a duplicate user, check the unique fields within your entity (either Curp or Email)");
+            }
         }
     }
 }

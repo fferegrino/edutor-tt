@@ -133,6 +133,7 @@ namespace Edutor.Data.SqlServer.QueryProcessors
         public Student GetStudent(int studentId)
         {
             var q = _session.QueryOver<Student>().Where(user => user.StudentId == studentId).SingleOrDefault();
+            if (q == null) throw new Edutor.Data.Exceptions.ObjectNotFoundException("No existe un tutor con Id " + studentId);
             return q;
         }
 
@@ -140,6 +141,7 @@ namespace Edutor.Data.SqlServer.QueryProcessors
         public Student GetStudent(string curp)
         {
             var q = _session.QueryOver<Student>().Where(user => user.Curp == (curp)).SingleOrDefault();
+            if (q == null) throw new Edutor.Data.Exceptions.ObjectNotFoundException("No existe un estudiante con CURP " + curp);
             return q;
         }
 
@@ -151,8 +153,9 @@ namespace Edutor.Data.SqlServer.QueryProcessors
 
         public Invitation GetStudentsForEvent(int eventId, int studentId)
         {
-            return _session.QueryOver<Invitation>().Where(t => t.Event.EventId == eventId
+            var q =  _session.QueryOver<Invitation>().Where(t => t.Event.EventId == eventId
                 && t.Student.StudentId == studentId).SingleOrDefault();
+            return q;
         }
 
         public Answer GetStudentsForQuestion(int questionId, int studentId)
@@ -167,8 +170,10 @@ namespace Edutor.Data.SqlServer.QueryProcessors
 
         public NotificationDetail GetStudentsForNotification(int notificationId, int studentId)
         {
-            return _session.QueryOver<NotificationDetail>().Where(t => t.Notification.NotificationId == notificationId
+            var q =  _session.QueryOver<NotificationDetail>().Where(t => t.Notification.NotificationId == notificationId
                 && t.Student.StudentId == studentId).SingleOrDefault();
+
+            return q;
         }
     }
 }

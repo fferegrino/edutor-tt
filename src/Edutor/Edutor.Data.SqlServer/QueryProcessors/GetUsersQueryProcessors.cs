@@ -78,24 +78,28 @@ namespace Edutor.Data.SqlServer.QueryProcessors
         public User GetSchoolUser(int userId)
         {
             var q = _session.QueryOver<User>().Where(user => user.Type == User.SchoolUserType && user.UserId == userId).SingleOrDefault();
+            if (q == null) throw new Edutor.Data.Exceptions.ObjectNotFoundException("No existe un usuario escolar con id " + userId);
             return q;
         }
 
         public User GetTutor(int userId)
         {
             var q = _session.QueryOver<User>().Where(user => user.Type == User.TutorType && user.UserId == userId).SingleOrDefault();
+            if (q == null) throw new Edutor.Data.Exceptions.ObjectNotFoundException("No existe un tutor con id " + userId);
             return q;
         }
 
         public User GetSchoolUser(string curp)
         {
             var q = _session.QueryOver<User>().Where(user => user.Type == User.SchoolUserType && user.Curp == (curp)).SingleOrDefault();
+            if (q == null) throw new Edutor.Data.Exceptions.ObjectNotFoundException("No existe un usuario escolar con CURP " + curp);
             return q;
         }
 
         public User GetTutor(string curp)
         {
             var q = _session.QueryOver<User>().Where(user => user.Type == User.TutorType && user.Curp == (curp)).SingleOrDefault();
+            if (q == null) throw new Edutor.Data.Exceptions.ObjectNotFoundException("No existe un tutor con CURP " + curp);
             return q;
         }
     }

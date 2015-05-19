@@ -54,6 +54,7 @@
     <Compile Include="Entities\Notification.cs" />
     <Compile Include="Entities\Teaching.cs" />
     <Compile Include="Entities\User.cs" />
+    <Compile Include="Exceptions\DuplicateEntityException.cs" />
     <Compile Include="Exceptions\ObjectNotFoundException.cs" />
     <Compile Include="PagedDataRequest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -63,6 +63,9 @@ namespace Edutor.Data.SqlServer.QueryProcessors
         public Group GetGroup(int groupId)
         {
             var q = _session.QueryOver<Group>().Where(user => user.GroupId == groupId).SingleOrDefault();
+
+            if (q == null) throw new Edutor.Data.Exceptions.ObjectNotFoundException("No existe un grupo con el Id " + groupId);
+
             return q;
         }
 

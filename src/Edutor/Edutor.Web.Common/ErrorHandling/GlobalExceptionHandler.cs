@@ -29,6 +29,11 @@ namespace Edutor.Web.Common.ErrorHandling
                 context.Result = new SimpleErrorResult(context.Request, HttpStatusCode.NotFound, exception.Message);
                 return;
             }
+            if (exception is DuplicateEntityException)
+            {
+                context.Result = new SimpleErrorResult(context.Request, HttpStatusCode.Conflict, exception.Message);
+                return;
+            }
 
             context.Result = new SimpleErrorResult(context.Request, HttpStatusCode.InternalServerError, exception.Message);
         }

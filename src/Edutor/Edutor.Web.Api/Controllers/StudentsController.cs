@@ -6,6 +6,7 @@ using System.Web.Http;
 using System.Web.Http.Description;
 using Edutor.Web.Api.Models.ReturnTypes;
 using Edutor.Web.Api.Models;
+using Edutor.Common;
 
 namespace Edutor.Web.Api.Controllers
 {
@@ -70,7 +71,7 @@ namespace Edutor.Web.Api.Controllers
         /// <returns></returns>
         [HttpGet]
         [ResponseType(typeof(Student))]
-        [Route("students/{curp:regex(^[A-Za-z0-9]+$)}")]
+        [Route("students/{curp:regex(" + Constants.CommonRoutingDefinitions.CurpRegex + ")}")]
         public Student GetTutor(string curp)
         {
             var s = _getStudentsInquiryProcessor.GetStudent(curp);

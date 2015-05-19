@@ -25,7 +25,7 @@ namespace Edutor.Web.Api
                 defaults: new { id = RouteParameter.Optional }
             );
 
-            
+            config.Services.Replace(typeof(IExceptionHandler), new GlobalExceptionHandler());
 
             config.Services.Add(typeof(IExceptionLogger), new SimpleExceptionLogger(WebContainerManager.Get<ILogManager>()));
 

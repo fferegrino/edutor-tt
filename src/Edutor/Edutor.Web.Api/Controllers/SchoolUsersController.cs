@@ -1,4 +1,5 @@
-﻿using Edutor.Data.QueryProcessors;
+﻿using Edutor.Common;
+using Edutor.Data.QueryProcessors;
 using Edutor.Web.Api.InquiryProcessing;
 using Edutor.Web.Api.MaintenanceProcessing;
 using Edutor.Web.Api.Models;
@@ -64,7 +65,7 @@ namespace Edutor.Web.Api.Controllers
         /// <returns></returns>
         [HttpGet]
         [ResponseType(typeof(SchoolUser))]
-        [Route("schoolusers/{curp:regex(^[A-Za-z0-9]+$)}")]
+        [Route("schoolusers/{curp:regex(" + Constants.CommonRoutingDefinitions.CurpRegex + ")}")]
         public SchoolUser GetSchoolUser(string curp)
         {
             var s = _getQueryProcessor.GetSchoolUser(curp);

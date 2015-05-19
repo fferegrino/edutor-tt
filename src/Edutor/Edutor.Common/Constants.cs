@@ -61,6 +61,7 @@ namespace Edutor.Common
         public static class CommonRoutingDefinitions
         {
             public const string ApiSegmentName = "";
+            public const string CurpRegex = "^[A-Za-z][A-Za-z0-9]+$";
 
         }
 

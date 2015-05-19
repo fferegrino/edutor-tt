@@ -28,7 +28,14 @@ namespace Edutor.Data.SqlServer.QueryProcessors
                 .Where(x => x.UserId == student.TutorId).SingleOrDefault();
 
             student.Tutor = tutors;
-            _session.SaveOrUpdate(student);
+            try
+            {
+                _session.SaveOrUpdate(student);
+            }
+            catch (NHibernate.Exceptions.GenericADOException ex)
+            {
+                throw new Edutor.Data.Exceptions.DuplicateEntityException("This is a duplicate student, check the unique fields within your entity (Curp)");
+            }
         }
     }
 }
