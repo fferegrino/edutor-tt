@@ -122,9 +122,6 @@ namespace Edutor.Data.SqlServer.QueryProcessors
 
             var selected = teachings.Skip(startIndex).Take(requestInfo.PageSize).List();
 
-            //var teachers = new List<Student>();
-            //foreach (var t in selected)
-            //    teachers.Add(_session.QueryOver<Student>().Where(u => u.StudentId == t.Student.StudentId).SingleOrDefault());
             foreach (var ans in selected)
                 ans.ActualAnswer = _session.QueryOver<PossibleAnswer>().Where(v => v.PossibleAnswerId == ans.ActualAnswerId && v.Question.QuestionId == ans.Question.QuestionId).SingleOrDefault();
 
@@ -160,8 +157,12 @@ namespace Edutor.Data.SqlServer.QueryProcessors
 
         public Answer GetStudentsForQuestion(int questionId, int studentId)
         {
-            return _session.QueryOver<Answer>().Where(t => t.Question.QuestionId == questionId
+            var ans = _session.QueryOver<Answer>().Where(t => t.Question.QuestionId == questionId
                 && t.Student.StudentId == studentId).SingleOrDefault();
+
+            ans.ActualAnswer = _session.QueryOver<PossibleAnswer>().Where(v => v.PossibleAnswerId == ans.ActualAnswerId && v.Question.QuestionId == ans.Question.QuestionId).SingleOrDefault();
+
+            return ans;
         }
 
         public NotificationDetail GetStudentsForNotification(int notificationId, int studentId)

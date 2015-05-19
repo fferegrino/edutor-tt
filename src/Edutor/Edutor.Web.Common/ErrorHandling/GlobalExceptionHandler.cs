@@ -5,6 +5,7 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web;
 using System.Web.Http.ExceptionHandling;
 
 namespace Edutor.Web.Common.ErrorHandling
@@ -15,14 +16,13 @@ namespace Edutor.Web.Common.ErrorHandling
         {
             var exception = context.Exception;
 
-            // TODO: ver por qué HttpException no funciona.
-            //var httpException = exception as HttpException;
-            //if (httpException != null)
-            //{
-            //    context.Result = new SimpleErrorResult(context.Request,
-            //        (HttpStatusCode)httpException.GetHttpCode(), httpException.Message);
-            //  return;
-            //}
+            var httpException = exception as HttpException;
+            if (httpException != null)
+            {
+                context.Result = new SimpleErrorResult(context.Request,
+                    (HttpStatusCode)httpException.GetHttpCode(), httpException.Message);
+                return;
+            }
 
             if (exception is ObjectNotFoundException)
             {

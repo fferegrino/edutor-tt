@@ -6,11 +6,13 @@ using System.Threading.Tasks;
 
 namespace Edutor.Data.Exceptions
 {
+    [Serializable]
     public class ObjectNotFoundException : Exception
     {
-        public ObjectNotFoundException(string message) : base(message)
+        public ObjectNotFoundException(string message)
+            : base(message)
         {
-                
+
         }
     }
 }
