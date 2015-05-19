@@ -153,6 +153,7 @@
     <Compile Include="InquiryProcessing\IGetSchoolUsersInquiryProcessor.cs" />
     <Compile Include="InquiryProcessing\IPagedDataRequestFactory.cs" />
     <Compile Include="LinkServices\ICommonLinkService.cs" />
+    <Compile Include="LinkServices\IConversationsLinkService.cs" />
     <Compile Include="LinkServices\INotificationsLinkService.cs" />
     <Compile Include="LinkServices\IQuestionsLinkService.cs" />
     <Compile Include="LinkServices\IEventsLinkService.cs" />
@@ -161,6 +162,7 @@
     <Compile Include="LinkServices\IStudentsLinkService.cs" />
     <Compile Include="LinkServices\ITutorsLinkService.cs" />
     <Compile Include="LinkServices\ISchoolUsersLinkService.cs" />
+    <Compile Include="MaintenanceProcessing\IPostConversationsMaintenanceProcessor.cs" />
     <Compile Include="MaintenanceProcessing\IPostNotificationMaintenanceProcessor.cs" />
     <Compile Include="MaintenanceProcessing\IPostQuestionMaintenanceProcessor.cs" />
     <Compile Include="MaintenanceProcessing\IPostEventMaintenanceProcessor.cs" />

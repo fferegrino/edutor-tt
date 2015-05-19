@@ -59,6 +59,7 @@ namespace Edutor.Web.Api
             container.Bind<LS.IEventsLinkService>().To<LS.EventsLinkService>();
             container.Bind<LS.IQuestionsLinkService>().To<LS.QuestionsLinkService>();
             container.Bind<LS.INotificationsLinkService>().To<LS.NotificationsLinkService>();
+            container.Bind<LS.IConversationsLinkService>().To<LS.ConversationsLinkService>();
             container.Bind<LS.IElementsLinkService>().To<LS.ElementsLinkService>();
             
         }
@@ -104,6 +105,7 @@ namespace Edutor.Web.Api
             container.Bind<QueryProcessors.IAddAnswerQueryProcessor>().To<SqlProcessors.AddAnswerQueryProcessor>().InRequestScope();
             container.Bind<QueryProcessors.IAddNotificationQueryProcessor>().To<SqlProcessors.AddNotificationQueryProcessor>().InRequestScope();
             container.Bind<QueryProcessors.IAddNotificationDetailQueryProcessor>().To<SqlProcessors.AddNotificationDetailQueryProcessor>().InRequestScope();
+            container.Bind<QueryProcessors.IAddConversationQueryProcessor>().To<SqlProcessors.AddConversationQueryProcessor>().InRequestScope();
 
             container.Bind<AMP.IPostSchoolUserMaintenanceProcessor>().To<AMP.PostSchoolUserMaintenanceProcessor>().InRequestScope();
             container.Bind<AMP.IPostStudentMaintenanceProcessor>().To<AMP.PostStudentMaintenanceProcessor>().InRequestScope();
@@ -114,7 +116,7 @@ namespace Edutor.Web.Api
             container.Bind<AMP.IPostEventMaintenanceProcessor>().To<AMP.PostEventMaintenanceProcessor>().InRequestScope();
             container.Bind<AMP.IPostQuestionMaintenanceProcessor>().To<AMP.PostQuestionMaintenanceProcessor>().InRequestScope();
             container.Bind<AMP.IPostNotificationMaintenanceProcessor>().To<AMP.PostNotificationMaintenanceProcessor>().InRequestScope();
-
+            container.Bind<AMP.IPostConversationsMaintenanceProcessor>().To<AMP.PostConversationsMaintenanceProcessor>().InRequestScope();
             #endregion
 
             #region Get binding
@@ -186,6 +188,9 @@ namespace Edutor.Web.Api
 
                 .Mappings(m => m.FluentMappings.AddFromAssemblyOf<Mapping.NotificationMap>())
                 .Mappings(m => m.FluentMappings.AddFromAssemblyOf<Mapping.NotificationDetailMap>())
+
+                .Mappings(m => m.FluentMappings.AddFromAssemblyOf<Mapping.ConversationsMap>())
+                .Mappings(m => m.FluentMappings.AddFromAssemblyOf<Mapping.MessageMap>())
 
                 .BuildSessionFactory();
             container.Bind<ISessionFactory>().ToConstant(sessionFactory);

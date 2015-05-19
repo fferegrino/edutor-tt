@@ -62,6 +62,7 @@
     <Compile Include="QueryProcessors\IAddNotificationDetailQueryProcessor.cs" />
     <Compile Include="QueryProcessors\IAddNotificationQueryProcessor.cs" />
     <Compile Include="QueryProcessors\IAddPossibleAnswerQueryProcessor.cs" />
+    <Compile Include="QueryProcessors\IAddConversationQueryProcessor.cs" />
     <Compile Include="QueryProcessors\IAddQuestionQueryProcessor.cs" />
     <Compile Include="QueryProcessors\IAddInvitationQueryProcessor.cs" />
     <Compile Include="QueryProcessors\IAddEventQueryProcessor.cs" />

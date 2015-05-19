@@ -49,6 +49,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Mapping\MessageMap.cs" />
+    <Compile Include="Mapping\ConversationsMap.cs" />
     <Compile Include="Mapping\NotificationDetailMap.cs" />
     <Compile Include="Mapping\NotificationMap.cs" />
     <Compile Include="Mapping\EventMap.cs" />
@@ -67,6 +69,7 @@
     <Compile Include="QueryProcessors\AddNotificationDetailQueryProcessor.cs" />
     <Compile Include="QueryProcessors\AddPossibleAnswerQueryProcessor.cs" />
     <Compile Include="QueryProcessors\AddAnswerQueryProcessor.cs" />
+    <Compile Include="QueryProcessors\AddConversationQueryProcessor.cs" />
     <Compile Include="QueryProcessors\AddQuestionQueryProcessor.cs" />
     <Compile Include="QueryProcessors\AddInvitationQueryProcessor.cs" />
     <Compile Include="QueryProcessors\AddEventQueryProcessor.cs" />
