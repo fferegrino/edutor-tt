@@ -13,6 +13,7 @@ namespace Edutor.Web.Api.LinkServices
 {
     public interface IConversationsLinkService
     {
+        void AddAllLinks(Message msg);
     }
 
     public class ConversationsLinkService : IConversationsLinkService
@@ -23,46 +24,11 @@ namespace Edutor.Web.Api.LinkServices
         {
             _commonLinkService = commonLinkService;
         }
-
-        public void AddSelfLink(BasicStudent user)
+        
+        public void AddAllLinks(Message msg)
         {
-            user.AddLink(GetSelfLink(user));
-        }
-
-
-        public virtual Link GetSelfLink(BasicStudent user)
-        {
-            var pathFragment = String.Format("students/{0}", user.StudentId);
-            var link = _commonLinkService.GetLink(pathFragment, Constants.CommonLinkRelValues.Self, HttpMethod.Get);
-            return link;
-        }
-
-        public void AddAllLinks(BasicStudent student)
-        {
-            var studentLinks = String.Format("students/{0}", student.StudentId);
-            student.AddLink(_commonLinkService.GetLink(studentLinks, Constants.CommonLinkRelValues.StudentRel, HttpMethod.Get));
-        }
-
-        public void AddAllLinks(StudentAnswer s)
-        {
-            var studentAnswerLinks = String.Format("questions/{0}/answers/{1}", s.QuestionId, s.StudentId);
-            s.AddLink(_commonLinkService.GetLink(studentAnswerLinks, Constants.CommonLinkRelValues.Self, HttpMethod.Get));
-            s.AddLink(_commonLinkService.GetLink(studentAnswerLinks, Constants.CommonLinkRelValues.AnswerRel, HttpMethod.Put));
-
-        }
-
-        public void AddAllLinks(StudentInvitation s)
-        {
-            var studentAnswerLinks = String.Format("events/{0}/attendees/{1}", s.EventId, s.StudentId);
-            s.AddLink(_commonLinkService.GetLink(studentAnswerLinks, Constants.CommonLinkRelValues.Self, HttpMethod.Get));
-            s.AddLink(_commonLinkService.GetLink(studentAnswerLinks, Constants.CommonLinkRelValues.RsvpRel, HttpMethod.Put));
-        }
-
-        public void AddAllLinks(StudentNotification s)
-        {
-            var studentAnswerLinks = String.Format("notifications/{0}/details/{1}", s.NotificationId, s.StudentId);
-            s.AddLink(_commonLinkService.GetLink(studentAnswerLinks, Constants.CommonLinkRelValues.Self, HttpMethod.Get));
-            s.AddLink(_commonLinkService.GetLink(studentAnswerLinks, Constants.CommonLinkRelValues.SeenRel, HttpMethod.Put));
+            var studentAnswerLinks = String.Format("conversation/{0}/message/{1}", msg.ConversationId, msg.MessageId);
+            msg.AddLink(_commonLinkService.GetLink(studentAnswerLinks, Constants.CommonLinkRelValues.Self, HttpMethod.Get));
         }
     }
 }

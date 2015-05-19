@@ -19,6 +19,7 @@
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
+    <UseGlobalApplicationHostFile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -131,6 +132,7 @@
     <Compile Include="AutoMappingConfigurator\NewEnrollmentToEnrollmentEntityAutoMapperTypeConfigurator.cs" />
     <Compile Include="AutoMappingConfigurator\NewStudentToStudentEntityAutoMapperTypeConfigurator.cs" />
     <Compile Include="AutoMappingConfigurator\NewEventToEventEntityAutoMapperTypeConfigurator.cs" />
+    <Compile Include="AutoMappingConfigurator\NewMessageToMessageEntityAutoMapperTypeConfigurator.cs" />
     <Compile Include="AutoMappingConfigurator\NewTutorToUserEntityAutoMapperTypeConfigurator.cs" />
     <Compile Include="Controllers\ConversationsController.cs" />
     <Compile Include="Controllers\EventsController.cs" />
@@ -144,6 +146,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="InquiryProcessing\IGetConversationsInquiryProcessor.cs" />
     <Compile Include="InquiryProcessing\IGetGroupsInquiryProcessor.cs" />
     <Compile Include="InquiryProcessing\IGetEventsInquiryProcessor.cs" />
     <Compile Include="InquiryProcessing\IGetQuestionsInquiryProcessor.cs" />

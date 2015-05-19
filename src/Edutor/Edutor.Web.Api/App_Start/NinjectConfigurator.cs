@@ -86,7 +86,9 @@ namespace Edutor.Web.Api
                 .To<AMC.NewQuestionToQuestionEntityAutoMapperTypeConfigurator>().InSingletonScope();
             container.Bind<TM.IAutoMapperTypeConfigurator>()
                 .To<AMC.NewNotificationToNotificationEntityAutoMapperTypeConfigurator>().InSingletonScope();
-
+            container.Bind<TM.IAutoMapperTypeConfigurator>()
+                .To<AMC.NewMessageToMessageEntityAutoMapperTypeConfigurator>().InSingletonScope();
+            
         }
 
         private void ConfigureQueryProcessors(IKernel container)
@@ -139,6 +141,9 @@ namespace Edutor.Web.Api
 
             container.Bind<QueryProcessors.IGetQuestionsQueryProcessor>().To<SqlProcessors.GetQuestionsQueryProcessor>().InRequestScope();
             container.Bind<InquiryProcessing.IGetQuestionsInquiryProcessor>().To<InquiryProcessing.GetQuestionsInquiryProcessor>().InRequestScope();
+
+            container.Bind<QueryProcessors.IGetConversationsQueryProcessor>().To<SqlProcessors.GetConversationsQueryProcessor>().InRequestScope();
+            container.Bind<InquiryProcessing.IGetConversationsInquiryProcessor>().To<InquiryProcessing.GetConversationsInquiryProcessor>().InRequestScope();
             #endregion
 
             #region Put region

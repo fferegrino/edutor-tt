@@ -13,5 +13,7 @@ namespace Edutor.Web.Api.Models.ReturnTypes
         public int ToId { get; set; }
         public int FromId { get; set; }
         public string Text { get; set; }
+        public DateTime SentDate { get; set; }
+        public DateTime? SeenDate { get; set; }
     }
 }
