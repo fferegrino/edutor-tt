@@ -114,6 +114,7 @@
   <ItemGroup>
     <Content Include="Global.asax" />
     <EmbeddedResource Include="SwaggerStuff\Html\index.html" />
+    <Content Include="index.html" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
