@@ -39,7 +39,7 @@ namespace Edutor.Web.Api.Controllers
         /// <summary>
         /// Obtiene la pregunta indicada
         /// </summary>
-        /// <param name="questionId">El id de la notificación deseada</param>
+        /// <param name="questionId">El identificador único de la notificación deseada</param>
         /// <returns></returns>
         [HttpGet]
         [Route("questions/{questionId:int}")]
@@ -51,7 +51,7 @@ namespace Edutor.Web.Api.Controllers
         /// <summary>
         /// Obtiene las respuestas a la pregunta especificada
         /// </summary>
-        /// <param name="questionId">El id de la pregunta deseada</param>
+        /// <param name="questionId">El identificador único de la pregunta deseada</param>
         /// <returns></returns>
         [HttpGet]
         [Route("questions/{questionId:int}/answers")]
@@ -66,8 +66,8 @@ namespace Edutor.Web.Api.Controllers
         /// <summary>
         /// Obtiene la respuesta escogida por este estudiante
         /// </summary>
-        /// <param name="questionId">El id de la pregunta deseada</param>
-        /// <param name="studentId">El id del estudiante</param>
+        /// <param name="questionId">El identificador único de la pregunta deseada</param>
+        /// <param name="studentId">El identificador único del estudiante</param>
         /// <returns></returns>
         [HttpGet]
         [Route("questions/{questionId:int}/answers/{studentId}")]
@@ -82,8 +82,8 @@ namespace Edutor.Web.Api.Controllers
         /// Responde a la pregunta con la respuesta seleccionada
         /// </summary>
         /// <param name="newAnswer"></param>
-        /// <param name="questionId">El id de la pregunta deseada</param>
-        /// <param name="studentId">El id del estudiante</param>
+        /// <param name="questionId">El identificador único de la pregunta deseada</param>
+        /// <param name="studentId">El identificador único del estudiante</param>
         /// <returns></returns>
         [HttpPut]
         [Route("questions/{questionId:int}/answers/{studentId}")]
@@ -102,6 +102,7 @@ namespace Edutor.Web.Api.Controllers
         /// <param name="newQuestion">La nueva pregunta a agregar</param>
         /// <returns></returns>
         [HttpPost]
+        [Route("questions")]
         public IHttpActionResult AddQuestion(NewQuestion newQuestion)
         {
             var ret = _postQuestion.AddQuestion(newQuestion);

@@ -46,6 +46,7 @@ namespace Edutor.Web.Api.Controllers
         /// <param name="newGroup">El nuevo grupo a ingresar</param>
         /// <returns></returns>
         [HttpPost]
+        [Route("groups")]
         public IHttpActionResult AddGroup( NewGroup newGroup)
         {
             var user = _addUserQueryProcessor.AddGroup(newGroup);
@@ -56,8 +57,8 @@ namespace Edutor.Web.Api.Controllers
         /// <summary>
         /// Obtiene los profesores del grupo indicado
         /// </summary>
-        /// <param name="groupId">El grupo del que se desea conocer los profesores</param>
-        /// <returns>Una lista con los profesores asignados a cada grupo</returns>
+        /// <param name="groupId">El identificador único del grupo del que se desea conocer los profesores</param>
+        /// <returns>Una lista paginada con los profesores asignados a cada grupo</returns>
         [HttpGet]
         [Route("groups/{groupId:int}/schoolusers")]
         [ResponseType(typeof(PagedDataInquiryResponse<SchoolUser>))]
@@ -71,8 +72,8 @@ namespace Edutor.Web.Api.Controllers
         /// <summary>
         /// Obtiene los estudiantes del grupo indicado
         /// </summary>
-        /// <param name="groupId">El grupo del que se desea conocer los estudiantes</param>
-        /// <returns>Una lista con los estudiantes asignados a cada grupo</returns>
+        /// <param name="groupId">El identificador único del grupo del que se desea conocer los estudiantes</param>
+        /// <returns>Una lista paginada con los estudiantes asignados a cada grupo</returns>
         [HttpGet]
         [Route("groups/{groupId:int}/students")]
         public PagedDataInquiryResponse<Student> GetStudentsForGroup(int groupId)
@@ -85,7 +86,7 @@ namespace Edutor.Web.Api.Controllers
         /// <summary>
         /// Obtiene el grupo indicado
         /// </summary>
-        /// <param name="groupId">El id del grupo indicado</param>
+        /// <param name="groupId">El identificador único del grupo a obtener</param>
         /// <returns></returns>
         [HttpGet]
         [ResponseType(typeof(Group))]
@@ -102,6 +103,7 @@ namespace Edutor.Web.Api.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
+        [Route("groups")]
         public PagedDataInquiryResponse<Group> GetGroups()
         {
             var request = _pagedDataRequestFactory.Create(Request.RequestUri);
@@ -112,8 +114,8 @@ namespace Edutor.Web.Api.Controllers
         /// <summary>
         /// Agrega un estudiante al grupo indicado
         /// </summary>
-        /// <param name="groupId">El id del grupo al que se agregará el estudiante</param>
-        /// <param name="studentId">El id del estudiante que se agregará al grupo</param>
+        /// <param name="groupId">El identificador único del grupo al que se agregará el estudiante</param>
+        /// <param name="studentId">El identificador único del estudiante que se agregará al grupo</param>
         /// <returns></returns>
         [HttpPut]
         [Route("groups/{groupId:int}/students/{studentId:int}")]
@@ -126,8 +128,8 @@ namespace Edutor.Web.Api.Controllers
         /// <summary>
         /// Agrega un usuario escolar al grupo indicado
         /// </summary>
-        /// <param name="groupId">El id del grupo al que se agregará el usuario escolar</param>
-        /// <param name="schoolUserId">El id del usuario escolar que se agregará al grupo</param>
+        /// <param name="groupId">El identificador único del grupo al que se agregará el usuario escolar</param>
+        /// <param name="schoolUserId">El identificador único del usuario escolar que se agregará al grupo</param>
         /// <returns></returns>
         [HttpPut]
         [Route("groups/{groupId:int}/schoolusers/{schoolUserId:int}")]
@@ -140,8 +142,8 @@ namespace Edutor.Web.Api.Controllers
         /// <summary>
         /// Elimina un estudiante escolar del grupo indicado
         /// </summary>
-        /// <param name="groupId">El id del grupo del que se eliminará el estudiante</param>
-        /// <param name="studentId">El id del estudiante que se eliminará del grupo</param>
+        /// <param name="groupId">El identificador único del grupo del que se eliminará el estudiante</param>
+        /// <param name="studentId">El identificador único del estudiante que se eliminará del grupo</param>
         /// <returns></returns>
         [HttpDelete]
         [Route("groups/{groupId:int}/students/{studentId:int}")]
@@ -154,8 +156,8 @@ namespace Edutor.Web.Api.Controllers
         /// <summary>
         /// Elimina un usuario escolar del grupo indicado
         /// </summary>
-        /// <param name="groupId">El id del grupo del que se eliminará el usuario escolar</param>
-        /// <param name="schoolUserId">El id del usuario escolar que se eliminará del grupo</param>
+        /// <param name="groupId">El identificador único del grupo del que se eliminará el usuario escolar</param>
+        /// <param name="schoolUserId">El identificador único del usuario escolar que se eliminará del grupo</param>
         /// <returns></returns>
         [HttpDelete]
         [Route("groups/{groupId:int}/schoolusers/{schoolUserId:int}")]

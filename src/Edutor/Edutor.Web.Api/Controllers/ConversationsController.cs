@@ -28,6 +28,11 @@ namespace Edutor.Web.Api.Controllers
             _pagedFactory = pagedFactory;
         }
 
+        /// <summary>
+        /// Obtiene los mensajes de una conversación
+        /// </summary>
+        /// <param name="conversationId">El id de la conversación a consultar</param>
+        /// <returns>Una lista paginada con los mensajes de la conversación consultada</returns>
         [Route("conversations/{conversationId:int}/messages")]
         [ResponseType(typeof(PagedDataInquiryResponse<Message>))]
         public PagedDataInquiryResponse<Message> GetMessagesForConversation(int conversationId)

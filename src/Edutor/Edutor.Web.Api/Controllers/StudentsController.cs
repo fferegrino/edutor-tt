@@ -54,7 +54,7 @@ namespace Edutor.Web.Api.Controllers
         /// <summary>
         /// Obtiene obtiene el estudiante indicado
         /// </summary>
-        /// <param name="studentId">El id del estudiante a recuperar</param>
+        /// <param name="studentId">El identificador único del estudiante a recuperar</param>
         /// <returns></returns>
         [HttpGet]
         [ResponseType(typeof(Student))]
@@ -67,7 +67,7 @@ namespace Edutor.Web.Api.Controllers
         /// <summary>
         /// Obtiene el tutor indicado
         /// </summary>
-        /// <param name="tutorId">El id del tutor a recuperar</param>
+        /// <param name="tutorId">El identificador único del tutor a recuperar</param>
         /// <returns></returns>
         [HttpGet]
         [ResponseType(typeof(Student))]
@@ -95,7 +95,7 @@ namespace Edutor.Web.Api.Controllers
         /// <summary>
         /// Obtiene una lista de las notificaciones para el estudiante
         /// </summary>
-        /// <param name="studentId">El id del estudiante del que se desea conocer sus notificaciones</param>
+        /// <param name="studentId">El identificador único del estudiante del que se desea conocer sus notificaciones</param>
         /// <returns>Una lista con las notificaciones del estudiante</returns>
         [HttpGet]
         [Route("students/{studentId:int}/notifications")]
@@ -109,7 +109,7 @@ namespace Edutor.Web.Api.Controllers
         /// <summary>
         /// Obtiene una lista de los eventos para el estudiante
         /// </summary>
-        /// <param name="studentId">El id del estudiante del que se desea conocer sus eventos</param>
+        /// <param name="studentId">El identificador único del estudiante del que se desea conocer sus eventos</param>
         /// <returns>Una lista con los eventos del estudiante</returns>
         [HttpGet]
         [Route("students/{studentId:int}/events")]
@@ -124,7 +124,7 @@ namespace Edutor.Web.Api.Controllers
         /// <summary>
         /// Obtiene una lista de las preguntas para el estudiante
         /// </summary>
-        /// <param name="studentId">El id del estudiante del que se desea conocer sus preguntas</param>
+        /// <param name="studentId">El identificador único del estudiante del que se desea conocer sus preguntas</param>
         /// <returns>Una lista con las preguntas del estudiante</returns>
         [HttpGet]
         [Route("students/{studentId:int}/questions")]

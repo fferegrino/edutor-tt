@@ -44,7 +44,7 @@ namespace Edutor.Web.Api.Controllers
         /// <summary>
         /// Obtiene el evento indicado
         /// </summary>
-        /// <param name="eventId">El id del evento que se desea obtener</param>
+        /// <param name="eventId">El identificador único del evento que se desea obtener</param>
         /// <returns></returns>
         [HttpGet]
         [ResponseType(typeof(Event))]
@@ -57,7 +57,7 @@ namespace Edutor.Web.Api.Controllers
         /// <summary>
         /// Obtiene el una lista de los estudiantes invitados al evento indicado
         /// </summary>
-        /// <param name="eventId">El id del evento que se desea obtener</param>
+        /// <param name="eventId">El identificador único del evento que se desea obtener</param>
         /// <returns></returns>
         [HttpGet]
         [ResponseType(typeof(PagedDataInquiryResponse<StudentInvitation>))]
@@ -71,8 +71,8 @@ namespace Edutor.Web.Api.Controllers
         /// <summary>
         /// Obtiene la invitación del estudiante indicado al evento
         /// </summary>
-        /// <param name="eventId">El id del evento que se desea obtener</param>
-        /// <param name="studentId">El id del estudiante deseado</param>
+        /// <param name="eventId">El identificador único del evento que se desea obtener</param>
+        /// <param name="studentId">El identificador único del estudiante deseado</param>
         /// <returns></returns>
         [HttpGet]
         [ResponseType(typeof(StudentInvitation))]
@@ -85,8 +85,8 @@ namespace Edutor.Web.Api.Controllers
         /// <summary>
         /// Indica si se asistirá al evento
         /// </summary>
-        /// <param name="eventId">El id del evento que se desea responder</param>
-        /// <param name="studentId">El id del estudiante que responde</param>
+        /// <param name="eventId">El identificador único del evento que se desea responder</param>
+        /// <param name="studentId">El identificador único del estudiante que responde</param>
         /// <returns></returns>
         [HttpPut]
         [ResponseType(typeof(int))]
@@ -107,6 +107,7 @@ namespace Edutor.Web.Api.Controllers
         /// <returns></returns>
         [HttpPost]
         [ResponseType(typeof(Event))]
+        [Route("events")]
         public IHttpActionResult AddEvent(NewEvent newEvent)
         {
             var user = _addQueryProcessor.AddEvent(newEvent);

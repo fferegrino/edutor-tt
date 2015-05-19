@@ -32,7 +32,7 @@ namespace Edutor.Web.Api.Controllers
         /// <summary>
         /// Obtiene el tutor indicado
         /// </summary>
-        /// <param name="tutorId">El id del tutor a recuperar</param>
+        /// <param name="tutorId">El identificador único del tutor a recuperar</param>
         /// <returns></returns>
         [HttpGet]
         [ResponseType(typeof(Tutor))]

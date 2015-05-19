@@ -39,7 +39,7 @@ namespace Edutor.Web.Api.Controllers
         /// <summary>
         /// Obtiene la notificación indicada
         /// </summary>
-        /// <param name="notificationId">El id de la notificación deseada</param>
+        /// <param name="notificationId">El identificador único de la notificación deseada</param>
         /// <returns></returns>
         [HttpGet]
         [Route("notifications/{notificationId:int}")]
@@ -51,7 +51,7 @@ namespace Edutor.Web.Api.Controllers
         /// <summary>
         /// Obtiene el una lista de los estudiantes notificados
         /// </summary>
-        /// <param name="notificationId">El id de la notificación que se desea obtener</param>
+        /// <param name="notificationId">El identificador único de la notificación que se desea obtener</param>
         /// <returns></returns>
         [HttpGet]
         [ResponseType(typeof(PagedDataInquiryResponse<StudentNotification>))]
@@ -65,8 +65,8 @@ namespace Edutor.Web.Api.Controllers
         /// <summary>
         /// Obtienen el detalle de notifricación indicado
         /// </summary>
-        /// <param name="notificationId">El id de la notificación que se desea obtener</param>
-        /// <param name="studentId">El id del estudiante con la notificación</param>
+        /// <param name="notificationId">El identificador único de la notificación que se desea obtener</param>
+        /// <param name="studentId">El identificador único del estudiante con la notificación</param>
         /// <returns></returns>
         [HttpGet]
         [ResponseType(typeof(StudentNotification))]
@@ -79,8 +79,8 @@ namespace Edutor.Web.Api.Controllers
         /// <summary>
         /// Una simple llamada a este extremo ocasionará que la notificación sea marcada como vista
         /// </summary>
-        /// <param name="notificationId">El id de la notificación que se desea marcar como vista</param>
-        /// <param name="studentId">El id del estudiante que vió la notificación/param>
+        /// <param name="notificationId">El identificador único de la notificación que se desea marcar como vista</param>
+        /// <param name="studentId">El identificador único del estudiante que vió la notificación/param>
         /// <returns></returns>
         [HttpPut]
         [ResponseType(typeof(int))]
@@ -98,6 +98,7 @@ namespace Edutor.Web.Api.Controllers
         /// <returns></returns>
         [HttpPost]
         [ResponseType(typeof(Notification))]
+        [Route("notifications")]
         public IHttpActionResult AddNotification(NewNotification newNotification)
         {
             var user = _notificationMaintenanceProcessor.AddNotification(newNotification);
