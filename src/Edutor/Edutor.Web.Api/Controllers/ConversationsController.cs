@@ -33,12 +33,21 @@ namespace Edutor.Web.Api.Controllers
         /// </summary>
         /// <param name="conversationId">El id de la conversación a consultar</param>
         /// <returns>Una lista paginada con los mensajes de la conversación consultada</returns>
+        [HttpGet]
         [Route("conversations/{conversationId:int}/messages")]
         [ResponseType(typeof(PagedDataInquiryResponse<Message>))]
         public PagedDataInquiryResponse<Message> GetMessagesForConversation(int conversationId)
         {
             var r = _getConversations.GetMessagesForConversation(conversationId, _pagedFactory.Create(Request.RequestUri));
             return r;
+        }
+
+        [HttpGet]
+        [Route("conversations/{conversationId:int}")]
+        [ResponseType(typeof(PagedDataInquiryResponse<Conversation>))]
+        public Conversation GetConversation(int conversationId)
+        {
+            return _getConversations.GetConversation(conversationId);
         }
 
         /// <summary>

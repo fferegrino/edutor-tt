@@ -15,7 +15,7 @@ namespace Edutor.Data.SqlServer.Mapping
             Id(x => x.ConversationId);
             References<User>(x => x.User1).Column("User1Id");
             References<User>(x => x.User2).Column("User2Id");
-            HasMany<Message>(c=> c.Messages);
+            HasMany<Message>(c=> c.Messages).KeyColumn("ConversationId");
         }
     }
 }

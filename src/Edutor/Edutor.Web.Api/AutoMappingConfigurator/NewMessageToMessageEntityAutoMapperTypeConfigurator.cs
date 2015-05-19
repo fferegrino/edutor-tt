@@ -32,6 +32,23 @@ namespace Edutor.Web.Api.AutoMappingConfigurator
                 .ForMember(t => t.FromId, opt => opt.MapFrom(x => x.From.UserId))
                 .ForMember(s => s.Links, x => x.Ignore())
                 ;
+
+            Func<Ent.Conversation, object> mapMessages = (conversation) =>
+            {
+                List<RetModels.Message> messages = new List<RetModels.Message>();
+                foreach (var msg in conversation.Messages)
+                    messages.Add(Mapper.Map<RetModels.Message>(msg));
+                return messages;
+            };
+
+            Mapper.CreateMap<Ent.Conversation, RetModels.Conversation>()
+                .ForMember(t => t.SenderName, opt => opt.MapFrom(x => x.User1.Name))
+                .ForMember(t => t.SenderId, opt => opt.MapFrom(x => x.User1.UserId))
+                .ForMember(t => t.RecipientName, opt => opt.MapFrom(x => x.User2.Name))
+                .ForMember(t => t.RecipientId, opt => opt.MapFrom(x => x.User2.UserId))
+                .ForMember(t => t.LastMessages, opt => opt.Ignore())
+                .ForMember(t => t.Links, opt => opt.Ignore())
+            ;
         }
     }
 }

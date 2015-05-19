@@ -12,6 +12,8 @@ namespace Edutor.Data.QueryProcessors
         QueryResult<Message> GetMessagesForConversation(int conversationId,PagedDataRequest requestInfo);
         Message GetMessagesForConversation(int conversationId, int messageId);
 
+        IList<Message> GetLastMessagesForConversation(int conversationId, int messageCount);
+
         Conversation GetConversation(int conversationId);
         
     }

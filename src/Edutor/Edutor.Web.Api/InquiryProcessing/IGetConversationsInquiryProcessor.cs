@@ -18,7 +18,7 @@ namespace Edutor.Web.Api.InquiryProcessing
         //PagedDataInquiryResponse<Return.Group> GetAllGroups(PagedDataRequest request);
 
         PagedDataInquiryResponse<Return.Message> GetMessagesForConversation(int conversationId, PagedDataRequest request);
-        //Return.Conversation GetConversation(int groupId);
+        Return.Conversation GetConversation(int conversationId);
     }
 
     public class GetConversationsInquiryProcessor : IGetConversationsInquiryProcessor
@@ -74,6 +74,26 @@ namespace Edutor.Web.Api.InquiryProcessing
         }
 
 
+
+
+        public Return.Conversation GetConversation(int conversationId)
+        {
+            var convo = _queryProcessor.GetConversation(conversationId);
+            var ret = _autoMapper.Map<Return.Conversation>(convo);
+            ret.LastMessages = MapMessages(_queryProcessor.GetLastMessagesForConversation(conversationId,5));
+            return ret;
+        }
+
+        private IList<Return.Message> MapMessages(IList<Data.Entities.Message> list)
+        {
+            var l = new List<Return.Message>();
+            foreach (var msg in list) {
+                var s  = _autoMapper.Map<Return.Message>(msg);
+                _linkServices.AddAllLinks(s);
+                l.Add(s);
+            }
+            return l;
+        }
     }
 }
 

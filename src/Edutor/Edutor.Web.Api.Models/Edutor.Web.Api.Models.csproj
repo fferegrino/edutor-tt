@@ -61,6 +61,7 @@
     <Compile Include="PagedDataInquiryResponse.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ReturnTypes\BasicStudent.cs" />
+    <Compile Include="ReturnTypes\Conversation.cs" />
     <Compile Include="ReturnTypes\Message.cs" />
     <Compile Include="ReturnTypes\StudentNotification.cs" />
     <Compile Include="ReturnTypes\StudentInvitation.cs" />

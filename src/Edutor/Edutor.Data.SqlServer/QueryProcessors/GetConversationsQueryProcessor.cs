@@ -27,6 +27,7 @@ namespace Edutor.Data.SqlServer.QueryProcessors
         public Conversation GetConversation(int conversationId)
         {
             var q = _session.QueryOver<Conversation>().Where(c => c.ConversationId == conversationId).SingleOrDefault();
+            if (q == null) throw new Edutor.Data.Exceptions.ObjectNotFoundException("La conversación con Id " + conversationId + " no existe.");
             return q;
         }
 
@@ -34,6 +35,13 @@ namespace Edutor.Data.SqlServer.QueryProcessors
         {
             var q = _session.QueryOver<Message>().Where(m => m.ConversationId == conversationId && m.MessageId == messageId).SingleOrDefault();
             return q;
+        }
+
+        public IList<Message> GetLastMessagesForConversation(int conversationId, int messageCount)
+        {
+            var q = _session.QueryOver<Message>().OrderBy(nn => nn.SentDate).Desc.Where(message => message.Conversation.ConversationId == conversationId);
+            var users = q.Take(messageCount).List();
+            return users;
         }
 
         public QueryResult<Message> GetMessagesForConversation(int conversationId, PagedDataRequest requestInfo)
