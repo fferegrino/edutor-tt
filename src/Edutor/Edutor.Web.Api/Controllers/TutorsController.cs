@@ -1,4 +1,5 @@
-﻿using Edutor.Web.Api.InquiryProcessing;
+﻿using Edutor.Common;
+using Edutor.Web.Api.InquiryProcessing;
 using Edutor.Web.Api.MaintenanceProcessing;
 using Edutor.Web.Api.Models;
 using Edutor.Web.Api.Models.NewModels;
@@ -49,7 +50,7 @@ namespace Edutor.Web.Api.Controllers
         /// <returns></returns>
         [HttpGet]
         [ResponseType(typeof(Tutor))]
-        [Route("tutors/{curp:regex(^[A-Za-z0-9]+$)}")]
+        [Route("tutors/{curp:regex(" + Constants.CommonRoutingDefinitions.CurpRegex +")}")]
         public Tutor GetTutor(string curp)
         {
             var s = _getQueryProcessor.GetTutor(curp);
@@ -92,6 +93,7 @@ namespace Edutor.Web.Api.Controllers
         /// <param name="newTutor">El nuevo tutor a ingresar</param>
         /// <returns></returns>
         [HttpPost]
+        [Route("tutors")]
         [ResponseType(typeof(Tutor))]
         public IHttpActionResult AddTutor(NewTutor newTutor)
         {
