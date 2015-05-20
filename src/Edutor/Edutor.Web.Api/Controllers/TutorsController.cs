@@ -104,15 +104,16 @@ namespace Edutor.Web.Api.Controllers
         /// <summary>
         /// Obtiene una lista de las conversaciones creadas por el usuario escolar
         /// </summary>
-        /// <param name="schoolUserid">El id del usuario escolar del que se desea conocer sus conversaciones</param>
+        /// <param name="tutorId">El id del tutor del que se desea conocer sus conversaciones</param>
         /// <returns>Una lista con las preguntas creadas por el usuario escolar</returns>
         [HttpGet]
         [Route("tutors/{tutorId:int}/conversations")]
-        public PagedDataInquiryResponse<Conversation> GetConversationsForSchoolUser(int schoolUserid)
+        public PagedDataInquiryResponse<Conversation> GetConversationsForSchoolUser(int tutorId)
         {
-            //var request = _pagedDataRequestFactory.Create(Request.RequestUri);
-            //var r = _getQuestions.GetQuestionsForSchoolUser(schoolUserid, request);
-            return null;
+
+            var request = _pagedDataRequestFactory.Create(Request.RequestUri);
+            var r = _getConversations.GetMessagesForUser(tutorId, request);
+            return r;
         }
 
 

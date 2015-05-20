@@ -150,9 +150,9 @@ namespace Edutor.Web.Api.Controllers
         [Route("schoolusers/{schoolUserId:int}/conversations")]
         public PagedDataInquiryResponse<Conversation> GetConversationsForSchoolUser(int schoolUserid)
         {
-            //var request = _pagedDataRequestFactory.Create(Request.RequestUri);
-            //var r = _getQuestions.GetQuestionsForSchoolUser(schoolUserid, request);
-            return null;
+            var request = _pagedDataRequestFactory.Create(Request.RequestUri);
+            var r = _getConversations.GetMessagesForUser(schoolUserid, request);
+            return r;
         }
 
 
