@@ -24,15 +24,17 @@ namespace Edutor.Web.Api.Controllers
         private readonly IGetSchoolUsersInquiryProcessor _getQueryProcessor;
         private readonly IGetGroupsInquiryProcessor _getGroupsProcessor;
         private readonly IGetNotificationsInquiryProcessor _getNotifications;
-        private readonly IPagedDataRequestFactory _pagedDataRequestFactory;
+        private readonly IGetConversationsInquiryProcessor _getConversations;
         private readonly IGetEventsInquiryProcessor _getEvents;
         private readonly IGetQuestionsInquiryProcessor _getQuestions;
+        private readonly IPagedDataRequestFactory _pagedDataRequestFactory;
 
         public SchoolUsersController(IPostSchoolUserMaintenanceProcessor addUserQueryProcessor,
             IGetSchoolUsersInquiryProcessor getQueryProcessor,
             IPagedDataRequestFactory pagedDataRequestFactory,
             IGetNotificationsInquiryProcessor getNotifications,
             IGetGroupsInquiryProcessor getGroupsProcessor, 
+            IGetConversationsInquiryProcessor getConversations,
             IGetEventsInquiryProcessor getEvents,
             IGetQuestionsInquiryProcessor getQuestions)
         {
@@ -42,6 +44,7 @@ namespace Edutor.Web.Api.Controllers
             _getGroupsProcessor = getGroupsProcessor;
             _getNotifications = getNotifications;
             _getEvents = getEvents;
+            _getConversations = getConversations;
             _getQuestions = getQuestions;
         }
 
@@ -136,6 +139,20 @@ namespace Edutor.Web.Api.Controllers
             var request = _pagedDataRequestFactory.Create(Request.RequestUri);
             var r = _getQuestions.GetQuestionsForSchoolUser(schoolUserid, request);
             return r;
+        }
+
+        /// <summary>
+        /// Obtiene una lista de las conversaciones creadas por el usuario escolar
+        /// </summary>
+        /// <param name="schoolUserid">El id del usuario escolar del que se desea conocer sus conversaciones</param>
+        /// <returns>Una lista con las preguntas creadas por el usuario escolar</returns>
+        [HttpGet]
+        [Route("schoolusers/{schoolUserId:int}/conversations")]
+        public PagedDataInquiryResponse<Conversation> GetConversationsForSchoolUser(int schoolUserid)
+        {
+            //var request = _pagedDataRequestFactory.Create(Request.RequestUri);
+            //var r = _getQuestions.GetQuestionsForSchoolUser(schoolUserid, request);
+            return null;
         }
 
 

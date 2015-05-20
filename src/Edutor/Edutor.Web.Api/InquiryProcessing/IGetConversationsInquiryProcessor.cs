@@ -15,6 +15,8 @@ namespace Edutor.Web.Api.InquiryProcessing
     public interface IGetConversationsInquiryProcessor
     {
 
+        PagedDataInquiryResponse<Return.Conversation> GetMessagesForUser(int userId, PagedDataRequest request);
+
         Return.Message GetMessagesForConversation(int conversationId, int messageId);
 
         PagedDataInquiryResponse<Return.Message> GetMessagesForConversation(int conversationId, PagedDataRequest request);
@@ -102,6 +104,38 @@ namespace Edutor.Web.Api.InquiryProcessing
             }
             return l;
         }
+
+
+
+        public PagedDataInquiryResponse<Return.Conversation> GetMessagesForUser(int userId, PagedDataRequest request)
+        {
+            var qresult = _queryProcessor.GetConversationForUser(userId, request);
+            var returnUsers = MapConversations(qresult.QueriedItems.ToList());
+            var inquiryResponse = new PagedDataInquiryResponse<Return.Conversation>
+            {
+                Items = returnUsers,
+                PageCount = qresult.TotalPageCount,
+                PageNumber = request.PageNumber,
+                PageSize = request.PageSize
+            };
+
+            _commonLinkService.AddPageLinks(inquiryResponse);
+
+            return inquiryResponse;
+        }
+
+        private List<Return.Conversation> MapConversations(List<Data.Entities.Conversation> list)
+        {
+            var l = new List<Return.Conversation>();
+            foreach (var msg in list)
+            {
+                var s = _autoMapper.Map<Return.Conversation>(msg);
+                _linkServices.AddAllLinks(s);
+                l.Add(s);
+            }
+            return l;
+        }
+
     }
 }
 

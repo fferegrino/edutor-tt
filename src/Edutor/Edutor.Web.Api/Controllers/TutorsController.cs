@@ -16,10 +16,20 @@ namespace Edutor.Web.Api.Controllers
         private readonly IPostTutorMaintenanceProcessor _addUserQueryProcessor;
         private readonly IGetTutorsInquiryProcessor _getQueryProcessor;
         private readonly IGetStudentsInquiryProcessor _getStudentsQueryProcessor;
+        private readonly IGetConversationsInquiryProcessor _getConversations;
         private readonly IPagedDataRequestFactory _pagedDataRequestFactory;
+
+
+        //private readonly IGetNotificationsInquiryProcessor _getNotifications;
+        //private readonly IGetEventsInquiryProcessor _getEvents;
+        //private readonly IGetQuestionsInquiryProcessor _getQuestions;
 
         public TutorsController(IPostTutorMaintenanceProcessor addUserQueryProcessor,
             IGetTutorsInquiryProcessor getQueryProcessor,
+            IGetConversationsInquiryProcessor getConversations,
+            //IGetNotificationsInquiryProcessor getNotifications,
+            //IGetEventsInquiryProcessor getEvents,
+            //IGetQuestionsInquiryProcessor getQuestions,
             IGetStudentsInquiryProcessor getStudentsQueryProcessor,
             IPagedDataRequestFactory pagedDataRequestFactory)
         {
@@ -27,6 +37,10 @@ namespace Edutor.Web.Api.Controllers
             _getQueryProcessor = getQueryProcessor;
             _getStudentsQueryProcessor = getStudentsQueryProcessor;
             _pagedDataRequestFactory = pagedDataRequestFactory;
+            _getConversations = getConversations;
+            //_getNotifications = getNotifications;
+            //_getEvents = getEvents;
+            //_getQuestions = getQuestions;
         }
 
         /// <summary>
@@ -50,7 +64,7 @@ namespace Edutor.Web.Api.Controllers
         /// <returns></returns>
         [HttpGet]
         [ResponseType(typeof(Tutor))]
-        [Route("tutors/{curp:regex(" + Constants.CommonRoutingDefinitions.CurpRegex +")}")]
+        [Route("tutors/{curp:regex(" + Constants.CommonRoutingDefinitions.CurpRegex + ")}")]
         public Tutor GetTutor(string curp)
         {
             var s = _getQueryProcessor.GetTutor(curp);
@@ -85,6 +99,22 @@ namespace Edutor.Web.Api.Controllers
             var r = _getStudentsQueryProcessor.GetStudentsForTutor(tutorId, request);
             return r;
         }
+
+
+        /// <summary>
+        /// Obtiene una lista de las conversaciones creadas por el usuario escolar
+        /// </summary>
+        /// <param name="schoolUserid">El id del usuario escolar del que se desea conocer sus conversaciones</param>
+        /// <returns>Una lista con las preguntas creadas por el usuario escolar</returns>
+        [HttpGet]
+        [Route("tutors/{tutorId:int}/conversations")]
+        public PagedDataInquiryResponse<Conversation> GetConversationsForSchoolUser(int schoolUserid)
+        {
+            //var request = _pagedDataRequestFactory.Create(Request.RequestUri);
+            //var r = _getQuestions.GetQuestionsForSchoolUser(schoolUserid, request);
+            return null;
+        }
+
 
 
         /// <summary>

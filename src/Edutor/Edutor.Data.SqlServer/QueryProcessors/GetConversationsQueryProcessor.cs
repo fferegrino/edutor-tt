@@ -59,5 +59,21 @@ namespace Edutor.Data.SqlServer.QueryProcessors
 
             return qResult;
         }
+
+
+        public QueryResult<Conversation> GetConversationForUser(int userId, PagedDataRequest requestInfo)
+        {
+            var q = _session.QueryOver<Conversation>().Where(c => c.User1.UserId == userId || c.User2.UserId == userId);
+
+            var totalItemCount = q.ToRowCountQuery().RowCount();
+
+            var startIndex = ResultsPagingUtility.CalculateStartIndex(requestInfo.PageNumber, requestInfo.PageSize);
+
+            var users = q.Skip(startIndex).Take(requestInfo.PageSize).List();
+
+
+            var qResult = new QueryResult<Conversation>(users, totalItemCount, requestInfo.PageSize);
+            return qResult;
+        }
     }
 }
