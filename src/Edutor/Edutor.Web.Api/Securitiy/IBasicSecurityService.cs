@@ -87,6 +87,8 @@ namespace Edutor.Web.Api.Securitiy
             var identity = new GenericIdentity(student.Tutor.UserId.ToString(), Constants.SchemeTypes.Basic);
 
             identity.AddClaim(new Claim(ClaimTypes.Role, Constants.RoleNames.Tutor));
+            identity.AddClaim(new Claim(Constants.CustomClaimTypes.StudentId, student.StudentId.ToString()));
+            identity.AddClaim(new Claim(Constants.CustomClaimTypes.TutorId, student.Tutor.UserId.ToString()));
 
             return new ClaimsPrincipal(identity);
         }
@@ -98,7 +100,7 @@ namespace Edutor.Web.Api.Securitiy
 
         private Student GetStudent(string token)
         {
-            return Session.QueryOver<Student>().Where(student => student.Token.Equals(token)).SingleOrDefault();
+            return Session.QueryOver<Student>().Where(student => student.Token == (token)).SingleOrDefault();
         }
     }
 }
