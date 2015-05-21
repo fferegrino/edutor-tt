@@ -3,7 +3,7 @@
 	[EventId] INT NOT NULL PRIMARY KEY IDENTITY, 
     [SchoolUserId] INT NOT NULL, 
 	[GroupId] INT NOT NULL, 
-    [Name] VARCHAR(50) NOT NULL, 
+    [Name] VARCHAR(60) NOT NULL, 
     [Date] DATETIME NOT NULL, 
     [CreationDate] DATETIME NOT NULL, 
     [Description] VARCHAR(255) NOT NULL, 

@@ -14,7 +14,10 @@ DECLARE @DummyUsers BIT = 1,
 		@DummyStudents BIT = 1,
 		@DummyGroups BIT = 1,
 		@DummyEnrollments BIT = 1,
-		@DummyTeachings BIT = 1
+		@DummyTeachings BIT = 1,
+		@DummyQuestions BIT = 1,
+		@DummyNotifications BIT = 1,
+		@DummyEvents BIT = 1
 
 --INSERT Users([Type],[Name],[Curp],[Email],[Address],[Mobile],[Phone])
 -- 7d0d12aa8d0e2ef983e1b1ab8585b205f439ffcd08092e92f709bbcec9790835
@@ -38,7 +41,7 @@ BEGIN
 					ELSE 'P' END
 	WHERE [Type] = 'S'
 
-	update Users set Password =  CONVERT(varchar(max),HASHBYTES('SHA2_256',Curp),2)
+	update Users set [Password] =  CONVERT(varchar(max),HASHBYTES('SHA2_256',Curp),2)
 	from Users
 
 
@@ -103,6 +106,8 @@ BEGIN
 	DROP TABLE #DUMMYDATA
 	DROP TABLE #MID_STUDENTS
 
+	update Students set Token = 'A' + SUBSTRING(Token, 1,9) 
+
 	UPDATE Students SET IsActive = 0
 
 END
@@ -147,3 +152,120 @@ BEGIN
 				OR G.GroupId * 99  % 89 = U.UserId
 	WHERE U.[Type] = 'S'
 END
+
+
+DECLARE @Gid INT = 3,
+		@Sid INT = 1
+
+IF(@DummyQuestions = 1)
+BEGIN
+
+	DECLARE @Qid INT
+
+	INSERT INTO [dbo].[Questions]([SchoolUserId],[GroupId],[Text],[ExpirationDate],[CreationDate])
+	VALUES(@Sid,@Gid,'¿Qué opina de la tarea de español?',DATEADD(day,15, GETDATE()),GETDATE())
+
+	SET @Qid = SCOPE_IDENTITY()
+
+	INSERT INTO PossibleAnswers
+	VALUES (@Qid,0,'Era sencilla'),(@Qid,1,'No se realizó'),(@Qid,2,'Resultó difícil')
+
+	insert into Answers (StudentId, QuestionId)
+	select StudentId,@Qid
+	FROM Enrollments where GroupId = @Gid
+
+	INSERT INTO [dbo].[Questions]([SchoolUserId],[GroupId],[Text],[ExpirationDate],[CreationDate])
+	VALUES(@Sid,@Gid,'¿Qué de la salida a Chapultepec el 7 de Agosto?',DATEADD(day,15, GETDATE()),GETDATE())
+
+	SET @Qid = SCOPE_IDENTITY()
+
+	INSERT INTO PossibleAnswers
+	VALUES (@Qid,0,'Estoy de acuerdo'),(@Qid,1,'No estoy de acuerdo')
+
+	INSERT INTO Answers (StudentId, QuestionId)
+	select StudentId,@Qid
+	FROM Enrollments where GroupId = @Gid
+
+	INSERT INTO [dbo].[Questions]([SchoolUserId],[GroupId],[Text],[ExpirationDate],[CreationDate])
+	VALUES(@Sid,@Gid,'¿Qué día debe llevarse a cabo el festival de día de las madres?',DATEADD(day,15, GETDATE()),GETDATE())
+
+	SET @Qid = SCOPE_IDENTITY()
+
+	INSERT INTO PossibleAnswers
+	VALUES (@Qid,0,'9 de mayo'),(@Qid,1,'12 de mayo'),(@Qid,2,'13 de mayo'),(@Qid,3,'No debe haber festival')
+
+	INSERT INTO Answers (StudentId, QuestionId)
+	select StudentId,@Qid
+	FROM Enrollments where GroupId = @Gid
+
+END
+
+IF (@DummyEvents = 1)
+BEGIN
+
+	DECLARE @Eid INT
+
+	INSERT INTO [dbo].[Events]([SchoolUserId],[GroupId],[Name],[Date],[CreationDate],[Description])
+	VALUES
+			   (@Sid,@Gid
+			   ,'Recaudación de firmas para para el tope'
+			   ,DATEADD(DAY, 5,GETDATE()),GETDATE()
+			   ,'Se recaudarán firmas en la escuela para solicitar la colocación de un tope en la esquina de la escuela para evitar accidentes')
+	
+	SET @Eid = SCOPE_IDENTITY()
+
+	INSERT INTO Invitations (StudentId, EventId)
+	select StudentId,@Eid
+	FROM Enrollments where GroupId = @Gid
+
+
+	INSERT INTO [dbo].[Events]([SchoolUserId],[GroupId],[Name],[Date],[CreationDate],[Description])
+	VALUES
+			   (@Sid,@Gid
+			   ,'Junta para entrega de calificaciones'
+			   ,DATEADD(DAY, 20,GETDATE()),GETDATE()
+			   ,'Es la junta bimestral de entrega y firma de boletas')
+	
+	SET @Eid = SCOPE_IDENTITY()
+
+	INSERT INTO Invitations (StudentId, EventId)
+	select StudentId,@Eid
+	FROM Enrollments where GroupId = @Gid
+
+
+	INSERT INTO [dbo].[Events]([SchoolUserId],[GroupId],[Name],[Date],[CreationDate],[Description])
+	VALUES
+			   (@Sid,@Gid
+			   ,'Ayúdanos a limpiar la escuela'
+			   ,DATEADD(DAY, 30,GETDATE()),GETDATE()
+			   ,'Trae un producto de limpieza y un utiensilio para ayudarnos a limpiar la escuela, por los problemas de la semana pasada no tuvimos servicio de limipieza.')
+	
+	SET @Eid = SCOPE_IDENTITY()
+
+	INSERT INTO Invitations (StudentId, EventId)
+	select StudentId,@Eid
+	FROM Enrollments where GroupId = @Gid
+
+END
+
+
+IF (@DummyNotifications = 1)
+BEGIN
+
+	INSERT INTO [dbo].[Notifications]([SchoolUserId],[GroupId],[CreationDate],[Text])
+		 VALUES
+			   (@Sid,@Gid,GETDATE(),
+			   'No habrá clases el día 9 de mayo de 2015'),
+			   (@Sid,@Gid,GETDATE(),
+			   'Tarea de español para el viernes'),
+			   (@Sid,@Gid,GETDATE(),
+			   'Recuerden comprar los materiales para la maqueta')
+
+
+	insert into NotificationDetails(StudentId, NotificationId,Seen)
+	select E.StudentId,N.NotificationId,0
+	from Enrollments E
+		inner join Notifications N
+		on E.GroupId = N.GroupId
+
+END 

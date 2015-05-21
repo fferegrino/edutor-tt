@@ -43,7 +43,7 @@ namespace Edutor.Web.Api.Securitiy
                 Student student = GetStudent(passwordOrToken);
                 if (student == null || (principal = GetPrincipal(student)) == null)
                 {
-                    _log.DebugFormat("No se pudo autenticar al usuario {0}", userId);
+                    _log.DebugFormat("No se pudo autenticar {0}", userId);
                     return false;
                 }
 

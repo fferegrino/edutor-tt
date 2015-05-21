@@ -2,9 +2,9 @@
 (
 	[UserId] INT NOT NULL PRIMARY KEY IDENTITY, 
     [Type] CHAR(1) NOT NULL, 
-    [Name] VARCHAR(60) NOT NULL, 
+    [Name] VARCHAR(70) NOT NULL, 
     [Curp] CHAR(18) NOT NULL, 
-    [Email] VARCHAR(50) NOT NULL, 
+    [Email] VARCHAR(60) NOT NULL, 
     [Address] VARCHAR(512) NOT NULL, 
     [Mobile] VARCHAR(10) NULL, 
     [Phone] VARCHAR(10) NULL, 
