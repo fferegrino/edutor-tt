@@ -1,4 +1,5 @@
 ﻿using Edutor.Common;
+using Edutor.Common.Extensions;
 using Edutor.Web.Api.InquiryProcessing;
 using Edutor.Web.Api.MaintenanceProcessing;
 using Edutor.Web.Api.Models;
@@ -7,6 +8,9 @@ using Edutor.Web.Api.Models.ReturnTypes;
 using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
+using System.Linq;
+using System.Security.Claims;
+using Edutor.Web.Common.Exceptions;
 
 namespace Edutor.Web.Api.Controllers
 {
@@ -92,11 +96,23 @@ namespace Edutor.Web.Api.Controllers
         /// <returns>Una lista con los profesores asignados a cada grupo</returns>
         [HttpGet]
         [Route("tutors/{tutorId:int}/students")]
-        [ResponseType(typeof(PagedDataInquiryResponse<Tutor>))]
+        [ResponseType(typeof(PagedDataInquiryResponse<Student>))]
+        [Authorize(Roles = Edutor.Common.Constants.RoleNames.All)]
         public PagedDataInquiryResponse<Student> GetStudentsForTutor(int tutorId)
         {
+            var identity = ((System.Security.Claims.ClaimsIdentity)User.Identity).Claims;
+            var role = User.Identity.GetClaim(ClaimTypes.Role);
+            var isTutor = role.Equals(Edutor.Common.Constants.RoleNames.Tutor);
+            if (isTutor)
+            {
+                if (User.Identity.GetIdClaim(Edutor.Common.Constants.CustomClaimTypes.TutorId) != tutorId)
+                {
+                    throw new CustomAuthorizationException("Como tutor solo puedes acceder a tus los estudiantes que están registrados a tu nombre");
+                }
+            }
+
             var request = _pagedDataRequestFactory.Create(Request.RequestUri);
-            var r = _getStudentsQueryProcessor.GetStudentsForTutor(tutorId, request);
+            var r = _getStudentsQueryProcessor.GetStudentsForTutor(tutorId, request, isTutor);
             return r;
         }
 

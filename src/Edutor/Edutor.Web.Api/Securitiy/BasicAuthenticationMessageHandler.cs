@@ -101,9 +101,10 @@ namespace Edutor.Web.Api.Securitiy
         private string[] GetCredentialParts(System.Net.Http.Headers.AuthenticationHeaderValue authHeader)
         {
             var encodedCredentials = authHeader.Parameter;
-            var credentialBytes = Convert.FromBase64String(encodedCredentials);
-            var credentials = Encoding.ASCII.GetString(credentialBytes);
-            var credentialParts = credentials.Split(AuthorizationHeaderSeparator);
+            //var credentialBytes = Convert.FromBase64String(encodedCredentials);
+            //var credentials = Encoding.ASCII.GetString(credentialBytes);
+            //var credentialParts = credentials.Split(AuthorizationHeaderSeparator);
+            var credentialParts = authHeader.Parameter.Split(AuthorizationHeaderSeparator);
             return credentialParts;
         }
 

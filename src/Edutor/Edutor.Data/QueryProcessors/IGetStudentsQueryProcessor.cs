@@ -13,7 +13,7 @@ namespace Edutor.Data.QueryProcessors
 
         QueryResult<Student> GetStudentsForGroup(int groupId, PagedDataRequest requestInfo);
 
-        QueryResult<Student> GetStudentsForTutor(int tutorId, PagedDataRequest requestInfo);
+        QueryResult<Student> GetStudentsForTutor(int tutorId, PagedDataRequest requestInfo, bool onlyActive = true);
 
         Student GetStudent(int studentId);
 

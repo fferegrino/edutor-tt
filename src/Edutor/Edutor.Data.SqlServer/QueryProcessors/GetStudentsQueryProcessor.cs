@@ -24,9 +24,18 @@ namespace Edutor.Data.SqlServer.QueryProcessors
             _session = session;
         }
 
-        public QueryResult<Student> GetStudentsForTutor(int tutorId, PagedDataRequest requestInfo)
+
+        public QueryResult<Student> GetStudentsForTutor(int tutorId, PagedDataRequest requestInfo, bool onlyActive = true)
         {
-            var q = _session.QueryOver<Student>().Where(s => s.Tutor.UserId == tutorId);
+            IQueryOver<Student> q = null;
+            if (onlyActive)
+            {
+                q = _session.QueryOver<Student>().Where(s => s.Tutor.UserId == tutorId && s.IsActive == true);
+            }
+            else
+            {
+                q = _session.QueryOver<Student>().Where(s => s.Tutor.UserId == tutorId);
+            }
 
             var totalItemCount = q.ToRowCountQuery().RowCount();
 
@@ -153,7 +162,7 @@ namespace Edutor.Data.SqlServer.QueryProcessors
 
         public Invitation GetStudentsForEvent(int eventId, int studentId)
         {
-            var q =  _session.QueryOver<Invitation>().Where(t => t.Event.EventId == eventId
+            var q = _session.QueryOver<Invitation>().Where(t => t.Event.EventId == eventId
                 && t.Student.StudentId == studentId).SingleOrDefault();
             return q;
         }
@@ -170,7 +179,7 @@ namespace Edutor.Data.SqlServer.QueryProcessors
 
         public NotificationDetail GetStudentsForNotification(int notificationId, int studentId)
         {
-            var q =  _session.QueryOver<NotificationDetail>().Where(t => t.Notification.NotificationId == notificationId
+            var q = _session.QueryOver<NotificationDetail>().Where(t => t.Notification.NotificationId == notificationId
                 && t.Student.StudentId == studentId).SingleOrDefault();
 
             return q;

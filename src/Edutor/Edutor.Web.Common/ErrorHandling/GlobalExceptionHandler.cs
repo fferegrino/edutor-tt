@@ -1,4 +1,5 @@
 ﻿using Edutor.Data.Exceptions;
+using Edutor.Web.Common.Exceptions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,6 +28,11 @@ namespace Edutor.Web.Common.ErrorHandling
             if (exception is ObjectNotFoundException)
             {
                 context.Result = new SimpleErrorResult(context.Request, HttpStatusCode.NotFound, exception.Message);
+                return;
+            }
+            if (exception is CustomAuthorizationException)
+            {
+                context.Result = new SimpleErrorResult(context.Request, HttpStatusCode.Unauthorized, exception.Message);
                 return;
             }
             if (exception is DuplicateEntityException)

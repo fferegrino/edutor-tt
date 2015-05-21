@@ -26,10 +26,21 @@ namespace Edutor.Web.Api.AutoMappingConfigurator
                 .ForMember(s => s.SchoolUser, x => x.Ignore())
                 ;
 
+            Func<Ent.Question, object> resolvePossobleAnswers = (ob) =>
+            {
+                var possobleAnswers = new List<RetModels.PossibleAnswer>();
+                foreach (var pa in ob.PossibleAnswers)
+                {
+                    var rrr = Mapper.Map<RetModels.PossibleAnswer>(pa);
+                    rrr.QuestionId = ob.QuestionId;
+                    possobleAnswers.Add(rrr);
+                }
+                return possobleAnswers;
+            };
 
             Mapper.CreateMap<Ent.Question, RetModels.Question>()
                 .ForMember(x => x.Links, opt => opt.Ignore())
-                .ForMember(s => s.PossibleAnswers, x => x.Ignore())
+                .ForMember(s => s.PossibleAnswers, x => x.ResolveUsing(resolvePossobleAnswers))
                  .ForMember(x => x.SchoolUserId, opt => opt.MapFrom(src => src.SchoolUser.UserId))
                 ;
 
@@ -60,6 +71,10 @@ namespace Edutor.Web.Api.AutoMappingConfigurator
                 .ForMember(d => d.StudentId, x => x.MapFrom(s => s.Student.StudentId))
                 .ForMember(d => d.Name, x => x.MapFrom(s => s.Student.Name))
                 .ForMember(d => d.Curp, x => x.MapFrom(s => s.Student.Curp))
+                ;
+
+            Mapper.CreateMap<Ent.PossibleAnswer, RetModels.PossibleAnswer>()
+                .ForMember(x => x.Links, opt => opt.Ignore())
                 ;
 
 

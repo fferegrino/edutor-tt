@@ -16,6 +16,13 @@ namespace Edutor.Common
             public const string TextJson = "text/json";
         }
 
+        public static class CustomClaimTypes
+        {
+            public const string StudentId = "StudentId";
+            public const string SchoolUserId = "SchoolUserId";
+            public const string TutorId = "TutorId";
+        }
+
         public static class Paging
         {
             public const int MinPageSize = 1;
@@ -63,7 +70,8 @@ namespace Edutor.Common
         public static class CommonRoutingDefinitions
         {
             public const string ApiSegmentName = "";
-            public const string CurpRegex = "^[A-Za-z][A-Za-z0-9]+$";
+            public const string CurpRegex = "^[A-Za-z]{4}[A-Za-z0-9]+$";
+            public const string Token = "^[A-Za-z][A-Za-z0-9]{9}$";
 
         }
 
@@ -77,6 +85,9 @@ namespace Edutor.Common
             public const string Teacher = "Teacher";
             public const string Administrator = "Administrator";
             public const string Tutor = "Tutor";
+            public const string All = Teacher + "," + Administrator + "," + Tutor;
+            public const string TeacherAndTutor = Teacher + "," + Tutor;
+            public const string SchoolUser = Teacher + "," + Administrator;
         }
     }
 }
