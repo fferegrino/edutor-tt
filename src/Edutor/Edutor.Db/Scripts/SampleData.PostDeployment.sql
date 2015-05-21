@@ -38,6 +38,10 @@ BEGIN
 					ELSE 'P' END
 	WHERE [Type] = 'S'
 
+	update Users set Password =  CONVERT(varchar(max),HASHBYTES('SHA2_256',Curp),2)
+	from Users
+
+
 END
 
 IF(@DummyStudents = 1)

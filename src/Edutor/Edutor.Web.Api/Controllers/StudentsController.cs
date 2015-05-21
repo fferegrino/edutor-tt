@@ -44,6 +44,7 @@ namespace Edutor.Web.Api.Controllers
         [HttpPost]
         [ResponseType(typeof(Student))]
         [Route("students")]
+        [Authorize(Roles = Constants.RoleNames.Administrator)]
         public IHttpActionResult AddStudent(NewStudent newStudent)
         {
 
@@ -60,6 +61,7 @@ namespace Edutor.Web.Api.Controllers
         [HttpGet]
         [ResponseType(typeof(Student))]
         [Route("students/{studentId:int}")]
+        [Authorize(Roles = Constants.RoleNames.All)]
         public Student GetStudentById(int studentId)
         {
             return _getStudentsInquiryProcessor.GetStudent(studentId);
@@ -73,6 +75,7 @@ namespace Edutor.Web.Api.Controllers
         [HttpGet]
         [ResponseType(typeof(Student))]
         [Route("students/{curp:regex(" + Constants.CommonRoutingDefinitions.CurpRegex + ")}")]
+        [Authorize(Roles = Constants.RoleNames.Administrator)]
         public Student GetTutor(string curp)
         {
             var s = _getStudentsInquiryProcessor.GetStudent(curp);
@@ -100,6 +103,7 @@ namespace Edutor.Web.Api.Controllers
         [HttpGet]
         [ResponseType(typeof(PagedDataInquiryResponse<Student>))]
         [Route("students")]
+        [Authorize(Roles = Constants.RoleNames.Administrator)]
         public PagedDataInquiryResponse<Student> GetTutors()
         {
             var request = _pagedDataRequestFactory.Create(Request.RequestUri);
@@ -114,6 +118,7 @@ namespace Edutor.Web.Api.Controllers
         /// <returns>Una lista con las notificaciones del estudiante</returns>
         [HttpGet]
         [Route("students/{studentId:int}/notifications")]
+        [Authorize(Roles = Constants.RoleNames.Tutor)]
         public PagedDataInquiryResponse<Notification> GetNotificationsForStudent(int studentId)
         {
             var request = _pagedDataRequestFactory.Create(Request.RequestUri);
@@ -128,6 +133,7 @@ namespace Edutor.Web.Api.Controllers
         /// <returns>Una lista con los eventos del estudiante</returns>
         [HttpGet]
         [Route("students/{studentId:int}/events")]
+        [Authorize(Roles = Constants.RoleNames.Tutor)]
         public PagedDataInquiryResponse<Event> GetEventsForStudent(int studentId)
         {
             var request = _pagedDataRequestFactory.Create(Request.RequestUri);
@@ -143,6 +149,7 @@ namespace Edutor.Web.Api.Controllers
         /// <returns>Una lista con las preguntas del estudiante</returns>
         [HttpGet]
         [Route("students/{studentId:int}/questions")]
+        [Authorize(Roles = Constants.RoleNames.Tutor)]
         public PagedDataInquiryResponse<Question> GetQuestionsForStudent(int studentId)
         {
             var request = _pagedDataRequestFactory.Create(Request.RequestUri);

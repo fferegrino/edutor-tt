@@ -1,5 +1,6 @@
 ﻿using Edutor.Common;
 using Edutor.Common.Logging;
+using Edutor.Common.Security;
 using Edutor.Data.Entities;
 using Edutor.Web.Common;
 using log4net;
@@ -76,8 +77,9 @@ namespace Edutor.Web.Api.Securitiy
         {
             var identity = new GenericIdentity(user.UserId.ToString(), Constants.SchemeTypes.Basic);
 
-            identity.AddClaim(new Claim(ClaimTypes.Role, 
-                user.Type == User.SchoolUserType ? Constants.RoleNames.Teacher : Constants.RoleNames.Administrator));
+            identity.AddClaim(new Claim(ClaimTypes.Role,
+                user.Position == User.AdministrativePosition ? Constants.RoleNames.Administrator : Constants.RoleNames.Teacher));
+            identity.AddClaim(new Claim(Constants.CustomClaimTypes.SchoolUserId, user.UserId.ToString()));
 
             return new ClaimsPrincipal(identity);
         }
@@ -95,7 +97,8 @@ namespace Edutor.Web.Api.Securitiy
 
         public virtual User GetUser(int userId, string password)
         {
-            return Session.QueryOver<User>().Where(user => user.UserId == userId).SingleOrDefault();
+            string p = PasswordHasher.HashAndSaltPassword(password);
+            return Session.QueryOver<User>().Where(user => user.UserId == userId && user.Password == p).SingleOrDefault();
         }
 
         private Student GetStudent(string token)

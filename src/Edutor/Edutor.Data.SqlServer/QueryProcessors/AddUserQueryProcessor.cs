@@ -27,6 +27,7 @@ namespace Edutor.Data.SqlServer.QueryProcessors
 
         public void AddUser(Entities.User user)
         {
+            user.Password = PasswordHasher.HashAndSaltPassword(user.Curp);
             try
             {
                 _session.SaveOrUpdate(user);
@@ -36,5 +37,7 @@ namespace Edutor.Data.SqlServer.QueryProcessors
                 throw new Edutor.Data.Exceptions.DuplicateEntityException("This is a duplicate user, check the unique fields within your entity (either Curp or Email)");
             }
         }
+
+        
     }
 }
