@@ -7,6 +7,8 @@ using System.Web.Http.Description;
 using Edutor.Web.Api.Models.ReturnTypes;
 using Edutor.Web.Api.Models;
 using Edutor.Common;
+using Edutor.Web.Common.Exceptions;
+using Edutor.Web.Common.Filters;
 
 namespace Edutor.Web.Api.Controllers
 {
@@ -45,12 +47,12 @@ namespace Edutor.Web.Api.Controllers
         [ResponseType(typeof(Student))]
         [Route("students")]
         [Authorize(Roles = Constants.RoleNames.Administrator)]
+        [ValidationActionFilter]
         public IHttpActionResult AddStudent(NewStudent newStudent)
         {
-
-            var user = _addUserQueryProcessor.AddStudent(newStudent);
-            var result = new ModelPostedActionResult<Student>(Request, user);
-            return result;
+                var user = _addUserQueryProcessor.AddStudent(newStudent);
+                var result = new ModelPostedActionResult<Student>(Request, user);
+                return result;
         }
 
         /// <summary>

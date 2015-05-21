@@ -11,6 +11,7 @@ namespace Edutor.Web.Api.Models.NewModels
     {
 
         [Required]
+        [StringLength(70)]
         public string Name { get; set; }
 
         [StringLength(18,MinimumLength=18)]
@@ -20,18 +21,19 @@ namespace Edutor.Web.Api.Models.NewModels
 
         [EmailAddress]
         [Required]
+        [StringLength(60)]
         public string Email { get; set; }
 
 
         [Required]
+        [StringLength(512)]
         public string Address { get; set; }
 
-
-        [Required]
+        [StringLength(10)]
         public string Mobile { get; set; }
 
 
-        [Required]
+        [StringLength(10)]
         public string Phone { get; set; }
 
         public char Type { get; set; }
