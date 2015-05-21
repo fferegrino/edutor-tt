@@ -20,7 +20,7 @@ namespace Edutor.Web.Api.InquiryProcessing
 
         PagedDataInquiryResponse<Return.Student> GetStudentsForGroup(int groupId, PagedDataRequest requestInfo);
 
-        PagedDataInquiryResponse<Return.Student> GetStudentsForTutor(int tutorId, PagedDataRequest requestInfo);
+        PagedDataInquiryResponse<Return.Student> GetStudentsForTutor(int tutorId, PagedDataRequest requestInfo, bool onlyActive = true);
 
         PagedDataInquiryResponse<Return.StudentNotification> GetStudentsForNotification(int notificationId, PagedDataRequest requestInfo);
 
@@ -78,9 +78,9 @@ namespace Edutor.Web.Api.InquiryProcessing
             return inquiryResponse;
         }
 
-        public PagedDataInquiryResponse<Return.Student> GetStudentsForTutor(int tutorId, PagedDataRequest requestInfo)
+        public PagedDataInquiryResponse<Return.Student> GetStudentsForTutor(int tutorId, PagedDataRequest requestInfo, bool onlyActive = true)
         {
-            var qresult = _queryProcessor.GetStudentsForTutor(tutorId, requestInfo);
+            var qresult = _queryProcessor.GetStudentsForTutor(tutorId, requestInfo, onlyActive);
             var returnUsers = GetCollection(qresult);
             var inquiryResponse = new PagedDataInquiryResponse<Return.Student>
             {
@@ -93,7 +93,7 @@ namespace Edutor.Web.Api.InquiryProcessing
             _commonLinkService.AddPageLinks(inquiryResponse);
 
             return inquiryResponse;
-        
+
         }
 
         public PagedDataInquiryResponse<Return.StudentNotification> GetStudentsForNotification(int notificationId, PagedDataRequest requestInfo)
@@ -114,9 +114,9 @@ namespace Edutor.Web.Api.InquiryProcessing
 
         }
 
-        public PagedDataInquiryResponse<Return.Student> GetStudentsForGroup(int groupId,PagedDataRequest request)
+        public PagedDataInquiryResponse<Return.Student> GetStudentsForGroup(int groupId, PagedDataRequest request)
         {
-            var qresult = _queryProcessor.GetStudentsForGroup(groupId,request);
+            var qresult = _queryProcessor.GetStudentsForGroup(groupId, request);
             var returnUsers = GetCollection(qresult);
             var inquiryResponse = new PagedDataInquiryResponse<Return.Student>
             {

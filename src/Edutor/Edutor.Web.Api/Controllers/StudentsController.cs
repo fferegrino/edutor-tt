@@ -80,6 +80,20 @@ namespace Edutor.Web.Api.Controllers
         }
 
         /// <summary>
+        /// Activa el estudiante con el token asignado
+        /// </summary>
+        /// <param name="token">El identificador único del tutor a recuperar</param>
+        /// <returns></returns>
+        [HttpPost]
+        [ResponseType(typeof(Student))]
+        [Route("students/{token:regex(" + Constants.CommonRoutingDefinitions.Token + ")}/activate")]
+        public Student ActivateStudent(string token)
+        {
+            var s = _addUserQueryProcessor.ActivateStudent(token);
+            return s;
+        }
+
+        /// <summary>
         /// Obtiene todos los tutores registrados en el sistema
         /// </summary>
         /// <returns>Una respuesta paginada de todos los tutores en el sistema</returns>

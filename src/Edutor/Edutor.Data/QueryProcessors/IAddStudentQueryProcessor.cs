@@ -9,5 +9,7 @@ namespace Edutor.Data.QueryProcessors
     public interface IAddStudentQueryProcessor
     {
         void AddStudent(Entities.Student student);
+
+        Entities.Student ActivateStudent(string token);
     }
 }

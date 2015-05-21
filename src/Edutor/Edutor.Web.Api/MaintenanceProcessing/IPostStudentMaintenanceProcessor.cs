@@ -17,6 +17,8 @@ namespace Edutor.Web.Api.MaintenanceProcessing
     public interface IPostStudentMaintenanceProcessor
     {
         Student AddStudent(NewStudent student);
+
+        Student ActivateStudent(string token);
     }
     public class PostStudentMaintenanceProcessor : IPostStudentMaintenanceProcessor
     {
@@ -42,6 +44,16 @@ namespace Edutor.Web.Api.MaintenanceProcessing
             //newUser.Type = userEntity.Type;
 
             // TODO Implement link service here
+            _linkServices.AddAllLinks(returnUser);
+
+            return returnUser;
+        }
+
+
+        public Student ActivateStudent(string token)
+        {
+            var userEntity = _addUserQueryProcessor.ActivateStudent(token);
+            var returnUser = _autoMapper.Map<Student>(userEntity);
             _linkServices.AddAllLinks(returnUser);
 
             return returnUser;

@@ -99,6 +99,8 @@ BEGIN
 	DROP TABLE #DUMMYDATA
 	DROP TABLE #MID_STUDENTS
 
+	UPDATE Students SET IsActive = 0
+
 END
 
 IF(@DummyGroups = 1)

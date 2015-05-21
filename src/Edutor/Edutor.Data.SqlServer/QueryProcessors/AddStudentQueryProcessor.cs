@@ -37,5 +37,14 @@ namespace Edutor.Data.SqlServer.QueryProcessors
                 throw new Edutor.Data.Exceptions.DuplicateEntityException("This is a duplicate student, check the unique fields within your entity (Curp)");
             }
         }
+
+
+        public Entities.Student ActivateStudent(string token)
+        {
+            var student = _session.QueryOver<Entities.Student>().Where(s => s.Token == token).SingleOrDefault();
+            student.IsActive = true;
+            _session.Update(student);
+            return student;
+        }
     }
 }
