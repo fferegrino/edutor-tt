@@ -14,6 +14,9 @@ using System.Web.Http.Description;
 
 namespace Edutor.Web.Api.Controllers
 {
+    /// <summary>
+    /// Conjunto de extremos REST que permiten operar con los servicios de creación y manipulación de notificaciones que ofrece la plataforma
+    /// </summary>
     [Edutor.Web.Common.UnitOfWorkActionFilter]
     public class NotificationsController : ApiController
     {

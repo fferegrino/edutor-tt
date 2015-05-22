@@ -16,7 +16,7 @@ using System.Web.Http.Description;
 namespace Edutor.Web.Api.Controllers
 {
     /// <summary>
-    /// Controlador de eventos dentro de la plataforma Edutor
+    /// Conjunto de extremos REST que permiten operar con los servicios de creación y manipulación de eventos que ofrece la plataforma
     /// </summary>
     [Edutor.Web.Common.UnitOfWorkActionFilter]
     public class EventsController : ApiController
@@ -38,6 +38,20 @@ namespace Edutor.Web.Api.Controllers
             _pagedDataRequestFactory = pagedDataRequestFactory;
             _getStudents = getStudents;
             _updateEvents = updateEvents;
+        }
+        /// <summary>
+        /// Agrega un evento al sistema
+        /// </summary>
+        /// <param name="newEvent">El nuevo evento</param>
+        /// <returns></returns>
+        [HttpPost]
+        [ResponseType(typeof(Event))]
+        [Route("events")]
+        public IHttpActionResult AddEvent(NewEvent newEvent)
+        {
+            var user = _addQueryProcessor.AddEvent(newEvent);
+            var result = new ModelPostedActionResult<Event>(Request, user);
+            return result;
         }
 
 
@@ -100,19 +114,5 @@ namespace Edutor.Web.Api.Controllers
         }
 
 
-        /// <summary>
-        /// Agrega un evento al sistema
-        /// </summary>
-        /// <param name="newEvent">El nuevo evento</param>
-        /// <returns></returns>
-        [HttpPost]
-        [ResponseType(typeof(Event))]
-        [Route("events")]
-        public IHttpActionResult AddEvent(NewEvent newEvent)
-        {
-            var user = _addQueryProcessor.AddEvent(newEvent);
-            var result = new ModelPostedActionResult<Event>(Request, user);
-            return result;
-        }
     }
 }

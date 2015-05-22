@@ -3,13 +3,15 @@ using Edutor.Web.Api.MaintenanceProcessing;
 using Edutor.Web.Api.Models;
 using Edutor.Web.Api.Models.NewModels;
 using Edutor.Web.Api.Models.ReturnTypes;
-//using Edutor.Web.Api.QueryProcessing;
 using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
 
 namespace Edutor.Web.Api.Controllers
 {
+    /// <summary>
+    /// Conjunto de extremos REST que permiten operar con los servicios de creación y manipulación de grupos que ofrece la plataforma
+    /// </summary>
     [Edutor.Web.Common.UnitOfWorkActionFilter]
     public class GroupsController : ApiController
     {
@@ -47,6 +49,7 @@ namespace Edutor.Web.Api.Controllers
         /// <returns></returns>
         [HttpPost]
         [Route("groups")]
+        [ResponseType(typeof(Group))]
         public IHttpActionResult AddGroup( NewGroup newGroup)
         {
             var user = _addUserQueryProcessor.AddGroup(newGroup);

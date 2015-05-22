@@ -1,0 +1,11 @@
+@using System.Web.Http
+@using Edutor.Web.Api.Areas.HelpPage.Models
+@model HelpPageApiModel
+
+@{
+    var description = Model.ApiDescription;
+    ViewBag.Title = description.HttpMethod.Method + " " + description.RelativePath;
+}
+
+
+@Html.DisplayForModel()

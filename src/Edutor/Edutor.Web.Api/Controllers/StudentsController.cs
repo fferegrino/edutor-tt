@@ -12,6 +12,9 @@ using Edutor.Web.Common.Filters;
 
 namespace Edutor.Web.Api.Controllers
 {
+    /// <summary>
+    /// Conjunto de extremos REST que permiten operar con los servicios de creación y manipulación de estudiantes que ofrece la plataforma
+    /// </summary>
     [Edutor.Web.Common.UnitOfWorkActionFilter]
     public class StudentsController : ApiController
     {

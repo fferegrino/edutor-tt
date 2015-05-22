@@ -14,6 +14,9 @@ using System.Web.Http.Description;
 
 namespace Edutor.Web.Api.Controllers
 {
+    /// <summary>
+    /// Conjunto de extremos REST que permiten operar con los servicios de creación y manipulación de preguntas que ofrece la plataforma
+    /// </summary>
     [Edutor.Web.Common.UnitOfWorkActionFilter]
     public class QuestionsController : ApiController
     {
@@ -34,6 +37,20 @@ namespace Edutor.Web.Api.Controllers
             _getStudents = getStudents;
             _pagedDataRequestFactory = pagedDataRequestFactory;
             _updateQuestion = updateQuestion;
+        }
+
+        /// <summary>
+        /// Agrega una nueva pregunta al sistema
+        /// </summary>
+        /// <param name="newQuestion">La nueva pregunta a agregar</param>
+        /// <returns></returns>
+        [HttpPost]
+        [Route("questions")]
+        public IHttpActionResult AddQuestion(NewQuestion newQuestion)
+        {
+            var ret = _postQuestion.AddQuestion(newQuestion);
+            var result = new ModelPostedActionResult<Question>(Request, ret);
+            return result;
         }
 
         /// <summary>
@@ -96,18 +113,5 @@ namespace Edutor.Web.Api.Controllers
             return 0;
         }
 
-        /// <summary>
-        /// Agrega una nueva pregunta al sistema
-        /// </summary>
-        /// <param name="newQuestion">La nueva pregunta a agregar</param>
-        /// <returns></returns>
-        [HttpPost]
-        [Route("questions")]
-        public IHttpActionResult AddQuestion(NewQuestion newQuestion)
-        {
-            var ret = _postQuestion.AddQuestion(newQuestion);
-            var result = new ModelPostedActionResult<Question>(Request, ret);
-            return result;
-        }
     }
 }
