@@ -14,6 +14,9 @@ using Edutor.Web.Common.Exceptions;
 
 namespace Edutor.Web.Api.Controllers
 {
+    /// <summary>
+    /// Conjunto de extremos REST que permiten operar con los servicios de creación y manipulación de usuarios tutores que ofrece la plataforma
+    /// </summary>
     [Edutor.Web.Common.UnitOfWorkActionFilter]
     public class TutorsController : ApiController
     {
@@ -31,9 +34,6 @@ namespace Edutor.Web.Api.Controllers
         public TutorsController(IPostTutorMaintenanceProcessor addUserQueryProcessor,
             IGetTutorsInquiryProcessor getQueryProcessor,
             IGetConversationsInquiryProcessor getConversations,
-            //IGetNotificationsInquiryProcessor getNotifications,
-            //IGetEventsInquiryProcessor getEvents,
-            //IGetQuestionsInquiryProcessor getQuestions,
             IGetStudentsInquiryProcessor getStudentsQueryProcessor,
             IPagedDataRequestFactory pagedDataRequestFactory)
         {
@@ -42,9 +42,21 @@ namespace Edutor.Web.Api.Controllers
             _getStudentsQueryProcessor = getStudentsQueryProcessor;
             _pagedDataRequestFactory = pagedDataRequestFactory;
             _getConversations = getConversations;
-            //_getNotifications = getNotifications;
-            //_getEvents = getEvents;
-            //_getQuestions = getQuestions;
+        }
+
+        /// <summary>
+        /// Agrega un nuevo tutor al sistema
+        /// </summary>
+        /// <param name="newTutor">El nuevo tutor a ingresar</param>
+        /// <returns></returns>
+        [HttpPost]
+        [Route("tutors")]
+        [ResponseType(typeof(Tutor))]
+        public IHttpActionResult AddTutor(NewTutor newTutor)
+        {
+            var user = _addUserQueryProcessor.AddUser(newTutor);
+            var result = new ModelPostedActionResult<Tutor>(Request, user);
+            return result;
         }
 
         /// <summary>
@@ -134,19 +146,5 @@ namespace Edutor.Web.Api.Controllers
 
 
 
-        /// <summary>
-        /// Agrega un nuevo tutor al sistema
-        /// </summary>
-        /// <param name="newTutor">El nuevo tutor a ingresar</param>
-        /// <returns></returns>
-        [HttpPost]
-        [Route("tutors")]
-        [ResponseType(typeof(Tutor))]
-        public IHttpActionResult AddTutor(NewTutor newTutor)
-        {
-            var user = _addUserQueryProcessor.AddUser(newTutor);
-            var result = new ModelPostedActionResult<Tutor>(Request, user);
-            return result;
-        }
     }
 }

@@ -13,6 +13,9 @@ using System.Web.Http.Description;
 
 namespace Edutor.Web.Api.Controllers
 {
+    /// <summary>
+    /// Conjunto de extremos REST que permiten operar con los servicios de mensajería que ofrece la plataforma
+    /// </summary>
     [Edutor.Web.Common.UnitOfWorkActionFilter]
     public class ConversationsController : ApiController
     {
@@ -26,6 +29,22 @@ namespace Edutor.Web.Api.Controllers
             _postConversations = postConversations;
             _getConversations = getConversations;
             _pagedFactory = pagedFactory;
+        }
+
+        /// <summary>
+        /// Envía un nuevo mensaje, en caso de no existir, se crea una conversación
+        /// </summary>
+        /// <param name="newTutor">El nuevo tutor a ingresar</param>
+        /// <returns></returns>
+        [HttpPost]
+        [Route("conversations")]
+        [ResponseType(typeof(Message))]
+        public IHttpActionResult AddTutor(NewMessage newMessage)
+        {
+            //var user = _addUserQueryProcessor.AddUser(newTutor);
+            var x = _postConversations.AddNewMessage(newMessage);
+            var result = new ModelPostedActionResult<Message>(Request, x);
+            return result;
         }
 
         /// <summary>
@@ -47,7 +66,6 @@ namespace Edutor.Web.Api.Controllers
         /// </summary>
         /// <param name="conversationId">El id de la conversación a consultar</param>
         /// /// <param name="messageId">El id del mensaje a consultar</param>
-        /// <returns>Una lista paginada con los mensajes de la conversación consultada</returns>
         [HttpGet]
         [Route("conversations/{conversationId:int}/messages/{messageId:int}")]
         [ResponseType(typeof(Message))]
@@ -67,22 +85,6 @@ namespace Edutor.Web.Api.Controllers
         public Conversation GetConversation(int conversationId)
         {
             return _getConversations.GetConversation(conversationId);
-        }
-
-        /// <summary>
-        /// Envía un nuevo mensaje, en caso de no existir, se crea una conversación
-        /// </summary>
-        /// <param name="newTutor">El nuevo tutor a ingresar</param>
-        /// <returns></returns>
-        [HttpPost]
-        [Route("conversations")]
-        [ResponseType(typeof(Message))]
-        public IHttpActionResult AddTutor(NewMessage newMessage)
-        {
-            //var user = _addUserQueryProcessor.AddUser(newTutor);
-            var x = _postConversations.AddNewMessage(newMessage);
-            var result = new ModelPostedActionResult<Message>(Request, x);
-            return result;
         }
     }
 }

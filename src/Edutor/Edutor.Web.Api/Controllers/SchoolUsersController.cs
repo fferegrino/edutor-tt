@@ -17,6 +17,9 @@ using System.Web.Http.Description;
 
 namespace Edutor.Web.Api.Controllers
 {
+    /// <summary>
+    /// Conjunto de extremos REST que permiten operar con los servicios de creación y manipulación de usuarios escolares que ofrece la plataforma
+    /// </summary>
     [UnitOfWorkActionFilter]
     public class SchoolUsersController : ApiController
     {
@@ -46,6 +49,23 @@ namespace Edutor.Web.Api.Controllers
             _getEvents = getEvents;
             _getConversations = getConversations;
             _getQuestions = getQuestions;
+        }
+
+        /// <summary>
+        /// Agrega usuario escolar
+        /// </summary>
+        /// <remarks>Agrega un nuevo usuario escolar al sistem</remarks>
+        /// <param name="newUser">El nuevo usuario a agregar</param>
+        /// <returns></returns>
+        /// <response code="201">Usuario escolar creado</response>
+        [HttpPost]
+        [ResponseType(typeof(SchoolUser))]
+        [Route("schoolusers")]
+        public IHttpActionResult AddSchoolUser(NewSchoolUser newUser)
+        {
+            var user = _addUserQueryProcessor.AddUser(newUser);
+            var result = new ModelPostedActionResult<SchoolUser>(Request, user);
+            return result;
         }
 
         /// <summary>
@@ -156,21 +176,5 @@ namespace Edutor.Web.Api.Controllers
         }
 
 
-        /// <summary>
-        /// Agrega usuario escolar
-        /// </summary>
-        /// <remarks>Agrega un nuevo usuario escolar al sistem</remarks>
-        /// <param name="newUser">El nuevo usuario a agregar</param>
-        /// <returns></returns>
-        /// <response code="201">Usuario escolar creado</response>
-        [HttpPost]
-        [ResponseType(typeof(SchoolUser))]
-        [Route("schoolusers")]
-        public IHttpActionResult AddSchoolUser(NewSchoolUser newUser)
-        {
-            var user = _addUserQueryProcessor.AddUser(newUser);
-            var result = new ModelPostedActionResult<SchoolUser>(Request, user);
-            return result;
-        }
     }
 }
