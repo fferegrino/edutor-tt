@@ -2,12 +2,8 @@
 using Edutor.Common.TypeMapping;
 using Edutor.Web.Api.Securitiy;
 using Edutor.Web.Common;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Http;
-using System.Web.Routing;
+using System.Web.Mvc;
 
 namespace Edutor.Web.Api
 {
@@ -18,7 +14,6 @@ namespace Edutor.Web.Api
             GlobalConfiguration.Configure(WebApiConfig.Register);
 
             RegisterHandlers();
-
             new AutoMapperConfigurator().Configure(
                 WebContainerManager.GetAll<IAutoMapperTypeConfigurator>());
         }

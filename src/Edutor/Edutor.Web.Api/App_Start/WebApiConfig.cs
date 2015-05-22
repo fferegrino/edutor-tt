@@ -7,6 +7,7 @@ using System.Linq;
 using System.Web.Http;
 using System.Web.Http.ExceptionHandling;
 using System.Web.Http.Tracing;
+using System.Web.Mvc;
 
 namespace Edutor.Web.Api
 {
@@ -16,6 +17,7 @@ namespace Edutor.Web.Api
         {
             // Configuración y servicios de API web
 
+            AreaRegistration.RegisterAllAreas();
             // Rutas de API web
             config.MapHttpAttributeRoutes();
 
@@ -24,6 +26,8 @@ namespace Edutor.Web.Api
                 routeTemplate: "{controller}/{id}",
                 defaults: new { id = RouteParameter.Optional }
             );
+
+
 
             config.Services.Replace(typeof(IExceptionHandler), new GlobalExceptionHandler());
 
