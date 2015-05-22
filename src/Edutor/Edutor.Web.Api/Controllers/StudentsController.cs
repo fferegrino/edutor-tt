@@ -19,6 +19,7 @@ namespace Edutor.Web.Api.Controllers
     public class StudentsController : ApiController
     {
         private readonly IPostStudentMaintenanceProcessor _addUserQueryProcessor;
+        private readonly IPatchStudentMaintenanceProcessor _patchStudent;
         private readonly IGetStudentsInquiryProcessor _getStudentsInquiryProcessor;
         private readonly IGetNotificationsInquiryProcessor _getNotifications;
         private readonly IPagedDataRequestFactory _pagedDataRequestFactory;
@@ -29,9 +30,11 @@ namespace Edutor.Web.Api.Controllers
             IGetStudentsInquiryProcessor getStudents,
             IGetNotificationsInquiryProcessor getNotifications,
             IPagedDataRequestFactory pagedDataRequest,
+            IPatchStudentMaintenanceProcessor patchStudent,
             IGetEventsInquiryProcessor getEvents,
             IGetQuestionsInquiryProcessor getQuestions)
         {
+            _patchStudent = patchStudent;
             _addUserQueryProcessor = addUserQueryProcessor;
             _getStudentsInquiryProcessor = getStudents;
             _getNotifications = getNotifications;

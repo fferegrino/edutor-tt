@@ -217,6 +217,10 @@
     <Compile Include="LinkServices\IStudentsLinkService.cs" />
     <Compile Include="LinkServices\ITutorsLinkService.cs" />
     <Compile Include="LinkServices\ISchoolUsersLinkService.cs" />
+    <Compile Include="MaintenanceProcessing\IPatchSchoolUserMaintenanceProcessor.cs" />
+    <Compile Include="MaintenanceProcessing\IPatchTutorMaintenanceProcessor.cs" />
+    <Compile Include="MaintenanceProcessing\IPatchGroupMaintenanceProcessor.cs" />
+    <Compile Include="MaintenanceProcessing\IPatchStudentMaintenanceProcessor.cs" />
     <Compile Include="MaintenanceProcessing\IPostConversationsMaintenanceProcessor.cs" />
     <Compile Include="MaintenanceProcessing\IPostNotificationMaintenanceProcessor.cs" />
     <Compile Include="MaintenanceProcessing\IPostQuestionMaintenanceProcessor.cs" />

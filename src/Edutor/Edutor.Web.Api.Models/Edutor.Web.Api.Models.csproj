@@ -45,6 +45,11 @@
     <Compile Include="IPageLinkContaining.cs" />
     <Compile Include="Link.cs" />
     <Compile Include="LinkContaining.cs" />
+    <Compile Include="ModModels\ModifyGroup.cs" />
+    <Compile Include="ModModels\ModifySchoolUser.cs" />
+    <Compile Include="ModModels\ModifyStudent.cs" />
+    <Compile Include="ModModels\ModifyTutor.cs" />
+    <Compile Include="ModModels\ModifyUser.cs" />
     <Compile Include="NewModels\NewEnrollment.cs" />
     <Compile Include="NewModels\NewMessage.cs" />
     <Compile Include="NewModels\NewNotification.cs" />

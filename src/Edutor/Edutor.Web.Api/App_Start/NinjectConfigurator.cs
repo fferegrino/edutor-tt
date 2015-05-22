@@ -61,7 +61,7 @@ namespace Edutor.Web.Api
             container.Bind<LS.INotificationsLinkService>().To<LS.NotificationsLinkService>();
             container.Bind<LS.IConversationsLinkService>().To<LS.ConversationsLinkService>();
             container.Bind<LS.IElementsLinkService>().To<LS.ElementsLinkService>();
-            
+
         }
 
         private void ConfigureAutoMapper(IKernel container)
@@ -88,7 +88,7 @@ namespace Edutor.Web.Api
                 .To<AMC.NewNotificationToNotificationEntityAutoMapperTypeConfigurator>().InSingletonScope();
             container.Bind<TM.IAutoMapperTypeConfigurator>()
                 .To<AMC.NewMessageToMessageEntityAutoMapperTypeConfigurator>().InSingletonScope();
-            
+
         }
 
         private void ConfigureQueryProcessors(IKernel container)
@@ -155,6 +155,20 @@ namespace Edutor.Web.Api
 
             container.Bind<QueryProcessors.IUpdateQuestionsQueryProcessor>().To<SqlProcessors.UpdateQuestionsQueryProcessor>().InRequestScope();
             container.Bind<UpdateProcessing.IPutQuestionsUpdateProcessor>().To<UpdateProcessing.PutQuestionsUpdateProcessor>().InRequestScope();
+            #endregion
+
+            #region Patch
+
+            container.Bind<QueryProcessors.IUpdateEventsQueryProcessor>().To<SqlProcessors.UpdateEventsQueryProcessor>().InRequestScope();
+            container.Bind<QueryProcessors.IUpdateStudentsQueryProcessor>().To<SqlProcessors.UpdateStudentsQueryProcessor>().InRequestScope();
+            container.Bind<QueryProcessors.IUpdateUsersQueryProcessor>().To<SqlProcessors.UpdateUsersQueryProcessor>().InRequestScope();
+
+
+            container.Bind<AMP.IPatchGroupMaintenanceProcessor>().To<AMP.PatchGroupMaintenanceProcessor>().InRequestScope();
+            container.Bind<AMP.IPatchSchoolUserMaintenanceProcessor>().To<AMP.PatchSchoolUserMaintenanceProcessor>().InRequestScope();
+            container.Bind<AMP.IPatchStudentMaintenanceProcessor>().To<AMP.PatchStudentMaintenanceProcessor>().InRequestScope();
+            container.Bind<AMP.IPatchTutorMaintenanceProcessor>().To<AMP.PatchTutorMaintenanceProcessor>().InRequestScope();
+
             #endregion
         }
 

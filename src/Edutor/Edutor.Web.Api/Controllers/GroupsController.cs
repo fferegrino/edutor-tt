@@ -21,6 +21,7 @@ namespace Edutor.Web.Api.Controllers
         private readonly IPostTeachingMaintenanceProcessor _postTeachingMaintenanceProcessor;
         private readonly IGetSchoolUsersInquiryProcessor _schoolUsersIP;
         private readonly IGetStudentsInquiryProcessor _studentsIP;
+        private readonly IPatchGroupMaintenanceProcessor _patchGroups;
         private readonly IGetGroupsInquiryProcessor _getGroups;
         private readonly IPagedDataRequestFactory _pagedDataRequestFactory;
 
@@ -29,9 +30,11 @@ namespace Edutor.Web.Api.Controllers
            IPostTeachingMaintenanceProcessor postTeachingMaintenanceProcessor,
             IGetSchoolUsersInquiryProcessor schoolUsersIP,
             IGetStudentsInquiryProcessor studentsIP,
+            IPatchGroupMaintenanceProcessor patchGroups,
             IPagedDataRequestFactory pagedDataRequestFactory,
             IGetGroupsInquiryProcessor getGroups)
         {
+            _patchGroups = patchGroups;
             _addUserQueryProcessor = addUserQueryProcessor;
             _postEnrollmentMaintenanceProcessor = postEnrollmentMaintenanceProcessor;
             _postTeachingMaintenanceProcessor = postTeachingMaintenanceProcessor;

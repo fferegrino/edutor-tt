@@ -25,18 +25,17 @@ namespace Edutor.Web.Api.Controllers
         private readonly IGetStudentsInquiryProcessor _getStudentsQueryProcessor;
         private readonly IGetConversationsInquiryProcessor _getConversations;
         private readonly IPagedDataRequestFactory _pagedDataRequestFactory;
+        private readonly IPatchTutorMaintenanceProcessor _patchTutors;
 
-
-        //private readonly IGetNotificationsInquiryProcessor _getNotifications;
-        //private readonly IGetEventsInquiryProcessor _getEvents;
-        //private readonly IGetQuestionsInquiryProcessor _getQuestions;
 
         public TutorsController(IPostTutorMaintenanceProcessor addUserQueryProcessor,
             IGetTutorsInquiryProcessor getQueryProcessor,
+            IPatchTutorMaintenanceProcessor patchTutors,
             IGetConversationsInquiryProcessor getConversations,
             IGetStudentsInquiryProcessor getStudentsQueryProcessor,
             IPagedDataRequestFactory pagedDataRequestFactory)
         {
+            _patchTutors = patchTutors;
             _addUserQueryProcessor = addUserQueryProcessor;
             _getQueryProcessor = getQueryProcessor;
             _getStudentsQueryProcessor = getStudentsQueryProcessor;

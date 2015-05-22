@@ -72,6 +72,9 @@
     <Compile Include="QueryProcessors\IAddTeachingQueryProcessor.cs" />
     <Compile Include="QueryProcessors\IAddUserQueryProcessor.cs" />
     <Compile Include="QueryProcessors\IGetConversationsQueryProcessor.cs" />
+    <Compile Include="QueryProcessors\IUpdateStudentsQueryProcessor.cs" />
+    <Compile Include="QueryProcessors\IUpdateGroupsQueryProcessor.cs" />
+    <Compile Include="QueryProcessors\IUpdateUsersQueryProcessor.cs" />
     <Compile Include="QueryProcessors\IUpdateQuestionsQueryProcessor.cs" />
     <Compile Include="QueryProcessors\IUpdateNotificationsQueryProcessor.cs" />
     <Compile Include="QueryProcessors\IUpdateEventsQueryProcessor.cs" />

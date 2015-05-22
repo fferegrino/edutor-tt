@@ -10,7 +10,6 @@ namespace Edutor.Web.Api.Models.ModModels
     {
         public int StudentId { get; set; }
         public string TutorRelationship { get; set; }
-        public int StudentId { get; set; }
         public int TutorId { get; set; }
         public string Address { get; set; }
         public string Phone { get; set; }
