@@ -135,6 +135,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\HelpPage\HelpPage.css" />
+    <Content Include="Areas\HelpPage\img\brand.png" />
     <Content Include="Global.asax" />
     <EmbeddedResource Include="SwaggerStuff\Html\index.html" />
     <Content Include="index.html" />

@@ -11,14 +11,18 @@
 <div>
     @foreach (var mediaType in mediaTypes)
     {
+        if ("application/x-www-form-urlencoded".Equals(mediaType))
+        {
+            continue;
+        }
         <h4 class="sample-header">@mediaType</h4>
         <div class="sample-content">
-            <span><b>Sample:</b></span>
+            <span><b>Ejemplo:</b></span>
             @{
                 var sample = samples[mediaType];
                 if (sample == null)
                 {
-                    <p>Sample not available.</p>
+                    <p>Ejemplo no disponible.</p>
                 }
                 else
                 {

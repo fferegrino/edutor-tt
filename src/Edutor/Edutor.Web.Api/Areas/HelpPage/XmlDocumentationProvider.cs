@@ -15,6 +15,7 @@ namespace Edutor.Web.Api.Areas.HelpPage
     public class XmlDocumentationProvider : IDocumentationProvider, IModelDocumentationProvider
     {
         private XPathNavigator _documentNavigator;
+        private XPathNavigator _documentNavigator2;
         private const string TypeExpression = "/doc/members/member[@name='T:{0}']";
         private const string MethodExpression = "/doc/members/member[@name='M:{0}']";
         private const string PropertyExpression = "/doc/members/member[@name='P:{0}']";
@@ -32,6 +33,7 @@ namespace Edutor.Web.Api.Areas.HelpPage
                 throw new ArgumentNullException("documentPath");
             }
             XPathDocument xpath = new XPathDocument(documentPath);
+
             _documentNavigator = xpath.CreateNavigator();
         }
 
