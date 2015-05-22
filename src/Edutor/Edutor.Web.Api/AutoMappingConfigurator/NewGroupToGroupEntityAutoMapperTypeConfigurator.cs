@@ -16,7 +16,7 @@ namespace Edutor.Web.Api.AutoMappingConfigurator
         public void Configure()
         {
             Mapper.CreateMap<NwModels.NewGroup, Ent.Group>()
-                //.ForMember(o => o.GroupId, opt => opt.Ignore())
+                .ForMember(o => o.GroupId, opt => opt.Ignore())
                 .ForMember(o => o.Version, x => x.Ignore())
                 .ForMember(s => s.Students, x => x.Ignore())
                 .ForMember(s => s.Teachers, x => x.Ignore())
