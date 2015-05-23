@@ -16,7 +16,7 @@ namespace Edutor.Web.Api.InquiryProcessing
     public interface IGetTutorsInquiryProcessor
     {
 
-        PagedDataInquiryResponse<Return.Tutor> GetAllTutors(PagedDataRequest request);
+        PagedDataResponse<Return.Tutor> GetAllTutors(PagedDataRequest request);
 
         Return.Tutor GetTutor(int id);
 
@@ -41,11 +41,11 @@ namespace Edutor.Web.Api.InquiryProcessing
             _tutorsLinkService = tutorsLinkService;
         }
 
-        public PagedDataInquiryResponse<Return.Tutor> GetAllTutors(PagedDataRequest request)
+        public PagedDataResponse<Return.Tutor> GetAllTutors(PagedDataRequest request)
         {
             var qresult = _queryProcessor.GetTutors(request);
             var returnUsers = GetTutors(qresult);
-            var inquiryResponse = new PagedDataInquiryResponse<Return.Tutor>
+            var inquiryResponse = new PagedDataResponse<Return.Tutor>
             {
                 Items = returnUsers,
                 PageCount = qresult.TotalPageCount,

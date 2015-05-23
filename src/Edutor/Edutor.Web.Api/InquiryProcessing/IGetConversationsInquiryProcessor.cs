@@ -15,11 +15,11 @@ namespace Edutor.Web.Api.InquiryProcessing
     public interface IGetConversationsInquiryProcessor
     {
 
-        PagedDataInquiryResponse<Return.Conversation> GetMessagesForUser(int userId, PagedDataRequest request);
+        PagedDataResponse<Return.Conversation> GetMessagesForUser(int userId, PagedDataRequest request);
 
         Return.Message GetMessagesForConversation(int conversationId, int messageId);
 
-        PagedDataInquiryResponse<Return.Message> GetMessagesForConversation(int conversationId, PagedDataRequest request);
+        PagedDataResponse<Return.Message> GetMessagesForConversation(int conversationId, PagedDataRequest request);
 
         Return.Conversation GetConversation(int conversationId);
     }
@@ -43,11 +43,11 @@ namespace Edutor.Web.Api.InquiryProcessing
             _linkServices = tutorsLinkService;
         }
 
-        public PagedDataInquiryResponse<Return.Message> GetMessagesForConversation(int conversationId, PagedDataRequest request)
+        public PagedDataResponse<Return.Message> GetMessagesForConversation(int conversationId, PagedDataRequest request)
         {
             var qresult = _queryProcessor.GetMessagesForConversation(conversationId, request);
             var returnUsers = GetCollection(qresult);
-            var inquiryResponse = new PagedDataInquiryResponse<Return.Message>
+            var inquiryResponse = new PagedDataResponse<Return.Message>
             {
                 Items = returnUsers,
                 PageCount = qresult.TotalPageCount,
@@ -107,11 +107,11 @@ namespace Edutor.Web.Api.InquiryProcessing
 
 
 
-        public PagedDataInquiryResponse<Return.Conversation> GetMessagesForUser(int userId, PagedDataRequest request)
+        public PagedDataResponse<Return.Conversation> GetMessagesForUser(int userId, PagedDataRequest request)
         {
             var qresult = _queryProcessor.GetConversationForUser(userId, request);
             var returnUsers = MapConversations(qresult.QueriedItems.ToList());
-            var inquiryResponse = new PagedDataInquiryResponse<Return.Conversation>
+            var inquiryResponse = new PagedDataResponse<Return.Conversation>
             {
                 Items = returnUsers,
                 PageCount = qresult.TotalPageCount,

@@ -16,9 +16,9 @@ namespace Edutor.Web.Api.InquiryProcessing
     public interface IGetEventsInquiryProcessor
     {
 
-        PagedDataInquiryResponse<Return.Event> GetEventsForSchoolUser(int schoolUserId, PagedDataRequest request);
+        PagedDataResponse<Return.Event> GetEventsForSchoolUser(int schoolUserId, PagedDataRequest request);
 
-        PagedDataInquiryResponse<Return.Event> GetEventsForStudent(int studentId, PagedDataRequest requestInfo);
+        PagedDataResponse<Return.Event> GetEventsForStudent(int studentId, PagedDataRequest requestInfo);
 
         Return.Event GetEvent(int eventId);
     }
@@ -42,11 +42,11 @@ namespace Edutor.Web.Api.InquiryProcessing
             _commonLinkService = commonLinkService;
         }
 
-        public Models.PagedDataInquiryResponse<Return.Event> GetEventsForSchoolUser(int schoolUserId, PagedDataRequest request)
+        public Models.PagedDataResponse<Return.Event> GetEventsForSchoolUser(int schoolUserId, PagedDataRequest request)
         {
             var qresult = _queryProcessor.GetEventsForSchoolUser(schoolUserId, request);
 
-            var inquiryResponse = new PagedDataInquiryResponse<Return.Event>
+            var inquiryResponse = new PagedDataResponse<Return.Event>
             {
                 Items = CastCollection(qresult),
                 PageCount = qresult.TotalPageCount,
@@ -58,11 +58,11 @@ namespace Edutor.Web.Api.InquiryProcessing
 
             return inquiryResponse;
         }
-        public Models.PagedDataInquiryResponse<Return.Event> GetEventsForStudent(int studentId, PagedDataRequest requestInfo)
+        public Models.PagedDataResponse<Return.Event> GetEventsForStudent(int studentId, PagedDataRequest requestInfo)
         {
             var qresult = _queryProcessor.GetEventsForStudent(studentId, requestInfo);
 
-            var inquiryResponse = new PagedDataInquiryResponse<Return.Event>
+            var inquiryResponse = new PagedDataResponse<Return.Event>
             {
                 Items = CastCollection(qresult),
                 PageCount = qresult.TotalPageCount,

@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using NwModels = Edutor.Web.Api.Models.NewModels;
 using RetModels = Edutor.Web.Api.Models.ReturnTypes;
+using Modifiable = Edutor.Web.Api.Models.ModModels;
 using Ent = Edutor.Data.Entities;
 
 namespace Edutor.Web.Api.AutoMappingConfigurator
@@ -25,6 +26,15 @@ namespace Edutor.Web.Api.AutoMappingConfigurator
             Mapper.CreateMap<Ent.Group, RetModels.Group>()
                 .ForMember(x => x.Links, opt => opt.Ignore())
                 ;
+            Mapper.CreateMap<Modifiable.ModifiableGroup, Ent.Group>()
+                .ForMember(o => o.GroupId, opt => opt.Ignore())
+                .ForMember(o => o.Version, x => x.Ignore())
+                .ForMember(o => o.Version, x => x.Ignore())
+                .ForMember(o => o.Version, x => x.Ignore())
+                .ForMember(s => s.Students, x => x.Ignore())
+                .ForMember(s => s.Teachers, x => x.Ignore())
+                ;
+
         }
     }
 }

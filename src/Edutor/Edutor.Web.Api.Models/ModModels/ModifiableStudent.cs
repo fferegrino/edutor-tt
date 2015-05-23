@@ -5,21 +5,24 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Edutor.Web.Api.Models.NewModels
+namespace Edutor.Web.Api.Models.ModModels
 {
-    /// <summary>
-    /// Clase que representa un nuevo estudiante en el sistema Edutor
-    /// </summary>
-    public class NewStudent
+    public class ModifiableStudent
     {
         /// <summary>
-        /// El tutor asignado a este estudiante
+        /// El identificador del estudiante a modificar
         /// </summary>
         [Required]
-        public int TutorId { get; set; }
+        public int StudentId { get; set; }
+
+
+        ///// <summary>
+        ///// El tutor asignado a este estudiante
+        ///// </summary>
+        //public int? TutorId { get; set; }
 
         /// <summary>
-        /// La relación entre el tutor y el estudiante, puede ser cualquier cadena de tres caracteres
+        /// La relación entre el tutor y el estudiante
         /// </summary>
         [StringLength(3, MinimumLength = 3)]
         public string TutorRelationship { get; set; }
@@ -27,7 +30,6 @@ namespace Edutor.Web.Api.Models.NewModels
         /// <summary>
         /// Dirección del estudiante
         /// </summary>
-        [Required]
         [StringLength(512)]
         public string Address { get; set; }
 
@@ -38,18 +40,9 @@ namespace Edutor.Web.Api.Models.NewModels
         public string Phone { get; set; }
 
         /// <summary>
-        /// La Clave Única de Registro de Población del estudiante
-        /// </summary>
-        [Required]
-        [StringLength(18, MinimumLength = 18, ErrorMessage = "La CURP consta de 18 caracteres")]
-        public string Curp { get; set; }
-
-        /// <summary>
         /// El nombre del estudiante
         /// </summary>
-        [Required]
         [StringLength(60)]
         public string Name { get; set; }
-
     }
 }

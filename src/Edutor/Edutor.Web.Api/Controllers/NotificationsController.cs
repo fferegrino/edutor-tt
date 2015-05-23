@@ -57,9 +57,9 @@ namespace Edutor.Web.Api.Controllers
         /// <param name="notificationId">El identificador único de la notificación que se desea obtener</param>
         /// <returns></returns>
         [HttpGet]
-        [ResponseType(typeof(PagedDataInquiryResponse<StudentNotification>))]
+        [ResponseType(typeof(PagedDataResponse<StudentNotification>))]
         [Route("notifications/{notificationId:int}/details")]
-        public PagedDataInquiryResponse<StudentNotification> GetNotifiedUsers(int notificationId)
+        public PagedDataResponse<StudentNotification> GetNotifiedUsers(int notificationId)
         {
             var request = _pagedDataRequestFactory.Create(Request.RequestUri);
             return _getStudents.GetStudentsForNotification(notificationId, request);

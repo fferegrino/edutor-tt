@@ -9,6 +9,7 @@ using Edutor.Web.Api.Models;
 using Edutor.Common;
 using Edutor.Web.Common.Exceptions;
 using Edutor.Web.Common.Filters;
+using Edutor.Web.Api.Models.ModModels;
 
 namespace Edutor.Web.Api.Controllers
 {
@@ -56,9 +57,40 @@ namespace Edutor.Web.Api.Controllers
         [ValidationActionFilter]
         public IHttpActionResult AddStudent(NewStudent newStudent)
         {
-                var user = _addUserQueryProcessor.AddStudent(newStudent);
-                var result = new ModelPostedActionResult<Student>(Request, user);
-                return result;
+            var user = _addUserQueryProcessor.AddStudent(newStudent);
+            var result = new ModelPostedActionResult<Student>(Request, user);
+            return result;
+        }
+
+
+        /// <summary>
+        /// Obtiene todos los tutores registrados en el sistema
+        /// </summary>
+        /// <returns>Una respuesta paginada de todos los tutores en el sistema</returns>
+        [HttpGet]
+        [ResponseType(typeof(PagedDataResponse<Student>))]
+        [Route("students")]
+        [Authorize(Roles = Constants.RoleNames.Administrator)]
+        public PagedDataResponse<Student> GetTutors()
+        {
+            var request = _pagedDataRequestFactory.Create(Request.RequestUri);
+            var s = _getStudentsInquiryProcessor.GetAllStudents(request);
+            return s;
+        }
+
+        /// <summary>
+        /// Modifica el estudiante de acuerdo a lo enviado en el parámetro <paramref name="student"/>
+        /// </summary>
+        /// <param name="student"></param>
+        /// <returns></returns>
+        [HttpPatch]
+        [Route("students")]
+        [Authorize(Roles = Constants.RoleNames.Administrator)]
+        [ResponseType(typeof(Student))]
+        public IHttpActionResult UpdateGroup(ModifiableStudent student)
+        {
+            var m = _patchStudent.UpdateStudent(student);
+            return new ModelUpdatedActionResult<Student>(Request, m);
         }
 
         /// <summary>
@@ -105,21 +137,6 @@ namespace Edutor.Web.Api.Controllers
         }
 
         /// <summary>
-        /// Obtiene todos los tutores registrados en el sistema
-        /// </summary>
-        /// <returns>Una respuesta paginada de todos los tutores en el sistema</returns>
-        [HttpGet]
-        [ResponseType(typeof(PagedDataInquiryResponse<Student>))]
-        [Route("students")]
-        [Authorize(Roles = Constants.RoleNames.Administrator)]
-        public PagedDataInquiryResponse<Student> GetTutors()
-        {
-            var request = _pagedDataRequestFactory.Create(Request.RequestUri);
-            var s = _getStudentsInquiryProcessor.GetAllStudents(request);
-            return s;
-        }
-
-        /// <summary>
         /// Obtiene una lista de las notificaciones para el estudiante
         /// </summary>
         /// <param name="studentId">El identificador único del estudiante del que se desea conocer sus notificaciones</param>
@@ -127,7 +144,7 @@ namespace Edutor.Web.Api.Controllers
         [HttpGet]
         [Route("students/{studentId:int}/notifications")]
         [Authorize(Roles = Constants.RoleNames.Tutor)]
-        public PagedDataInquiryResponse<Notification> GetNotificationsForStudent(int studentId)
+        public PagedDataResponse<Notification> GetNotificationsForStudent(int studentId)
         {
             var request = _pagedDataRequestFactory.Create(Request.RequestUri);
             var r = _getNotifications.GetNotificationsForStudent(studentId, request);
@@ -142,12 +159,13 @@ namespace Edutor.Web.Api.Controllers
         [HttpGet]
         [Route("students/{studentId:int}/events")]
         [Authorize(Roles = Constants.RoleNames.Tutor)]
-        public PagedDataInquiryResponse<Event> GetEventsForStudent(int studentId)
+        public PagedDataResponse<Event> GetEventsForStudent(int studentId)
         {
             var request = _pagedDataRequestFactory.Create(Request.RequestUri);
             var r = _getEvents.GetEventsForStudent(studentId, request);
             return r;
         }
+
 
 
         /// <summary>
@@ -158,7 +176,7 @@ namespace Edutor.Web.Api.Controllers
         [HttpGet]
         [Route("students/{studentId:int}/questions")]
         [Authorize(Roles = Constants.RoleNames.Tutor)]
-        public PagedDataInquiryResponse<Question> GetQuestionsForStudent(int studentId)
+        public PagedDataResponse<Question> GetQuestionsForStudent(int studentId)
         {
             var request = _pagedDataRequestFactory.Create(Request.RequestUri);
             var r = _getQuestions.GetQuestionsForStudent(studentId, request);

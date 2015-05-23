@@ -72,8 +72,8 @@ namespace Edutor.Web.Api.Controllers
         /// <returns></returns>
         [HttpGet]
         [Route("questions/{questionId:int}/answers")]
-        [ResponseType(typeof(PagedDataInquiryResponse<StudentAnswer>))]
-        public PagedDataInquiryResponse<StudentAnswer> GetAnswerers(int questionId)
+        [ResponseType(typeof(PagedDataResponse<StudentAnswer>))]
+        public PagedDataResponse<StudentAnswer> GetAnswerers(int questionId)
         {
             var request = _pagedDataRequestFactory.Create(Request.RequestUri);
             var r = _getStudents.GetStudentsForQuestion(questionId, request);

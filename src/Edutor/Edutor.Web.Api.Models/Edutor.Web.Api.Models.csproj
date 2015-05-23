@@ -45,11 +45,11 @@
     <Compile Include="IPageLinkContaining.cs" />
     <Compile Include="Link.cs" />
     <Compile Include="LinkContaining.cs" />
-    <Compile Include="ModModels\ModifyGroup.cs" />
-    <Compile Include="ModModels\ModifySchoolUser.cs" />
-    <Compile Include="ModModels\ModifyStudent.cs" />
-    <Compile Include="ModModels\ModifyTutor.cs" />
-    <Compile Include="ModModels\ModifyUser.cs" />
+    <Compile Include="ModModels\ModifiableGroup.cs" />
+    <Compile Include="ModModels\ModifiableSchoolUser.cs" />
+    <Compile Include="ModModels\ModifiableStudent.cs" />
+    <Compile Include="ModModels\ModifiableTutor.cs" />
+    <Compile Include="ModModels\ModifiableUser.cs" />
     <Compile Include="NewModels\NewEnrollment.cs" />
     <Compile Include="NewModels\NewMessage.cs" />
     <Compile Include="NewModels\NewNotification.cs" />
@@ -64,7 +64,7 @@
     <Compile Include="NewModels\NewTeaching.cs" />
     <Compile Include="NewModels\NewTutor.cs" />
     <Compile Include="NewModels\NewUser.cs" />
-    <Compile Include="PagedDataInquiryResponse.cs" />
+    <Compile Include="PagedDataResponse.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ReturnTypes\BasicStudent.cs" />
     <Compile Include="ReturnTypes\Conversation.cs" />

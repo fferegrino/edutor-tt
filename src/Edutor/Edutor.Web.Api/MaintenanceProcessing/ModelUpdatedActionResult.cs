@@ -9,12 +9,15 @@ using System.Web.Http;
 
 namespace Edutor.Web.Api.MaintenanceProcessing
 {
-    public class ModelDeletedActionResult : IHttpActionResult 
+    public class ModelUpdatedActionResult<T> : IHttpActionResult
+        where T : ILinkContaining
     {
+        private readonly T _created;
         private readonly HttpRequestMessage _requestMessage;
 
-        public ModelDeletedActionResult(HttpRequestMessage requestMessage)
+        public ModelUpdatedActionResult(HttpRequestMessage requestMessage, T created)
         {
+            _created = created;
             _requestMessage = requestMessage;
         }
 
@@ -25,7 +28,8 @@ namespace Edutor.Web.Api.MaintenanceProcessing
 
         private HttpResponseMessage Execute()
         {
-            var resp = _requestMessage.CreateResponse(System.Net.HttpStatusCode.NoContent);
+            var resp = _requestMessage.CreateResponse(System.Net.HttpStatusCode.Created, _created);
+            resp.Headers.Location = _created.GetLocationLink();
             return resp;
         }
     }

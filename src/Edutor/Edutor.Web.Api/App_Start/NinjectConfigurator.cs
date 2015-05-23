@@ -159,7 +159,7 @@ namespace Edutor.Web.Api
 
             #region Patch
 
-            container.Bind<QueryProcessors.IUpdateEventsQueryProcessor>().To<SqlProcessors.UpdateEventsQueryProcessor>().InRequestScope();
+            container.Bind<QueryProcessors.IUpdateGroupsQueryProcessor>().To<SqlProcessors.UpdateGroupsQueryProcessor>().InRequestScope();
             container.Bind<QueryProcessors.IUpdateStudentsQueryProcessor>().To<SqlProcessors.UpdateStudentsQueryProcessor>().InRequestScope();
             container.Bind<QueryProcessors.IUpdateUsersQueryProcessor>().To<SqlProcessors.UpdateUsersQueryProcessor>().InRequestScope();
 

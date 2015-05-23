@@ -232,6 +232,7 @@
     <Compile Include="MaintenanceProcessing\IPostTeachingMaintenanceProcessor.cs" />
     <Compile Include="MaintenanceProcessing\IPostTutorMaintenanceProcessor.cs" />
     <Compile Include="MaintenanceProcessing\LocationLinkCalculator.cs" />
+    <Compile Include="MaintenanceProcessing\ModelUpdatedActionResult.cs" />
     <Compile Include="MaintenanceProcessing\ModelCreatedActionResult.cs" />
     <Compile Include="MaintenanceProcessing\ModelDeletedActionResult.cs" />
     <Compile Include="MaintenanceProcessing\ModelsLinkedActionResult.cs" />

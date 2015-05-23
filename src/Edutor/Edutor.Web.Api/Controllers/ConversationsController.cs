@@ -54,8 +54,8 @@ namespace Edutor.Web.Api.Controllers
         /// <returns>Una lista paginada con los mensajes de la conversación consultada</returns>
         [HttpGet]
         [Route("conversations/{conversationId:int}/messages")]
-        [ResponseType(typeof(PagedDataInquiryResponse<Message>))]
-        public PagedDataInquiryResponse<Message> GetMessagesForConversation(int conversationId)
+        [ResponseType(typeof(PagedDataResponse<Message>))]
+        public PagedDataResponse<Message> GetMessagesForConversation(int conversationId)
         {
             var r = _getConversations.GetMessagesForConversation(conversationId, _pagedFactory.Create(Request.RequestUri));
             return r;

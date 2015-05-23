@@ -15,8 +15,8 @@ namespace Edutor.Web.Api.InquiryProcessing
     public interface IGetGroupsInquiryProcessor
     {
 
-        PagedDataInquiryResponse<Return.Group> GetAllGroups(PagedDataRequest request);
-        PagedDataInquiryResponse<Return.Group> GetGroupsForSchoolUser(int schoolUserId, PagedDataRequest request);
+        PagedDataResponse<Return.Group> GetAllGroups(PagedDataRequest request);
+        PagedDataResponse<Return.Group> GetGroupsForSchoolUser(int schoolUserId, PagedDataRequest request);
         Return.Group GetGroup(int groupId);
     }
 
@@ -39,11 +39,11 @@ namespace Edutor.Web.Api.InquiryProcessing
             _groupsLinkServicces = tutorsLinkService;
         }
 
-        public PagedDataInquiryResponse<Return.Group> GetAllGroups(PagedDataRequest request)
+        public PagedDataResponse<Return.Group> GetAllGroups(PagedDataRequest request)
         {
             var qresult = _queryProcessor.GetGroups(request);
             var returnUsers = GetCollection(qresult);
-            var inquiryResponse = new PagedDataInquiryResponse<Return.Group>
+            var inquiryResponse = new PagedDataResponse<Return.Group>
             {
                 Items = returnUsers,
                 PageCount = qresult.TotalPageCount,
@@ -64,11 +64,11 @@ namespace Edutor.Web.Api.InquiryProcessing
             return x;
         }
 
-        public PagedDataInquiryResponse<Return.Group> GetGroupsForSchoolUser(int schoolUser,PagedDataRequest request)
+        public PagedDataResponse<Return.Group> GetGroupsForSchoolUser(int schoolUser,PagedDataRequest request)
         {
             var qresult = _queryProcessor.GetGroupsForSchoolUser(schoolUser, request);
             var returnUsers = GetCollection(qresult);
-            var inquiryResponse = new PagedDataInquiryResponse<Return.Group>
+            var inquiryResponse = new PagedDataResponse<Return.Group>
             {
                 Items = returnUsers,
                 PageCount = qresult.TotalPageCount,

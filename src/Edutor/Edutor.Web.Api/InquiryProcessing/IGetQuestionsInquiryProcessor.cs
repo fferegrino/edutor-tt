@@ -16,9 +16,9 @@ namespace Edutor.Web.Api.InquiryProcessing
     public interface IGetQuestionsInquiryProcessor
     {
 
-        PagedDataInquiryResponse<Return.Question> GetQuestionsForSchoolUser(int schoolUserId, PagedDataRequest request);
+        PagedDataResponse<Return.Question> GetQuestionsForSchoolUser(int schoolUserId, PagedDataRequest request);
 
-        PagedDataInquiryResponse<Return.Question> GetQuestionsForStudent(int studentId, PagedDataRequest requestInfo);
+        PagedDataResponse<Return.Question> GetQuestionsForStudent(int studentId, PagedDataRequest requestInfo);
 
         Return.Question GetQuestion(int questionId);
     }
@@ -42,11 +42,11 @@ namespace Edutor.Web.Api.InquiryProcessing
             _commonLinkService = commonLinkService;
         }
 
-        public Models.PagedDataInquiryResponse<Return.Question> GetQuestionsForSchoolUser(int schoolUserId, PagedDataRequest request)
+        public Models.PagedDataResponse<Return.Question> GetQuestionsForSchoolUser(int schoolUserId, PagedDataRequest request)
         {
             var qresult = _queryProcessor.GetQuestionsForSchoolUser(schoolUserId, request);
 
-            var inquiryResponse = new PagedDataInquiryResponse<Return.Question>
+            var inquiryResponse = new PagedDataResponse<Return.Question>
             {
                 Items = CastCollection(qresult),
                 PageCount = qresult.TotalPageCount,
@@ -59,11 +59,11 @@ namespace Edutor.Web.Api.InquiryProcessing
             return inquiryResponse;
         }
 
-        public PagedDataInquiryResponse<Return.Question> GetQuestionsForStudent(int studentId, PagedDataRequest request)
+        public PagedDataResponse<Return.Question> GetQuestionsForStudent(int studentId, PagedDataRequest request)
         {
             var qresult = _queryProcessor.GetQuestionsForStudent(studentId, request);
 
-            var inquiryResponse = new PagedDataInquiryResponse<Return.Question>
+            var inquiryResponse = new PagedDataResponse<Return.Question>
             {
                 Items = CastCollection(qresult),
                 PageCount = qresult.TotalPageCount,

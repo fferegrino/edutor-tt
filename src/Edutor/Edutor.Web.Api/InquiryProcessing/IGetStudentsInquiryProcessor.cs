@@ -16,17 +16,17 @@ namespace Edutor.Web.Api.InquiryProcessing
     public interface IGetStudentsInquiryProcessor
     {
 
-        PagedDataInquiryResponse<Return.Student> GetAllStudents(PagedDataRequest request);
+        PagedDataResponse<Return.Student> GetAllStudents(PagedDataRequest request);
 
-        PagedDataInquiryResponse<Return.Student> GetStudentsForGroup(int groupId, PagedDataRequest requestInfo);
+        PagedDataResponse<Return.Student> GetStudentsForGroup(int groupId, PagedDataRequest requestInfo);
 
-        PagedDataInquiryResponse<Return.Student> GetStudentsForTutor(int tutorId, PagedDataRequest requestInfo, bool onlyActive = true);
+        PagedDataResponse<Return.Student> GetStudentsForTutor(int tutorId, PagedDataRequest requestInfo, bool onlyActive = true);
 
-        PagedDataInquiryResponse<Return.StudentNotification> GetStudentsForNotification(int notificationId, PagedDataRequest requestInfo);
+        PagedDataResponse<Return.StudentNotification> GetStudentsForNotification(int notificationId, PagedDataRequest requestInfo);
 
-        PagedDataInquiryResponse<Return.StudentInvitation> GetStudentsForEvent(int eventId, PagedDataRequest request);
+        PagedDataResponse<Return.StudentInvitation> GetStudentsForEvent(int eventId, PagedDataRequest request);
 
-        PagedDataInquiryResponse<Return.StudentAnswer> GetStudentsForQuestion(int questionId, PagedDataRequest request);
+        PagedDataResponse<Return.StudentAnswer> GetStudentsForQuestion(int questionId, PagedDataRequest request);
 
         Return.Student GetStudent(int id);
 
@@ -61,11 +61,11 @@ namespace Edutor.Web.Api.InquiryProcessing
             _linkBasicServices = linkBasicServices;
         }
 
-        public PagedDataInquiryResponse<Return.Student> GetAllStudents(PagedDataRequest request)
+        public PagedDataResponse<Return.Student> GetAllStudents(PagedDataRequest request)
         {
             var qresult = _queryProcessor.GetStudents(request);
             var returnUsers = GetCollection(qresult);
-            var inquiryResponse = new PagedDataInquiryResponse<Return.Student>
+            var inquiryResponse = new PagedDataResponse<Return.Student>
             {
                 Items = returnUsers,
                 PageCount = qresult.TotalPageCount,
@@ -78,11 +78,11 @@ namespace Edutor.Web.Api.InquiryProcessing
             return inquiryResponse;
         }
 
-        public PagedDataInquiryResponse<Return.Student> GetStudentsForTutor(int tutorId, PagedDataRequest requestInfo, bool onlyActive = true)
+        public PagedDataResponse<Return.Student> GetStudentsForTutor(int tutorId, PagedDataRequest requestInfo, bool onlyActive = true)
         {
             var qresult = _queryProcessor.GetStudentsForTutor(tutorId, requestInfo, onlyActive);
             var returnUsers = GetCollection(qresult);
-            var inquiryResponse = new PagedDataInquiryResponse<Return.Student>
+            var inquiryResponse = new PagedDataResponse<Return.Student>
             {
                 Items = returnUsers,
                 PageCount = qresult.TotalPageCount,
@@ -96,11 +96,11 @@ namespace Edutor.Web.Api.InquiryProcessing
 
         }
 
-        public PagedDataInquiryResponse<Return.StudentNotification> GetStudentsForNotification(int notificationId, PagedDataRequest requestInfo)
+        public PagedDataResponse<Return.StudentNotification> GetStudentsForNotification(int notificationId, PagedDataRequest requestInfo)
         {
             var qresult = _queryProcessor.GetStudentsForNotification(notificationId, requestInfo);
             var returnUsers = GetStudentNotifications(qresult);
-            var inquiryResponse = new PagedDataInquiryResponse<Return.StudentNotification>
+            var inquiryResponse = new PagedDataResponse<Return.StudentNotification>
             {
                 Items = returnUsers,
                 PageCount = qresult.TotalPageCount,
@@ -114,11 +114,11 @@ namespace Edutor.Web.Api.InquiryProcessing
 
         }
 
-        public PagedDataInquiryResponse<Return.Student> GetStudentsForGroup(int groupId, PagedDataRequest request)
+        public PagedDataResponse<Return.Student> GetStudentsForGroup(int groupId, PagedDataRequest request)
         {
             var qresult = _queryProcessor.GetStudentsForGroup(groupId, request);
             var returnUsers = GetCollection(qresult);
-            var inquiryResponse = new PagedDataInquiryResponse<Return.Student>
+            var inquiryResponse = new PagedDataResponse<Return.Student>
             {
                 Items = returnUsers,
                 PageCount = qresult.TotalPageCount,
@@ -130,11 +130,11 @@ namespace Edutor.Web.Api.InquiryProcessing
 
             return inquiryResponse;
         }
-        public PagedDataInquiryResponse<Return.StudentAnswer> GetStudentsForQuestion(int questionId, PagedDataRequest request)
+        public PagedDataResponse<Return.StudentAnswer> GetStudentsForQuestion(int questionId, PagedDataRequest request)
         {
             var qresult = _queryProcessor.GetStudentsForQuestion(questionId, request);
             var returnUsers = GetStudentAnswers(qresult);
-            var inquiryResponse = new PagedDataInquiryResponse<Return.StudentAnswer>
+            var inquiryResponse = new PagedDataResponse<Return.StudentAnswer>
             {
                 Items = returnUsers,
                 PageCount = qresult.TotalPageCount,
@@ -147,11 +147,11 @@ namespace Edutor.Web.Api.InquiryProcessing
             return inquiryResponse;
         }
 
-        public PagedDataInquiryResponse<Return.StudentInvitation> GetStudentsForEvent(int eventId, PagedDataRequest request)
+        public PagedDataResponse<Return.StudentInvitation> GetStudentsForEvent(int eventId, PagedDataRequest request)
         {
             var qresult = _queryProcessor.GetStudentsForEvent(eventId, request);
             var returnUsers = GetStudentInvitations(qresult);
-            var inquiryResponse = new PagedDataInquiryResponse<Return.StudentInvitation>
+            var inquiryResponse = new PagedDataResponse<Return.StudentInvitation>
             {
                 Items = returnUsers,
                 PageCount = qresult.TotalPageCount,

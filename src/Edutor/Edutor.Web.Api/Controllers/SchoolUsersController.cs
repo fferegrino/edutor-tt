@@ -3,6 +3,7 @@ using Edutor.Data.QueryProcessors;
 using Edutor.Web.Api.InquiryProcessing;
 using Edutor.Web.Api.MaintenanceProcessing;
 using Edutor.Web.Api.Models;
+using Edutor.Web.Api.Models.ModModels;
 using Edutor.Web.Api.Models.NewModels;
 using Edutor.Web.Api.Models.ReturnTypes;
 //using Edutor.Web.Api.QueryProcessing;
@@ -38,7 +39,7 @@ namespace Edutor.Web.Api.Controllers
             IPagedDataRequestFactory pagedDataRequestFactory,
             IGetNotificationsInquiryProcessor getNotifications,
             IPatchSchoolUserMaintenanceProcessor patchUsers,
-            IGetGroupsInquiryProcessor getGroupsProcessor, 
+            IGetGroupsInquiryProcessor getGroupsProcessor,
             IGetConversationsInquiryProcessor getConversations,
             IGetEventsInquiryProcessor getEvents,
             IGetQuestionsInquiryProcessor getQuestions)
@@ -72,6 +73,34 @@ namespace Edutor.Web.Api.Controllers
         }
 
         /// <summary>
+        /// Modifica el usuario escolar de acuerdo a lo enviado en el parámetro <paramref name="schoolUser"/>
+        /// </summary>
+        /// <param name="schoolUser"></param>
+        /// <returns></returns>
+        [HttpPatch]
+        [Route("schoolusers")]
+        [Authorize(Roles = Constants.RoleNames.Administrator)]
+        [ResponseType(typeof(SchoolUser))]
+        public IHttpActionResult UpdateGroup(ModifiableSchoolUser schoolUser)
+        {
+            var m = _patchUsers.UpdateSchoolUser(schoolUser);
+            return new ModelUpdatedActionResult<SchoolUser>(Request, m);
+        }
+
+        /// <summary>
+        /// Recupera una lista paginada de usuarios escolares
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("schoolusers")]
+        public PagedDataResponse<SchoolUser> GetSchoolUsers()
+        {
+            var request = _pagedDataRequestFactory.Create(Request.RequestUri);
+            var tasks = _getQueryProcessor.GetAllSchoolUsers(request);
+            return tasks;
+        }
+
+        /// <summary>
         /// Obtiene el usuario escolar indicado
         /// </summary>
         /// <param name="schoolUserId">El id del usuario escolar</param>
@@ -98,14 +127,6 @@ namespace Edutor.Web.Api.Controllers
             return s;
         }
 
-        [HttpGet]
-        [Route("schoolusers")]
-        public PagedDataInquiryResponse<SchoolUser> GetSchoolUsers()
-        {
-            var request = _pagedDataRequestFactory.Create(Request.RequestUri);
-            var tasks = _getQueryProcessor.GetAllSchoolUsers(request);
-            return tasks;
-        }
 
         /// <summary>
         /// Obtiene los grupos asignados al usuario escolar indicado
@@ -114,7 +135,7 @@ namespace Edutor.Web.Api.Controllers
         /// <returns></returns>
         [HttpGet]
         [Route("schoolusers/{schoolUserId:int}/groups")]
-        public PagedDataInquiryResponse<Group> GetGroupsForSchoolUser(int schoolUserId)
+        public PagedDataResponse<Group> GetGroupsForSchoolUser(int schoolUserId)
         {
             var request = _pagedDataRequestFactory.Create(Request.RequestUri);
             var tasks = _getGroupsProcessor.GetGroupsForSchoolUser(schoolUserId, request);
@@ -129,7 +150,7 @@ namespace Edutor.Web.Api.Controllers
         /// <returns>Una lista con las notificaciones creadas por el usuario escolar</returns>
         [HttpGet]
         [Route("schoolusers/{schoolUserId:int}/notifications")]
-        public PagedDataInquiryResponse<Notification> GetNotificationsForSchoolUser(int schoolUserid)
+        public PagedDataResponse<Notification> GetNotificationsForSchoolUser(int schoolUserid)
         {
             var request = _pagedDataRequestFactory.Create(Request.RequestUri);
             var r = _getNotifications.GetNotificationsForSchoolUser(schoolUserid, request);
@@ -143,10 +164,10 @@ namespace Edutor.Web.Api.Controllers
         /// <returns>Una lista con los eventos creados por el usuario escolar</returns>
         [HttpGet]
         [Route("schoolusers/{schoolUserId:int}/events")]
-        public PagedDataInquiryResponse<Event> GetEventsForSchoolUser(int schoolUserid)
+        public PagedDataResponse<Event> GetEventsForSchoolUser(int schoolUserid)
         {
             var request = _pagedDataRequestFactory.Create(Request.RequestUri);
-            var r  =_getEvents.GetEventsForSchoolUser(schoolUserid, request);
+            var r = _getEvents.GetEventsForSchoolUser(schoolUserid, request);
             return r;
         }
 
@@ -157,7 +178,7 @@ namespace Edutor.Web.Api.Controllers
         /// <returns>Una lista con las preguntas creadas por el usuario escolar</returns>
         [HttpGet]
         [Route("schoolusers/{schoolUserId:int}/questions")]
-        public PagedDataInquiryResponse<Question> GetQuestionsForSchoolUser(int schoolUserid)
+        public PagedDataResponse<Question> GetQuestionsForSchoolUser(int schoolUserid)
         {
             var request = _pagedDataRequestFactory.Create(Request.RequestUri);
             var r = _getQuestions.GetQuestionsForSchoolUser(schoolUserid, request);
@@ -171,13 +192,11 @@ namespace Edutor.Web.Api.Controllers
         /// <returns>Una lista con las preguntas creadas por el usuario escolar</returns>
         [HttpGet]
         [Route("schoolusers/{schoolUserId:int}/conversations")]
-        public PagedDataInquiryResponse<Conversation> GetConversationsForSchoolUser(int schoolUserid)
+        public PagedDataResponse<Conversation> GetConversationsForSchoolUser(int schoolUserid)
         {
             var request = _pagedDataRequestFactory.Create(Request.RequestUri);
             var r = _getConversations.GetMessagesForUser(schoolUserid, request);
             return r;
         }
-
-
     }
 }

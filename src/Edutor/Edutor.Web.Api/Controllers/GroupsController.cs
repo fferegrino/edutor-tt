@@ -2,10 +2,12 @@
 using Edutor.Web.Api.MaintenanceProcessing;
 using Edutor.Web.Api.Models;
 using Edutor.Web.Api.Models.NewModels;
+using Edutor.Web.Api.Models.ModModels;
 using Edutor.Web.Api.Models.ReturnTypes;
 using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
+using Edutor.Common;
 
 namespace Edutor.Web.Api.Controllers
 {
@@ -44,7 +46,7 @@ namespace Edutor.Web.Api.Controllers
             _getGroups = getGroups;
         }
 
-         
+
         /// <summary>
         /// Agrega un nuevo grupo al sistema
         /// </summary>
@@ -53,7 +55,7 @@ namespace Edutor.Web.Api.Controllers
         [HttpPost]
         [Route("groups")]
         [ResponseType(typeof(Group))]
-        public IHttpActionResult AddGroup( NewGroup newGroup)
+        public IHttpActionResult AddGroup(NewGroup newGroup)
         {
             var user = _addUserQueryProcessor.AddGroup(newGroup);
             var result = new ModelPostedActionResult<Group>(Request, user);
@@ -67,8 +69,8 @@ namespace Edutor.Web.Api.Controllers
         /// <returns>Una lista paginada con los profesores asignados a cada grupo</returns>
         [HttpGet]
         [Route("groups/{groupId:int}/schoolusers")]
-        [ResponseType(typeof(PagedDataInquiryResponse<SchoolUser>))]
-        public PagedDataInquiryResponse<SchoolUser> GetSchoolUsersForGroup(int groupId)
+        [ResponseType(typeof(PagedDataResponse<SchoolUser>))]
+        public PagedDataResponse<SchoolUser> GetSchoolUsersForGroup(int groupId)
         {
             var request = _pagedDataRequestFactory.Create(Request.RequestUri);
             var r = _schoolUsersIP.GetSchoolUsersForGroup(groupId, request);
@@ -82,7 +84,7 @@ namespace Edutor.Web.Api.Controllers
         /// <returns>Una lista paginada con los estudiantes asignados a cada grupo</returns>
         [HttpGet]
         [Route("groups/{groupId:int}/students")]
-        public PagedDataInquiryResponse<Student> GetStudentsForGroup(int groupId)
+        public PagedDataResponse<Student> GetStudentsForGroup(int groupId)
         {
             var request = _pagedDataRequestFactory.Create(Request.RequestUri);
             var r = _studentsIP.GetStudentsForGroup(groupId, request);
@@ -110,7 +112,7 @@ namespace Edutor.Web.Api.Controllers
         /// <returns></returns>
         [HttpGet]
         [Route("groups")]
-        public PagedDataInquiryResponse<Group> GetGroups()
+        public PagedDataResponse<Group> GetGroups()
         {
             var request = _pagedDataRequestFactory.Create(Request.RequestUri);
             var tasks = _getGroups.GetAllGroups(request);
@@ -143,6 +145,22 @@ namespace Edutor.Web.Api.Controllers
         {
             _postTeachingMaintenanceProcessor.AddTeaching(schoolUserId, groupId);
             return new ModelsLinkedActionResult(Request);
+        }
+
+
+        /// <summary>
+        /// Modifica el grupo de acuerdo a lo enviado en el parámetro <paramref name="group"/>
+        /// </summary>
+        /// <param name="group"></param>
+        /// <returns></returns>
+        [HttpPatch]
+        [Route("groups")]
+        [Authorize(Roles = Constants.RoleNames.All)]
+        [ResponseType(typeof(Group))]
+        public IHttpActionResult UpdateGroup(ModifiableGroup group)
+        {
+            var m = _patchGroups.UpdateGroup(group);
+            return new ModelUpdatedActionResult<Group>(Request, m);
         }
 
         /// <summary>

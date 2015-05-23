@@ -16,9 +16,9 @@ namespace Edutor.Web.Api.InquiryProcessing
     public interface IGetNotificationsInquiryProcessor
     {
 
-        PagedDataInquiryResponse<Return.Notification> GetNotificationsForSchoolUser(int schoolUserId, PagedDataRequest request);
+        PagedDataResponse<Return.Notification> GetNotificationsForSchoolUser(int schoolUserId, PagedDataRequest request);
 
-        PagedDataInquiryResponse<Return.Notification> GetNotificationsForStudent(int studentId, PagedDataRequest requestInfo);
+        PagedDataResponse<Return.Notification> GetNotificationsForStudent(int studentId, PagedDataRequest requestInfo);
 
         Return.Notification GetNotification(int notificationId);
     }
@@ -42,11 +42,11 @@ namespace Edutor.Web.Api.InquiryProcessing
             _commonLinkService = commonLinkService;
         }
 
-        public Models.PagedDataInquiryResponse<Return.Notification> GetNotificationsForSchoolUser(int schoolUserId, PagedDataRequest request)
+        public Models.PagedDataResponse<Return.Notification> GetNotificationsForSchoolUser(int schoolUserId, PagedDataRequest request)
         {
             var qresult = _queryProcessor.GetNotificationsForSchoolUser(schoolUserId, request);
 
-            var inquiryResponse = new PagedDataInquiryResponse<Return.Notification>
+            var inquiryResponse = new PagedDataResponse<Return.Notification>
             {
                 Items = CastCollection(qresult),
                 PageCount = qresult.TotalPageCount,
@@ -59,11 +59,11 @@ namespace Edutor.Web.Api.InquiryProcessing
             return inquiryResponse;
         }
 
-        public PagedDataInquiryResponse<Return.Notification> GetNotificationsForStudent(int studentId, PagedDataRequest request)
+        public PagedDataResponse<Return.Notification> GetNotificationsForStudent(int studentId, PagedDataRequest request)
         {
             var qresult = _queryProcessor.GetNotificationsForStudent(studentId, request);
 
-            var inquiryResponse = new PagedDataInquiryResponse<Return.Notification>
+            var inquiryResponse = new PagedDataResponse<Return.Notification>
             {
                 Items = CastCollection(qresult),
                 PageCount = qresult.TotalPageCount,

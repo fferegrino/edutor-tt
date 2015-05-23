@@ -11,6 +11,8 @@ using System.Web.Http.Description;
 using System.Linq;
 using System.Security.Claims;
 using Edutor.Web.Common.Exceptions;
+using Edutor.Web.Api.Models.ModModels;
+using System.Net;
 
 namespace Edutor.Web.Api.Controllers
 {
@@ -50,6 +52,7 @@ namespace Edutor.Web.Api.Controllers
         /// <returns></returns>
         [HttpPost]
         [Route("tutors")]
+        [Authorize(Roles = Constants.RoleNames.Administrator)]
         [ResponseType(typeof(Tutor))]
         public IHttpActionResult AddTutor(NewTutor newTutor)
         {
@@ -57,6 +60,46 @@ namespace Edutor.Web.Api.Controllers
             var result = new ModelPostedActionResult<Tutor>(Request, user);
             return result;
         }
+
+        /// <summary>
+        /// Modifica el tutor de acuerdo a lo enviado en el parámetro <paramref name="tutor"/>
+        /// </summary>
+        /// <param name="tutor"></param>
+        /// <returns></returns>
+        [HttpPatch]
+        [Route("tutors")]
+        [Authorize(Roles = Constants.RoleNames.Administrator)]
+        [ResponseType(typeof(Tutor))]
+        public IHttpActionResult UpdateGroup(ModifiableTutor tutor)
+        {
+            var m = _patchTutors.UpdateTutor(tutor);
+            return new ModelUpdatedActionResult<Tutor>(Request, m);
+        }
+
+        /// <summary>
+        /// Obtiene todos los tutores registrados en el sistema
+        /// </summary>
+        /// <returns>Una respuesta paginada de todos los tutores en el sistema</returns>
+        [HttpGet]
+        [Route("tutors")]
+        [Authorize(Roles = Constants.RoleNames.Administrator)]
+        [ResponseType(typeof(PagedDataResponse<Tutor>))]
+        public PagedDataResponse<Tutor> GetAllPagedTutors()
+        {
+            var request = _pagedDataRequestFactory.Create(Request.RequestUri);
+            var s = _getQueryProcessor.GetAllTutors(request);
+            return s;
+        }
+
+        [HttpDelete]
+        [Route("tutors/{tutorId:int}")]
+        [Authorize(Roles = Constants.RoleNames.Administrator)]
+        //[ResponseType(type))]
+        public IHttpActionResult DeleteTutor(int tutorId)
+        {
+            return new ModelDeletedActionResult(Request);
+        }
+
 
         /// <summary>
         /// Obtiene el tutor indicado
@@ -86,19 +129,6 @@ namespace Edutor.Web.Api.Controllers
             return s;
         }
 
-        /// <summary>
-        /// Obtiene todos los tutores registrados en el sistema
-        /// </summary>
-        /// <returns>Una respuesta paginada de todos los tutores en el sistema</returns>
-        [HttpGet]
-        [ResponseType(typeof(PagedDataInquiryResponse<Tutor>))]
-        [Route("tutors")]
-        public PagedDataInquiryResponse<Tutor> GetTutors()
-        {
-            var request = _pagedDataRequestFactory.Create(Request.RequestUri);
-            var s = _getQueryProcessor.GetAllTutors(request);
-            return s;
-        }
 
         /// <summary>
         /// Obtiene todos los estudiantes asignados al tutor asignado
@@ -107,9 +137,9 @@ namespace Edutor.Web.Api.Controllers
         /// <returns>Una lista con los profesores asignados a cada grupo</returns>
         [HttpGet]
         [Route("tutors/{tutorId:int}/students")]
-        [ResponseType(typeof(PagedDataInquiryResponse<Student>))]
+        [ResponseType(typeof(PagedDataResponse<Student>))]
         [Authorize(Roles = Edutor.Common.Constants.RoleNames.All)]
-        public PagedDataInquiryResponse<Student> GetStudentsForTutor(int tutorId)
+        public PagedDataResponse<Student> GetPagedStudentsForTutor(int tutorId)
         {
             var identity = ((System.Security.Claims.ClaimsIdentity)User.Identity).Claims;
             var role = User.Identity.GetClaim(ClaimTypes.Role);
@@ -135,7 +165,7 @@ namespace Edutor.Web.Api.Controllers
         /// <returns>Una lista con las preguntas creadas por el usuario escolar</returns>
         [HttpGet]
         [Route("tutors/{tutorId:int}/conversations")]
-        public PagedDataInquiryResponse<Conversation> GetConversationsForSchoolUser(int tutorId)
+        public PagedDataResponse<Conversation> GetPagedConversationsForTutor(int tutorId)
         {
 
             var request = _pagedDataRequestFactory.Create(Request.RequestUri);

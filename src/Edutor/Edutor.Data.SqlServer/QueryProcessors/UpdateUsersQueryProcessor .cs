@@ -28,7 +28,7 @@ namespace Edutor.Data.SqlServer.QueryProcessors
 
         public void Update(User user)
         {
-            throw new NotImplementedException();
+            _session.Update(user);
         }
     }
 }

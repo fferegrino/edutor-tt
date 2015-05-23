@@ -15,8 +15,8 @@ namespace Edutor.Web.Api.InquiryProcessing
     public interface IGetSchoolUsersInquiryProcessor
     {
 
-        PagedDataInquiryResponse<Return.SchoolUser> GetAllSchoolUsers(PagedDataRequest request);
-        PagedDataInquiryResponse<Return.SchoolUser> GetSchoolUsersForGroup(int groupId, PagedDataRequest request);
+        PagedDataResponse<Return.SchoolUser> GetAllSchoolUsers(PagedDataRequest request);
+        PagedDataResponse<Return.SchoolUser> GetSchoolUsersForGroup(int groupId, PagedDataRequest request);
         Return.SchoolUser GetSchoolUser(int userId);
 
         Return.SchoolUser GetSchoolUser(string curp);
@@ -39,11 +39,11 @@ namespace Edutor.Web.Api.InquiryProcessing
             _commonLinkService = commonLinkService;
             _tutorsLinkService = tutorsLinkService;
         }
-        public PagedDataInquiryResponse<Return.SchoolUser> GetAllSchoolUsers(PagedDataRequest request)
+        public PagedDataResponse<Return.SchoolUser> GetAllSchoolUsers(PagedDataRequest request)
         {
             var qresult = _queryProcessor.GetSchoolUsers(request);
             var returnUsers = GetSchoolUsers(qresult);
-            var inquiryResponse = new PagedDataInquiryResponse<Return.SchoolUser>
+            var inquiryResponse = new PagedDataResponse<Return.SchoolUser>
             {
                 Items = returnUsers,
                 PageCount = qresult.TotalPageCount,
@@ -56,11 +56,11 @@ namespace Edutor.Web.Api.InquiryProcessing
             return inquiryResponse;
         }
 
-        public PagedDataInquiryResponse<Return.SchoolUser> GetSchoolUsersForGroup(int groupId,PagedDataRequest request)
+        public PagedDataResponse<Return.SchoolUser> GetSchoolUsersForGroup(int groupId,PagedDataRequest request)
         {
             var qresult = _queryProcessor.GetSchoolUsersForGroup(groupId, request);
             var returnUsers = GetSchoolUsers(qresult);
-            var inquiryResponse = new PagedDataInquiryResponse<Return.SchoolUser>
+            var inquiryResponse = new PagedDataResponse<Return.SchoolUser>
             {
                 Items = returnUsers,
                 PageCount = qresult.TotalPageCount,
