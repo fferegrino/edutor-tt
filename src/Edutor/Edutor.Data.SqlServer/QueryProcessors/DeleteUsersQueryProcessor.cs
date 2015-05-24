@@ -33,7 +33,7 @@ namespace Edutor.Data.SqlServer.QueryProcessors
             {
                 _session.Delete(userToDelete);
             }
-            catch
+            catch(ADOException ex)
             {
                 throw new ForeignKeyException("El usuario no puede ser eliminado, la eliminación tiene conflictos con otras tablas");
             }
