@@ -21,6 +21,7 @@ namespace Edutor.Web.Api.Controllers
     {
         private readonly IPostStudentMaintenanceProcessor _addUserQueryProcessor;
         private readonly IPatchStudentMaintenanceProcessor _patchStudent;
+        private readonly IDeleteStudentMaintenanceProcessor _deleteStudent;
         private readonly IGetStudentsInquiryProcessor _getStudentsInquiryProcessor;
         private readonly IGetNotificationsInquiryProcessor _getNotifications;
         private readonly IPagedDataRequestFactory _pagedDataRequestFactory;
@@ -31,6 +32,7 @@ namespace Edutor.Web.Api.Controllers
             IGetStudentsInquiryProcessor getStudents,
             IGetNotificationsInquiryProcessor getNotifications,
             IPagedDataRequestFactory pagedDataRequest,
+            IDeleteStudentMaintenanceProcessor deleteStudent,
             IPatchStudentMaintenanceProcessor patchStudent,
             IGetEventsInquiryProcessor getEvents,
             IGetQuestionsInquiryProcessor getQuestions)
@@ -42,6 +44,7 @@ namespace Edutor.Web.Api.Controllers
             _pagedDataRequestFactory = pagedDataRequest;
             _getEvents = getEvents;
             _getQuestions = getQuestions;
+            _deleteStudent = deleteStudent;
         }
 
 
@@ -81,16 +84,15 @@ namespace Edutor.Web.Api.Controllers
         /// <summary>
         /// Modifica el estudiante de acuerdo a lo enviado en el parámetro <paramref name="student"/>
         /// </summary>
-        /// <param name="student"></param>
+        /// <param name="studentId"></param>
         /// <returns></returns>
-        [HttpPatch]
-        [Route("students")]
+        [HttpDelete]
+        [Route("students/{studentId:int}")]
         [Authorize(Roles = Constants.RoleNames.Administrator)]
-        [ResponseType(typeof(Student))]
-        public IHttpActionResult UpdateGroup(ModifiableStudent student)
+        public IHttpActionResult DeleteGroup(int studentId)
         {
-            var m = _patchStudent.UpdateStudent(student);
-            return new ModelUpdatedActionResult<Student>(Request, m);
+            _deleteStudent.Delete(studentId);
+            return new ModelDeletedActionResult(Request);
         }
 
         /// <summary>

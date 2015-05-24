@@ -10,6 +10,9 @@ Post-Deployment Script Template
 --------------------------------------------------------------------------------------
 */
 
+
+
+
 DECLARE @DummyUsers BIT = 1,
 		@DummyStudents BIT = 1,
 		@DummyGroups BIT = 1,
@@ -19,8 +22,7 @@ DECLARE @DummyUsers BIT = 1,
 		@DummyNotifications BIT = 1,
 		@DummyEvents BIT = 1
 
---INSERT Users([Type],[Name],[Curp],[Email],[Address],[Mobile],[Phone])
--- 7d0d12aa8d0e2ef983e1b1ab8585b205f439ffcd08092e92f709bbcec9790835
+
 
 IF(@DummyUsers = 1)
 BEGIN

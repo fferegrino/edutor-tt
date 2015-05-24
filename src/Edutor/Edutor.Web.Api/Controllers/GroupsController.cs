@@ -24,7 +24,7 @@ namespace Edutor.Web.Api.Controllers
         private readonly IGetSchoolUsersInquiryProcessor _schoolUsersIP;
         private readonly IGetStudentsInquiryProcessor _studentsIP;
         private readonly IPatchGroupMaintenanceProcessor _patchGroups;
-        private readonly IDeleteGroupsMaintenanceProcessor _deleteGroups;
+        private readonly IDeleteGroupMaintenanceProcessor _deleteGroups;
         private readonly IGetGroupsInquiryProcessor _getGroups;
         private readonly IPagedDataRequestFactory _pagedDataRequestFactory;
 
@@ -34,7 +34,7 @@ namespace Edutor.Web.Api.Controllers
             IGetSchoolUsersInquiryProcessor schoolUsersIP,
             IGetStudentsInquiryProcessor studentsIP,
             IPatchGroupMaintenanceProcessor patchGroups,
-            IDeleteGroupsMaintenanceProcessor deleteGroups,
+            IDeleteGroupMaintenanceProcessor deleteGroups,
             IPagedDataRequestFactory pagedDataRequestFactory,
             IGetGroupsInquiryProcessor getGroups)
         {
@@ -190,7 +190,7 @@ namespace Edutor.Web.Api.Controllers
         [Route("groups/{groupId:int}/students/{studentId:int}")]
         public IHttpActionResult DeleteStudentFromGroup(int groupId, int studentId)
         {
-            //_postEnrollmentMaintenanceProcessor.AddEnrollment(studentId, groupId);
+            _deleteGroups.UnlinkStudent(groupId, studentId);
             return new ModelDeletedActionResult(Request);
         }
 
@@ -204,7 +204,7 @@ namespace Edutor.Web.Api.Controllers
         [Route("groups/{groupId:int}/schoolusers/{schoolUserId:int}")]
         public IHttpActionResult DeleteTeacherFromGroup(int groupId, int schoolUserId)
         {
-            //_postTeachingMaintenanceProcessor.AddTeaching(schoolUserId, groupId);
+            _deleteGroups.UnlinkSchoolUser(groupId, schoolUserId);
             return new ModelDeletedActionResult(Request);
         }
 

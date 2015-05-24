@@ -9,6 +9,10 @@ namespace Edutor.Data.QueryProcessors
     public interface IDeleteGroupQueryProcessor
     {
         void Delete(int grouopId);
+
+        void UnlinkStudent(int groupId, int studentId);
+
+        void UnlinkSchoolUser(int groupId, int schoolUserId);
     }
 
 }

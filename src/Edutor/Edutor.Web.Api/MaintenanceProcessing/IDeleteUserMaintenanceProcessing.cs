@@ -7,12 +7,12 @@ using System.Threading.Tasks;
 
 namespace Edutor.Web.Api.MaintenanceProcessing
 {
-    public interface IDeleteUsersMaintenanceProcessing
+    public interface IDeleteUserMaintenanceProcessing
     {
         void Delete(int userId);
     }
 
-    public class DeleteUsersMaintenanceProcessing : IDeleteUsersMaintenanceProcessing
+    public class DeleteUsersMaintenanceProcessing : IDeleteUserMaintenanceProcessing
     {
         private readonly IDeleteUserQueryProcessor _deleteUserQ;
 

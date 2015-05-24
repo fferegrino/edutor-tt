@@ -28,8 +28,26 @@ namespace Edutor.Data.SqlServer.QueryProcessors
         public void Delete(int gorupId)
         {
             int deletingUser = _userSession.UserId;
-            var userToDelete = _session.QueryOver<Group>().Where(gr => gr.GroupId == gorupId).SingleOrDefault();
-            _session.Delete(userToDelete);
+            var groupToDelete = _session.QueryOver<Group>().Where(gr => gr.GroupId == gorupId).SingleOrDefault();
+            if (groupToDelete != null) // Allow idempotency
+                _session.Delete(groupToDelete);
+        }
+
+
+        public void UnlinkStudent(int groupId, int studentId)
+        {
+            int deletingUser = _userSession.UserId;
+            var linkToDelete = _session.QueryOver<Enrollment>().Where(en => en.Student.StudentId == studentId && en.Group.GroupId == groupId).SingleOrDefault();
+            if (linkToDelete != null) // Allow idempotency
+                _session.Delete(linkToDelete);
+        }
+
+        public void UnlinkSchoolUser(int groupId, int schoolUserId)
+        {
+            int deletingUser = _userSession.UserId;
+            var linkToDelete = _session.QueryOver<Teaching>().Where(en => en.SchoolUser.UserId == schoolUserId && en.Group.GroupId == groupId).SingleOrDefault();
+            if (linkToDelete != null) // Allow idempotency
+                _session.Delete(linkToDelete);
         }
     }
 }

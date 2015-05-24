@@ -23,7 +23,6 @@ using AMC = Edutor.Web.Api.AutoMappingConfigurator;
 using AMP = Edutor.Web.Api.MaintenanceProcessing;
 using AUP = Edutor.Web.Api.UpdateProcessing;
 using Security = Edutor.Web.Api.Securitiy;
-//using AQP = Edutor.Web.Api.QueryProcessing;
 using LS = Edutor.Web.Api.LinkServices;
 using Edutor.Web.Api.InquiryProcessing;
 
@@ -174,10 +173,13 @@ namespace Edutor.Web.Api
             #region Delete region
 
             container.Bind<QueryProcessors.IDeleteGroupQueryProcessor>().To<SqlProcessors.DeleteGroupQueryProcessor>().InRequestScope();
-            container.Bind<AMP.IDeleteGroupsMaintenanceProcessor>().To<AMP.DeleteGroupsMaintenanceProcessor>().InRequestScope();
+            container.Bind<AMP.IDeleteGroupMaintenanceProcessor>().To<AMP.DeleteGroupsMaintenanceProcessor>().InRequestScope();
 
             container.Bind<QueryProcessors.IDeleteUserQueryProcessor>().To<SqlProcessors.DeleteUserQueryProcessor>().InRequestScope();
-            container.Bind<AMP.IDeleteUsersMaintenanceProcessing>().To<AMP.DeleteUsersMaintenanceProcessing>().InRequestScope();
+            container.Bind<AMP.IDeleteUserMaintenanceProcessing>().To<AMP.DeleteUsersMaintenanceProcessing>().InRequestScope();
+
+            container.Bind<QueryProcessors.IDeleteStudentQueryProcessor>().To<SqlProcessors.DeleteStudentQueryProcessor>().InRequestScope();
+            container.Bind<AMP.IDeleteStudentMaintenanceProcessor>().To<AMP.DeleteStudentMaintenanceProcessor>().InRequestScope();
 
             #endregion
         }

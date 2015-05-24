@@ -12,26 +12,25 @@ using System.Threading.Tasks;
 
 namespace Edutor.Data.SqlServer.QueryProcessors
 {
-    public class DeleteUserQueryProcessor : IDeleteUserQueryProcessor
+    public class DeleteStudentQueryProcessor : IDeleteStudentQueryProcessor
     {
         private readonly IDateTime _dateTime;
         private readonly ISession _session;
         private readonly IUserSession _userSession;
 
-        public DeleteUserQueryProcessor(IDateTime dateTime, ISession session, IUserSession userSession)
+        public DeleteStudentQueryProcessor(IDateTime dateTime, ISession session, IUserSession userSession)
         {
             _dateTime = dateTime;
             _userSession = userSession;
             _session = session;
         }
 
-        public void Delete(int userId)
+        public void Delete(int studentId)
         {
             int deletingUser = _userSession.UserId;
-            var userToDelete = _session.QueryOver<User>().Where(user => user.UserId == userId).SingleOrDefault();
+            var userToDelete = _session.QueryOver<Student>().Where(user => user.StudentId == studentId).SingleOrDefault();
             if (userToDelete != null) // Allow idempotency
                 _session.Delete(userToDelete);
-
         }
     }
 }

@@ -30,7 +30,7 @@ namespace Edutor.Web.Api.Controllers
         private readonly IGetNotificationsInquiryProcessor _getNotifications;
         private readonly IGetConversationsInquiryProcessor _getConversations;
         private readonly IGetEventsInquiryProcessor _getEvents;
-        private readonly IDeleteUsersMaintenanceProcessing _deleteSchoolUsers;
+        private readonly IDeleteUserMaintenanceProcessing _deleteSchoolUsers;
         private readonly IPatchSchoolUserMaintenanceProcessor _patchUsers;
         private readonly IGetQuestionsInquiryProcessor _getQuestions;
         private readonly IPagedDataRequestFactory _pagedDataRequestFactory;
@@ -40,7 +40,7 @@ namespace Edutor.Web.Api.Controllers
             IPagedDataRequestFactory pagedDataRequestFactory,
             IGetNotificationsInquiryProcessor getNotifications,
             IPatchSchoolUserMaintenanceProcessor patchUsers,
-            IDeleteUsersMaintenanceProcessing deleteTutors,
+            IDeleteUserMaintenanceProcessing deleteTutors,
             IGetGroupsInquiryProcessor getGroupsProcessor,
             IGetConversationsInquiryProcessor getConversations,
             IGetEventsInquiryProcessor getEvents,

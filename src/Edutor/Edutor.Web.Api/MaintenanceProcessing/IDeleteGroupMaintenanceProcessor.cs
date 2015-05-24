@@ -7,12 +7,16 @@ using System.Threading.Tasks;
 
 namespace Edutor.Web.Api.MaintenanceProcessing
 {
-    public interface IDeleteGroupsMaintenanceProcessor
+    public interface IDeleteGroupMaintenanceProcessor
     {
         void Delete(int userId);
+
+        void UnlinkStudent(int groupId, int studentId);
+
+        void UnlinkSchoolUser(int groupId, int schoolUserId);
     }
 
-    public class DeleteGroupsMaintenanceProcessor : IDeleteGroupsMaintenanceProcessor
+    public class DeleteGroupsMaintenanceProcessor : IDeleteGroupMaintenanceProcessor
     {
         private readonly IDeleteGroupQueryProcessor _deleteUserQ;
 
@@ -24,6 +28,17 @@ namespace Edutor.Web.Api.MaintenanceProcessing
         public void Delete(int userId)
         {
             _deleteUserQ.Delete(userId);
+        }
+
+
+        public void UnlinkStudent(int groupId, int studentId)
+        {
+            _deleteUserQ.UnlinkStudent(groupId, studentId);
+        }
+
+        public void UnlinkSchoolUser(int groupId, int schoolUserId)
+        {
+            _deleteUserQ.UnlinkSchoolUser(groupId, schoolUserId);
         }
     }
 }
