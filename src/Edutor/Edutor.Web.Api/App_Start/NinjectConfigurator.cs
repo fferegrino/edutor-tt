@@ -157,7 +157,7 @@ namespace Edutor.Web.Api
             container.Bind<UpdateProcessing.IPutQuestionsUpdateProcessor>().To<UpdateProcessing.PutQuestionsUpdateProcessor>().InRequestScope();
             #endregion
 
-            #region Patch
+            #region Patch region
 
             container.Bind<QueryProcessors.IUpdateGroupsQueryProcessor>().To<SqlProcessors.UpdateGroupsQueryProcessor>().InRequestScope();
             container.Bind<QueryProcessors.IUpdateStudentsQueryProcessor>().To<SqlProcessors.UpdateStudentsQueryProcessor>().InRequestScope();
@@ -168,6 +168,12 @@ namespace Edutor.Web.Api
             container.Bind<AMP.IPatchSchoolUserMaintenanceProcessor>().To<AMP.PatchSchoolUserMaintenanceProcessor>().InRequestScope();
             container.Bind<AMP.IPatchStudentMaintenanceProcessor>().To<AMP.PatchStudentMaintenanceProcessor>().InRequestScope();
             container.Bind<AMP.IPatchTutorMaintenanceProcessor>().To<AMP.PatchTutorMaintenanceProcessor>().InRequestScope();
+
+            #endregion
+
+            #region Delete region
+            container.Bind<QueryProcessors.IDeleteUserQueryProcessor>().To<SqlProcessors.DeleteUserQueryProcessor>().InRequestScope();
+            container.Bind<AMP.IDeleteUsersMaintenanceProcessing>().To<AMP.DeleteUsersMaintenanceProcessing>().InRequestScope();
 
             #endregion
         }

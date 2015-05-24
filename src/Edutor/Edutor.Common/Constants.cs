@@ -16,12 +16,6 @@ namespace Edutor.Common
             public const string TextJson = "text/json";
         }
 
-        public static class CustomClaimTypes
-        {
-            public const string StudentId = "StudentId";
-            public const string SchoolUserId = "SchoolUserId";
-            public const string TutorId = "TutorId";
-        }
 
         public static class Paging
         {
@@ -88,6 +82,13 @@ namespace Edutor.Common
             public const string All = Teacher + "," + Administrator + "," + Tutor;
             public const string TeacherAndTutor = Teacher + "," + Tutor;
             public const string SchoolUser = Teacher + "," + Administrator;
+        }
+        public static class CustomClaimTypes
+        {
+            public const string StudentId = "StudentId";
+            public const string SchoolUserId = "SchoolUserId";
+            public const string TutorId = "TutorId";
+            public const string UserId = "UserId";
         }
     }
 }

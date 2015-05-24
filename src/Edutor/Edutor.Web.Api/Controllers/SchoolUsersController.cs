@@ -24,12 +24,13 @@ namespace Edutor.Web.Api.Controllers
     [UnitOfWorkActionFilter]
     public class SchoolUsersController : ApiController
     {
-        private readonly IPostSchoolUserMaintenanceProcessor _addUserQueryProcessor;
-        private readonly IGetSchoolUsersInquiryProcessor _getQueryProcessor;
+        private readonly IPostSchoolUserMaintenanceProcessor _addUser;
+        private readonly IGetSchoolUsersInquiryProcessor _getSchoolUser;
         private readonly IGetGroupsInquiryProcessor _getGroupsProcessor;
         private readonly IGetNotificationsInquiryProcessor _getNotifications;
         private readonly IGetConversationsInquiryProcessor _getConversations;
         private readonly IGetEventsInquiryProcessor _getEvents;
+        private readonly IDeleteUsersMaintenanceProcessing _deleteSchoolUsers;
         private readonly IPatchSchoolUserMaintenanceProcessor _patchUsers;
         private readonly IGetQuestionsInquiryProcessor _getQuestions;
         private readonly IPagedDataRequestFactory _pagedDataRequestFactory;
@@ -39,14 +40,16 @@ namespace Edutor.Web.Api.Controllers
             IPagedDataRequestFactory pagedDataRequestFactory,
             IGetNotificationsInquiryProcessor getNotifications,
             IPatchSchoolUserMaintenanceProcessor patchUsers,
+            IDeleteUsersMaintenanceProcessing deleteTutors,
             IGetGroupsInquiryProcessor getGroupsProcessor,
             IGetConversationsInquiryProcessor getConversations,
             IGetEventsInquiryProcessor getEvents,
             IGetQuestionsInquiryProcessor getQuestions)
         {
+            _deleteSchoolUsers = deleteTutors;
             _patchUsers = patchUsers;
-            _getQueryProcessor = getQueryProcessor;
-            _addUserQueryProcessor = addUserQueryProcessor;
+            _getSchoolUser = getQueryProcessor;
+            _addUser = addUserQueryProcessor;
             _pagedDataRequestFactory = pagedDataRequestFactory;
             _getGroupsProcessor = getGroupsProcessor;
             _getNotifications = getNotifications;
@@ -67,7 +70,7 @@ namespace Edutor.Web.Api.Controllers
         [Route("schoolusers")]
         public IHttpActionResult AddSchoolUser(NewSchoolUser newUser)
         {
-            var user = _addUserQueryProcessor.AddUser(newUser);
+            var user = _addUser.AddUser(newUser);
             var result = new ModelPostedActionResult<SchoolUser>(Request, user);
             return result;
         }
@@ -96,9 +99,25 @@ namespace Edutor.Web.Api.Controllers
         public PagedDataResponse<SchoolUser> GetSchoolUsers()
         {
             var request = _pagedDataRequestFactory.Create(Request.RequestUri);
-            var tasks = _getQueryProcessor.GetAllSchoolUsers(request);
+            var tasks = _getSchoolUser.GetAllSchoolUsers(request);
             return tasks;
         }
+
+        /// <summary>
+        /// Elimina al usuario indicado del sistema siempre y cuando no existan conflictos
+        /// </summary>
+        /// <param name="schoolUserId">El identificador de el usuario a eliminar</param>
+        /// <returns></returns>
+        [HttpDelete]
+        [Route("schoolusers/{schoolUserId:int}")]
+        [Authorize(Roles = Constants.RoleNames.Administrator)]
+        //[ResponseType(type))]
+        public IHttpActionResult DeleteTutor(int schoolUserId)
+        {
+            _deleteSchoolUsers.Delete(schoolUserId);
+            return new ModelDeletedActionResult(Request);
+        }
+
 
         /// <summary>
         /// Obtiene el usuario escolar indicado
@@ -109,7 +128,7 @@ namespace Edutor.Web.Api.Controllers
         [Route("schoolusers/{schoolUserId:int}")]
         public SchoolUser GetSchoolUser(int schoolUserId)
         {
-            var s = _getQueryProcessor.GetSchoolUser(schoolUserId);
+            var s = _getSchoolUser.GetSchoolUser(schoolUserId);
             return s;
         }
 
@@ -123,7 +142,7 @@ namespace Edutor.Web.Api.Controllers
         [Route("schoolusers/{curp:regex(" + Constants.CommonRoutingDefinitions.CurpRegex + ")}")]
         public SchoolUser GetSchoolUser(string curp)
         {
-            var s = _getQueryProcessor.GetSchoolUser(curp);
+            var s = _getSchoolUser.GetSchoolUser(curp);
             return s;
         }
 

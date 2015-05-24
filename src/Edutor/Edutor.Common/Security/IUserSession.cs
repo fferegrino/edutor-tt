@@ -14,6 +14,8 @@ namespace Edutor.Common.Security
 
         string Username { get; }
 
+        int UserId { get; }
+
         bool IsInRole(string roleName);
 
     }

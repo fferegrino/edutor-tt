@@ -55,6 +55,7 @@
     <Compile Include="Entities\Teaching.cs" />
     <Compile Include="Entities\User.cs" />
     <Compile Include="Exceptions\DuplicateEntityException.cs" />
+    <Compile Include="Exceptions\ForeignKeyException.cs" />
     <Compile Include="Exceptions\ObjectNotFoundException.cs" />
     <Compile Include="PagedDataRequest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -71,6 +72,7 @@
     <Compile Include="QueryProcessors\IAddStudentQueryProcessor.cs" />
     <Compile Include="QueryProcessors\IAddTeachingQueryProcessor.cs" />
     <Compile Include="QueryProcessors\IAddUserQueryProcessor.cs" />
+    <Compile Include="QueryProcessors\IDeleteUserQueryProcessor.cs" />
     <Compile Include="QueryProcessors\IGetConversationsQueryProcessor.cs" />
     <Compile Include="QueryProcessors\IUpdateStudentsQueryProcessor.cs" />
     <Compile Include="QueryProcessors\IUpdateGroupsQueryProcessor.cs" />

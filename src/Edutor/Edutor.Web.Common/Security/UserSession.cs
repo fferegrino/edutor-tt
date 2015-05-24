@@ -5,7 +5,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Text;
+using Edutor.Common.Extensions;
 using System.Threading.Tasks;
+using Edutor.Common;
 
 namespace Edutor.Web.Common.Security
 {
@@ -50,6 +52,12 @@ namespace Edutor.Web.Common.Security
         public bool IsInRole(string roleName)
         {
             return HttpContext.Current.User.IsInRole(roleName);
+        }
+
+
+        public int UserId
+        {
+            get { return HttpContext.Current.User.Identity.GetIdClaim(Constants.CustomClaimTypes.UserId); }
         }
     }
 }

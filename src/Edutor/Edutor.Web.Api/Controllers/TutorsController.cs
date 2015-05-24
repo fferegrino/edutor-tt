@@ -22,10 +22,11 @@ namespace Edutor.Web.Api.Controllers
     [Edutor.Web.Common.UnitOfWorkActionFilter]
     public class TutorsController : ApiController
     {
-        private readonly IPostTutorMaintenanceProcessor _addUserQueryProcessor;
-        private readonly IGetTutorsInquiryProcessor _getQueryProcessor;
-        private readonly IGetStudentsInquiryProcessor _getStudentsQueryProcessor;
+        private readonly IPostTutorMaintenanceProcessor _addUsers;
+        private readonly IGetTutorsInquiryProcessor _getUsers;
+        private readonly IGetStudentsInquiryProcessor _getStudents;
         private readonly IGetConversationsInquiryProcessor _getConversations;
+        private readonly IDeleteUsersMaintenanceProcessing _deleteTutors;
         private readonly IPagedDataRequestFactory _pagedDataRequestFactory;
         private readonly IPatchTutorMaintenanceProcessor _patchTutors;
 
@@ -33,14 +34,16 @@ namespace Edutor.Web.Api.Controllers
         public TutorsController(IPostTutorMaintenanceProcessor addUserQueryProcessor,
             IGetTutorsInquiryProcessor getQueryProcessor,
             IPatchTutorMaintenanceProcessor patchTutors,
+            IDeleteUsersMaintenanceProcessing deleteTutors,
             IGetConversationsInquiryProcessor getConversations,
             IGetStudentsInquiryProcessor getStudentsQueryProcessor,
             IPagedDataRequestFactory pagedDataRequestFactory)
         {
+            _deleteTutors = deleteTutors;
             _patchTutors = patchTutors;
-            _addUserQueryProcessor = addUserQueryProcessor;
-            _getQueryProcessor = getQueryProcessor;
-            _getStudentsQueryProcessor = getStudentsQueryProcessor;
+            _addUsers = addUserQueryProcessor;
+            _getUsers = getQueryProcessor;
+            _getStudents = getStudentsQueryProcessor;
             _pagedDataRequestFactory = pagedDataRequestFactory;
             _getConversations = getConversations;
         }
@@ -56,7 +59,7 @@ namespace Edutor.Web.Api.Controllers
         [ResponseType(typeof(Tutor))]
         public IHttpActionResult AddTutor(NewTutor newTutor)
         {
-            var user = _addUserQueryProcessor.AddUser(newTutor);
+            var user = _addUsers.AddUser(newTutor);
             var result = new ModelPostedActionResult<Tutor>(Request, user);
             return result;
         }
@@ -87,16 +90,22 @@ namespace Edutor.Web.Api.Controllers
         public PagedDataResponse<Tutor> GetAllPagedTutors()
         {
             var request = _pagedDataRequestFactory.Create(Request.RequestUri);
-            var s = _getQueryProcessor.GetAllTutors(request);
+            var s = _getUsers.GetAllTutors(request);
             return s;
         }
 
+        /// <summary>
+        /// Elimina al tutor indicado del sistema siempre y cuando no existan conflictos, que tengan estudiantes vinculados es un ejemplo.
+        /// </summary>
+        /// <param name="tutorId">El identificador de el tutor a eliminar</param>
+        /// <returns></returns>
         [HttpDelete]
         [Route("tutors/{tutorId:int}")]
         [Authorize(Roles = Constants.RoleNames.Administrator)]
         //[ResponseType(type))]
         public IHttpActionResult DeleteTutor(int tutorId)
         {
+            _deleteTutors.Delete(tutorId);
             return new ModelDeletedActionResult(Request);
         }
 
@@ -111,7 +120,7 @@ namespace Edutor.Web.Api.Controllers
         [Route("tutors/{tutorId:int}")]
         public Tutor GetTutor(int tutorId)
         {
-            var s = _getQueryProcessor.GetTutor(tutorId);
+            var s = _getUsers.GetTutor(tutorId);
             return s;
         }
 
@@ -125,7 +134,7 @@ namespace Edutor.Web.Api.Controllers
         [Route("tutors/{curp:regex(" + Constants.CommonRoutingDefinitions.CurpRegex + ")}")]
         public Tutor GetTutor(string curp)
         {
-            var s = _getQueryProcessor.GetTutor(curp);
+            var s = _getUsers.GetTutor(curp);
             return s;
         }
 
@@ -153,7 +162,7 @@ namespace Edutor.Web.Api.Controllers
             }
 
             var request = _pagedDataRequestFactory.Create(Request.RequestUri);
-            var r = _getStudentsQueryProcessor.GetStudentsForTutor(tutorId, request, isTutor);
+            var r = _getStudents.GetStudentsForTutor(tutorId, request, isTutor);
             return r;
         }
 

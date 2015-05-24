@@ -80,6 +80,7 @@ namespace Edutor.Web.Api.Securitiy
             identity.AddClaim(new Claim(ClaimTypes.Role,
                 user.Position == User.AdministrativePosition ? Constants.RoleNames.Administrator : Constants.RoleNames.Teacher));
             identity.AddClaim(new Claim(Constants.CustomClaimTypes.SchoolUserId, user.UserId.ToString()));
+            identity.AddClaim(new Claim(Constants.CustomClaimTypes.UserId, user.UserId.ToString()));
 
             return new ClaimsPrincipal(identity);
         }
@@ -91,6 +92,7 @@ namespace Edutor.Web.Api.Securitiy
             identity.AddClaim(new Claim(ClaimTypes.Role, Constants.RoleNames.Tutor));
             identity.AddClaim(new Claim(Constants.CustomClaimTypes.StudentId, student.StudentId.ToString()));
             identity.AddClaim(new Claim(Constants.CustomClaimTypes.TutorId, student.Tutor.UserId.ToString()));
+            identity.AddClaim(new Claim(Constants.CustomClaimTypes.UserId, student.Tutor.UserId.ToString()));
 
             return new ClaimsPrincipal(identity);
         }
