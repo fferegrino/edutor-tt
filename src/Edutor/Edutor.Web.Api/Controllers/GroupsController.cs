@@ -24,6 +24,7 @@ namespace Edutor.Web.Api.Controllers
         private readonly IGetSchoolUsersInquiryProcessor _schoolUsersIP;
         private readonly IGetStudentsInquiryProcessor _studentsIP;
         private readonly IPatchGroupMaintenanceProcessor _patchGroups;
+        private readonly IDeleteGroupsMaintenanceProcessor _deleteGroups;
         private readonly IGetGroupsInquiryProcessor _getGroups;
         private readonly IPagedDataRequestFactory _pagedDataRequestFactory;
 
@@ -33,6 +34,7 @@ namespace Edutor.Web.Api.Controllers
             IGetSchoolUsersInquiryProcessor schoolUsersIP,
             IGetStudentsInquiryProcessor studentsIP,
             IPatchGroupMaintenanceProcessor patchGroups,
+            IDeleteGroupsMaintenanceProcessor deleteGroups,
             IPagedDataRequestFactory pagedDataRequestFactory,
             IGetGroupsInquiryProcessor getGroups)
         {
@@ -44,6 +46,7 @@ namespace Edutor.Web.Api.Controllers
             _pagedDataRequestFactory = pagedDataRequestFactory;
             _studentsIP = studentsIP;
             _getGroups = getGroups;
+            _deleteGroups = deleteGroups;
         }
 
 
@@ -60,6 +63,20 @@ namespace Edutor.Web.Api.Controllers
             var user = _addUserQueryProcessor.AddGroup(newGroup);
             var result = new ModelPostedActionResult<Group>(Request, user);
             return result;
+        }
+
+        /// <summary>
+        /// Elimina un grupo dentro del sistema
+        /// </summary>
+        /// <param name="groupId">El identificador único del grupo a eliminar</param>
+        /// <returns></returns>
+        [HttpDelete]
+        [Route("groups/{groupId:int}")]
+        public IHttpActionResult DeleteGroup(int groupId)
+        {
+            _deleteGroups.Delete(groupId);
+            return new ModelDeletedActionResult(Request);
+
         }
 
         /// <summary>

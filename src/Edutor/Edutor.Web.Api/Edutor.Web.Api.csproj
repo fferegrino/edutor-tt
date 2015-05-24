@@ -217,6 +217,7 @@
     <Compile Include="LinkServices\IStudentsLinkService.cs" />
     <Compile Include="LinkServices\ITutorsLinkService.cs" />
     <Compile Include="LinkServices\ISchoolUsersLinkService.cs" />
+    <Compile Include="MaintenanceProcessing\IDeleteGroupsMaintenanceProcessor.cs" />
     <Compile Include="MaintenanceProcessing\IDeleteUsersMaintenanceProcessing.cs" />
     <Compile Include="MaintenanceProcessing\IPatchSchoolUserMaintenanceProcessor.cs" />
     <Compile Include="MaintenanceProcessing\IPatchTutorMaintenanceProcessor.cs" />

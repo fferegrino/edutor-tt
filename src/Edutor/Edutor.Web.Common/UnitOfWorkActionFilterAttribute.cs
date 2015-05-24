@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Edutor.Data.Exceptions;
+using NHibernate.Exceptions;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -26,7 +28,16 @@ namespace Edutor.Web.Common
 
         public override void OnActionExecuted(HttpActionExecutedContext actionExecutedContext)
         {
-            ActionTransactionHelper.EndTransaction(actionExecutedContext);
+#warning This shouldn't be handled here
+            try
+            {
+                ActionTransactionHelper.EndTransaction(actionExecutedContext);
+            }
+            catch (GenericADOException e)
+            {
+                ActionTransactionHelper.CloseSession();
+                throw new ForeignKeyException("El usuario / estudiante no puede ser eliminado, está en conflicto");
+            }
             ActionTransactionHelper.CloseSession();
         }
     }

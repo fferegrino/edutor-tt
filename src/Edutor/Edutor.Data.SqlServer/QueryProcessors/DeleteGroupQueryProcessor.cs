@@ -12,31 +12,24 @@ using System.Threading.Tasks;
 
 namespace Edutor.Data.SqlServer.QueryProcessors
 {
-    public class DeleteUserQueryProcessor : IDeleteUserQueryProcessor
+    public class DeleteGroupQueryProcessor : IDeleteGroupQueryProcessor
     {
         private readonly IDateTime _dateTime;
         private readonly ISession _session;
         private readonly IUserSession _userSession;
 
-        public DeleteUserQueryProcessor(IDateTime dateTime, ISession session, IUserSession userSession)
+        public DeleteGroupQueryProcessor(IDateTime dateTime, ISession session, IUserSession userSession)
         {
             _dateTime = dateTime;
             _userSession = userSession;
             _session = session;
         }
 
-        public void Delete(int userId)
+        public void Delete(int gorupId)
         {
             int deletingUser = _userSession.UserId;
-            var userToDelete = _session.QueryOver<User>().Where(user => user.UserId == userId).SingleOrDefault();
-            try
-            {
-                _session.Delete(userToDelete);
-            }
-            catch(ADOException ex)
-            {
-                throw new ForeignKeyException("El usuario no puede ser eliminado, la eliminación tiene conflictos con otras tablas");
-            }
+            var userToDelete = _session.QueryOver<Group>().Where(gr => gr.GroupId == gorupId).SingleOrDefault();
+            _session.Delete(userToDelete);
         }
     }
 }

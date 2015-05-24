@@ -172,6 +172,10 @@ namespace Edutor.Web.Api
             #endregion
 
             #region Delete region
+
+            container.Bind<QueryProcessors.IDeleteGroupQueryProcessor>().To<SqlProcessors.DeleteGroupQueryProcessor>().InRequestScope();
+            container.Bind<AMP.IDeleteGroupsMaintenanceProcessor>().To<AMP.DeleteGroupsMaintenanceProcessor>().InRequestScope();
+
             container.Bind<QueryProcessors.IDeleteUserQueryProcessor>().To<SqlProcessors.DeleteUserQueryProcessor>().InRequestScope();
             container.Bind<AMP.IDeleteUsersMaintenanceProcessing>().To<AMP.DeleteUsersMaintenanceProcessing>().InRequestScope();
 
