@@ -83,12 +83,4 @@
   <ItemGroup>
     <PostDeploy Include="Scripts\Required.PostDeployment.sql" />
   </ItemGroup>
-  <ItemGroup>
-    <None Include="Edutor.Db.Test.publish.xml" />
-    <None Include="Edutor.Db.local.publish.xml" />
-    <None Include="Edutor.Db.publish.xml" />
-    <None Include="Edutor.Db.Azure.publish.xml" />
-    <None Include="Edutor.Db.HSXD.publish.xml" />
-    <None Include="Edutor.Dbw10..publish.xml" />
-  </ItemGroup>
 </Project>

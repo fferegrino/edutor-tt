@@ -13,13 +13,14 @@ using System.Security.Claims;
 using Edutor.Web.Common.Exceptions;
 using Edutor.Web.Api.Models.ModModels;
 using System.Net;
+using Edutor.Web.Common;
 
 namespace Edutor.Web.Api.Controllers
 {
     /// <summary>
     /// Conjunto de extremos REST que permiten operar con los servicios de creación y manipulación de usuarios tutores que ofrece la plataforma
     /// </summary>
-    [Edutor.Web.Common.UnitOfWorkActionFilter]
+    [UnitOfWorkActionFilter]
     public class TutorsController : ApiController
     {
         private readonly IPostTutorMaintenanceProcessor _addUsers;

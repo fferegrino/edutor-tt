@@ -8,6 +8,16 @@ namespace Edutor.Common
 {
     public static class Constants
     {
+        public static class RoleNames
+        {
+            public const string Teacher = "Teacher";
+            public const string Administrator = "Administrator";
+            public const string Tutor = "Tutor";
+            public const string All = Teacher + "," + Administrator + "," + Tutor;
+            public const string TeacherAndTutor = Teacher + "," + Tutor;
+            public const string SchoolUser = Teacher + "," + Administrator;
+        }
+
         public static class MediaTypeNames
         {
             public const string ApplicationXml = "application/xml";
@@ -16,7 +26,6 @@ namespace Edutor.Common
             public const string TextJson = "text/json";
         }
 
-
         public static class Paging
         {
             public const int MinPageSize = 1;
@@ -24,7 +33,6 @@ namespace Edutor.Common
             public const int DefaultPageNumber = 1;
             public const string PagedQueryStringFormat = "pageNumber={0}&pageSize={1}";
         }
-
 
         public static class CommonParameterNames
         {
@@ -74,15 +82,6 @@ namespace Edutor.Common
             public const string Basic = "basic";
         }
 
-        public static class RoleNames
-        {
-            public const string Teacher = "Teacher";
-            public const string Administrator = "Administrator";
-            public const string Tutor = "Tutor";
-            public const string All = Teacher + "," + Administrator + "," + Tutor;
-            public const string TeacherAndTutor = Teacher + "," + Tutor;
-            public const string SchoolUser = Teacher + "," + Administrator;
-        }
         public static class CustomClaimTypes
         {
             public const string StudentId = "StudentId";

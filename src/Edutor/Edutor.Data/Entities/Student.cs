@@ -17,12 +17,8 @@ namespace Edutor.Data.Entities
         public virtual string Curp { get; set; }
         public virtual string Name { get; set; }
         public virtual string Token { get; set; }
-
         public virtual User Tutor { get; set; }
-
         public virtual IList<Group> Groups { get; set; }
-
-
         public virtual byte[] Version { get; set; }
     }
 }

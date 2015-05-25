@@ -29,7 +29,6 @@ namespace Edutor.Data.SqlServer.Mapping
             HasManyToMany(x => x.Groups).Table("Teachings")
                                    .ParentKeyColumn("GroupId")
                                    .ChildKeyColumn("SchoolUserId");
-                                   //.Inverse();
             
         }
     }

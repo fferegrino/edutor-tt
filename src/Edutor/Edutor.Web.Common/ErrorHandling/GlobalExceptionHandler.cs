@@ -24,9 +24,11 @@ namespace Edutor.Web.Common.ErrorHandling
                     (HttpStatusCode)httpException.GetHttpCode(), httpException.Message);
                 return;
             }
-
+            
             if (exception is ObjectNotFoundException)
             {
+                // En caso de que la exepción sea lanzada al no encotntrar un registro en la base de datos se debe
+                // devolver un código 404
                 context.Result = new SimpleErrorResult(context.Request, HttpStatusCode.NotFound, exception.Message);
                 return;
             }

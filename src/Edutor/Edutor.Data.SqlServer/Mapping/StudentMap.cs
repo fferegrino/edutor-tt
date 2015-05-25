@@ -13,7 +13,6 @@ namespace Edutor.Data.SqlServer.Mapping
         {
             Table("Students");
             Id(x => x.StudentId);
-            //Map(x => x.TutorId).Not.Nullable();
             Map(x => x.Name).Not.Nullable();
             Map(x => x.Curp).Not.Nullable();
             Map(x => x.Address).Not.Nullable();
@@ -27,7 +26,6 @@ namespace Edutor.Data.SqlServer.Mapping
             HasManyToMany(x => x.Groups).Table("Enrollments")
                                    .ParentKeyColumn("GroupId")
                                    .ChildKeyColumn("StudentId");
-                                   //.Inverse();
         }
 
     }

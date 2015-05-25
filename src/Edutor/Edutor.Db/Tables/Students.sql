@@ -9,6 +9,6 @@
     [Name] VARCHAR(60) NOT NULL,
     [Curp] CHAR(18) NOT NULL, 
     [Token] CHAR(10) NOT NULL, 
-    --[Email] VARCHAR(50) NOT NULL, 
-    CONSTRAINT [FK_Students_ToTutors] FOREIGN KEY (TutorId) REFERENCES [Users]([UserId])
+    CONSTRAINT [FK_Students_ToTutors] 
+		FOREIGN KEY (TutorId) REFERENCES [Users]([UserId])
 )

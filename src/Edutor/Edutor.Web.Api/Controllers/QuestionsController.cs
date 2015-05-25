@@ -4,6 +4,7 @@ using Edutor.Web.Api.Models;
 using Edutor.Web.Api.Models.NewModels;
 using Edutor.Web.Api.Models.ReturnTypes;
 using Edutor.Web.Api.UpdateProcessing;
+using Edutor.Web.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,7 +18,7 @@ namespace Edutor.Web.Api.Controllers
     /// <summary>
     /// Conjunto de extremos REST que permiten operar con los servicios de creación y manipulación de preguntas que ofrece la plataforma
     /// </summary>
-    [Edutor.Web.Common.UnitOfWorkActionFilter]
+    [UnitOfWorkActionFilter]
     public class QuestionsController : ApiController
     {
         private readonly IPostQuestionMaintenanceProcessor _postQuestion;
@@ -44,11 +45,13 @@ namespace Edutor.Web.Api.Controllers
         /// </summary>
         /// <param name="newQuestion">La nueva pregunta a agregar</param>
         /// <returns></returns>
-        [HttpPost]
         [Route("questions")]
+        [HttpPost]
+        [ResponseType(typeof(Question))]
         public IHttpActionResult AddQuestion(NewQuestion newQuestion)
         {
             var ret = _postQuestion.AddQuestion(newQuestion);
+            // Genera la respuesta con su correspondiente código de estatus HTTP
             var result = new ModelPostedActionResult<Question>(Request, ret);
             return result;
         }
@@ -58,8 +61,8 @@ namespace Edutor.Web.Api.Controllers
         /// </summary>
         /// <param name="questionId">El identificador único de la notificación deseada</param>
         /// <returns></returns>
-        [HttpGet]
         [Route("questions/{questionId:int}")]
+        [HttpGet]
         public Question GetQuestion(int questionId)
         {
             return _getQuestions.GetQuestion(questionId);
