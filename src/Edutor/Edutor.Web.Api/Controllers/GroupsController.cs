@@ -51,10 +51,41 @@ namespace Edutor.Web.Api.Controllers
 
 
         /// <summary>
-        /// Obtiene los profesores del grupo indicado
+        /// Regresa una lista paginada de todos los grupos que existen en el sistema
+        /// </summary>
+        /// <returns>Una lista paginada de todos los grupos que existen en el sistema</returns>
+        [HttpGet]
+        [Route("groups")]
+        [Authorize(Roles = Constants.RoleNames.Administrator)]
+        public PagedDataResponse<Group> GetGroups()
+        {
+            var request = _pagedDataRequestFactory.Create(Request.RequestUri);
+            var tasks = _getGroups.GetAllGroups(request);
+            return tasks;
+        }
+
+        /// <summary>
+        /// Regresa el grupo con el identificador enviado en la URL
+        /// </summary>
+        /// <param name="groupId">El identificador único del grupo a obtener</param>
+        /// <returns>Regresa el grupo deseado o un código de error 404 en caso de que no exista</returns>
+        [HttpGet]
+        [ResponseType(typeof(Group))]
+        [Route("groups/{groupId:int}")]
+        [Authorize]
+        public Group GetGroup(int groupId)
+        {
+            var tasks = _getGroups.GetGroup(groupId);
+            return tasks;
+
+        }
+
+
+        /// <summary>
+        /// Regresa una lista paginada con los profesores asignados al grupo especificado
         /// </summary>
         /// <param name="groupId">El identificador único del grupo del que se desea conocer los profesores</param>
-        /// <returns>Una lista paginada con los profesores asignados a cada grupo</returns>
+        /// <returns>Una lista paginada con los profesores asignados al grupo especificado</returns>
         [Route("groups/{groupId:int}/schoolusers")]
         [HttpGet]
         [ResponseType(typeof(PagedDataResponse<SchoolUser>))]
@@ -66,10 +97,10 @@ namespace Edutor.Web.Api.Controllers
         }
 
         /// <summary>
-        /// Obtiene los estudiantes del grupo indicado
+        /// Regresa una lista paginada con los estudiantes pertenecientes al grupo especificado
         /// </summary>
         /// <param name="groupId">El identificador único del grupo del que se desea conocer los estudiantes</param>
-        /// <returns>Una lista paginada con los estudiantes asignados a cada grupo</returns>
+        /// <returns>Una lista paginada con los estudiantes pertenecientes al grupo especificado</returns>
         [HttpGet]
         [Route("groups/{groupId:int}/students")]
         public PagedDataResponse<Student> GetStudentsForGroup(int groupId)
@@ -79,39 +110,12 @@ namespace Edutor.Web.Api.Controllers
             return r;
         }
 
-        /// <summary>
-        /// Obtiene el grupo indicado
-        /// </summary>
-        /// <param name="groupId">El identificador único del grupo a obtener</param>
-        /// <returns></returns>
-        [HttpGet]
-        [ResponseType(typeof(Group))]
-        [Route("groups/{groupId:int}")]
-        public Group GetGroup(int groupId)
-        {
-            var tasks = _getGroups.GetGroup(groupId);
-            return tasks;
-
-        }
 
         /// <summary>
-        /// Obtiene todos los grupos del sistema
-        /// </summary>
-        /// <returns></returns>
-        [HttpGet]
-        [Route("groups")]
-        public PagedDataResponse<Group> GetGroups()
-        {
-            var request = _pagedDataRequestFactory.Create(Request.RequestUri);
-            var tasks = _getGroups.GetAllGroups(request);
-            return tasks;
-        }
-
-        /// <summary>
-        /// Agrega un nuevo grupo al sistema
+        /// Da de alta un nuevo grupo en el sistema
         /// </summary>
         /// <param name="newGroup">El nuevo grupo a ingresar</param>
-        /// <returns></returns>
+        /// <returns>Mensaje de confirmación de que el grupo fue dado de alta correctamente</returns>
         [HttpPost]
         [Route("groups")]
         [ResponseType(typeof(Group))]
@@ -123,7 +127,23 @@ namespace Edutor.Web.Api.Controllers
         }
 
         /// <summary>
-        /// Agrega un estudiante al grupo indicado
+        /// Modifica el grupo de acuerdo a lo enviado en el el cuerpo de la petición.
+        /// <remarks>Cualquier propiedad faltante o cuyo valor sea nulo no será modificada</remarks>
+        /// </summary>
+        /// <param name="group">Los nuevos valores a asignar</param>
+        /// <returns></returns>
+        [HttpPatch]
+        [Route("groups")]
+        [Authorize(Roles = Constants.RoleNames.All)]
+        [ResponseType(typeof(Group))]
+        public IHttpActionResult UpdateGroup(ModifiableGroup group)
+        {
+            var m = _patchGroups.UpdateGroup(group);
+            return new ModelUpdatedActionResult<Group>(Request, m);
+        }
+
+        /// <summary>
+        /// Establece un vínculo entre un grupo y un estudiante especificados a través de la URL
         /// </summary>
         /// <param name="groupId">El identificador único del grupo al que se agregará el estudiante</param>
         /// <param name="studentId">El identificador único del estudiante que se agregará al grupo</param>
@@ -137,7 +157,7 @@ namespace Edutor.Web.Api.Controllers
         }
 
         /// <summary>
-        /// Agrega un usuario escolar al grupo indicado
+        /// Establece un vínculo entre un grupo y el profesor especificados a través de la URL
         /// </summary>
         /// <param name="groupId">El identificador único del grupo al que se agregará el usuario escolar</param>
         /// <param name="schoolUserId">El identificador único del usuario escolar que se agregará al grupo</param>
@@ -150,27 +170,11 @@ namespace Edutor.Web.Api.Controllers
             return new ModelsLinkedActionResult(Request);
         }
 
-
         /// <summary>
-        /// Modifica el grupo de acuerdo a lo enviado en el parámetro <paramref name="group"/>
-        /// </summary>
-        /// <param name="group"></param>
-        /// <returns></returns>
-        [HttpPatch]
-        [Route("groups")]
-        [Authorize(Roles = Constants.RoleNames.All)]
-        [ResponseType(typeof(Group))]
-        public IHttpActionResult UpdateGroup(ModifiableGroup group)
-        {
-            var m = _patchGroups.UpdateGroup(group);
-            return new ModelUpdatedActionResult<Group>(Request, m);
-        }
-
-        /// <summary>
-        /// Elimina un grupo dentro del sistema
+        /// Elimina el grupo especificado del sistema.
         /// </summary>
         /// <param name="groupId">El identificador único del grupo a eliminar</param>
-        /// <returns></returns>
+        /// <returns>Un código de estatus</returns>
         [HttpDelete]
         [Route("groups/{groupId:int}")]
         public IHttpActionResult DeleteGroup(int groupId)
@@ -181,7 +185,7 @@ namespace Edutor.Web.Api.Controllers
         }
 
         /// <summary>
-        /// Elimina un estudiante escolar del grupo indicado
+        /// Elimina el vinculo establecido entre un estudiante y un grupo
         /// </summary>
         /// <param name="groupId">El identificador único del grupo del que se eliminará el estudiante</param>
         /// <param name="studentId">El identificador único del estudiante que se eliminará del grupo</param>
@@ -195,7 +199,7 @@ namespace Edutor.Web.Api.Controllers
         }
 
         /// <summary>
-        /// Elimina un usuario escolar del grupo indicado
+        /// Elimina el vínculo establecido entre un profesor y un grupo
         /// </summary>
         /// <param name="groupId">El identificador único del grupo del que se eliminará el usuario escolar</param>
         /// <param name="schoolUserId">El identificador único del usuario escolar que se eliminará del grupo</param>

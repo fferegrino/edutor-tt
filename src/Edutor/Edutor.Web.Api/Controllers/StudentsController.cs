@@ -47,52 +47,19 @@ namespace Edutor.Web.Api.Controllers
             _deleteStudent = deleteStudent;
         }
 
-
         /// <summary>
-        /// Adds a new Tutor to the system
+        /// Regresa una lista paginada de todos los estudiantes registrados en el sistema
         /// </summary>
-        /// <param name="newStudent">The tutor to be added</param>
-        /// <returns></returns>
-        [HttpPost]
-        [ResponseType(typeof(Student))]
-        [Route("students")]
-        [Authorize(Roles = Constants.RoleNames.Administrator)]
-        [ValidationActionFilter]
-        public IHttpActionResult AddStudent(NewStudent newStudent)
-        {
-            var user = _addUserQueryProcessor.AddStudent(newStudent);
-            var result = new ModelPostedActionResult<Student>(Request, user);
-            return result;
-        }
-
-
-        /// <summary>
-        /// Obtiene todos los tutores registrados en el sistema
-        /// </summary>
-        /// <returns>Una respuesta paginada de todos los tutores en el sistema</returns>
+        /// <returns>Una lista paginada de todos los estudiantes registrados en el sistema</returns>
         [HttpGet]
         [ResponseType(typeof(PagedDataResponse<Student>))]
         [Route("students")]
         [Authorize(Roles = Constants.RoleNames.Administrator)]
-        public PagedDataResponse<Student> GetTutors()
+        public PagedDataResponse<Student> GetStudents()
         {
             var request = _pagedDataRequestFactory.Create(Request.RequestUri);
             var s = _getStudentsInquiryProcessor.GetAllStudents(request);
             return s;
-        }
-
-        /// <summary>
-        /// Modifica el estudiante de acuerdo a lo enviado en el parámetro <paramref name="student"/>
-        /// </summary>
-        /// <param name="studentId"></param>
-        /// <returns></returns>
-        [HttpDelete]
-        [Route("students/{studentId:int}")]
-        [Authorize(Roles = Constants.RoleNames.Administrator)]
-        public IHttpActionResult DeleteGroup(int studentId)
-        {
-            _deleteStudent.Delete(studentId);
-            return new ModelDeletedActionResult(Request);
         }
 
         /// <summary>
@@ -110,39 +77,25 @@ namespace Edutor.Web.Api.Controllers
         }
 
         /// <summary>
-        /// Obtiene el tutor indicado
+        /// Obtiene el estudiante indicado realizando la búsqueda mediante la CURP
         /// </summary>
-        /// <param name="tutorId">El identificador único del tutor a recuperar</param>
+        /// <param name="tutorId">La Clave Única de Registro de Población del usuario escolar</param>
         /// <returns></returns>
         [HttpGet]
         [ResponseType(typeof(Student))]
         [Route("students/{curp:regex(" + Constants.CommonRoutingDefinitions.CurpRegex + ")}")]
         [Authorize(Roles = Constants.RoleNames.Administrator)]
-        public Student GetTutor(string curp)
+        public Student GetStudent(string curp)
         {
             var s = _getStudentsInquiryProcessor.GetStudent(curp);
             return s;
         }
 
         /// <summary>
-        /// Activa el estudiante con el token asignado
-        /// </summary>
-        /// <param name="token">El identificador único del tutor a recuperar</param>
-        /// <returns></returns>
-        [HttpPost]
-        [ResponseType(typeof(Student))]
-        [Route("students/{token:regex(" + Constants.CommonRoutingDefinitions.Token + ")}/activate")]
-        public Student ActivateStudent(string token)
-        {
-            var s = _addUserQueryProcessor.ActivateStudent(token);
-            return s;
-        }
-
-        /// <summary>
-        /// Obtiene una lista de las notificaciones para el estudiante
+        /// Obtiene una lista paginada de las notificaciones para el estudiante
         /// </summary>
         /// <param name="studentId">El identificador único del estudiante del que se desea conocer sus notificaciones</param>
-        /// <returns>Una lista con las notificaciones del estudiante</returns>
+        /// <returns>Una lista paginada de las notificaciones para el estudiante</returns>
         [HttpGet]
         [Route("students/{studentId:int}/notifications")]
         [Authorize(Roles = Constants.RoleNames.Tutor)]
@@ -154,10 +107,10 @@ namespace Edutor.Web.Api.Controllers
         }
 
         /// <summary>
-        /// Obtiene una lista de los eventos para el estudiante
+        /// Obtiene una lista paginada de los eventos para el estudiante
         /// </summary>
         /// <param name="studentId">El identificador único del estudiante del que se desea conocer sus eventos</param>
-        /// <returns>Una lista con los eventos del estudiante</returns>
+        /// <returns>Una lista paginada de los eventos para el estudiante</returns>
         [HttpGet]
         [Route("students/{studentId:int}/events")]
         [Authorize(Roles = Constants.RoleNames.Tutor)]
@@ -168,13 +121,11 @@ namespace Edutor.Web.Api.Controllers
             return r;
         }
 
-
-
         /// <summary>
-        /// Obtiene una lista de las preguntas para el estudiante
+        /// Obtiene una lista paginada de las preguntas para el estudiante
         /// </summary>
         /// <param name="studentId">El identificador único del estudiante del que se desea conocer sus preguntas</param>
-        /// <returns>Una lista con las preguntas del estudiante</returns>
+        /// <returns>Una lista paginada de las preguntas para el estudiante</returns>
         [HttpGet]
         [Route("students/{studentId:int}/questions")]
         [Authorize(Roles = Constants.RoleNames.Tutor)]
@@ -183,6 +134,51 @@ namespace Edutor.Web.Api.Controllers
             var request = _pagedDataRequestFactory.Create(Request.RequestUri);
             var r = _getQuestions.GetQuestionsForStudent(studentId, request);
             return r;
+        }
+
+        /// <summary>
+        /// Activa el estudiante con el token asignado
+        /// </summary>
+        /// <param name="token">El token asignado por el sistema</param>
+        /// <returns>El estudiante activado</returns>
+        [HttpPost]
+        [ResponseType(typeof(Student))]
+        [Route("students/{token:regex(" + Constants.CommonRoutingDefinitions.Token + ")}/activate")]
+        public Student ActivateStudent(string token)
+        {
+            var s = _addUserQueryProcessor.ActivateStudent(token);
+            return s;
+        }
+
+        /// <summary>
+        /// Agrega un nuevo estudiante al sistema
+        /// </summary>
+        /// <param name="student">El estudiante que será añadido</param>
+        /// <returns></returns>
+        [HttpPost]
+        [ResponseType(typeof(Student))]
+        [Route("students")]
+        [Authorize(Roles = Constants.RoleNames.Administrator)]
+        [ValidationActionFilter]
+        public IHttpActionResult AddStudent(NewStudent student)
+        {
+            var user = _addUserQueryProcessor.AddStudent(student);
+            var result = new ModelPostedActionResult<Student>(Request, user);
+            return result;
+        }
+
+        /// <summary>
+        /// Modifica el estudiante de acuerdo a lo enviado en el parámetro <paramref name="student"/>
+        /// </summary>
+        /// <param name="studentId"></param>
+        /// <returns></returns>
+        [HttpDelete]
+        [Route("students/{studentId:int}")]
+        [Authorize(Roles = Constants.RoleNames.Administrator)]
+        public IHttpActionResult DeleteGroup(int studentId)
+        {
+            _deleteStudent.Delete(studentId);
+            return new ModelDeletedActionResult(Request);
         }
     }
 }

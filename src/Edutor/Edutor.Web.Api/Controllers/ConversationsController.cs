@@ -1,4 +1,5 @@
-﻿using Edutor.Web.Api.InquiryProcessing;
+﻿using Edutor.Common;
+using Edutor.Web.Api.InquiryProcessing;
 using Edutor.Web.Api.MaintenanceProcessing;
 using Edutor.Web.Api.Models;
 using Edutor.Web.Api.Models.NewModels;
@@ -39,19 +40,21 @@ namespace Edutor.Web.Api.Controllers
         [Route("conversations/{conversationId:int}")]
         [HttpGet]
         [ResponseType(typeof(Conversation))]
+        [Authorize(Roles = Constants.RoleNames.All)]
         public Conversation GetConversation(int conversationId)
         {
             return _getConversations.GetConversation(conversationId);
         }
 
         /// <summary>
-        /// Obtiene los mensajes de una conversación
+        /// Regresa una lista paginada con los mensajes de la conversación indicada
         /// </summary>
         /// <param name="conversationId">El id de la conversación a consultar</param>
         /// <returns>Una lista paginada con los mensajes de la conversación consultada</returns>
         [Route("conversations/{conversationId:int}/messages")]
         [HttpGet]
         [ResponseType(typeof(PagedDataResponse<Message>))]
+        [Authorize(Roles = Constants.RoleNames.All)]
         public PagedDataResponse<Message> GetMessagesForConversation(int conversationId)
         {
             var r = _getConversations.GetMessagesForConversation(conversationId, _pagedFactory.Create(Request.RequestUri));
@@ -66,22 +69,24 @@ namespace Edutor.Web.Api.Controllers
         [Route("conversations/{conversationId:int}/messages/{messageId:int}")]
         [HttpGet]
         [ResponseType(typeof(Message))]
+        [Authorize(Roles = Constants.RoleNames.All)]
         public Message GetMessagesForConversation(int conversationId, int messageId)
         {
             return _getConversations.GetMessagesForConversation(conversationId, messageId);
         }
 
         /// <summary>
-        /// Envía un nuevo mensaje, en caso de no existir, se crea una conversación
+        /// Envía un nuevo mensaje y se asocia con una conversación, en caso de no existir, se crea una conversación
         /// </summary>
-        /// <param name="newTutor">El nuevo tutor a ingresar</param>
+        /// <param name="message">El mensaje a a enviar a través del sistema</param>
         /// <returns></returns>
         [Route("conversations")]
         [HttpPost]
         [ResponseType(typeof(Message))]
-        public IHttpActionResult AddTutor(NewMessage newMessage)
+        [Authorize(Roles = Constants.RoleNames.All)]
+        public IHttpActionResult AddTutor(NewMessage message)
         {
-            var x = _postConversations.AddNewMessage(newMessage);
+            var x = _postConversations.AddNewMessage(message);
             var result = new ModelPostedActionResult<Message>(Request, x);
             return result;
         }

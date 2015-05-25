@@ -8,7 +8,7 @@ namespace Edutor.Web.Api.Models.ReturnTypes
 {
     /// <summary>
     /// Representa una conversación, contiene información sobre los participantes 
-    /// de la misma así como los mensajes recientes que tiene
+    /// de la misma así como los mensajes recientes que tiene registrados
     /// </summary>
     public class Conversation : LinkContaining
     {

@@ -59,15 +59,136 @@ namespace Edutor.Web.Api.Controllers
         }
 
         /// <summary>
-        /// Agrega usuario escolar
+        /// Recupera una lista paginada de usuarios escolares
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("schoolusers")]
+        public PagedDataResponse<SchoolUser> GetSchoolUsers()
+        {
+            var request = _pagedDataRequestFactory.Create(Request.RequestUri);
+            var tasks = _getSchoolUser.GetAllSchoolUsers(request);
+            return tasks;
+        }
+
+
+        /// <summary>
+        /// Obtiene el usuario escolar indicado
+        /// </summary>
+        /// <param name="schoolUserId">El id del usuario escolar</param>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("schoolusers/{schoolUserId:int}")]
+        [Authorize(Roles = Constants.RoleNames.All)]
+        public SchoolUser GetSchoolUser(int schoolUserId)
+        {
+            var s = _getSchoolUser.GetSchoolUser(schoolUserId);
+            return s;
+        }
+
+        /// <summary>
+        /// Obtiene el usuario escolar indicado realizando la búsqueda mediante la CURP
+        /// </summary>
+        /// <param name="curp">La Clave Única de Registro de Población del usuario escolar</param>
+        /// <returns></returns>
+        [HttpGet]
+        [ResponseType(typeof(SchoolUser))]
+        [Route("schoolusers/{curp:regex(" + Constants.CommonRoutingDefinitions.CurpRegex + ")}")]
+        [Authorize(Roles = Constants.RoleNames.All)]
+        public SchoolUser GetSchoolUser(string curp)
+        {
+            var s = _getSchoolUser.GetSchoolUser(curp);
+            return s;
+        }
+
+
+
+        /// <summary>
+        /// Obtiene los grupos asignados al usuario escolar indicado
+        /// </summary>
+        /// <param name="schoolUserId">El id del usuario escolar</param>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("schoolusers/{schoolUserId:int}/groups")]
+        [Authorize(Roles = Constants.RoleNames.SchoolUser)]
+        public PagedDataResponse<Group> GetGroupsForSchoolUser(int schoolUserId)
+        {
+            var request = _pagedDataRequestFactory.Create(Request.RequestUri);
+            var tasks = _getGroupsProcessor.GetGroupsForSchoolUser(schoolUserId, request);
+            return tasks;
+        }
+
+
+        /// <summary>
+        /// Obtiene una lista de las notificaciones creadas por el usuario escolar
+        /// </summary>
+        /// <param name="schoolUserid">El id del usuario escolar del que se desea conocer sus notificaciones</param>
+        /// <returns>Una lista con las notificaciones creadas por el usuario escolar</returns>
+        [HttpGet]
+        [Route("schoolusers/{schoolUserId:int}/notifications")]
+        [Authorize(Roles = Constants.RoleNames.SchoolUser)]
+        public PagedDataResponse<Notification> GetNotificationsForSchoolUser(int schoolUserid)
+        {
+            var request = _pagedDataRequestFactory.Create(Request.RequestUri);
+            var r = _getNotifications.GetNotificationsForSchoolUser(schoolUserid, request);
+            return r;
+        }
+
+        /// <summary>
+        /// Obtiene una lista de los eventos creados por el usuario escolar
+        /// </summary>
+        /// <param name="schoolUserid">El id del usuario escolar del que se desea conocer sus eventos</param>
+        /// <returns>Una lista con los eventos creados por el usuario escolar</returns>
+        [HttpGet]
+        [Route("schoolusers/{schoolUserId:int}/events")]
+        [Authorize(Roles = Constants.RoleNames.SchoolUser)]
+        public PagedDataResponse<Event> GetEventsForSchoolUser(int schoolUserid)
+        {
+            var request = _pagedDataRequestFactory.Create(Request.RequestUri);
+            var r = _getEvents.GetEventsForSchoolUser(schoolUserid, request);
+            return r;
+        }
+
+        /// <summary>
+        /// Obtiene una lista de las preguntas creadas por el usuario escolar
+        /// </summary>
+        /// <param name="schoolUserid">El id del usuario escolar del que se desea conocer sus preguntas</param>
+        /// <returns>Una lista con las preguntas creadas por el usuario escolar</returns>
+        [HttpGet]
+        [Route("schoolusers/{schoolUserId:int}/questions")]
+        [Authorize(Roles = Constants.RoleNames.SchoolUser)]
+        public PagedDataResponse<Question> GetQuestionsForSchoolUser(int schoolUserid)
+        {
+            var request = _pagedDataRequestFactory.Create(Request.RequestUri);
+            var r = _getQuestions.GetQuestionsForSchoolUser(schoolUserid, request);
+            return r;
+        }
+
+        /// <summary>
+        /// Obtiene una lista de las conversaciones creadas por el usuario escolar
+        /// </summary>
+        /// <param name="schoolUserid">El id del usuario escolar del que se desea conocer sus conversaciones</param>
+        /// <returns>Una lista con las preguntas creadas por el usuario escolar</returns>
+        [HttpGet]
+        [Route("schoolusers/{schoolUserId:int}/conversations")]
+        [Authorize(Roles = Constants.RoleNames.SchoolUser)]
+        public PagedDataResponse<Conversation> GetConversationsForSchoolUser(int schoolUserid)
+        {
+            var request = _pagedDataRequestFactory.Create(Request.RequestUri);
+            var r = _getConversations.GetMessagesForUser(schoolUserid, request);
+            return r;
+        }
+
+        /// <summary>
+        /// Agrega usuario escolar al sistema con los valores establecidos en el cuerpo de la peiticón
         /// </summary>
         /// <remarks>Agrega un nuevo usuario escolar al sistem</remarks>
         /// <param name="newUser">El nuevo usuario a agregar</param>
-        /// <returns></returns>
-        /// <response code="201">Usuario escolar creado</response>
+        /// <returns>Información delevante al usuario escoar creado</returns>
         [HttpPost]
         [ResponseType(typeof(SchoolUser))]
         [Route("schoolusers")]
+        [Authorize(Roles = Constants.RoleNames.Administrator)]
         public IHttpActionResult AddSchoolUser(NewSchoolUser newUser)
         {
             var user = _addUser.AddUser(newUser);
@@ -91,19 +212,6 @@ namespace Edutor.Web.Api.Controllers
         }
 
         /// <summary>
-        /// Recupera una lista paginada de usuarios escolares
-        /// </summary>
-        /// <returns></returns>
-        [HttpGet]
-        [Route("schoolusers")]
-        public PagedDataResponse<SchoolUser> GetSchoolUsers()
-        {
-            var request = _pagedDataRequestFactory.Create(Request.RequestUri);
-            var tasks = _getSchoolUser.GetAllSchoolUsers(request);
-            return tasks;
-        }
-
-        /// <summary>
         /// Elimina al usuario indicado del sistema siempre y cuando no existan conflictos
         /// </summary>
         /// <param name="schoolUserId">El identificador de el usuario a eliminar</param>
@@ -116,106 +224,6 @@ namespace Edutor.Web.Api.Controllers
         {
             _deleteSchoolUsers.Delete(schoolUserId);
             return new ModelDeletedActionResult(Request);
-        }
-
-
-        /// <summary>
-        /// Obtiene el usuario escolar indicado
-        /// </summary>
-        /// <param name="schoolUserId">El id del usuario escolar</param>
-        /// <returns></returns>
-        [HttpGet]
-        [Route("schoolusers/{schoolUserId:int}")]
-        public SchoolUser GetSchoolUser(int schoolUserId)
-        {
-            var s = _getSchoolUser.GetSchoolUser(schoolUserId);
-            return s;
-        }
-
-        /// <summary>
-        /// Obtiene el usuario escolar indicado
-        /// </summary>
-        /// <param name="curp">La Clave Única de Registro de Población del usuario escolar</param>
-        /// <returns></returns>
-        [HttpGet]
-        [ResponseType(typeof(SchoolUser))]
-        [Route("schoolusers/{curp:regex(" + Constants.CommonRoutingDefinitions.CurpRegex + ")}")]
-        public SchoolUser GetSchoolUser(string curp)
-        {
-            var s = _getSchoolUser.GetSchoolUser(curp);
-            return s;
-        }
-
-
-        /// <summary>
-        /// Obtiene los grupos asignados al usuario escolar indicado
-        /// </summary>
-        /// <param name="schoolUserId">El id del usuario escolar</param>
-        /// <returns></returns>
-        [HttpGet]
-        [Route("schoolusers/{schoolUserId:int}/groups")]
-        public PagedDataResponse<Group> GetGroupsForSchoolUser(int schoolUserId)
-        {
-            var request = _pagedDataRequestFactory.Create(Request.RequestUri);
-            var tasks = _getGroupsProcessor.GetGroupsForSchoolUser(schoolUserId, request);
-            return tasks;
-        }
-
-
-        /// <summary>
-        /// Obtiene una lista de las notificaciones creadas por el usuario escolar
-        /// </summary>
-        /// <param name="schoolUserid">El id del usuario escolar del que se desea conocer sus notificaciones</param>
-        /// <returns>Una lista con las notificaciones creadas por el usuario escolar</returns>
-        [HttpGet]
-        [Route("schoolusers/{schoolUserId:int}/notifications")]
-        public PagedDataResponse<Notification> GetNotificationsForSchoolUser(int schoolUserid)
-        {
-            var request = _pagedDataRequestFactory.Create(Request.RequestUri);
-            var r = _getNotifications.GetNotificationsForSchoolUser(schoolUserid, request);
-            return r;
-        }
-
-        /// <summary>
-        /// Obtiene una lista de los eventos creados por el usuario escolar
-        /// </summary>
-        /// <param name="schoolUserid">El id del usuario escolar del que se desea conocer sus eventos</param>
-        /// <returns>Una lista con los eventos creados por el usuario escolar</returns>
-        [HttpGet]
-        [Route("schoolusers/{schoolUserId:int}/events")]
-        public PagedDataResponse<Event> GetEventsForSchoolUser(int schoolUserid)
-        {
-            var request = _pagedDataRequestFactory.Create(Request.RequestUri);
-            var r = _getEvents.GetEventsForSchoolUser(schoolUserid, request);
-            return r;
-        }
-
-        /// <summary>
-        /// Obtiene una lista de las preguntas creadas por el usuario escolar
-        /// </summary>
-        /// <param name="schoolUserid">El id del usuario escolar del que se desea conocer sus preguntas</param>
-        /// <returns>Una lista con las preguntas creadas por el usuario escolar</returns>
-        [HttpGet]
-        [Route("schoolusers/{schoolUserId:int}/questions")]
-        public PagedDataResponse<Question> GetQuestionsForSchoolUser(int schoolUserid)
-        {
-            var request = _pagedDataRequestFactory.Create(Request.RequestUri);
-            var r = _getQuestions.GetQuestionsForSchoolUser(schoolUserid, request);
-            return r;
-        }
-
-        /// <summary>
-        /// Obtiene una lista de las conversaciones creadas por el usuario escolar
-        /// </summary>
-        /// <param name="schoolUserid">El id del usuario escolar del que se desea conocer sus conversaciones</param>
-        /// <returns>Una lista con las preguntas creadas por el usuario escolar</returns>
-        [HttpGet]
-        [Route("schoolusers/{schoolUserId:int}/conversations")]
-        public PagedDataResponse<Conversation> GetConversationsForSchoolUser(int schoolUserid)
-        {
-            var request = _pagedDataRequestFactory.Create(Request.RequestUri);
-            var r = _getConversations.GetMessagesForUser(schoolUserid, request);
-            return r;
         }
     }
 }
