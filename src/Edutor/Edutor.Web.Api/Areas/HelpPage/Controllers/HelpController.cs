@@ -27,6 +27,7 @@ namespace Edutor.Web.Api.Areas.HelpPage.Controllers
 
         public ActionResult Index()
         {
+            ViewBag.Conf = Configuration;
             ViewBag.DocumentationProvider = Configuration.Services.GetDocumentationProvider();
             return View(Configuration.Services.GetApiExplorer().ApiDescriptions);
         }
@@ -56,6 +57,7 @@ namespace Edutor.Web.Api.Areas.HelpPage.Controllers
             {
                 ModelDescriptionGenerator modelDescriptionGenerator = Configuration.GetModelDescriptionGenerator();
                 ModelDescription modelDescription;
+                
                 if (modelDescriptionGenerator.GeneratedModels.TryGetValue(modelName, out modelDescription))
                 {
                     return View(modelDescription);

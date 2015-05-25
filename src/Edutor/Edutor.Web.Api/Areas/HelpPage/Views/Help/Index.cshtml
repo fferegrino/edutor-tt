@@ -3,36 +3,113 @@
 @using System.Web.Http.Description
 @using System.Collections.ObjectModel
 @using Edutor.Web.Api.Areas.HelpPage.Models
+@using Edutor.Web.Api.Areas.HelpPage;
+@using Edutor.Web.Api.Areas.HelpPage.ModelDescriptions
 @model Collection<ApiDescription>
 
 @{
     ViewBag.Title = "REST APIs - edutor";
-    
+    var httpConf = ViewBag.Conf as HttpConfiguration;
     // Group APIs by controller
     ILookup<HttpControllerDescriptor, ApiDescription> apiGroups = Model.ToLookup(api => api.ActionDescriptor.ControllerDescriptor);
-    
+
 }
 
-<header class="help-page">
-    <div class="content-wrapper">
-        <div class="float-left">
-            <h1>REST APIs - edutor</h1>
-        </div>
-    </div>
-</header>
-<div id="body" class="help-page">
-    <section class="featured">
-        <div class="content-wrapper">
-            <h2>REST APIs</h2>
-            <p>
-                Las REST APIs proveen acceso de lectura-escritura a los datos del sistema Edutor, agregar usuarios y tutores, integrar grupos, crear eventos y más. La mayoría de los extremos expuestos requieren de peticiones autorizadas. Las formas de respuesta son JSON o XML. Todas las peticiones a las APIs de Edutor contar con encabezado de @Html.ActionLink("autorización", "auth") para ser procesadas.
-            </p>
-        </div>
-    </section>
-    <section class="content-wrapper main-content clear-fix">
-        @foreach (var group in apiGroups)
+<h1>Extremos</h1>
+@foreach (var apiGroup in apiGroups)
+{
+    var controllerDocumentation = ViewBag.DocumentationProvider != null ?
+    ViewBag.DocumentationProvider.GetDocumentation(apiGroup.Key) :
+    null;
+
+    <h2>@apiGroup.Key.ControllerName</h2>
+
+    if (!String.IsNullOrEmpty(controllerDocumentation))
+    {
+        <p>@controllerDocumentation</p>
+    }
+
+    foreach (var api in apiGroup)
+    {
+        <h3>@api.HttpMethod @api.RelativePath</h3>
+        if (@api.Documentation != null)
         {
-            @Html.DisplayFor(m => group, "ApiGroup")
+            <p>@api.Documentation</p>
         }
-    </section>
-</div>
+        else
+        {
+            <p>Sin documentación</p>
+        }
+
+        HelpPageApiModel apiModel = httpConf.GetHelpPageApiModel(api.GetFriendlyId());
+        ApiDescription description = apiModel.ApiDescription;
+
+        <h4>Información de la petición</h4>
+        <h5>Parámetros de la URI</h5>
+        @Html.DisplayFor(m => apiModel.UriParameters, "Parameters")
+
+        <h5>Parámetros del cuerpo</h5>
+        if (apiModel.RequestModelDescription != null)
+        {
+
+            <p>@Html.DisplayFor(m => apiModel.RequestModelDescription.ModelType, "ModelDescriptionLink", new { modelDescription = apiModel.RequestModelDescription }) - @apiModel.RequestDocumentation</p>
+
+            if (apiModel.RequestBodyParameters != null)
+            {
+                @Html.DisplayFor(m => apiModel.RequestBodyParameters, "Parameters")
+            }
+        }
+        else
+        {
+            <p>Ninguno.</p>
+        }
+
+
+        if (apiModel.SampleRequests.Count > 0)
+        {
+            <h4>Formato de solicitud</h4>
+            @Html.DisplayFor(m => apiModel.SampleRequests, "Samples")
+        }
+        <h4>Información de la respuesta</h4>
+
+        <h5>Descripción de la respuesta</h5>
+
+        <p>@description.ResponseDescription.Documentation</p>
+
+        if (apiModel.ResourceDescription != null)
+        {
+            @Html.DisplayFor(m => apiModel.ResourceDescription.ModelType, "ModelDescriptionLink", new { modelDescription = apiModel.ResourceDescription })
+            if (apiModel.ResourceProperties != null)
+            {
+                @Html.DisplayFor(m => apiModel.ResourceProperties, "Parameters")
+            }
+        }
+        else
+        {
+            <p>Ninguno.</p>
+        }
+
+        if (apiModel.SampleResponses.Count > 0)
+        {
+            <h3>Formato de respuesta</h3>
+            @Html.DisplayFor(m => apiModel.SampleResponses, "Samples")
+        }
+    }
+
+}
+<h1>Modelos</h1>
+@{
+    ModelDescriptionGenerator modelDescriptionGenerator = httpConf.GetModelDescriptionGenerator();
+    ModelDescription modelDescription;
+
+
+    foreach (var generatedModel in modelDescriptionGenerator.GeneratedModels)
+    {
+        string key = generatedModel.Key;
+        modelDescription = generatedModel.Value as ModelDescription;
+
+        <h2>@modelDescription.Name</h2>
+        <p>@modelDescription.Documentation</p>
+        @Html.DisplayFor(m => modelDescription)
+    }
+}
