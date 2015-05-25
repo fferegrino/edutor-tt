@@ -1,4 +1,5 @@
-﻿using Edutor.Web.Api.InquiryProcessing;
+﻿using Edutor.Common;
+using Edutor.Web.Api.InquiryProcessing;
 using Edutor.Web.Api.MaintenanceProcessing;
 using Edutor.Web.Api.Models;
 using Edutor.Web.Api.Models.NewModels;
@@ -40,25 +41,27 @@ namespace Edutor.Web.Api.Controllers
         }
 
         /// <summary>
-        /// Obtiene la notificación indicada
+        /// Regresa la notificación solicitada mediante la URL
         /// </summary>
         /// <param name="notificationId">El identificador único de la notificación deseada</param>
         /// <returns></returns>
         [HttpGet]
         [Route("notifications/{notificationId:int}")]
+        [Authorize(Roles = Constants.RoleNames.All)]
         public Notification GetNotification(int notificationId)
         {
             return _getNotifications.GetNotification(notificationId);
         }
 
         /// <summary>
-        /// Obtiene el una lista de los estudiantes notificados
+        /// Regesa una lista paginada con los detalles de la notificación
         /// </summary>
         /// <param name="notificationId">El identificador único de la notificación que se desea obtener</param>
         /// <returns></returns>
         [HttpGet]
         [ResponseType(typeof(PagedDataResponse<StudentNotification>))]
         [Route("notifications/{notificationId:int}/details")]
+        [Authorize(Roles = Constants.RoleNames.SchoolUser)]
         public PagedDataResponse<StudentNotification> GetNotifiedUsers(int notificationId)
         {
             var request = _pagedDataRequestFactory.Create(Request.RequestUri);
@@ -74,28 +77,14 @@ namespace Edutor.Web.Api.Controllers
         [HttpGet]
         [ResponseType(typeof(StudentNotification))]
         [Route("notifications/{notificationId:int}/details/{studentId:int}")]
+        [Authorize(Roles = Constants.RoleNames.All)]
         public StudentNotification GetNotifiedUsers(int notificationId, int studentId)
         {
             return _getStudents.GetStudentsForNotification(notificationId, studentId);
         }
 
         /// <summary>
-        /// Una simple llamada a este extremo ocasionará que la notificación sea marcada como vista
-        /// </summary>
-        /// <param name="notificationId">El identificador único de la notificación que se desea marcar como vista</param>
-        /// <param name="studentId">El identificador único del estudiante que vió la notificación/param>
-        /// <returns></returns>
-        [HttpPut]
-        [ResponseType(typeof(int))]
-        [Route("notifications/{notificationId:int}/details/{studentId:int}")]
-        public int MarkNotificationAsSeen(int notificationId, int studentId)
-        {
-            _updateNotifications.MarkAsSeen(new NewSeenNotification { NotificationId = notificationId, StudentId = studentId });
-            return 0;
-        }
-
-        /// <summary>
-        /// Agrega una nueva notificación al sistema
+        /// Agrega una nueva notificación al sistema de acuerdo a la información enviáda en el cuerpo de la petición
         /// </summary>
         /// <param name="newNotification">La nueva notificación</param>
         /// <returns></returns>
@@ -107,6 +96,22 @@ namespace Edutor.Web.Api.Controllers
             var user = _notificationMaintenanceProcessor.AddNotification(newNotification);
             var result = new ModelPostedActionResult<Notification>(Request, user);
             return result;
+        }
+
+        /// <summary>
+        /// Marca la notificación como "vista" dentro del sistema
+        /// </summary>
+        /// <param name="notificationId">El identificador único de la notificación que se desea marcar como vista</param>
+        /// <param name="studentId">El identificador único del estudiante que vió la notificación/param>
+        /// <returns></returns>
+        [HttpPut]
+        [ResponseType(typeof(int))]
+        [Route("notifications/{notificationId:int}/details/{studentId:int}")]
+        [Authorize(Roles = Constants.RoleNames.Tutor)]
+        public int MarkNotificationAsSeen(int notificationId, int studentId)
+        {
+            _updateNotifications.MarkAsSeen(new NewSeenNotification { NotificationId = notificationId, StudentId = studentId });
+            return 0;
         }
     }
 }

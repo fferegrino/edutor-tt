@@ -49,6 +49,7 @@ namespace Edutor.Web.Api.Controllers
         [Route("events/{eventId:int}")]
         [HttpGet]
         [ResponseType(typeof(Event))]
+        [Authorize(Roles = Constants.RoleNames.All)]
         public Event GetEvent(int eventId)
         {
             return _getEvents.GetEvent(eventId);
@@ -62,6 +63,7 @@ namespace Edutor.Web.Api.Controllers
         [Route("events/{eventId:int}/attendees")]
         [HttpGet]
         [ResponseType(typeof(PagedDataResponse<StudentInvitation>))]
+        [Authorize(Roles = Constants.RoleNames.SchoolUser)]
         public PagedDataResponse<StudentInvitation> GetEventAttendees(int eventId)
         {
             var request = _pagedDataRequestFactory.Create(Request.RequestUri);
@@ -77,9 +79,27 @@ namespace Edutor.Web.Api.Controllers
         [Route("events/{eventId:int}/attendees/{studentId:int}")]
         [HttpGet]
         [ResponseType(typeof(StudentInvitation))]
+        [Authorize(Roles = Constants.RoleNames.Tutor)]
         public StudentInvitation GetEventAttendees(int eventId, int studentId)
         {
             return _getStudents.GetStudentsForEvent(eventId, studentId);
+        }
+
+        /// <summary>
+        /// Indica si se asistirá al evento o no
+        /// </summary>
+        /// <param name="eventId">El identificador único del evento que se desea responder</param>
+        /// <param name="studentId">El identificador único del estudiante que responde</param>
+        /// <returns></returns>
+        [Route("events/{eventId:int}/attendees/{studentId:int}")]
+        [HttpPut]
+        [Authorize(Roles = Constants.RoleNames.Tutor)]
+        public IHttpActionResult GetEventAttendees(int eventId, int studentId, NewRsvp rsvp)
+        {
+            rsvp.EventId = eventId;
+            rsvp.StudentId = studentId;
+            _updateEvents.Rsvp(rsvp);
+            return new ModelDeletedActionResult(Request);
         }
 
         /// <summary>
@@ -90,27 +110,12 @@ namespace Edutor.Web.Api.Controllers
         [Route("events")]
         [HttpPost]
         [ResponseType(typeof(Event))]
+        [Authorize(Roles = Constants.RoleNames.Administrator)]
         public IHttpActionResult AddEvent(NewEvent newEvent)
         {
             var user = _addQueryProcessor.AddEvent(newEvent);
             var result = new ModelPostedActionResult<Event>(Request, user);
             return result;
-        }
-
-        /// <summary>
-        /// Indica si se asistirá al evento
-        /// </summary>
-        /// <param name="eventId">El identificador único del evento que se desea responder</param>
-        /// <param name="studentId">El identificador único del estudiante que responde</param>
-        /// <returns></returns>
-        [Route("events/{eventId:int}/attendees/{studentId:int}")]
-        [HttpPut]
-        public IHttpActionResult GetEventAttendees(int eventId, int studentId, NewRsvp rsvp)
-        {
-            rsvp.EventId = eventId;
-            rsvp.StudentId = studentId;
-            _updateEvents.Rsvp(rsvp);
-            return new ModelDeletedActionResult(Request);
         }
 
 

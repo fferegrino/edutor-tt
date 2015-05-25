@@ -6,11 +6,29 @@ using System.Threading.Tasks;
 
 namespace Edutor.Web.Api.Models.ReturnTypes
 {
+    /// <summary>
+    /// Clase que representa una notificación
+    /// </summary>
     public class Notification : LinkContaining
     {
+        /// <summary>
+        /// El identificador único de la notificación dentro del sistema
+        /// </summary>
         public int NotificationId { get; set; }
+
+        /// <summary>
+        /// El identificador único del usuario escolar que generó la notificación
+        /// </summary>
         public int SchoolUserId { get; set; }
+
+        /// <summary>
+        /// El identificador único del grupo asociado con la notificación
+        /// </summary>
         public int GroupId { get; set; }
+
+        /// <summary>
+        /// El contenido de la notificación
+        /// </summary>
         public string Text { get; set; }
     }
 }

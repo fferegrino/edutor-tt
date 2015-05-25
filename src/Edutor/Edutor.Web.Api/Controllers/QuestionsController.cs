@@ -1,4 +1,5 @@
-﻿using Edutor.Web.Api.InquiryProcessing;
+﻿using Edutor.Common;
+using Edutor.Web.Api.InquiryProcessing;
 using Edutor.Web.Api.MaintenanceProcessing;
 using Edutor.Web.Api.Models;
 using Edutor.Web.Api.Models.NewModels;
@@ -40,42 +41,29 @@ namespace Edutor.Web.Api.Controllers
             _updateQuestion = updateQuestion;
         }
 
-        /// <summary>
-        /// Agrega una nueva pregunta al sistema
-        /// </summary>
-        /// <param name="newQuestion">La nueva pregunta a agregar</param>
-        /// <returns></returns>
-        [Route("questions")]
-        [HttpPost]
-        [ResponseType(typeof(Question))]
-        public IHttpActionResult AddQuestion(NewQuestion newQuestion)
-        {
-            var ret = _postQuestion.AddQuestion(newQuestion);
-            // Genera la respuesta con su correspondiente código de estatus HTTP
-            var result = new ModelPostedActionResult<Question>(Request, ret);
-            return result;
-        }
 
         /// <summary>
-        /// Obtiene la pregunta indicada
+        /// Regresa la pregunta solicitada mediante la URL
         /// </summary>
         /// <param name="questionId">El identificador único de la notificación deseada</param>
         /// <returns></returns>
         [Route("questions/{questionId:int}")]
         [HttpGet]
+        [Authorize(Roles = Constants.RoleNames.All)]
         public Question GetQuestion(int questionId)
         {
             return _getQuestions.GetQuestion(questionId);
         }
 
         /// <summary>
-        /// Obtiene las respuestas a la pregunta especificada
+        /// Regresa una lista paginada con las respuestas a la pregunta especificada
         /// </summary>
         /// <param name="questionId">El identificador único de la pregunta deseada</param>
-        /// <returns></returns>
+        /// <returns>Una lista paginada con las respuestas a la pregunta especificada</returns>
         [HttpGet]
         [Route("questions/{questionId:int}/answers")]
         [ResponseType(typeof(PagedDataResponse<StudentAnswer>))]
+        [Authorize(Roles = Constants.RoleNames.SchoolUser)]
         public PagedDataResponse<StudentAnswer> GetAnswerers(int questionId)
         {
             var request = _pagedDataRequestFactory.Create(Request.RequestUri);
@@ -92,28 +80,46 @@ namespace Edutor.Web.Api.Controllers
         [HttpGet]
         [Route("questions/{questionId:int}/answers/{studentId}")]
         [ResponseType(typeof(StudentAnswer))]
+        [Authorize(Roles = Constants.RoleNames.All)]
         public StudentAnswer GetAnswerers(int questionId, int studentId)
         {
             var r = _getStudents.GetStudentsForQuestion(questionId,studentId);
             return r;
-        } 
+        }
+
+        /// <summary>
+        /// Agrega una nueva pregunta al sistema de acuerdo a la información enviáda en el cuerpo de la petición
+        /// </summary>
+        /// <param name="question">La nueva pregunta a agregar</param>
+        /// <returns></returns>
+        [Route("questions")]
+        [HttpPost]
+        [ResponseType(typeof(Question))]
+        [Authorize(Roles = Constants.RoleNames.SchoolUser)]
+        public IHttpActionResult AddQuestion(NewQuestion question)
+        {
+            var ret = _postQuestion.AddQuestion(question);
+            // Genera la respuesta con su correspondiente código de estatus HTTP
+            var result = new ModelPostedActionResult<Question>(Request, ret);
+            return result;
+        }
         
         /// <summary>
         /// Responde a la pregunta con la respuesta seleccionada
         /// </summary>
-        /// <param name="newAnswer"></param>
+        /// <param name="answer">La respuesta a la pregunta</param>
         /// <param name="questionId">El identificador único de la pregunta deseada</param>
-        /// <param name="studentId">El identificador único del estudiante</param>
+        /// <param name="studentId">El identificador único del estudiante a nombre de quien se resuelve la preguntta</param>
         /// <returns></returns>
         [HttpPut]
         [Route("questions/{questionId:int}/answers/{studentId}")]
-        [ResponseType(typeof(int))]
-        public int GetAnswerers(NewAnswer newAnswer, int questionId, int studentId)
+        [Authorize(Roles = Constants.RoleNames.Tutor)]
+        public IHttpActionResult AnswerQuestion(NewAnswer answer, int questionId, int studentId)
         {
-            newAnswer.QuestionId = questionId;
-            newAnswer.StudentId = studentId;
-            _updateQuestion.AnswerQuestion(newAnswer);
-            return 0;
+            answer.QuestionId = questionId;
+            answer.StudentId = studentId;
+            _updateQuestion.AnswerQuestion(answer);
+            return new ModelDeletedActionResult(Request);
         }
 
     }
