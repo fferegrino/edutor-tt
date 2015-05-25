@@ -51,41 +51,12 @@ namespace Edutor.Web.Api.Controllers
 
 
         /// <summary>
-        /// Agrega un nuevo grupo al sistema
-        /// </summary>
-        /// <param name="newGroup">El nuevo grupo a ingresar</param>
-        /// <returns></returns>
-        [HttpPost]
-        [Route("groups")]
-        [ResponseType(typeof(Group))]
-        public IHttpActionResult AddGroup(NewGroup newGroup)
-        {
-            var user = _addUserQueryProcessor.AddGroup(newGroup);
-            var result = new ModelPostedActionResult<Group>(Request, user);
-            return result;
-        }
-
-        /// <summary>
-        /// Elimina un grupo dentro del sistema
-        /// </summary>
-        /// <param name="groupId">El identificador único del grupo a eliminar</param>
-        /// <returns></returns>
-        [HttpDelete]
-        [Route("groups/{groupId:int}")]
-        public IHttpActionResult DeleteGroup(int groupId)
-        {
-            _deleteGroups.Delete(groupId);
-            return new ModelDeletedActionResult(Request);
-
-        }
-
-        /// <summary>
         /// Obtiene los profesores del grupo indicado
         /// </summary>
         /// <param name="groupId">El identificador único del grupo del que se desea conocer los profesores</param>
         /// <returns>Una lista paginada con los profesores asignados a cada grupo</returns>
-        [HttpGet]
         [Route("groups/{groupId:int}/schoolusers")]
+        [HttpGet]
         [ResponseType(typeof(PagedDataResponse<SchoolUser>))]
         public PagedDataResponse<SchoolUser> GetSchoolUsersForGroup(int groupId)
         {
@@ -137,6 +108,21 @@ namespace Edutor.Web.Api.Controllers
         }
 
         /// <summary>
+        /// Agrega un nuevo grupo al sistema
+        /// </summary>
+        /// <param name="newGroup">El nuevo grupo a ingresar</param>
+        /// <returns></returns>
+        [HttpPost]
+        [Route("groups")]
+        [ResponseType(typeof(Group))]
+        public IHttpActionResult AddGroup(NewGroup newGroup)
+        {
+            var user = _addUserQueryProcessor.AddGroup(newGroup);
+            var result = new ModelPostedActionResult<Group>(Request, user);
+            return result;
+        }
+
+        /// <summary>
         /// Agrega un estudiante al grupo indicado
         /// </summary>
         /// <param name="groupId">El identificador único del grupo al que se agregará el estudiante</param>
@@ -181,6 +167,20 @@ namespace Edutor.Web.Api.Controllers
         }
 
         /// <summary>
+        /// Elimina un grupo dentro del sistema
+        /// </summary>
+        /// <param name="groupId">El identificador único del grupo a eliminar</param>
+        /// <returns></returns>
+        [HttpDelete]
+        [Route("groups/{groupId:int}")]
+        public IHttpActionResult DeleteGroup(int groupId)
+        {
+            _deleteGroups.Delete(groupId);
+            return new ModelDeletedActionResult(Request);
+
+        }
+
+        /// <summary>
         /// Elimina un estudiante escolar del grupo indicado
         /// </summary>
         /// <param name="groupId">El identificador único del grupo del que se eliminará el estudiante</param>
@@ -207,6 +207,7 @@ namespace Edutor.Web.Api.Controllers
             _deleteGroups.UnlinkSchoolUser(groupId, schoolUserId);
             return new ModelDeletedActionResult(Request);
         }
+
 
 
     }

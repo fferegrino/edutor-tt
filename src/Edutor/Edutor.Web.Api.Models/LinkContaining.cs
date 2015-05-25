@@ -9,6 +9,10 @@ namespace Edutor.Web.Api.Models
     public abstract class LinkContaining : ILinkContaining
     {
         private List<Link> _links;
+
+        /// <summary>
+        /// Colección de enlaces relevantes al modelo que la contiene
+        /// </summary>
         public List<Link> Links
         {
             get { return _links ?? (_links = new List<Link>()); }

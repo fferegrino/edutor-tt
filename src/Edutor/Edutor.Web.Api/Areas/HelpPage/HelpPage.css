@@ -113,6 +113,8 @@ header.help-page {
 
 .content-wrapper {
     padding: 10px 30px;
+    margin: 0 auto;
+    width: 1000px;
 }
 
 .help-page h1,

@@ -32,19 +32,16 @@ namespace Edutor.Web.Api.Controllers
         }
 
         /// <summary>
-        /// Envía un nuevo mensaje, en caso de no existir, se crea una conversación
+        /// Obtiene la conversación indicada
         /// </summary>
-        /// <param name="newTutor">El nuevo tutor a ingresar</param>
-        /// <returns></returns>
-        [HttpPost]
-        [Route("conversations")]
-        [ResponseType(typeof(Message))]
-        public IHttpActionResult AddTutor(NewMessage newMessage)
+        /// <param name="conversationId">El id de la conversación a recuperar</param>
+        /// <returns>Responde con la conversación indicada, en caso de que no exista se responderá con un código de error</returns>
+        [Route("conversations/{conversationId:int}")]
+        [HttpGet]
+        [ResponseType(typeof(Conversation))]
+        public Conversation GetConversation(int conversationId)
         {
-            //var user = _addUserQueryProcessor.AddUser(newTutor);
-            var x = _postConversations.AddNewMessage(newMessage);
-            var result = new ModelPostedActionResult<Message>(Request, x);
-            return result;
+            return _getConversations.GetConversation(conversationId);
         }
 
         /// <summary>
@@ -52,8 +49,8 @@ namespace Edutor.Web.Api.Controllers
         /// </summary>
         /// <param name="conversationId">El id de la conversación a consultar</param>
         /// <returns>Una lista paginada con los mensajes de la conversación consultada</returns>
-        [HttpGet]
         [Route("conversations/{conversationId:int}/messages")]
+        [HttpGet]
         [ResponseType(typeof(PagedDataResponse<Message>))]
         public PagedDataResponse<Message> GetMessagesForConversation(int conversationId)
         {
@@ -66,8 +63,8 @@ namespace Edutor.Web.Api.Controllers
         /// </summary>
         /// <param name="conversationId">El id de la conversación a consultar</param>
         /// /// <param name="messageId">El id del mensaje a consultar</param>
-        [HttpGet]
         [Route("conversations/{conversationId:int}/messages/{messageId:int}")]
+        [HttpGet]
         [ResponseType(typeof(Message))]
         public Message GetMessagesForConversation(int conversationId, int messageId)
         {
@@ -75,16 +72,18 @@ namespace Edutor.Web.Api.Controllers
         }
 
         /// <summary>
-        /// Obtiene la conversación indicada
+        /// Envía un nuevo mensaje, en caso de no existir, se crea una conversación
         /// </summary>
-        /// <param name="conversationId">El id de la conversación a recuperar</param>
+        /// <param name="newTutor">El nuevo tutor a ingresar</param>
         /// <returns></returns>
-        [HttpGet]
-        [Route("conversations/{conversationId:int}")]
-        [ResponseType(typeof(Conversation))]
-        public Conversation GetConversation(int conversationId)
+        [Route("conversations")]
+        [HttpPost]
+        [ResponseType(typeof(Message))]
+        public IHttpActionResult AddTutor(NewMessage newMessage)
         {
-            return _getConversations.GetConversation(conversationId);
+            var x = _postConversations.AddNewMessage(newMessage);
+            var result = new ModelPostedActionResult<Message>(Request, x);
+            return result;
         }
     }
 }

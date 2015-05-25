@@ -13,7 +13,6 @@
     
 }
 
-@*<link type="text/css" href="~/Areas/HelpPage/HelpPage.css" rel="stylesheet" />*@
 <header class="help-page">
     <div class="content-wrapper">
         <div class="float-left">
@@ -26,7 +25,7 @@
         <div class="content-wrapper">
             <h2>REST APIs</h2>
             <p>
-                Las REST APIs proveen acceso de lectura-escritura a los datos del sistema Edutor, agregar usuarios y tutores, integrar grupos, crear eventos y más. La mayoría de los extremos expuestos requieren de peticiones autorizadas. Las formas de respuesta son JSON o XML.
+                Las REST APIs proveen acceso de lectura-escritura a los datos del sistema Edutor, agregar usuarios y tutores, integrar grupos, crear eventos y más. La mayoría de los extremos expuestos requieren de peticiones autorizadas. Las formas de respuesta son JSON o XML. Todas las peticiones a las APIs de Edutor contar con encabezado de @Html.ActionLink("autorización", "auth") para ser procesadas.
             </p>
         </div>
     </section>

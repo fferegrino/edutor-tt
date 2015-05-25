@@ -31,6 +31,11 @@ namespace Edutor.Web.Api.Areas.HelpPage.Controllers
             return View(Configuration.Services.GetApiExplorer().ApiDescriptions);
         }
 
+        public ActionResult Auth()
+        {
+            return View();
+        }
+
         public ActionResult Api(string apiId)
         {
             if (!String.IsNullOrEmpty(apiId))
