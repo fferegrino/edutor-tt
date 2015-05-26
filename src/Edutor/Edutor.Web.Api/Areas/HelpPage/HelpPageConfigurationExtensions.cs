@@ -40,6 +40,11 @@ namespace Edutor.Web.Api.Areas.HelpPage
             config.GetHelpPageSampleGenerator().SampleObjects = sampleObjects;
         }
 
+        public static void AddJsonSampleObject<T>(this HttpConfiguration config, T t, string jsonString)
+        {
+            config.GetHelpPageSampleGenerator().SampleObjects.Add(typeof(T), Newtonsoft.Json.JsonConvert.DeserializeObject<T>(jsonString));
+        }
+
         /// <summary>
         /// Sets the sample request directly for the specified media type and action.
         /// </summary>

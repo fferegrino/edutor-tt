@@ -12,6 +12,7 @@ using System.Net.Http.Headers;
 using System.Reflection;
 using System.Web;
 using System.Web.Http;
+using New = Edutor.Web.Api.Models.NewModels;
 #if Handle_PageResultOfT
 using System.Web.Http.OData;
 #endif
@@ -39,11 +40,15 @@ namespace Edutor.Web.Api.Areas.HelpPage
             //// Uncomment the following to use "sample string" as the sample for all actions that have string as the body parameter or return type.
             //// Also, the string arrays will be used for IEnumerable<string>. The sample objects will be serialized into different media type 
             //// formats by the available formatters.
-            //config.SetSampleObjects(new Dictionary<Type, object>
-            //{
-            //    {typeof(string), "sample string"},
-            //    {typeof(IEnumerable<string>), new string[]{"sample 1", "sample 2"}}
-            //});
+            config.SetSampleObjects(new Dictionary<Type, object>
+            {
+                {typeof(string), "sample string"},
+                {typeof(IEnumerable<string>), new string[]{"sample 1", "sample 2"}},
+                //{ typeof(New.NewStudent), new New.NewStudent { Name="Fulanito Cosme", Address = "España", Curp="FEBA911206",Phone="5540", TutorId=1, TutorRelationship="pads" } }
+            });
+
+            config.AddJsonSampleObject(new New.NewStudent(), "{\"TutorId\":12,\"TutorRelationship\":\"dad\",\"Address\":\"795-5910 Suscipit, Ave\",\"Phone\":\"9574138039\",\"Curp\":\"TGYG688537MGSKB9GB\",\"Name\":\"Cleo Carrillo\"}");
+
 
             // Extend the following to provide factories for types not handled automatically (those lacking parameterless
             // constructors) or for which you prefer to use non-default property values. Line below provides a fallback
