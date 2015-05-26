@@ -80,6 +80,22 @@ namespace Edutor.Web.Api.Controllers
 
         }
 
+        /// <summary>
+        /// Regresa el grupo con el nombre especificado en la URL, en caso de tener espacios se debe codificar como URL
+        /// </summary>
+        /// <param name="groupName">El nombre del grupo a obtener</param>
+        /// <returns>Regresa el grupo deseado o un código de error 404 en caso de que no exista</returns>
+        [HttpGet]
+        [ResponseType(typeof(Group))]
+        [Route("groups/{groupName:regex(" + Constants.CommonRoutingDefinitions.GroupName + ")}")]
+        [Authorize]
+        public Group GetGroup(string groupName)
+        {
+            var tasks = _getGroups.GetGroup(groupName);
+            return tasks;
+
+        }
+
 
         /// <summary>
         /// Regresa una lista paginada con los profesores asignados al grupo especificado

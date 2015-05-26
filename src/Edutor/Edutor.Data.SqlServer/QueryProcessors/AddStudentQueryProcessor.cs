@@ -2,6 +2,7 @@
 using Edutor.Common.Security;
 using Edutor.Data.QueryProcessors;
 using NHibernate;
+using System;
 
 namespace Edutor.Data.SqlServer.QueryProcessors
 {
@@ -21,8 +22,11 @@ namespace Edutor.Data.SqlServer.QueryProcessors
 
         public void AddStudent(Entities.Student student)
         {
-            // TODO: Implementar servicio de tokens
-            student.Token = "AABABABA";
+            var guid = Guid.NewGuid();
+            string tkn = "E" + guid.ToString().Replace("-", String.Empty).Substring(0, 9);
+
+            student.Token = tkn;
+
             var tutors = _session.QueryOver<Entities.User>()
 
                 .Where(x => x.UserId == student.TutorId).SingleOrDefault();

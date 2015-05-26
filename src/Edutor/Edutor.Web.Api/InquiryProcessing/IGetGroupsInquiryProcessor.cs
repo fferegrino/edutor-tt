@@ -18,6 +18,8 @@ namespace Edutor.Web.Api.InquiryProcessing
         PagedDataResponse<Return.Group> GetAllGroups(PagedDataRequest request);
         PagedDataResponse<Return.Group> GetGroupsForSchoolUser(int schoolUserId, PagedDataRequest request);
         Return.Group GetGroup(int groupId);
+
+        Return.Group GetGroup(string name);
     }
 
     public class GetGroupsInquiryProcessor : IGetGroupsInquiryProcessor
@@ -91,6 +93,15 @@ namespace Edutor.Web.Api.InquiryProcessing
         }
 
 
+
+
+        public Return.Group GetGroup(string name)
+        {
+            var s = _queryProcessor.GetGroup(name);
+            var returnType = _autoMapper.Map<Return.Group>(s);
+            _groupsLinkServicces.AddAllLinks(returnType);
+            return returnType;
+        }
     }
 }
 

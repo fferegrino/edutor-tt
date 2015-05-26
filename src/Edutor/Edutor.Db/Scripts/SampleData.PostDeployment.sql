@@ -42,9 +42,11 @@ BEGIN
 					WHEN 0 THEN 'A'
 					ELSE 'P' END
 	WHERE [Type] = 'S'
+			AND UserId > 1
 
 	update Users set [Password] =  CONVERT(varchar(max),HASHBYTES('SHA2_256',Curp),2)
 	from Users
+	where UserId > 1
 
 
 END

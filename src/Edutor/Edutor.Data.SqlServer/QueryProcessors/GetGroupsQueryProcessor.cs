@@ -69,5 +69,15 @@ namespace Edutor.Data.SqlServer.QueryProcessors
             return q;
         }
 
+
+
+        public Group GetGroup(string name)
+        {
+            var q = _session.QueryOver<Group>().Where(user => user.Name == name).SingleOrDefault();
+
+            if (q == null) throw new Edutor.Data.Exceptions.ObjectNotFoundException("No existe un grupo con el nombre " + name);
+
+            return q;
+        }
     }
 }

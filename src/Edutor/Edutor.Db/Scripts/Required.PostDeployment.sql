@@ -11,7 +11,7 @@ Plantilla de script posterior a la implementación
 */
 
 -- Inserta usuario adminsitrador:
-INSERT INTO Users([Type],[Position],[Name],[Curp],[Email],[Address],[Mobile],[Phone]) VALUES('S','A','Antonio Feregrino Bolaños','FEBA911206HDFRLN','antonio.feregrino@hotmail.es','Av. Juan de Dios Bátiz esq. Av. Miguel Othón de Mendizábal, Col. Lindavista. Del. Gustavo A. Madero. México, D. F. C. P. 07738.','5540481160','5540481160')
+INSERT INTO Users([Type],[Position],[Name],[Curp],[Email],[Address],[Mobile],[Phone]) VALUES('S','A','Antonio Feregrino Bolaños','FEBA911206HDFRLN09','antonio.feregrino@hotmail.es','Av. Juan de Dios Bátiz esq. Av. Miguel Othón de Mendizábal, Col. Lindavista. Del. Gustavo A. Madero. México, D. F. C. P. 07738.','5540481160','5540481160')
 UPDATE Users SET [Password] =  CONVERT(varchar(max),HASHBYTES('SHA2_256',Curp),2) -- Contraseña de usuario
 FROM Users
 

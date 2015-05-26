@@ -85,6 +85,11 @@ namespace Edutor.Web.Api.Securitiy
                 return false;
             }
 
+            // Validar peticiones solo de clientes con el UserAgent = "Edutor-Client"
+            var userAgent = request.Headers.UserAgent.Where(h => h.Product.Name.Equals("Edutor-Client")).SingleOrDefault(); 
+            if (userAgent == null)
+                return false;
+
             var credentialParts = GetCredentialParts(authHeader);
             if (credentialParts.Length == TutorExpectedCredentialCount)
             {
