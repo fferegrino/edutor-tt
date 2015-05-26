@@ -21,6 +21,9 @@ namespace Edutor.Web.Api
             // Rutas de API web
             config.MapHttpAttributeRoutes();
 
+            config.Formatters.JsonFormatter.SerializerSettings.ContractResolver =
+                new Newtonsoft.Json.Serialization.CamelCasePropertyNamesContractResolver();
+
             config.Routes.MapHttpRoute(
                 name: "DefaultApiRoute",
                 routeTemplate: "{controller}/{id}",
