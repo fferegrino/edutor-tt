@@ -81,7 +81,7 @@ namespace Edutor.Web.Api.Controllers
         }
 
         /// <summary>
-        /// Regresa el grupo con el nombre especificado en la URL, en caso de tener espacios se debe codificar como URL
+        /// Regresa el grupo con el nombre especificado en la URL, el nombre del grupo debe estar URL-codificado 
         /// </summary>
         /// <param name="groupName">El nombre del grupo a obtener</param>
         /// <returns>Regresa el grupo deseado o un código de error 404 en caso de que no exista</returns>
