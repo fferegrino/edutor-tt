@@ -87,7 +87,7 @@ namespace Edutor.Web.Api.Controllers
         /// <returns>Regresa el grupo deseado o un código de error 404 en caso de que no exista</returns>
         [HttpGet]
         [ResponseType(typeof(Group))]
-        [Route("groups/{groupName:regex(" + Constants.CommonRoutingDefinitions.GroupName + ")}")]
+        [Route("groups/name/{groupName:regex(" + Constants.CommonRoutingDefinitions.GroupName + ")}")]
         [Authorize]
         public Group GetGroup(string groupName)
         {
