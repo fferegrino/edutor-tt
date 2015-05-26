@@ -1,0 +1,5 @@
+GET http://localhost:12441/tutors/BFSV108491TILHPK56 HTTP/1.1
+Authorization: Basic UzpGRUJBOTExMjA2SERGUkxOMDk6MQ==
+User-Agent: Edutor-Client/1.0
+Host: localhost:12441
+

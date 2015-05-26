@@ -1,17 +1,10 @@
 POST http://localhost:12441/tutors HTTP/1.1
-User-Agent: Edutor-Client
 Authorization: Basic UzpGRUJBOTExMjA2SERGUkxOMDk6MQ==
-Content-Type: application/json
+User-Agent: Edutor-Client/1.0
+Content-Type: application/json; charset=utf-8
 Host: localhost:12441
-Content-Length: 221
+Content-Length: 182
+Expect: 100-continue
+Connection: Keep-Alive
 
-{
-	name:"Antonio Feregrino Bolaños",
-	curp:"FEBA911206HDFRLN06",
-	email:"antonio.feregrino@gmaill.fi",
-	address:"Payasos #197",
-	mobile:"5540841160",
-	phone:"5540841160",
-	job:"Wood worker",
-	jobtelephone:"5540841160"
-}
+{"Job":"","JobTelephone":null,"Name":"Cairo Chaney","Curp":"ADCV818338LIPFMC29","Email":"mi.tempor@mifelis.com","Address":"Ap #388-1548 Neque Ave","Mobile":"0138346865","Phone":null}

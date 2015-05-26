@@ -1,14 +1,10 @@
 POST http://localhost:12441/schoolusers HTTP/1.1
-User-Agent: Fiddler
-Content-Type: application/json
+Authorization: Basic UzpGRUJBOTExMjA2SERGUkxOMDk6MQ==
+User-Agent: Edutor-Client/1.0
+Content-Type: application/json; charset=utf-8
 Host: localhost:12441
+Content-Length: 171
+Expect: 100-continue
+Connection: Keep-Alive
 
-{
-	name:"Antonio Feregrino Bolaños",
-	curp:"FEBA911206HDFRLN07",
-	email:"antonio.feregrino@gmaill.com",
-	address:"Payasos #197",
-	position:"T",
-	mobile:"5540841160",
-	phone:"5540841160"
-}
+{"Position":"P","Name":"Ulla Stout","Curp":"ABKZ607668NVIQTL64","Email":"penatibus.et@Fusce.org","Address":"614-9864 Metus St.","Mobile":"0259591233","Phone":"2269749034"}

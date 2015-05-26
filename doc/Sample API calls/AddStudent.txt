@@ -1,13 +1,9 @@
 POST http://localhost:12441/students HTTP/1.1
-User-Agent: Fiddler
-Content-Type: application/json
+Authorization: Basic UzpGRUJBOTExMjA2SERGUkxOMDk6MQ==
+User-Agent: Edutor-Client/1.0
+Content-Type: application/json; charset=utf-8
 Host: localhost:12441
+Content-Length: 147
+Expect: 100-continue
 
-{
-	name:"Antonio Feregrino Bolaños",
-	curp:"FEBA911206HDFRLN07",
-	address:"Payasos #197",
-	phone:"5540841160",
-	tutorid:1,
-	tutorrelationship:"PAD"
-}
+{"TutorId":12,"TutorRelationship":"dad","Address":"795-5910 Suscipit, Ave","Phone":"9574138039","Curp":"TGYG688537MGSKB9GB","Name":"Cleo Carrillo"}

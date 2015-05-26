@@ -1,10 +1,9 @@
 POST http://localhost:12441/groups HTTP/1.1
-User-Agent: Fiddler
-Content-Type: application/json
+Authorization: Basic UzpGRUJBOTExMjA2SERGUkxOMDk6MQ==
+User-Agent: Edutor-Client/1.0
+Content-Type: application/json; charset=utf-8
 Host: localhost:12441
+Content-Length: 80
+Expect: 100-continue
 
-{
-	name:"Español I",
-	subject: "Grupo de español 1",
-	fromdate: "2014-01-01"
-}]
+{"Name":"1L","Subject":"Gbongan","FromDate":"2015-01-28T00:00:00","ToDate":null}
