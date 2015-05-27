@@ -1,0 +1,13 @@
+HTTP/1.1 200 OK
+Cache-Control: no-cache
+Pragma: no-cache
+Content-Length: 1552
+Content-Type: application/json; charset=utf-8
+Expires: -1
+Server: Microsoft-IIS/8.0
+X-AspNet-Version: 4.0.30319
+X-Powered-By: ASP.NET
+Set-Cookie: ARRAffinity=e4f96554b9cda14da203562f7bec91d7e5166ea897f97c6587aa23a38f255328;Path=/;Domain=api.edutor-tt.com
+Date: Wed, 27 May 2015 01:00:35 GMT
+
+{"pageCount":5,"pageNumber":2,"pageSize":3,"items":[{"groupId":3,"name":"1U","subject":"Ciudad Real","fromDate":"2015-02-20T00:00:00","toDate":null,"studentsCount":8,"teachersCount":4,"links":[{"rel":"self","href":"http://api.edutor-tt.com/groups/3","method":"GET"},{"rel":"students","href":"http://api.edutor-tt.com/groups/3/students","method":"GET"},{"rel":"schoolusers","href":"http://api.edutor-tt.com/groups/3/schoolusers","method":"GET"}]},{"groupId":4,"name":"2U","subject":"St. John's","fromDate":"2015-03-01T00:00:00","toDate":null,"studentsCount":12,"teachersCount":2,"links":[{"rel":"self","href":"http://api.edutor-tt.com/groups/4","method":"GET"},{"rel":"students","href":"http://api.edutor-tt.com/groups/4/students","method":"GET"},{"rel":"schoolusers","href":"http://api.edutor-tt.com/groups/4/schoolusers","method":"GET"}]},{"groupId":5,"name":"3G","subject":"Rivire-du-Loup","fromDate":"2015-05-05T00:00:00","toDate":null,"studentsCount":6,"teachersCount":5,"links":[{"rel":"self","href":"http://api.edutor-tt.com/groups/5","method":"GET"},{"rel":"students","href":"http://api.edutor-tt.com/groups/5/students","method":"GET"},{"rel":"schoolusers","href":"http://api.edutor-tt.com/groups/5/schoolusers","method":"GET"}]}],"links":[{"rel":"currentPage","href":"http://api.edutor-tt.com/groups?pageNumber=2&pageSize=3","method":"GET"},{"rel":"previousPage","href":"http://api.edutor-tt.com/groups?pageNumber=1&pageSize=3","method":"GET"},{"rel":"nextPage","href":"http://api.edutor-tt.com/groups?pageNumber=3&pageSize=3","method":"GET"}]}

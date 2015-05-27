@@ -1,0 +1,14 @@
+HTTP/1.1 201 Created
+Cache-Control: no-cache
+Pragma: no-cache
+Content-Length: 412
+Content-Type: application/json; charset=utf-8
+Expires: -1
+Location: http://api.edutor-tt.com/groups/15
+Server: Microsoft-IIS/8.0
+X-AspNet-Version: 4.0.30319
+X-Powered-By: ASP.NET
+Set-Cookie: ARRAffinity=e4f96554b9cda14da203562f7bec91d7e5166ea897f97c6587aa23a38f255328;Path=/;Domain=api.edutor-tt.com
+Date: Wed, 27 May 2015 01:55:45 GMT
+
+{"groupId":15,"name":"3C","subject":"Tercero C","fromDate":"2015-01-28T00:00:00","toDate":"2015-06-28T00:00:00","studentsCount":0,"teachersCount":0,"links":[{"rel":"self","href":"http://api.edutor-tt.com/groups/15","method":"GET"},{"rel":"students","href":"http://api.edutor-tt.com/groups/15/students","method":"GET"},{"rel":"schoolusers","href":"http://api.edutor-tt.com/groups/15/schoolusers","method":"GET"}]}

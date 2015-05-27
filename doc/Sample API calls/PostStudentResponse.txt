@@ -1,0 +1,14 @@
+HTTP/1.1 201 Created
+Cache-Control: no-cache
+Pragma: no-cache
+Content-Length: 340
+Content-Type: application/json; charset=utf-8
+Expires: -1
+Location: http://api.edutor-tt.com/students/99
+Server: Microsoft-IIS/8.0
+X-AspNet-Version: 4.0.30319
+X-Powered-By: ASP.NET
+Set-Cookie: ARRAffinity=e4f96554b9cda14da203562f7bec91d7e5166ea897f97c6587aa23a38f255328;Path=/;Domain=api.edutor-tt.com
+Date: Tue, 26 May 2015 23:30:13 GMT
+
+{"studentId":99,"tutorId":72,"tutorRelationship":"oth","isActive":false,"address":"Ap #328-8169 Libero Ave","phone":"6243276079","curp":"SDZZ628743ZZLFK4CO","name":"Clark Newman","links":[{"rel":"self","href":"http://api.edutor-tt.com/students/99","method":"GET"},{"rel":"tutor","href":"http://api.edutor-tt.com/tutors/72","method":"GET"}]}

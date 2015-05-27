@@ -1,0 +1,9 @@
+POST http://api.edutor-tt.com/students HTTP/1.1
+Authorization: Basic UzpGRUJBOTExMjA2SERGUkxOMDk6MQ==
+User-Agent: Edutor-Client/1.0
+Content-Type: application/json; charset=utf-8
+Host: api.edutor-tt.com
+Content-Length: 147
+Expect: 100-continue
+
+{"TutorId":72,"TutorRelationship":"oth","Address":"Ap #328-8169 Libero Ave","Phone":"6243276079","Curp":"SDZZ628743ZZLFK4CO","Name":"Clark Newman"}

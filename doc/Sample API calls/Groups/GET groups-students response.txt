@@ -1,0 +1,13 @@
+HTTP/1.1 200 OK
+Cache-Control: no-cache
+Pragma: no-cache
+Content-Length: 966
+Content-Type: application/json; charset=utf-8
+Expires: -1
+Server: Microsoft-IIS/8.0
+X-AspNet-Version: 4.0.30319
+X-Powered-By: ASP.NET
+Set-Cookie: ARRAffinity=0ec7680e16ae8434b5d9a5e5d512855911584f694bf55c47c3183797c5eb9dcb;Path=/;Domain=api.edutor-tt.com
+Date: Wed, 27 May 2015 01:49:30 GMT
+
+{"pageCount":4,"pageNumber":1,"pageSize":2,"items":[{"studentId":1,"tutorId":2,"tutorRelationship":"aun","isActive":false,"address":"Ap #388-1548 Neque Ave","phone":"8816363220","curp":"EFUN614645IWRYX8GJ","name":"Phelan H. Dillard","links":[{"rel":"self","href":"http://api.edutor-tt.com/students/1","method":"GET"},{"rel":"tutor","href":"http://api.edutor-tt.com/tutors/2","method":"GET"}]},{"studentId":3,"tutorId":4,"tutorRelationship":"aun","isActive":false,"address":"Ap #474-8185 Lobortis Street","phone":"6105015383","curp":"HGVX569745XWHID1AJ","name":"Hope Mayo","links":[{"rel":"self","href":"http://api.edutor-tt.com/students/3","method":"GET"},{"rel":"tutor","href":"http://api.edutor-tt.com/tutors/4","method":"GET"}]}],"links":[{"rel":"currentPage","href":"http://api.edutor-tt.com/groups/3/students?pageNumber=1&pageSize=2","method":"GET"},{"rel":"nextPage","href":"http://api.edutor-tt.com/groups/3/students?pageNumber=2&pageSize=2","method":"GET"}]}

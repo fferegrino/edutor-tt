@@ -1,0 +1,13 @@
+HTTP/1.1 200 OK
+Cache-Control: no-cache
+Pragma: no-cache
+Content-Length: 1066
+Content-Type: application/json; charset=utf-8
+Expires: -1
+Server: Microsoft-IIS/8.0
+X-AspNet-Version: 4.0.30319
+X-Powered-By: ASP.NET
+Set-Cookie: ARRAffinity=0ec7680e16ae8434b5d9a5e5d512855911584f694bf55c47c3183797c5eb9dcb;Path=/;Domain=api.edutor-tt.com
+Date: Wed, 27 May 2015 01:46:11 GMT
+
+{"pageCount":2,"pageNumber":1,"pageSize":2,"items":[{"position":"P","userId":3,"name":"Ulla Stout","curp":"ABKZ607668NVIQTL64","email":"penatibus.et@Fusce.org","address":"614-9864 Metus St.","mobile":"0259591233","phone":"2269749034","type":"S","links":[{"rel":"self","href":"http://api.edutor-tt.com/schoolusers/3","method":"GET"},{"rel":"groups","href":"http://api.edutor-tt.com/schoolusers/3/groups","method":"GET"}]},{"position":"P","userId":11,"name":"Benedict H. Paul","curp":"CIBY457198YTWKRU65","email":"diam.Pellentesque@Praesenteunulla.com","address":"P.O. Box 377, 1776 Libero. Rd.","mobile":"0818980771","phone":"2899729854","type":"S","links":[{"rel":"self","href":"http://api.edutor-tt.com/schoolusers/11","method":"GET"},{"rel":"groups","href":"http://api.edutor-tt.com/schoolusers/11/groups","method":"GET"}]}],"links":[{"rel":"currentPage","href":"http://api.edutor-tt.com/groups/3/schoolusers?pageNumber=1&pageSize=2","method":"GET"},{"rel":"nextPage","href":"http://api.edutor-tt.com/groups/3/schoolusers?pageNumber=2&pageSize=2","method":"GET"}]}

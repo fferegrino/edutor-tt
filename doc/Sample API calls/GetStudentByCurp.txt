@@ -1,0 +1,5 @@
+GET http://api.edutor-tt.com/students/SMYS276714VMJSJ4TY HTTP/1.1
+Authorization: Basic UzpGRUJBOTExMjA2SERGUkxOMDk6MQ==
+User-Agent: Edutor-Client/1.0
+Host: api.edutor-tt.com
+

@@ -1,0 +1,14 @@
+HTTP/1.1 201 Created
+Cache-Control: no-cache
+Pragma: no-cache
+Content-Length: 395
+Content-Type: application/json; charset=utf-8
+Expires: -1
+Location: http://api.edutor-tt.com/tutors/62
+Server: Microsoft-IIS/8.0
+X-AspNet-Version: 4.0.30319
+X-Powered-By: ASP.NET
+Set-Cookie: ARRAffinity=0ec7680e16ae8434b5d9a5e5d512855911584f694bf55c47c3183797c5eb9dcb;Path=/;Domain=api.edutor-tt.com
+Date: Tue, 26 May 2015 23:26:33 GMT
+
+{"job":"","jobTelephone":null,"userId":62,"name":"Aurelia N. Powers","curp":"VSZZ681504BGBGZG89","email":"urna.Nullam.lobortis@vel.com","address":"P.O. Box 518, 1976 Tellus St.","mobile":"0629623846","phone":null,"type":"T","links":[{"rel":"self","href":"http://api.edutor-tt.com/tutors/62","method":"GET"},{"rel":"students","href":"http://api.edutor-tt.com/tutors/62/students","method":"GET"}]}

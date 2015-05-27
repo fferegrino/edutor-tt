@@ -1,0 +1,9 @@
+PATCH http://api.edutor-tt.com/groups HTTP/1.1
+Authorization: Basic UzpGRUJBOTExMjA2SERGUkxOMDk6MQ==
+User-Agent: Edutor-Client/1.0
+Content-Type: application/json; charset=utf-8
+Host: api.edutor-tt.com
+Content-Length: 136
+Expect: 100-continue
+
+{"GroupId":16,"Name":"5C","Subject":"Matematicas I","FromDate":"2015-05-26T21:11:07.1523961-05:00","ToDate":"2015-09-26T00:00:00-05:00"}

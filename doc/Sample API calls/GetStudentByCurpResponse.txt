@@ -1,0 +1,13 @@
+HTTP/1.1 200 OK
+Cache-Control: no-cache
+Pragma: no-cache
+Content-Length: 340
+Content-Type: application/json; charset=utf-8
+Expires: -1
+Server: Microsoft-IIS/8.0
+X-AspNet-Version: 4.0.30319
+X-Powered-By: ASP.NET
+Set-Cookie: ARRAffinity=0ec7680e16ae8434b5d9a5e5d512855911584f694bf55c47c3183797c5eb9dcb;Path=/;Domain=api.edutor-tt.com
+Date: Tue, 26 May 2015 23:50:15 GMT
+
+{"studentId":85,"tutorId":61,"tutorRelationship":"mom","isActive":false,"address":"582-7184 Class Av.","phone":"3244820232","curp":"SMYS276714VMJSJ4TY","name":"Alfreda V. Melton","links":[{"rel":"self","href":"http://api.edutor-tt.com/students/85","method":"GET"},{"rel":"tutor","href":"http://api.edutor-tt.com/tutors/61","method":"GET"}]}

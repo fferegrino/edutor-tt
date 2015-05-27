@@ -40,9 +40,17 @@ namespace Edutor.Web.Api.Areas.HelpPage
             config.GetHelpPageSampleGenerator().SampleObjects = sampleObjects;
         }
 
-        public static void AddJsonSampleObject<T>(this HttpConfiguration config, T t, string jsonString)
+        public static void SetSampleJsonObjects(this HttpConfiguration config, IDictionary<Type, string> sampleObjects)
         {
-            config.GetHelpPageSampleGenerator().SampleObjects.Add(typeof(T), Newtonsoft.Json.JsonConvert.DeserializeObject<T>(jsonString));
+            foreach (var sample in sampleObjects)
+            {
+                config.GetHelpPageSampleGenerator().SampleObjects.Add(sample.Key, Newtonsoft.Json.JsonConvert.DeserializeObject(sample.Value, sample.Key));
+            }
+        }
+
+        public static void AddJsonSampleObject(this HttpConfiguration config, Type t, string jsonString)
+        {
+            config.GetHelpPageSampleGenerator().SampleObjects.Add(t, Newtonsoft.Json.JsonConvert.DeserializeObject(jsonString, t) );
         }
 
         /// <summary>
