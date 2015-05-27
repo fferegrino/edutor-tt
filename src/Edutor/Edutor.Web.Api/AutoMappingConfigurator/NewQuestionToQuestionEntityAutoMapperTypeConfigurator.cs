@@ -26,14 +26,19 @@ namespace Edutor.Web.Api.AutoMappingConfigurator
                 .ForMember(s => s.SchoolUser, x => x.Ignore())
                 ;
 
+
+
             Func<Ent.Question, object> resolvePossobleAnswers = (ob) =>
             {
                 var possobleAnswers = new List<RetModels.PossibleAnswer>();
-                foreach (var pa in ob.PossibleAnswers)
+                if (ob.PossibleAnswers != null)
                 {
-                    var rrr = Mapper.Map<RetModels.PossibleAnswer>(pa);
-                    rrr.QuestionId = ob.QuestionId;
-                    possobleAnswers.Add(rrr);
+                    foreach (var pa in ob.PossibleAnswers)
+                    {
+                        var rrr = Mapper.Map<RetModels.PossibleAnswer>(pa);
+                        rrr.QuestionId = ob.QuestionId;
+                        possobleAnswers.Add(rrr);
+                    }
                 }
                 return possobleAnswers;
             };

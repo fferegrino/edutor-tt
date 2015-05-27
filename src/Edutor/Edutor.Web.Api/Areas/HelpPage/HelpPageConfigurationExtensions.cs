@@ -13,6 +13,7 @@ using System.Web.Http.Controllers;
 using System.Web.Http.Description;
 using Edutor.Web.Api.Areas.HelpPage.ModelDescriptions;
 using Edutor.Web.Api.Areas.HelpPage.Models;
+using System.Text;
 
 namespace Edutor.Web.Api.Areas.HelpPage
 {
@@ -50,7 +51,7 @@ namespace Edutor.Web.Api.Areas.HelpPage
 
         public static void AddJsonSampleObject(this HttpConfiguration config, Type t, string jsonString)
         {
-            config.GetHelpPageSampleGenerator().SampleObjects.Add(t, Newtonsoft.Json.JsonConvert.DeserializeObject(jsonString, t) );
+            config.GetHelpPageSampleGenerator().SampleObjects.Add(t, Newtonsoft.Json.JsonConvert.DeserializeObject(jsonString, t));
         }
 
         /// <summary>
@@ -252,7 +253,29 @@ namespace Edutor.Web.Api.Areas.HelpPage
             HelpPageApiModel apiModel = new HelpPageApiModel()
             {
                 ApiDescription = apiDescription,
+
             };
+
+            var auth = apiDescription.ActionDescriptor.GetCustomAttributes<AuthorizeAttribute>().SingleOrDefault();
+            if (auth != null)
+            {
+                StringBuilder sb = new StringBuilder("Este extremo requiere credenciales de ");
+                var roles = auth.Roles.Split(',');
+                int total;
+                int vomms = (total = roles.Count()) - 1;
+                for (int i = 0; i < total; i++)
+                {
+                    sb.Append(roles[i]);
+                    if (i != vomms)
+                        sb.Append(", ");
+                    else
+                        sb.Append(" ");
+                }
+                sb.Append("para ser ejecutado");
+                apiModel.AuthorizationMessage = sb.ToString();
+                apiModel.RequiresAuth = true;
+            }
+
 
             ModelDescriptionGenerator modelGenerator = config.GetModelDescriptionGenerator();
             HelpPageSampleGenerator sampleGenerator = config.GetHelpPageSampleGenerator();
@@ -317,7 +340,7 @@ namespace Edutor.Web.Api.Areas.HelpPage
 
                         if (!parameterDescriptor.IsOptional)
                         {
-                            uriParameter.Annotations.Add(new ParameterAnnotation() { Documentation = "Required" });
+                            uriParameter.Annotations.Add(new ParameterAnnotation() { Documentation = "Requerido" });
                         }
 
                         object defaultValue = parameterDescriptor.DefaultValue;

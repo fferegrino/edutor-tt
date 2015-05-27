@@ -41,7 +41,6 @@ namespace Edutor.Web.Api.MaintenanceProcessing
         {
             var eventEntity = _autoMapper.Map<Data.Entities.Question>(q);
             _addQuestionQP.AddQuestion(eventEntity);
-            var ret = _autoMapper.Map<Ret.Question>(eventEntity);
 
             var students = eventEntity.Group.Students;
 
@@ -53,7 +52,10 @@ namespace Edutor.Web.Api.MaintenanceProcessing
                                       QuestionId = eventEntity.QuestionId,
                                       PossibleAnswerId = i++,
                                   };
-            _addPossibleAnswerQP.AddPossibleAnswers(possibleAnswers.ToList());
+            var lst = possibleAnswers.ToList();
+            _addPossibleAnswerQP.AddPossibleAnswers(lst);
+            eventEntity.PossibleAnswers = lst;
+            var ret = _autoMapper.Map<Ret.Question>(eventEntity);
 
             var answersStudents = from student in students
                                   select new Data.Entities.Answer

@@ -51,7 +51,7 @@ namespace Edutor.Web.Api.Controllers
 
 
         /// <summary>
-        /// Regresa una lista paginada de todos los grupos que existen en el sistema
+        /// Regresa una lista paginada de todos los grupos que existen en el sistema.<br /><b>Este método solo puede ser ejecutado por un administrador</b>
         /// </summary>
         /// <returns>Una lista paginada de todos los grupos que existen en el sistema</returns>
         [HttpGet]

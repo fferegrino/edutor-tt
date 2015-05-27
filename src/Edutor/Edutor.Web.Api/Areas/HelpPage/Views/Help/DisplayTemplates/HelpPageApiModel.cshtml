@@ -26,6 +26,10 @@
     <div class="content-wrapper">
 
         <p>@description.Documentation</p>
+        @if (Model.RequiresAuth)
+        {
+            <p>@Model.AuthorizationMessage</p>
+        }
 
         <h2>Información de la petición</h2>
 

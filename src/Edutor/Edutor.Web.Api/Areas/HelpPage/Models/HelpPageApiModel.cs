@@ -69,6 +69,10 @@ namespace Edutor.Web.Api.Areas.HelpPage.Models
             }
         }
 
+        public bool RequiresAuth { get; set; }
+
+        public string AuthorizationMessage { get; set; }
+
         /// <summary>
         /// Gets the sample requests associated with the API.
         /// </summary>

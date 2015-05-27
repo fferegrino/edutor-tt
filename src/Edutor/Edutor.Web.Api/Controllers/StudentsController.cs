@@ -168,6 +168,22 @@ namespace Edutor.Web.Api.Controllers
         }
 
         /// <summary>
+        /// Modifica al tutor de acuerdo a lo enviado en el el cuerpo de la petición.
+        /// <remarks>Cualquier propiedad faltante o cuyo valor sea nulo no será modificada</remarks>
+        /// </summary>
+        /// <param name="tutor">Los nuevos valores a asignar</param>
+        /// <returns></returns>
+        [HttpPatch]
+        [Route("students")]
+        [Authorize(Roles = Constants.RoleNames.Administrator)]
+        [ResponseType(typeof(Student))]
+        public IHttpActionResult UpdateGroup(ModifiableStudent tutor)
+        {
+            var m = _patchStudent.UpdateStudent(tutor);
+            return new ModelUpdatedActionResult<Student>(Request, m);
+        }
+
+        /// <summary>
         /// Modifica el estudiante de acuerdo a lo enviado en el parámetro <paramref name="student"/>
         /// </summary>
         /// <param name="studentId"></param>

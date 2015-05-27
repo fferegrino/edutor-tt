@@ -172,7 +172,6 @@ namespace Edutor.Web.Api.Controllers
             return new ModelUpdatedActionResult<Tutor>(Request, m);
         }
 
-
         /// <summary>
         /// Elimina al tutor indicado del sistema siempre y cuando no existan conflictos, que tengan estudiantes vinculados es un ejemplo.
         /// </summary>
