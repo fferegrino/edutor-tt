@@ -43,7 +43,7 @@ namespace Edutor.Data.SqlServer.QueryProcessors
         public QueryResult<Notification> GetNotificationsForStudent(int studentId, PagedDataRequest requestInfo)
         {
 
-            var teachings = _session.QueryOver<NotificationDetail>().Where(t => t.Student.StudentId == studentId);
+            var teachings = _session.QueryOver<NotificationDetail>().Where(t => t.Student.StudentId == studentId).JoinQueryOver(x => x.Notification).OrderBy(q => q.CreationDate).Desc;
 
             var totalItemCount = teachings.ToRowCountQuery().RowCount();
 

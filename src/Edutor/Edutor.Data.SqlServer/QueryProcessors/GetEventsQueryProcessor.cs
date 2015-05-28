@@ -43,7 +43,7 @@ namespace Edutor.Data.SqlServer.QueryProcessors
         public QueryResult<Event> GetEventsForStudent(int studentId, PagedDataRequest requestInfo)
         {
 
-            var teachings = _session.QueryOver<Invitation>().Where(t => t.Student.StudentId == studentId);
+            var teachings = _session.QueryOver<Invitation>().Where(t => t.Student.StudentId == studentId).JoinQueryOver(x => x.Event).OrderBy(q => q.CreationDate).Desc;
 
             var totalItemCount = teachings.ToRowCountQuery().RowCount();
 

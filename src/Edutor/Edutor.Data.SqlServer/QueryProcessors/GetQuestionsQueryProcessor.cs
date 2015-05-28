@@ -27,7 +27,7 @@ namespace Edutor.Data.SqlServer.QueryProcessors
 
         public QueryResult<Question> GetQuestionsForSchoolUser(int schoolUser, PagedDataRequest requestInfo)
         {
-            var q = _session.QueryOver<Question>().OrderBy(nn => nn.CreationDate).Asc.Where(not => not.SchoolUser.UserId == schoolUser);
+            var q = _session.QueryOver<Question>().OrderBy(nn => nn.CreationDate).Desc.Where(not => not.SchoolUser.UserId == schoolUser);
 
             var totalItemCount = q.ToRowCountQuery().RowCount();
 
@@ -43,7 +43,7 @@ namespace Edutor.Data.SqlServer.QueryProcessors
         public QueryResult<Question> GetQuestionsForStudent(int studentId, PagedDataRequest requestInfo)
         {
 
-            var teachings = _session.QueryOver<Answer>().Where(t => t.Student.StudentId == studentId);
+            var teachings = _session.QueryOver<Answer>().Where(t => t.Student.StudentId == studentId).JoinQueryOver(x => x.Question).OrderBy(q => q.CreationDate).Desc;
 
             var totalItemCount = teachings.ToRowCountQuery().RowCount();
 
