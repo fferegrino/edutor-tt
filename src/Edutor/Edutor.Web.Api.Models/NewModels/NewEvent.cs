@@ -42,7 +42,7 @@ namespace Edutor.Web.Api.Models.NewModels
         /// La descripción del evento
         /// </summary>
         [Required]
-        [StringLength(255)]
+        [StringLength(500)]
         public string Description { get; set; }
     }
 }

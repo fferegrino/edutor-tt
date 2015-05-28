@@ -6,6 +6,7 @@ using Edutor.Web.Api.Models.NewModels;
 using Edutor.Web.Api.Models.ReturnTypes;
 using Edutor.Web.Api.UpdateProcessing;
 using Edutor.Web.Common;
+using Edutor.Web.Common.Filters;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -110,7 +111,8 @@ namespace Edutor.Web.Api.Controllers
         [Route("events")]
         [HttpPost]
         [ResponseType(typeof(Event))]
-        [Authorize(Roles = Constants.RoleNames.Administrator)]
+        [Authorize(Roles = Constants.RoleNames.SchoolUser)]
+        [ValidationActionFilter]
         public IHttpActionResult AddEvent(NewEvent newEvent)
         {
             var user = _addQueryProcessor.AddEvent(newEvent);

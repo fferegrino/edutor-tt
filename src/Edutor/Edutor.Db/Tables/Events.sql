@@ -6,6 +6,6 @@
     [Name] VARCHAR(60) NOT NULL, 
     [Date] DATETIME NOT NULL, 
     [CreationDate] DATETIME NOT NULL, 
-    [Description] VARCHAR(255) NOT NULL, 
+    [Description] VARCHAR(500) NOT NULL, 
     CONSTRAINT [FK_Events_ToSchoolUsers] FOREIGN KEY ([SchoolUserId]) REFERENCES [Users]([UserId])
 )
