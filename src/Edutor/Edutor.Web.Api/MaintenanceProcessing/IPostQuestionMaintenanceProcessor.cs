@@ -44,7 +44,7 @@ namespace Edutor.Web.Api.MaintenanceProcessing
 
             var students = eventEntity.Group.Students;
 
-            int i = 0;
+            int i = 1;
             var possibleAnswers = from popssibleAnswerText in q.PossibleAnswers
                                   select new Data.Entities.PossibleAnswer
                                   {
