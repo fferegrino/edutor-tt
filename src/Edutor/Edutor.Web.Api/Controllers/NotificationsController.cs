@@ -16,7 +16,9 @@ using System.Web.Http.Description;
 namespace Edutor.Web.Api.Controllers
 {
     /// <summary>
-    /// Conjunto de extremos REST que permiten operar con los servicios de creación y manipulación de notificaciones que ofrece la plataforma
+    /// Los extremos de notificaciones son los encargados de ofrecer la capacidad de crear y asignar las notificaciones a los usuarios 
+    /// correspondientes. Al igual que la mayoría de los extremos dentro de Edutor, estos requieren de algún nivel de autenticación para 
+    /// ser accedidos.
     /// </summary>
     [Edutor.Web.Common.UnitOfWorkActionFilter]
     public class NotificationsController : ApiController
@@ -41,10 +43,12 @@ namespace Edutor.Web.Api.Controllers
         }
 
         /// <summary>
-        /// Regresa la notificación solicitada mediante la URL
+        /// Obtiene la notificación indicada por su identificador único, 
+        /// Un usuario administrador podrá acceder a la información de todas las notificaciones, 
+        /// mientras que cualquier otro usuario podrá acceder únicamente a las notificaciones que creó o de las que es receptor.
         /// </summary>
-        /// <param name="notificationId">El identificador único de la notificación deseada</param>
-        /// <returns></returns>
+        /// <param name="notificationId">El identificador único de la notificación a obtener.</param>
+        /// <returns>Devuelve la notificación deseada, en caso de que exista y el usuario tenga permiso para acceder a él.</returns>
         [HttpGet]
         [Route("notifications/{notificationId:int}")]
         [Authorize(Roles = Constants.RoleNames.All)]
@@ -54,10 +58,12 @@ namespace Edutor.Web.Api.Controllers
         }
 
         /// <summary>
-        /// Regesa una lista paginada con los detalles de la notificación
+        /// Obtiene una lista paginada con los detalles de la notificación, 
+        /// cada detalle consiste del identificador del estudiante notificado y el estatus de la notificación, 
+        /// es decir, si el tutor ha visto o no la notificación.
         /// </summary>
         /// <param name="notificationId">El identificador único de la notificación que se desea obtener</param>
-        /// <returns></returns>
+        /// <returns>Devuelve una lista paginada con los detalles de la notifcación</returns>
         [HttpGet]
         [ResponseType(typeof(PagedDataResponse<StudentNotification>))]
         [Route("notifications/{notificationId:int}/details")]
@@ -69,10 +75,11 @@ namespace Edutor.Web.Api.Controllers
         }
 
         /// <summary>
-        /// Obtienen el detalle de notifricación indicado
+        /// Obtienen el detalle de notificación indicado, cada detalle consiste del identificador del estudiante notificado y el estatus de la notificación, 
+        /// es decir, si el tutor ha visto o no la notificación.
         /// </summary>
         /// <param name="notificationId">El identificador único de la notificación que se desea obtener</param>
-        /// <param name="studentId">El identificador único del estudiante con la notificación</param>
+        /// <param name="studentId">El identificador único del estudiante del que se desea obtener el detalle.</param>
         /// <returns></returns>
         [HttpGet]
         [ResponseType(typeof(StudentNotification))]

@@ -13,7 +13,8 @@ using Edutor.Web.Common.Filters;
 namespace Edutor.Web.Api.Controllers
 {
     /// <summary>
-    /// Conjunto de extremos REST que permiten operar con los servicios de creación y manipulación de grupos que ofrece la plataforma
+    /// Los extremos de grupos proveen la capacidad de agregar, modificar y eliminar grupos dentro de Edutor, también permiten vincular alumnos con grupos y grupos con profesores.
+    /// Todos los extremos dentro de este conjunto requieren de algún nivel de autorización.
     /// </summary>
     [Edutor.Web.Common.UnitOfWorkActionFilter]
     public class GroupsController : ApiController
