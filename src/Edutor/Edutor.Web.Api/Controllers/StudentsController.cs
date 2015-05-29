@@ -129,7 +129,7 @@ namespace Edutor.Web.Api.Controllers
         [HttpGet]
         [Route("students/{studentId:int}/questions")]
         [Authorize(Roles = Constants.RoleNames.Tutor)]
-        public PagedDataResponse<Question> GetQuestionsForStudent(int studentId)
+        public PagedDataResponse<StudentAnswer> GetQuestionsForStudent(int studentId)
         {
             var request = _pagedDataRequestFactory.Create(Request.RequestUri);
             var r = _getQuestions.GetQuestionsForStudent(studentId, request);

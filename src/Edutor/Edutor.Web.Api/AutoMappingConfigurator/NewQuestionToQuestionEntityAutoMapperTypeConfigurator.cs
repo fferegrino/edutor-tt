@@ -28,7 +28,7 @@ namespace Edutor.Web.Api.AutoMappingConfigurator
 
 
 
-            Func<Ent.Question, object> resolvePossobleAnswers = (ob) =>
+            Func<Ent.Question, object> questionsPossibleAnswersToReturnModels = (ob) =>
             {
                 var possobleAnswers = new List<RetModels.PossibleAnswer>();
                 if (ob.PossibleAnswers != null)
@@ -43,9 +43,26 @@ namespace Edutor.Web.Api.AutoMappingConfigurator
                 return possobleAnswers;
             };
 
+            Func<Ent.Answer, object> answerPossibleAnswersToReturnModels = (ob) =>
+            {
+                var possobleAnswers = new List<RetModels.PossibleAnswer>();
+                if (ob.Question.PossibleAnswers != null)
+                {
+                    foreach (var pa in ob.Question.PossibleAnswers)
+                    {
+                        var rrr = Mapper.Map<RetModels.PossibleAnswer>(pa);
+                        rrr.QuestionId = ob.QuestionId;
+                        possobleAnswers.Add(rrr);
+                    }
+                }
+                return possobleAnswers;
+            };
+
+
+
             Mapper.CreateMap<Ent.Question, RetModels.Question>()
                 .ForMember(x => x.Links, opt => opt.Ignore())
-                .ForMember(s => s.PossibleAnswers, x => x.ResolveUsing(resolvePossobleAnswers))
+                .ForMember(s => s.PossibleAnswers, x => x.ResolveUsing(questionsPossibleAnswersToReturnModels))
                  .ForMember(x => x.SchoolUserId, opt => opt.MapFrom(src => src.SchoolUser.UserId))
                 ;
 
@@ -69,8 +86,10 @@ namespace Edutor.Web.Api.AutoMappingConfigurator
                 .ForMember(x => x.Links, opt => opt.Ignore())
                 .ForMember(d => d.Text, x => x.MapFrom(s => s.Question.Text))
                 .ForMember(d => d.QuestionId, x => x.MapFrom(s => s.Question.QuestionId))
-                .ForMember(d => d.GroupId, x => x.MapFrom(s => s.Question.GroupId))
-                .ForMember(d => d.SchoolUserId, x => x.MapFrom(s => s.Question.SchoolUserId))
+                .ForMember(d => d.ExpirationDate, x => x.MapFrom(s => s.Question.ExpirationDate))
+                .ForMember(d => d.PossibleAnswers, x => x.ResolveUsing(answerPossibleAnswersToReturnModels))
+                .ForMember(d => d.GroupId, x => x.MapFrom(s => s.Question.Group.GroupId))
+                .ForMember(d => d.SchoolUserId, x => x.MapFrom(s => s.Question.SchoolUser.UserId))
                 .ForMember(d => d.AnswerId, x => x.ResolveUsing(resolveActualAnsId))
                 .ForMember(d => d.AnswerText, x => x.ResolveUsing(resolveActualAns))
                 .ForMember(d => d.StudentId, x => x.MapFrom(s => s.Student.StudentId))
@@ -79,7 +98,7 @@ namespace Edutor.Web.Api.AutoMappingConfigurator
                 ;
 
             Mapper.CreateMap<Ent.PossibleAnswer, RetModels.PossibleAnswer>()
-                .ForMember(x => x.Links, opt => opt.Ignore())
+                //.ForMember(x => x.Links, opt => opt.Ignore())
                 ;
 
 

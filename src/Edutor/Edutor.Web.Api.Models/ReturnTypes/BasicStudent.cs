@@ -22,7 +22,6 @@ namespace Edutor.Web.Api.Models.ReturnTypes
         /// El nombre real del estudiante
         /// </summary>
         public string Name { get; set; }
-        //public string Token { get; set; }
 
     }
 }

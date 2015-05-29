@@ -41,6 +41,16 @@ namespace Edutor.Web.Api.Models.ReturnTypes
         /// El texto de la respuesta elegida por el tutor
         /// </summary>
         public string AnswerText { get; set; }
+
+        /// <summary>
+        /// La fecha en que la pregunta expira
+        /// </summary>
+        public DateTime ExpirationDate { get; set; }
+
+        /// <summary>
+        /// Colección con respuestas posibles a la pregunta realizada
+        /// </summary>
+        public IList<PossibleAnswer> PossibleAnswers { get; set; }
         
     }
 }

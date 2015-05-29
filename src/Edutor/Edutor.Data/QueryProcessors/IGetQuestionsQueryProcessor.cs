@@ -11,7 +11,7 @@ namespace Edutor.Data.QueryProcessors
     {
         QueryResult<Question> GetQuestionsForSchoolUser(int schoolUser, PagedDataRequest requestInfo);
 
-        QueryResult<Question> GetQuestionsForStudent(int studentId, PagedDataRequest requestInfo);
+        QueryResult<Answer> GetQuestionsForStudent(int studentId, PagedDataRequest requestInfo);
 
         Question GetQuestion(int questionId);
 

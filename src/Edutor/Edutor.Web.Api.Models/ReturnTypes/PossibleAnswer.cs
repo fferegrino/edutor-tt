@@ -8,7 +8,7 @@ namespace Edutor.Web.Api.Models.ReturnTypes
     /// <summary>
     /// Clase que representa una respeusta posible a una pregunta realizada dentro de edutor
     /// </summary>
-    public class PossibleAnswer : LinkContaining
+    public class PossibleAnswer // : LinkContaining
     {
         /// <summary>
         /// El identificador único de la pregunta con la que esta respuesta está asociada
