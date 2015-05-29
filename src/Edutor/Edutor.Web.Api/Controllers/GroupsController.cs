@@ -8,6 +8,7 @@ using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
 using Edutor.Common;
+using Edutor.Web.Common.Filters;
 
 namespace Edutor.Web.Api.Controllers
 {
@@ -51,9 +52,10 @@ namespace Edutor.Web.Api.Controllers
 
 
         /// <summary>
-        /// Regresa una lista paginada de todos los grupos que existen en el sistema.<br /><b>Este método solo puede ser ejecutado por un administrador</b>
+        /// Regresa una lista paginada de todos los grupos que están registrados en el sistema.
+        /// Este extremo solo puede ser accedido por un usuario administrador.
         /// </summary>
-        /// <returns>Una lista paginada de todos los grupos que existen en el sistema</returns>
+        /// <returns>Una lista paginada de todos los grupos que existen en el sistema.</returns>
         [HttpGet]
         [Route("groups")]
         [Authorize(Roles = Constants.RoleNames.Administrator)]
@@ -65,10 +67,12 @@ namespace Edutor.Web.Api.Controllers
         }
 
         /// <summary>
-        /// Regresa el grupo con el identificador enviado en la URL
+        /// Obtiene el grupo indicado por su identificador único, 
+        /// Un usuario administrador podrá acceder a la información de todos los grupos, 
+        /// mientras que cualquier otro usuario podrá acceder únicamente a los grupos con los que tiene relación.
         /// </summary>
-        /// <param name="groupId">El identificador único del grupo a obtener</param>
-        /// <returns>Regresa el grupo deseado o un código de error 404 en caso de que no exista</returns>
+        /// <param name="groupId">El identificador único del grupo a obtener.</param>
+        /// <returns>Devuelve el grupo deseado, en caso de que exista y el usuario tenga permiso para acceder a él.</returns>
         [HttpGet]
         [ResponseType(typeof(Group))]
         [Route("groups/{groupId:int}")]
@@ -81,10 +85,12 @@ namespace Edutor.Web.Api.Controllers
         }
 
         /// <summary>
-        /// Regresa el grupo con el nombre especificado en la URL, el nombre del grupo debe estar URL-codificado 
+        /// Obtiene el grupo indicado por su nombre, 
+        /// Un usuario administrador podrá acceder a la información de todos los grupos, 
+        /// mientras que cualquier otro usuario podrá acceder únicamente a los grupos con los que tiene relación.
         /// </summary>
-        /// <param name="groupName">El nombre del grupo a obtener</param>
-        /// <returns>Regresa el grupo deseado o un código de error 404 en caso de que no exista</returns>
+        /// <param name="groupName">El nombre del grupo a obtener.</param>
+        /// <returns>Devuelve el grupo deseado, en caso de que exista y el usuario tenga permiso para acceder a él.</returns>
         [HttpGet]
         [ResponseType(typeof(Group))]
         [Route("groups/name/{groupName:regex(" + Constants.CommonRoutingDefinitions.GroupName + ")}")]
@@ -98,13 +104,15 @@ namespace Edutor.Web.Api.Controllers
 
 
         /// <summary>
-        /// Regresa una lista paginada con los profesores asignados al grupo especificado
+        /// Obtiene una lista paginada con los usuarios escolares (profesores) relacionados con el grupo indicado.
+        /// Este extremo es accesible únicamente para usuarios administradores.
         /// </summary>
-        /// <param name="groupId">El identificador único del grupo del que se desea conocer los profesores</param>
-        /// <returns>Una lista paginada con los profesores asignados al grupo especificado</returns>
+        /// <param name="groupId">El identificador único del grupo del que se desea conocer los profesores.</param>
+        /// <returns>Una lista paginada con los usuarios escolares asignados al grupo indicado.</returns>
         [Route("groups/{groupId:int}/schoolusers")]
         [HttpGet]
         [ResponseType(typeof(PagedDataResponse<SchoolUser>))]
+        [Authorize(Roles = Constants.RoleNames.Administrator)]
         public PagedDataResponse<SchoolUser> GetSchoolUsersForGroup(int groupId)
         {
             var request = _pagedDataRequestFactory.Create(Request.RequestUri);
@@ -113,12 +121,15 @@ namespace Edutor.Web.Api.Controllers
         }
 
         /// <summary>
-        /// Regresa una lista paginada con los estudiantes pertenecientes al grupo especificado
+        /// Obtiene una lista paginada con los estudiantes relacionados con el grupo indicado.
+        /// Este extremo es accesible únicamente para usuarios escolares,
+        /// un usuario administrador podrá consultar información de cualquier grupo, mientras que un profesor únicamente de los grupos a los que pertenence.
         /// </summary>
-        /// <param name="groupId">El identificador único del grupo del que se desea conocer los estudiantes</param>
-        /// <returns>Una lista paginada con los estudiantes pertenecientes al grupo especificado</returns>
+        /// <param name="groupId">El identificador único del grupo del que se desea conocer los estudiantes.</param>
+        /// <returns>Una lista paginada con los estudiantes pertenecientes al grupo indicado.</returns>
         [HttpGet]
         [Route("groups/{groupId:int}/students")]
+        [Authorize(Roles = Constants.RoleNames.SchoolUser)]
         public PagedDataResponse<Student> GetStudentsForGroup(int groupId)
         {
             var request = _pagedDataRequestFactory.Create(Request.RequestUri);
@@ -128,13 +139,16 @@ namespace Edutor.Web.Api.Controllers
 
 
         /// <summary>
-        /// Da de alta un nuevo grupo en el sistema
+        /// Añade un nuevo grupo al sistema Edutor.
+        /// Este extremo es accesible únicamente para usuarios administradores.
         /// </summary>
-        /// <param name="newGroup">El nuevo grupo a ingresar</param>
-        /// <returns>Mensaje de confirmación de que el grupo fue dado de alta correctamente</returns>
+        /// <param name="newGroup">La información del nuevo grupo a registrar.</param>
+        /// <returns>El grupo creado en caso de que la operación se haya realizado con éxito.</returns>
         [HttpPost]
         [Route("groups")]
         [ResponseType(typeof(Group))]
+        [Authorize(Roles = Constants.RoleNames.Administrator)]
+        [ValidationActionFilter]
         public IHttpActionResult AddGroup(NewGroup newGroup)
         {
             var user = _addUserQueryProcessor.AddGroup(newGroup);
@@ -143,15 +157,17 @@ namespace Edutor.Web.Api.Controllers
         }
 
         /// <summary>
-        /// Modifica el grupo de acuerdo a lo enviado en el el cuerpo de la petición.
-        /// <remarks>Cualquier propiedad faltante o cuyo valor sea nulo no será modificada</remarks>
+        /// Modifica el grupo de acuerdo a lo enviado en el el cuerpo de la petición,
+        /// cualquier propiedad faltante o cuyo valor sea nulo no será modificada.
+        /// Este extremo es accesible por usuarios administradores unicamente.
         /// </summary>
-        /// <param name="group">Los nuevos valores a asignar</param>
-        /// <returns></returns>
+        /// <param name="group">Los nuevos valores del grupo.</param>
+        /// <returns>El grupo modificado en caso de que la operación se haya realizado con éxito.</returns>
         [HttpPatch]
         [Route("groups")]
-        [Authorize(Roles = Constants.RoleNames.All)]
+        [Authorize(Roles = Constants.RoleNames.Administrator)]
         [ResponseType(typeof(Group))]
+        [ValidationActionFilter]
         public IHttpActionResult UpdateGroup(ModifiableGroup group)
         {
             var m = _patchGroups.UpdateGroup(group);
@@ -159,13 +175,15 @@ namespace Edutor.Web.Api.Controllers
         }
 
         /// <summary>
-        /// Establece un vínculo entre un grupo y un estudiante especificados a través de la URL
+        /// Establece un vínculo entre un grupo y un estudiante.
+        /// Este extremo es accesible únicamente por usuarios administradores.
         /// </summary>
-        /// <param name="groupId">El identificador único del grupo al que se agregará el estudiante</param>
-        /// <param name="studentId">El identificador único del estudiante que se agregará al grupo</param>
-        /// <returns></returns>
+        /// <param name="groupId">El identificador único del grupo al que se agregará el estudiante.</param>
+        /// <param name="studentId">El identificador único del estudiante que se agregará al grupo.</param>
+        /// <returns>Un código de estatus (No Content) si es que la acción se concluyó correctamente.</returns>
         [HttpPut]
         [Route("groups/{groupId:int}/students/{studentId:int}")]
+        [Authorize(Roles = Constants.RoleNames.Administrator)]
         public IHttpActionResult AddStudentToGroup(int groupId, int studentId)
         {
             _postEnrollmentMaintenanceProcessor.AddEnrollment(studentId, groupId);
@@ -173,11 +191,12 @@ namespace Edutor.Web.Api.Controllers
         }
 
         /// <summary>
-        /// Establece un vínculo entre un grupo y el profesor especificados a través de la URL
+        /// Establece un vínculo entre un grupo y un profesor.
+        /// Este extremo es accesible únicamente por usuarios administradores.
         /// </summary>
-        /// <param name="groupId">El identificador único del grupo al que se agregará el usuario escolar</param>
-        /// <param name="schoolUserId">El identificador único del usuario escolar que se agregará al grupo</param>
-        /// <returns></returns>
+        /// <param name="groupId">El identificador único del grupo al que se agregará el usuario escolar.</param>
+        /// <param name="schoolUserId">El identificador único del usuario escolar que se agregará al grupo.</param>
+        /// <returns>Un código de estatus (No Content) si es que la acción se concluyó correctamente.</returns>
         [HttpPut]
         [Route("groups/{groupId:int}/schoolusers/{schoolUserId:int}")]
         public IHttpActionResult AddTeacherToGroup(int groupId, int schoolUserId)
@@ -187,11 +206,14 @@ namespace Edutor.Web.Api.Controllers
         }
 
         /// <summary>
-        /// Elimina el grupo especificado del sistema.
+        /// Elimina el grupo especificado del sistema, 
+        /// esta acción elimina los vínculos estudiante-grupo y profesor-grupo.
+        /// Este extremo es accesible únicamente por usuarios administradores.
         /// </summary>
-        /// <param name="groupId">El identificador único del grupo a eliminar</param>
-        /// <returns>Un código de estatus</returns>
+        /// <param name="groupId">El identificador único del grupo a eliminar.</param>
+        /// <returns>Un código de estatus (No Content) si es que la acción se concluyó correctamente.</returns>
         [HttpDelete]
+        [Authorize(Roles = Constants.RoleNames.Administrator)]
         [Route("groups/{groupId:int}")]
         public IHttpActionResult DeleteGroup(int groupId)
         {
@@ -201,13 +223,15 @@ namespace Edutor.Web.Api.Controllers
         }
 
         /// <summary>
-        /// Elimina el vinculo establecido entre un estudiante y un grupo
+        /// Elimina el vinculo establecido entre un estudiante y un grupo.
+        /// Este extremo es accesible únicamente por usuarios administradores.
         /// </summary>
-        /// <param name="groupId">El identificador único del grupo del que se eliminará el estudiante</param>
-        /// <param name="studentId">El identificador único del estudiante que se eliminará del grupo</param>
-        /// <returns></returns>
+        /// <param name="groupId">El identificador único del grupo del que se eliminará el estudiante.</param>
+        /// <param name="studentId">El identificador único del estudiante que se eliminará del grupo.</param>
+        /// <returns>Un código de estatus (No Content) si es que la acción se concluyó correctamente.</returns>
         [HttpDelete]
         [Route("groups/{groupId:int}/students/{studentId:int}")]
+        [Authorize(Roles =Constants.RoleNames.Administrator)]
         public IHttpActionResult DeleteStudentFromGroup(int groupId, int studentId)
         {
             _deleteGroups.UnlinkStudent(groupId, studentId);
@@ -215,13 +239,15 @@ namespace Edutor.Web.Api.Controllers
         }
 
         /// <summary>
-        /// Elimina el vínculo establecido entre un profesor y un grupo
+        /// Elimina el vínculo establecido entre un profesor y un grupo.
+        /// Este extremo es accesible únicamente por usuarios administradores.
         /// </summary>
-        /// <param name="groupId">El identificador único del grupo del que se eliminará el usuario escolar</param>
-        /// <param name="schoolUserId">El identificador único del usuario escolar que se eliminará del grupo</param>
-        /// <returns></returns>
+        /// <param name="groupId">El identificador único del grupo del que se eliminará el usuario escolar.</param>
+        /// <param name="schoolUserId">El identificador único del usuario escolar que se eliminará del grupo.</param>
+        /// <returns>Un código de estatus (No Content) si es que la acción se concluyó correctamente.</returns>
         [HttpDelete]
         [Route("groups/{groupId:int}/schoolusers/{schoolUserId:int}")]
+        [Authorize(Roles = Constants.RoleNames.Administrator)]
         public IHttpActionResult DeleteTeacherFromGroup(int groupId, int schoolUserId)
         {
             _deleteGroups.UnlinkSchoolUser(groupId, schoolUserId);

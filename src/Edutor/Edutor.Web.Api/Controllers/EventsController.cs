@@ -45,8 +45,8 @@ namespace Edutor.Web.Api.Controllers
         }
 
         /// <summary>
-        /// Obtiene el evento indicado por el identificador único,
-        /// un usuario administrador podrá recuperar cualquier evento, 
+        /// Obtiene el evento indicado por el identificador único.
+        /// Un usuario administrador podrá recuperar cualquier evento, 
         /// mientras que cualquier otro usuario solo podrá recuperar los eventos de los que es participante.
         /// </summary>
         /// <param name="eventId">El identificador único del evento que se desea obtener, debe ser un entero mayor a 0.</param>
@@ -96,11 +96,13 @@ namespace Edutor.Web.Api.Controllers
         }
 
         /// <summary>
-        /// Indica si se asistirá al evento o no
+        /// Indica si el tutor del estudiante asistirá al evento indicado o no. 
+        /// Este extremo es accesible únicamente para usuarios tutores.
         /// </summary>
-        /// <param name="eventId">El identificador único del evento que se desea responder</param>
-        /// <param name="studentId">El identificador único del estudiante que responde</param>
-        /// <returns></returns>
+        /// <param name="eventId">El identificador único del evento que se desea responder.</param>
+        /// <param name="studentId">El identificador único del estudiante que responde.</param>
+        /// <param name="rsvp">El contenido de la respuesta, los valores de <code>EventId</code> y <code>StudentId</code> dentro de este parámetro carecen de importancia.</param>
+        /// <returns>Un código de estatus (No Content) si es que la acción se concluyó correctamente.</returns>
         [Route("events/{eventId:int}/attendees/{studentId:int}")]
         [HttpPut]
         [Authorize(Roles = Constants.RoleNames.Tutor)]
@@ -113,10 +115,12 @@ namespace Edutor.Web.Api.Controllers
         }
 
         /// <summary>
-        /// Agrega un evento al sistema
+        /// Añade un nuevo evento al sistema de Edutor, 
+        /// al añadirlo crea las invitaciones para cada alumno según el grupo al que está dirigido el evento.
+        /// Este extremo es accesible únicamente para usuarios escolares.
         /// </summary>
-        /// <param name="newEvent">El nuevo evento</param>
-        /// <returns></returns>
+        /// <param name="newEvent">La información del nuevo evento que se añadirá.</param>
+        /// <returns>El evento registrado, con información completa del mismo.</returns>
         [Route("events")]
         [HttpPost]
         [ResponseType(typeof(Event))]
