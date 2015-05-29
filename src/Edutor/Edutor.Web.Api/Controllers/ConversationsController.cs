@@ -15,7 +15,9 @@ using System.Web.Http.Description;
 namespace Edutor.Web.Api.Controllers
 {
     /// <summary>
-    /// Conjunto de extremos REST que permiten operar con los servicios de mensajería que ofrece la plataforma
+    /// Los extremos de conversaciones permiten el intercambio de mensajes entre profesores y tutores.
+    /// Las conversaciones son interacciones uno a uno, tutor con profesor.
+    /// A diferencia de los otros tipos de interacciones en Edutor, las conversaciones no son únicas por alumno.
     /// </summary>
     [Edutor.Web.Common.UnitOfWorkActionFilter]
     public class ConversationsController : ApiController
@@ -33,10 +35,12 @@ namespace Edutor.Web.Api.Controllers
         }
 
         /// <summary>
-        /// Obtiene la conversación indicada
+        /// Obtiene la conversación solicitada dado el identificador único, 
+        /// un usuario administrador podrá recuperar cualquier conversación, 
+        /// mientras que cualquier otro usuario solo podrá recuperar conversaciones de las que es participante.
         /// </summary>
-        /// <param name="conversationId">El id de la conversación a recuperar</param>
-        /// <returns>Responde con la conversación indicada, en caso de que no exista se responderá con un código de error</returns>
+        /// <param name="conversationId">El identificador la conversación a recuperar, debe ser un número mayor a 0.</param>
+        /// <returns>Devuelve la conversación deseada, en caso de que exista y el usuario tenga permiso para acceder a ella.</returns>
         [Route("conversations/{conversationId:int}")]
         [HttpGet]
         [ResponseType(typeof(Conversation))]
@@ -47,10 +51,13 @@ namespace Edutor.Web.Api.Controllers
         }
 
         /// <summary>
-        /// Regresa una lista paginada con los mensajes de la conversación indicada
+        /// Obtiene una lista paginada que contiene los mensajes de la conversación solicitada, 
+        /// un usuario administrador podrá recuperar los mensajes de cualquier conversación, 
+        /// mientras que cualquier otro usuario solo podrá recuperar mensajes de conversaciones de las que es participante.
         /// </summary>
-        /// <param name="conversationId">El id de la conversación a consultar</param>
-        /// <returns>Una lista paginada con los mensajes de la conversación consultada</returns>
+        /// <param name="conversationId">El identificador de la conversación a consultar</param>
+        /// <returns>Una lista paginada con los mensajes de la conversación consultada, 
+        /// en caso de que la conversación exista y el usuario tenga permiso para acceder a ella.</returns>
         [Route("conversations/{conversationId:int}/messages")]
         [HttpGet]
         [ResponseType(typeof(PagedDataResponse<Message>))]
@@ -62,29 +69,33 @@ namespace Edutor.Web.Api.Controllers
         }
 
         /// <summary>
-        /// Obtiene el mensaje indicado de la conversación deseada
+        /// Obtiene el mensaje solicitado de la conversación solicitada,
+        /// un usuario administrador podrá recuperar los mensajes de cualquier conversación,
+        /// mientras que cualquier otro usuario solo podrá recuperar mensajes de las conversaciones de las que es participante.
         /// </summary>
-        /// <param name="conversationId">El id de la conversación a consultar</param>
-        /// /// <param name="messageId">El id del mensaje a consultar</param>
+        /// <param name="conversationId">El identificador de la conversación a consultar.</param>
+        /// /// <param name="messageId">El identificador del mensaje a consultar.</param>
         [Route("conversations/{conversationId:int}/messages/{messageId:int}")]
         [HttpGet]
         [ResponseType(typeof(Message))]
         [Authorize(Roles = Constants.RoleNames.All)]
-        public Message GetMessagesForConversation(int conversationId, int messageId)
+        public Message GetMessageForConversation(int conversationId, int messageId)
         {
             return _getConversations.GetMessagesForConversation(conversationId, messageId);
         }
 
         /// <summary>
-        /// Envía un nuevo mensaje y se asocia con una conversación, en caso de no existir, se crea una conversación
+        /// Envía un nuevo mensaje y lo asocia a una conversación,
+        /// en caso de que la conversación no exista, la crea.
+        /// Un usuario administrador no podrá enviar mensajes.s
         /// </summary>
-        /// <param name="message">El mensaje a a enviar a través del sistema</param>
-        /// <returns></returns>
+        /// <param name="message">El mensaje a a enviar a través del sistema.</param>
+        /// <returns>El mensaje recién creado, con información sobre él mismo y la conversación a la que está asociado.</returns>
         [Route("conversations")]
         [HttpPost]
         [ResponseType(typeof(Message))]
-        [Authorize(Roles = Constants.RoleNames.All)]
-        public IHttpActionResult AddTutor(NewMessage message)
+        [Authorize(Roles = Constants.RoleNames.TeacherAndTutor)]
+        public IHttpActionResult AddMessage(NewMessage message)
         {
             var x = _postConversations.AddNewMessage(message);
             var result = new ModelPostedActionResult<Message>(Request, x);

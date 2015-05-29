@@ -9,6 +9,7 @@ using Edutor.Data;
 using Edutor.Data.QueryProcessors;
 using Edutor.Common.TypeMapping;
 using Edutor.Web.Api.LinkServices;
+using System.Web;
 
 namespace Edutor.Web.Api.InquiryProcessing
 {

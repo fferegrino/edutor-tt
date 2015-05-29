@@ -18,7 +18,9 @@ using System.Web.Http.Description;
 namespace Edutor.Web.Api.Controllers
 {
     /// <summary>
-    /// Conjunto de extremos REST que permiten operar con los servicios de creación y manipulación de eventos que ofrece la plataforma
+    /// Los extremos de eventos permiten la planeación de eventos escolares, 
+    /// son los usuarios escolares los encargados de crear los eventos mientras que los tutores los encargados de
+    /// confirmar o negar su asistencia a los mismos.
     /// </summary>
     [UnitOfWorkActionFilter]
     public class EventsController : ApiController
@@ -43,10 +45,12 @@ namespace Edutor.Web.Api.Controllers
         }
 
         /// <summary>
-        /// Obtiene el evento indicado
+        /// Obtiene el evento indicado por el identificador único,
+        /// un usuario administrador podrá recuperar cualquier evento, 
+        /// mientras que cualquier otro usuario solo podrá recuperar los eventos de los que es participante.
         /// </summary>
-        /// <param name="eventId">El identificador único del evento que se desea obtener</param>
-        /// <returns></returns>
+        /// <param name="eventId">El identificador único del evento que se desea obtener, debe ser un entero mayor a 0.</param>
+        /// <returns>Devuelve la conversación deseada, en caso de que exista y el usuario tenga permiso para acceder a ella.</returns>
         [Route("events/{eventId:int}")]
         [HttpGet]
         [ResponseType(typeof(Event))]
@@ -57,10 +61,13 @@ namespace Edutor.Web.Api.Controllers
         }
 
         /// <summary>
-        /// Obtiene el una lista de los estudiantes invitados al evento indicado
+        /// Obtiene una lista paginada de los estudiantes invitados y su estatus respecto al evento.
+        /// A este extremo sólamente pueden acceder usuarios escolares, 
+        /// los administradores pueden recuperar los invitados de cualquier evento mientras que cualquier otro solo puede
+        /// acceder a la lista de invitados a eventos que ha creado.
         /// </summary>
-        /// <param name="eventId">El identificador único del evento que se desea obtener</param>
-        /// <returns></returns>
+        /// <param name="eventId">El identificador único del evento que se desea obtener la lista de invitados.</param>
+        /// <returns>La lista de invitados deseada, en caso de que exista y el usuario tenga permiso para acceder a ella.</returns>
         [Route("events/{eventId:int}/attendees")]
         [HttpGet]
         [ResponseType(typeof(PagedDataResponse<StudentInvitation>))]
@@ -72,16 +79,18 @@ namespace Edutor.Web.Api.Controllers
         }
 
         /// <summary>
-        /// Obtiene la invitación del estudiante indicado al evento
+        /// Obtiene la invitación del estudiante al evento indicado.
+        /// Esta acción es solo accesible para el usuario tutor del estudiante invitado.
         /// </summary>
         /// <param name="eventId">El identificador único del evento que se desea obtener</param>
         /// <param name="studentId">El identificador único del estudiante deseado</param>
-        /// <returns></returns>
+        /// <returns>Regresa la invitación del estudiante indicado al evento, 
+        /// en caso de que exista y el usuario tenga permisos para acceder a ella</returns>
         [Route("events/{eventId:int}/attendees/{studentId:int}")]
         [HttpGet]
         [ResponseType(typeof(StudentInvitation))]
         [Authorize(Roles = Constants.RoleNames.Tutor)]
-        public StudentInvitation GetEventAttendees(int eventId, int studentId)
+        public StudentInvitation GetEventAttendee(int eventId, int studentId)
         {
             return _getStudents.GetStudentsForEvent(eventId, studentId);
         }
@@ -95,7 +104,7 @@ namespace Edutor.Web.Api.Controllers
         [Route("events/{eventId:int}/attendees/{studentId:int}")]
         [HttpPut]
         [Authorize(Roles = Constants.RoleNames.Tutor)]
-        public IHttpActionResult GetEventAttendees(int eventId, int studentId, NewRsvp rsvp)
+        public IHttpActionResult ConfirmAttendance(int eventId, int studentId, NewRsvp rsvp)
         {
             rsvp.EventId = eventId;
             rsvp.StudentId = studentId;
