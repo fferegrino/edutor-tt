@@ -98,8 +98,8 @@ namespace Edutor.Web.Api.Controllers
         /// <returns>Una lista paginada de las notificaciones para el estudiante</returns>
         [HttpGet]
         [Route("students/{studentId:int}/notifications")]
-        [Authorize(Roles = Constants.RoleNames.Tutor)]
-        public PagedDataResponse<Notification> GetNotificationsForStudent(int studentId)
+        //[Authorize(Roles = Constants.RoleNames.Tutor)]
+        public PagedDataResponse<StudentNotification> GetNotificationsForStudent(int studentId)
         {
             var request = _pagedDataRequestFactory.Create(Request.RequestUri);
             var r = _getNotifications.GetNotificationsForStudent(studentId, request);
@@ -114,7 +114,7 @@ namespace Edutor.Web.Api.Controllers
         [HttpGet]
         [Route("students/{studentId:int}/events")]
         [Authorize(Roles = Constants.RoleNames.Tutor)]
-        public PagedDataResponse<Event> GetEventsForStudent(int studentId)
+        public PagedDataResponse<StudentInvitation> GetEventsForStudent(int studentId)
         {
             var request = _pagedDataRequestFactory.Create(Request.RequestUri);
             var r = _getEvents.GetEventsForStudent(studentId, request);

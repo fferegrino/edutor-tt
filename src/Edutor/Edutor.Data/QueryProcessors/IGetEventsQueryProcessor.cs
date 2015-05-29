@@ -11,7 +11,7 @@ namespace Edutor.Data.QueryProcessors
     {
         QueryResult<Event> GetEventsForSchoolUser(int schoolUser, PagedDataRequest requestInfo);
 
-        QueryResult<Event> GetEventsForStudent(int studentId, PagedDataRequest requestInfo);
+        QueryResult<Invitation> GetEventsForStudent(int studentId, PagedDataRequest requestInfo);
 
         Event GetEvent(int eventId);
 

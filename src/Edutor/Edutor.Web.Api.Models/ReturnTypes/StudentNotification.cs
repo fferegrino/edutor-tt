@@ -16,7 +16,6 @@ namespace Edutor.Web.Api.Models.ReturnTypes
         /// </summary>
         public int NotificationId { get; set; }
 
-
         /// <summary>
         /// El identificador único del usuario escolar dentro del sistema que generó la pregunta
         /// </summary>

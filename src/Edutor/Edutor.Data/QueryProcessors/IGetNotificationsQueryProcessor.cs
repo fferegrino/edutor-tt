@@ -11,7 +11,7 @@ namespace Edutor.Data.QueryProcessors
     {
         QueryResult<Notification> GetNotificationsForSchoolUser(int schoolUser, PagedDataRequest requestInfo);
 
-        QueryResult<Notification> GetNotificationsForStudent(int studentId, PagedDataRequest requestInfo);
+        QueryResult<NotificationDetail> GetNotificationsForStudent(int studentId, PagedDataRequest requestInfo);
 
         Notification GetNotification(int notificationId);
 

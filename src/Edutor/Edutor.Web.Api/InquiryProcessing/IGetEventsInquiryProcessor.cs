@@ -18,7 +18,7 @@ namespace Edutor.Web.Api.InquiryProcessing
 
         PagedDataResponse<Return.Event> GetEventsForSchoolUser(int schoolUserId, PagedDataRequest request);
 
-        PagedDataResponse<Return.Event> GetEventsForStudent(int studentId, PagedDataRequest requestInfo);
+        PagedDataResponse<Return.StudentInvitation> GetEventsForStudent(int studentId, PagedDataRequest requestInfo);
 
         Return.Event GetEvent(int eventId);
     }
@@ -29,13 +29,16 @@ namespace Edutor.Web.Api.InquiryProcessing
         private readonly IAutoMapper _autoMapper;
         private readonly IGetEventsQueryProcessor _queryProcessor;
         private readonly IEventsLinkService _notifLinkService;
+        private readonly IElementsLinkService _b;
         private readonly ICommonLinkService _commonLinkService;
 
         public GetEventsInquiryProcessor(IAutoMapper autoMapper,
             IGetEventsQueryProcessor queryProcessor,
             IEventsLinkService notifLinkService,
+            IElementsLinkService b,
             ICommonLinkService commonLinkService)
         {
+            _b = b;
             _autoMapper = autoMapper;
             _queryProcessor = queryProcessor;
             _notifLinkService = notifLinkService;
@@ -58,13 +61,13 @@ namespace Edutor.Web.Api.InquiryProcessing
 
             return inquiryResponse;
         }
-        public Models.PagedDataResponse<Return.Event> GetEventsForStudent(int studentId, PagedDataRequest requestInfo)
+        public Models.PagedDataResponse<Return.StudentInvitation> GetEventsForStudent(int studentId, PagedDataRequest requestInfo)
         {
             var qresult = _queryProcessor.GetEventsForStudent(studentId, requestInfo);
 
-            var inquiryResponse = new PagedDataResponse<Return.Event>
+            var inquiryResponse = new PagedDataResponse<Return.StudentInvitation>
             {
-                Items = CastCollection(qresult),
+                Items = CastInvitationToStudentInvitation(qresult),
                 PageCount = qresult.TotalPageCount,
                 PageNumber = requestInfo.PageNumber,
                 PageSize = requestInfo.PageSize
@@ -84,6 +87,13 @@ namespace Edutor.Web.Api.InquiryProcessing
             return t;
         }
 
+
+        private List<Return.StudentInvitation> CastInvitationToStudentInvitation(QueryResult<Data.Entities.Invitation> qresult)
+        {
+            var x = qresult.QueriedItems.Select(r => _autoMapper.Map<Return.StudentInvitation>(r)).ToList();
+            x.ForEach(t => _b.AddAllLinks(t));
+            return x;
+        }
 
         private List<Return.Event> CastCollection(QueryResult<Data.Entities.Event> qresult)
         {

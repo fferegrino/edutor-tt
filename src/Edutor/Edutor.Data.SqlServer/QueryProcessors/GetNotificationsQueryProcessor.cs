@@ -40,7 +40,7 @@ namespace Edutor.Data.SqlServer.QueryProcessors
             return qResult;
         }
 
-        public QueryResult<Notification> GetNotificationsForStudent(int studentId, PagedDataRequest requestInfo)
+        public QueryResult<NotificationDetail> GetNotificationsForStudent(int studentId, PagedDataRequest requestInfo)
         {
 
             var teachings = _session.QueryOver<NotificationDetail>().Where(t => t.Student.StudentId == studentId).JoinQueryOver(x => x.Notification).OrderBy(q => q.CreationDate).Desc;
@@ -51,11 +51,11 @@ namespace Edutor.Data.SqlServer.QueryProcessors
 
             var selected = teachings.Skip(startIndex).Take(requestInfo.PageSize).List();
 
-            var teachers = new List<Notification>();
-            foreach (var t in selected)
-                teachers.Add(_session.QueryOver<Notification>().Where(u => u.NotificationId == t.Notification.NotificationId).SingleOrDefault());
+            //var teachers = new List<Notification>();
+            //foreach (var t in selected)
+            //    teachers.Add(_session.QueryOver<Notification>().Where(u => u.NotificationId == t.Notification.NotificationId).SingleOrDefault());
 
-            var qResult = new QueryResult<Notification>(teachers, totalItemCount, requestInfo.PageSize);
+            var qResult = new QueryResult<NotificationDetail>(selected, totalItemCount, requestInfo.PageSize);
 
             return qResult;
         }

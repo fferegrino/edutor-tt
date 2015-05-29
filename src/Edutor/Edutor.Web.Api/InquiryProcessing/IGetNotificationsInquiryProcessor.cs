@@ -18,7 +18,7 @@ namespace Edutor.Web.Api.InquiryProcessing
 
         PagedDataResponse<Return.Notification> GetNotificationsForSchoolUser(int schoolUserId, PagedDataRequest request);
 
-        PagedDataResponse<Return.Notification> GetNotificationsForStudent(int studentId, PagedDataRequest requestInfo);
+        PagedDataResponse<Return.StudentNotification> GetNotificationsForStudent(int studentId, PagedDataRequest requestInfo);
 
         Return.Notification GetNotification(int notificationId);
     }
@@ -30,12 +30,15 @@ namespace Edutor.Web.Api.InquiryProcessing
         private readonly IGetNotificationsQueryProcessor _queryProcessor;
         private readonly INotificationsLinkService _notifLinkService;
         private readonly ICommonLinkService _commonLinkService;
+        private readonly IElementsLinkService _b;
 
         public GetNotificationsInquiryProcessor(IAutoMapper autoMapper,
             IGetNotificationsQueryProcessor queryProcessor,
             INotificationsLinkService notifLinkService,
+            IElementsLinkService b,
             ICommonLinkService commonLinkService)
         {
+            _b = b;
             _autoMapper = autoMapper;
             _queryProcessor = queryProcessor;
             _notifLinkService = notifLinkService;
@@ -59,13 +62,13 @@ namespace Edutor.Web.Api.InquiryProcessing
             return inquiryResponse;
         }
 
-        public PagedDataResponse<Return.Notification> GetNotificationsForStudent(int studentId, PagedDataRequest request)
+        public PagedDataResponse<Return.StudentNotification> GetNotificationsForStudent(int studentId, PagedDataRequest request)
         {
             var qresult = _queryProcessor.GetNotificationsForStudent(studentId, request);
 
-            var inquiryResponse = new PagedDataResponse<Return.Notification>
+            var inquiryResponse = new PagedDataResponse<Return.StudentNotification>
             {
-                Items = CastCollection(qresult),
+                Items = Cast(qresult),
                 PageCount = qresult.TotalPageCount,
                 PageNumber = request.PageNumber,
                 PageSize = request.PageSize
@@ -74,6 +77,14 @@ namespace Edutor.Web.Api.InquiryProcessing
             _commonLinkService.AddPageLinks(inquiryResponse);
 
             return inquiryResponse;
+        }
+
+
+        private List<Return.StudentNotification> Cast(QueryResult<Data.Entities.NotificationDetail> qresult)
+        {
+            var x = qresult.QueriedItems.Select(r => _autoMapper.Map<Return.StudentNotification>(r)).ToList();
+            x.ForEach(t => _b.AddAllLinks(t));
+            return x;
         }
 
         private List<Return.Notification> CastCollection(QueryResult<Data.Entities.Notification> qresult)

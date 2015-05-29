@@ -40,7 +40,7 @@ namespace Edutor.Data.SqlServer.QueryProcessors
             return qResult;
         }
 
-        public QueryResult<Event> GetEventsForStudent(int studentId, PagedDataRequest requestInfo)
+        public QueryResult<Invitation> GetEventsForStudent(int studentId, PagedDataRequest requestInfo)
         {
 
             var teachings = _session.QueryOver<Invitation>().Where(t => t.Student.StudentId == studentId).JoinQueryOver(x => x.Event).OrderBy(q => q.CreationDate).Desc;
@@ -51,11 +51,11 @@ namespace Edutor.Data.SqlServer.QueryProcessors
 
             var selected = teachings.Skip(startIndex).Take(requestInfo.PageSize).List();
 
-            var teachers = new List<Event>();
-            foreach (var t in selected)
-                teachers.Add(_session.QueryOver<Event>().Where(u => u.EventId == t.Event.EventId).SingleOrDefault());
+            //var teachers = new List<Event>();
+            //foreach (var t in selected)
+            //    teachers.Add(_session.QueryOver<Event>().Where(u => u.EventId == t.Event.EventId).SingleOrDefault());
 
-            var qResult = new QueryResult<Event>(teachers, totalItemCount, requestInfo.PageSize);
+            var qResult = new QueryResult<Invitation>(selected, totalItemCount, requestInfo.PageSize);
 
             return qResult;
         }

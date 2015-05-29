@@ -33,6 +33,16 @@ namespace Edutor.Web.Api.Models.ReturnTypes
         public string EventName { get; set; }
 
         /// <summary>
+        /// La fecha en la que se llevará a cabo el evento
+        /// </summary>
+        public DateTime Date { get; set; }
+
+        /// <summary>
+        /// La fecha en la que fue creado el evento
+        /// </summary>
+        public DateTime CreationDate { get; set; }
+
+        /// <summary>
         /// Descripción breve del evento
         /// </summary>
         public string Description { get; set; }
