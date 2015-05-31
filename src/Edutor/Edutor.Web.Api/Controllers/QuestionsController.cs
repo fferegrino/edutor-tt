@@ -6,6 +6,7 @@ using Edutor.Web.Api.Models.NewModels;
 using Edutor.Web.Api.Models.ReturnTypes;
 using Edutor.Web.Api.UpdateProcessing;
 using Edutor.Web.Common;
+using Edutor.Web.Common.Filters;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -96,6 +97,7 @@ namespace Edutor.Web.Api.Controllers
         [HttpPost]
         [ResponseType(typeof(Question))]
         [Authorize(Roles = Constants.RoleNames.SchoolUser)]
+        [ValidationActionFilter]
         public IHttpActionResult AddQuestion(NewQuestion question)
         {
             var ret = _postQuestion.AddQuestion(question);
