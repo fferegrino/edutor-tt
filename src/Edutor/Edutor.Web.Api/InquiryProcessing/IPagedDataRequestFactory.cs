@@ -43,7 +43,7 @@ namespace Edutor.Web.Api.InquiryProcessing
             }
             catch (Exception e)
             {
-                _log.Error("Error parsing input", e);
+                _log.Error("Error al interpretar la entrada", e);
                 throw new HttpException((int)HttpStatusCode.BadRequest, e.Message);
             }
             pageNumber = pageNumber.GetBoundedValue(Constants.Paging.DefaultPageNumber, Constants.Paging.MinPageNumber);
