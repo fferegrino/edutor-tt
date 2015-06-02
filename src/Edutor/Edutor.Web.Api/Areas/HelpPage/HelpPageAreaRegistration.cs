@@ -19,6 +19,10 @@ namespace Edutor.Web.Api.Areas.HelpPage
                 "HelpPage_Default",
                 "docs/{action}/{apiId}",
                 new { controller = "Help", action = "Index", apiId = UrlParameter.Optional });
+            context.MapRoute(
+                "HelpPage_Print",
+                "docprint/{action}/{apiId}",
+                new { controller = "Print", action = "Index", apiId = UrlParameter.Optional });
 
             HelpPageConfig.Register(GlobalConfiguration.Configuration);
         }

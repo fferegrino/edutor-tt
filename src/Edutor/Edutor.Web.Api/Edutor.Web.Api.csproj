@@ -134,6 +134,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Areas\HelpPage\HelpPagePrint.css" />
     <Content Include="Areas\HelpPage\HelpPage.css" />
     <Content Include="Areas\HelpPage\img\brand.png" />
     <Content Include="Global.asax" />
@@ -149,6 +150,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Areas\HelpPage\ApiDescriptionExtensions.cs" />
     <Compile Include="Areas\HelpPage\App_Start\HelpPageConfig.cs" />
+    <Compile Include="Areas\HelpPage\Controllers\PrintController.cs" />
     <Compile Include="Areas\HelpPage\Controllers\HelpController.cs" />
     <Compile Include="Areas\HelpPage\HelpPageAreaRegistration.cs" />
     <Compile Include="Areas\HelpPage\HelpPageConfigurationExtensions.cs" />
@@ -270,6 +272,26 @@
     <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\CollectionModelDescription.cshtml" />
     <Content Include="Areas\HelpPage\Views\_ViewStart.cshtml" />
     <Content Include="Areas\HelpPage\Views\Help\Auth.cshtml" />
+    <Content Include="Areas\HelpPage\Views\Print\Api.cshtml" />
+    <Content Include="Areas\HelpPage\Views\Print\Auth.cshtml" />
+    <Content Include="Areas\HelpPage\Views\Print\DisplayTemplates\ApiGroup.cshtml" />
+    <Content Include="Areas\HelpPage\Views\Print\DisplayTemplates\CollectionModelDescription.cshtml" />
+    <Content Include="Areas\HelpPage\Views\Print\DisplayTemplates\ComplexTypeModelDescription.cshtml" />
+    <Content Include="Areas\HelpPage\Views\Print\DisplayTemplates\DictionaryModelDescription.cshtml" />
+    <Content Include="Areas\HelpPage\Views\Print\DisplayTemplates\EnumTypeModelDescription.cshtml" />
+    <Content Include="Areas\HelpPage\Views\Print\DisplayTemplates\HelpPageApiModel.cshtml" />
+    <Content Include="Areas\HelpPage\Views\Print\DisplayTemplates\ImageSample.cshtml" />
+    <Content Include="Areas\HelpPage\Views\Print\DisplayTemplates\InvalidSample.cshtml" />
+    <Content Include="Areas\HelpPage\Views\Print\DisplayTemplates\KeyValuePairModelDescription.cshtml" />
+    <Content Include="Areas\HelpPage\Views\Print\DisplayTemplates\ModelDescriptionLink.cshtml" />
+    <Content Include="Areas\HelpPage\Views\Print\DisplayTemplates\Parameters.cshtml" />
+    <Content Include="Areas\HelpPage\Views\Print\DisplayTemplates\Samples.cshtml" />
+    <Content Include="Areas\HelpPage\Views\Print\DisplayTemplates\SimpleTypeModelDescription.cshtml" />
+    <Content Include="Areas\HelpPage\Views\Print\DisplayTemplates\TextSample.cshtml" />
+    <Content Include="Areas\HelpPage\Views\Print\Index.cshtml" />
+    <Content Include="Areas\HelpPage\Views\Print\ResourceModel.cshtml" />
+    <Content Include="Areas\HelpPage\Views\Print\_ViewStart.cshtml" />
+    <Content Include="Areas\HelpPage\Views\Shared\_LayoutPaper.cshtml" />
     <None Include="Properties\PublishProfiles\apiedutor - FTP.pubxml" />
     <None Include="Properties\PublishProfiles\apiedutor - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\apiedutor.pubxml" />
