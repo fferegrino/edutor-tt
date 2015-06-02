@@ -18,7 +18,9 @@ using System.Web.Http.Description;
 namespace Edutor.Web.Api.Controllers
 {
     /// <summary>
-    /// Conjunto de extremos REST que permiten operar con los servicios de creación y manipulación de preguntas que ofrece la plataforma
+    /// Las preguntas son otra forma de comunicación que ofrecen los extremos de Edutor,
+    /// a través de ellos los usuarios escolares pueden crear preguntas y los tutores responderlas.
+    /// Los extremos requieren de que el usuario que los utiliza esté autorizado.
     /// </summary>
     [UnitOfWorkActionFilter]
     public class QuestionsController : ApiController
@@ -44,10 +46,12 @@ namespace Edutor.Web.Api.Controllers
 
 
         /// <summary>
-        /// Regresa la pregunta solicitada mediante la URL
+        /// Obtiene la pregunta indicada por su identificador único, 
+        /// Un usuario administrador podrá acceder a la información de todas las preguntas, 
+        /// mientras que cualquier otro usuario podrá acceder únicamente a las preguntas que creó o de las que es receptor.
         /// </summary>
-        /// <param name="questionId">El identificador único de la notificación deseada</param>
-        /// <returns></returns>
+        /// <param name="questionId">El identificador único de la pregunta a obtener.</param>
+        /// <returns>Devuelve la pregunta deseada, en caso de que exista y el usuario tenga permiso para acceder a él.</returns>
         [Route("questions/{questionId:int}")]
         [HttpGet]
         [Authorize(Roles = Constants.RoleNames.All)]
@@ -57,10 +61,12 @@ namespace Edutor.Web.Api.Controllers
         }
 
         /// <summary>
-        /// Regresa una lista paginada con las respuestas a la pregunta especificada
+        /// Obtiene una lista paginada con las respuestas a la pregunta, 
+        /// cada respuesta consiste del identificador del estudiante que responde y 
+        /// la respuesta elegida por el tutor del mismo.
         /// </summary>
-        /// <param name="questionId">El identificador único de la pregunta deseada</param>
-        /// <returns>Una lista paginada con las respuestas a la pregunta especificada</returns>
+        /// <param name="questionId">El identificador único de la pregunta de la que se desea obtener las respuestas.</param>
+        /// <returns>Devuelve una lista paginada con las respuestas a la pregunta.</returns>
         [HttpGet]
         [Route("questions/{questionId:int}/answers")]
         [ResponseType(typeof(PagedDataResponse<StudentAnswer>))]
@@ -73,10 +79,11 @@ namespace Edutor.Web.Api.Controllers
         }
 
         /// <summary>
-        /// Obtiene la respuesta escogida por este estudiante
+        /// Obtienen el la respuesta indicada, cada respuesta consiste del identificador del estudiante que responde y 
+        /// la respuesta elegida por el tutor del mismo.
         /// </summary>
-        /// <param name="questionId">El identificador único de la pregunta deseada</param>
-        /// <param name="studentId">El identificador único del estudiante</param>
+        /// <param name="questionId">El identificador único de la pregunta que se desea obtener.</param>
+        /// <param name="studentId">El identificador único del estudiante del que se desea obtener la respuesta.</param>
         /// <returns></returns>
         [HttpGet]
         [Route("questions/{questionId:int}/answers/{studentId}")]
@@ -92,7 +99,7 @@ namespace Edutor.Web.Api.Controllers
         /// Agrega una nueva pregunta al sistema de acuerdo a la información enviáda en el cuerpo de la petición
         /// </summary>
         /// <param name="question">La nueva pregunta a agregar</param>
-        /// <returns></returns>
+        /// <returns>La pregunta agregada al sistema.</returns>
         [Route("questions")]
         [HttpPost]
         [ResponseType(typeof(Question))]
@@ -112,7 +119,7 @@ namespace Edutor.Web.Api.Controllers
         /// <param name="answer">La respuesta a la pregunta</param>
         /// <param name="questionId">El identificador único de la pregunta deseada</param>
         /// <param name="studentId">El identificador único del estudiante a nombre de quien se resuelve la preguntta</param>
-        /// <returns></returns>
+        /// <returns>Un código de estatus 204 (sin contenido) si la acción se realizó con éxito</returns>
         [HttpPut]
         [Route("questions/{questionId:int}/answers/{studentId}")]
         [Authorize(Roles = Constants.RoleNames.Tutor)]

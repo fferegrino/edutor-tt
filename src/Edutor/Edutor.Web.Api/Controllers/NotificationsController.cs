@@ -94,7 +94,7 @@ namespace Edutor.Web.Api.Controllers
         /// Agrega una nueva notificación al sistema de acuerdo a la información enviáda en el cuerpo de la petición
         /// </summary>
         /// <param name="newNotification">La nueva notificación</param>
-        /// <returns></returns>
+        /// <returns>La notificación agregada al sistema.</returns>
         [HttpPost]
         [ResponseType(typeof(Notification))]
         [Route("notifications")]
@@ -110,15 +110,15 @@ namespace Edutor.Web.Api.Controllers
         /// </summary>
         /// <param name="notificationId">El identificador único de la notificación que se desea marcar como vista</param>
         /// <param name="studentId">El identificador único del estudiante que vió la notificación/param>
-        /// <returns></returns>
+        /// <returns>Un código de estatus 204 (sin contenido) si la acción se realizó con éxito</returns>
         [HttpPut]
         [ResponseType(typeof(int))]
         [Route("notifications/{notificationId:int}/details/{studentId:int}")]
         [Authorize(Roles = Constants.RoleNames.Tutor)]
-        public int MarkNotificationAsSeen(int notificationId, int studentId)
+        public IHttpActionResult MarkNotificationAsSeen(int notificationId, int studentId)
         {
             _updateNotifications.MarkAsSeen(new NewSeenNotification { NotificationId = notificationId, StudentId = studentId });
-            return 0;
+            return new ModelDeletedActionResult(Request);
         }
     }
 }

@@ -59,11 +59,13 @@ namespace Edutor.Web.Api.Controllers
         }
 
         /// <summary>
-        /// Recupera una lista paginada de usuarios escolares
+        /// Obtiene una lista paginada de todos los usuarios escolares registrados en el sistema.
+        /// Este extremo es accesible únicamente por usuarios administradores.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>Una lista paginada de todos los usuarios escolares que existen en el sistema.</returns>
         [HttpGet]
         [Route("schoolusers")]
+        [Authorize(Roles = Constants.RoleNames.Administrator)]
         public PagedDataResponse<SchoolUser> GetSchoolUsers()
         {
             var request = _pagedDataRequestFactory.Create(Request.RequestUri);
@@ -73,10 +75,12 @@ namespace Edutor.Web.Api.Controllers
 
 
         /// <summary>
-        /// Obtiene el usuario escolar indicado
+        /// Obtiene el grupo indicado por su identificador único, 
+        /// Un usuario administrador podrá acceder a la información de todos los usuarios escolares, 
+        /// mientras que cualquier otro usuario podrá acceder únicamente a su información.
         /// </summary>
-        /// <param name="schoolUserId">El id del usuario escolar</param>
-        /// <returns></returns>
+        /// <param name="schoolUserId">El identificador único del usuario escolar a obtener.</param>
+        /// <returns>El usuario escolar deseado.</returns>
         [HttpGet]
         [Route("schoolusers/{schoolUserId:int}")]
         [Authorize(Roles = Constants.RoleNames.All)]
