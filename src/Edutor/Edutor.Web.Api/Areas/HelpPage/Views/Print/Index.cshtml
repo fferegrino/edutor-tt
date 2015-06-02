@@ -3,7 +3,7 @@
 @using System.Web.Http.Description
 @using System.Collections.ObjectModel
 @using Edutor.Web.Api.Areas.HelpPage;
-using Edutor.Web.Api.Areas.HelpPage.ModelDescriptions;
+
 @model Collection<ApiDescription>
 
 @{
@@ -22,14 +22,6 @@ using Edutor.Web.Api.Areas.HelpPage.ModelDescriptions;
     </div>
 </header>
 <div id="body" class="help-page">
-    <section class="featured">
-        <div class="content-wrapper">
-            <h1>REST APIs</h1>
-            <p>
-                Las REST APIs proveen acceso de lectura-escritura a los datos del sistema Edutor, agregar usuarios y tutores, integrar grupos, crear eventos y más. La mayoría de los extremos expuestos requieren de peticiones autorizadas. Las formas de respuesta son JSON o XML. Todas las peticiones a las APIs de Edutor contar con encabezado de @Html.ActionLink("autorización", "auth") para ser procesadas.
-            </p>
-        </div>
-    </section>
     <section class="content-wrapper main-content clear-fix">
         @foreach (var apiGroup in apiGroups)
         {
@@ -60,10 +52,10 @@ using Edutor.Web.Api.Areas.HelpPage.ModelDescriptions;
                     <h4>Autorización</h4>
                     <p>@apiModel.AuthorizationMessage</p>
                 }
-                <h3>Información de la petición</h3>
-                <h4>Parámetros de la URI</h4>
+                <h4>Información de la petición</h4>
+                <h5>Parámetros de la URI</h5>
                 @Html.DisplayFor(m => apiModel.UriParameters, "Parameters");
-                <h3>Parámetros del cuerpo</h3>
+                <h5>Parámetros del cuerpo</h5>
                 <p>@apiModel.RequestDocumentation</p>
                 if (apiModel.RequestModelDescription != null)
                 {
@@ -80,13 +72,13 @@ using Edutor.Web.Api.Areas.HelpPage.ModelDescriptions;
 
                 if (apiModel.SampleRequests.Count > 0)
                 {
-                    <h3>Formato de solicitud</h3>
+                    <h5>Formato de solicitud</h5>
                     @Html.DisplayFor(m => apiModel.SampleRequests, "Samples")
                 }
 
-                <h2>Información de la respuesta</h2>
+                <h4>Información de la respuesta</h4>
 
-                <h3>Descripción de la respuesta</h3>
+                <h5>Descripción de la respuesta</h5>
 
                 <p>@endpoint.ResponseDescription.Documentation</p>
 
@@ -105,7 +97,7 @@ using Edutor.Web.Api.Areas.HelpPage.ModelDescriptions;
 
                 if (apiModel.SampleResponses.Count > 0)
                 {
-                    <h3>Formato de respuesta</h3>
+                    <h4>Formato de respuesta</h4>
                     @Html.DisplayFor(m => apiModel.SampleResponses, "Samples")
                 }
 
