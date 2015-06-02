@@ -28,7 +28,7 @@ namespace Edutor.Web.Api.MaintenanceProcessing
 
         private HttpResponseMessage Execute()
         {
-            var resp = _requestMessage.CreateResponse(System.Net.HttpStatusCode.Created, _created);
+            var resp = _requestMessage.CreateResponse(System.Net.HttpStatusCode.OK, _created);
             resp.Headers.Location = _created.GetLocationLink();
             return resp;
         }
