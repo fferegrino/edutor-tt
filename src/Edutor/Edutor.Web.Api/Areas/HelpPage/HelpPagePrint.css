@@ -67,7 +67,10 @@ header.help-page {
     }
 
 
-a:
+a{
+    text-decoration:none;
+    color: black;
+}
 /*.help-page a:hover {
     background-color: transparent;
 }
