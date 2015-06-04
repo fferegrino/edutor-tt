@@ -53,7 +53,7 @@ namespace Edutor.Data.SqlServer.QueryProcessors
 
             //var teachers = new List<Event>();
             //foreach (var t in selected)
-            //    teachers.Add(_session.QueryOver<Event>().Where(u => u.EventId == t.Event.EventId).SingleOrDefault());
+            //    teachers.Add(_session.QueryOver<Event>().Where(u => u.EventId == t.Event.EventId).List().FirstOrDefault());
 
             var qResult = new QueryResult<Invitation>(selected, totalItemCount, requestInfo.PageSize);
 
@@ -63,7 +63,7 @@ namespace Edutor.Data.SqlServer.QueryProcessors
         public Event GetEvent(int eventId)
         {
             return
-                _session.QueryOver<Event>().Where(n => n.EventId == eventId).SingleOrDefault();
+                _session.QueryOver<Event>().Where(n => n.EventId == eventId).List().FirstOrDefault();
         }
     }
 }

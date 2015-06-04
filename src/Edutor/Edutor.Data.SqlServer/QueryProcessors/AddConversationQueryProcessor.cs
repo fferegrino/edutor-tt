@@ -31,10 +31,10 @@ namespace Edutor.Data.SqlServer.QueryProcessors
 
             var conversation = _session.QueryOver<Conversation>().Where(
                 c => (c.User1.UserId == fromId && c.User2.UserId == toId)
-                || (c.User1.UserId == toId && c.User2.UserId == fromId)).SingleOrDefault();
+                || (c.User1.UserId == toId && c.User2.UserId == fromId)).List().FirstOrDefault();
 
-            var fromUser = _session.QueryOver<User>().Where(u => u.UserId == fromId).SingleOrDefault();
-            var toUser = _session.QueryOver<User>().Where(u => u.UserId == toId).SingleOrDefault();
+            var fromUser = _session.QueryOver<User>().Where(u => u.UserId == fromId).List().FirstOrDefault();
+            var toUser = _session.QueryOver<User>().Where(u => u.UserId == toId).List().FirstOrDefault();
 
             if (conversation == null)
             {

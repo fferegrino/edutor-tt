@@ -26,8 +26,8 @@ namespace Edutor.Data.SqlServer.QueryProcessors
 
         public void MarkAsSeen(NotificationDetail notificationDetail)
         {
-            notificationDetail.Student = _session.QueryOver<Student>().Where(s => s.StudentId == notificationDetail.StudentId).SingleOrDefault();
-            notificationDetail.Notification = _session.QueryOver<Notification>().Where(s => s.NotificationId == notificationDetail.NotificationId).SingleOrDefault();
+            notificationDetail.Student = _session.QueryOver<Student>().Where(s => s.StudentId == notificationDetail.StudentId).List().FirstOrDefault();
+            notificationDetail.Notification = _session.QueryOver<Notification>().Where(s => s.NotificationId == notificationDetail.NotificationId).List().FirstOrDefault();
             notificationDetail.Seen = true;
             _session.Update(notificationDetail);
         }

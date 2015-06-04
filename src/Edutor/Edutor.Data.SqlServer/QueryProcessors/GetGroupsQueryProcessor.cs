@@ -53,7 +53,7 @@ namespace Edutor.Data.SqlServer.QueryProcessors
 
             var teachers = new List<Group>();
             foreach (var t in selected)
-                teachers.Add(_session.QueryOver<Group>().Where(u => u.GroupId == t.Group.GroupId).SingleOrDefault());
+                teachers.Add(_session.QueryOver<Group>().Where(u => u.GroupId == t.Group.GroupId).List().FirstOrDefault());
 
             var qResult = new QueryResult<Group>(teachers, totalItemCount, requestInfo.PageSize);
 
@@ -62,7 +62,7 @@ namespace Edutor.Data.SqlServer.QueryProcessors
 
         public Group GetGroup(int groupId)
         {
-            var q = _session.QueryOver<Group>().Where(user => user.GroupId == groupId).SingleOrDefault();
+            var q = _session.QueryOver<Group>().Where(user => user.GroupId == groupId).List().FirstOrDefault();
 
             if (q == null) throw new Edutor.Data.Exceptions.ObjectNotFoundException("No existe un grupo con el Id " + groupId);
 
@@ -73,7 +73,7 @@ namespace Edutor.Data.SqlServer.QueryProcessors
 
         public Group GetGroup(string name)
         {
-            var q = _session.QueryOver<Group>().Where(user => user.Name == name).SingleOrDefault();
+            var q = _session.QueryOver<Group>().Where(user => user.Name == name).List().FirstOrDefault();
 
             if (q == null) throw new Edutor.Data.Exceptions.ObjectNotFoundException("No existe un grupo con el nombre " + name);
 

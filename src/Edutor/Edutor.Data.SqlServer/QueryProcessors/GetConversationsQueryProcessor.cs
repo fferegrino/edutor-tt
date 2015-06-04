@@ -26,14 +26,14 @@ namespace Edutor.Data.SqlServer.QueryProcessors
 
         public Conversation GetConversation(int conversationId)
         {
-            var q = _session.QueryOver<Conversation>().Where(c => c.ConversationId == conversationId).SingleOrDefault();
+            var q = _session.QueryOver<Conversation>().Where(c => c.ConversationId == conversationId).List().FirstOrDefault();
             if (q == null) throw new Edutor.Data.Exceptions.ObjectNotFoundException("La conversación con Id " + conversationId + " no existe.");
             return q;
         }
 
         public Message GetMessagesForConversation(int conversationId, int messageId)
         {
-            var q = _session.QueryOver<Message>().Where(m => m.Conversation.ConversationId == conversationId && m.MessageId == messageId).SingleOrDefault();
+            var q = _session.QueryOver<Message>().Where(m => m.Conversation.ConversationId == conversationId && m.MessageId == messageId).List().FirstOrDefault();
             return q;
         }
 

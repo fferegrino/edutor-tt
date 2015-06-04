@@ -25,8 +25,8 @@ namespace Edutor.Data.SqlServer.QueryProcessors
 
         public void AddNotification(Entities.Notification notification)
         {
-            notification.SchoolUser = _session.QueryOver<Entities.User>().Where(x => x.UserId == notification.SchoolUserId).SingleOrDefault();
-            notification.Group = _session.QueryOver<Entities.Group>().Where(g => g.GroupId == notification.GroupId).SingleOrDefault();
+            notification.SchoolUser = _session.QueryOver<Entities.User>().Where(x => x.UserId == notification.SchoolUserId).List().FirstOrDefault();
+            notification.Group = _session.QueryOver<Entities.Group>().Where(g => g.GroupId == notification.GroupId).List().FirstOrDefault();
             notification.CreationDate = _dateTime.UtcNow;
             _session.Save(notification);
         }

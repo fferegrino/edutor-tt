@@ -100,12 +100,12 @@ namespace Edutor.Web.Api.Securitiy
         public virtual User GetUser(int userId, string password)
         {
             string p = PasswordHasher.HashAndSaltPassword(password);
-            return Session.QueryOver<User>().Where(user => user.UserId == userId && user.Password == p).SingleOrDefault();
+            return Session.QueryOver<User>().Where(user => user.UserId == userId && user.Password == p).Take(1).List().FirstOrDefault();
         }
 
         private Student GetStudent(string token)
         {
-            return Session.QueryOver<Student>().Where(student => student.Token == (token)).SingleOrDefault();
+            return Session.QueryOver<Student>().Where(student => student.Token == (token)).Take(1).List().FirstOrDefault();
         }
     }
 }

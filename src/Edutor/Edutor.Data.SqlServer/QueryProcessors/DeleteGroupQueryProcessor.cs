@@ -28,7 +28,7 @@ namespace Edutor.Data.SqlServer.QueryProcessors
         public void Delete(int gorupId)
         {
             int deletingUser = _userSession.UserId;
-            var groupToDelete = _session.QueryOver<Group>().Where(gr => gr.GroupId == gorupId).SingleOrDefault();
+            var groupToDelete = _session.QueryOver<Group>().Where(gr => gr.GroupId == gorupId).List().FirstOrDefault();
             if (groupToDelete != null) // Allow idempotency
                 _session.Delete(groupToDelete);
         }
@@ -37,7 +37,7 @@ namespace Edutor.Data.SqlServer.QueryProcessors
         public void UnlinkStudent(int groupId, int studentId)
         {
             int deletingUser = _userSession.UserId;
-            var linkToDelete = _session.QueryOver<Enrollment>().Where(en => en.Student.StudentId == studentId && en.Group.GroupId == groupId).SingleOrDefault();
+            var linkToDelete = _session.QueryOver<Enrollment>().Where(en => en.Student.StudentId == studentId && en.Group.GroupId == groupId).List().FirstOrDefault();
             if (linkToDelete != null) // Allow idempotency
                 _session.Delete(linkToDelete);
         }
@@ -45,7 +45,7 @@ namespace Edutor.Data.SqlServer.QueryProcessors
         public void UnlinkSchoolUser(int groupId, int schoolUserId)
         {
             int deletingUser = _userSession.UserId;
-            var linkToDelete = _session.QueryOver<Teaching>().Where(en => en.SchoolUser.UserId == schoolUserId && en.Group.GroupId == groupId).SingleOrDefault();
+            var linkToDelete = _session.QueryOver<Teaching>().Where(en => en.SchoolUser.UserId == schoolUserId && en.Group.GroupId == groupId).List().FirstOrDefault();
             if (linkToDelete != null) // Allow idempotency
                 _session.Delete(linkToDelete);
         }

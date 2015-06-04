@@ -26,8 +26,8 @@ namespace Edutor.Data.SqlServer.QueryProcessors
 
         public void Rsvp(Invitation invitation)
         {
-            invitation.Student = _session.QueryOver<Student>().Where(s => s.StudentId == invitation.StudentId).SingleOrDefault();
-            invitation.Event = _session.QueryOver<Event>().Where(s => s.EventId == invitation.EventId).SingleOrDefault();
+            invitation.Student = _session.QueryOver<Student>().Where(s => s.StudentId == invitation.StudentId).List().FirstOrDefault();
+            invitation.Event = _session.QueryOver<Event>().Where(s => s.EventId == invitation.EventId).List().FirstOrDefault();
             _session.Update(invitation);
         }
 

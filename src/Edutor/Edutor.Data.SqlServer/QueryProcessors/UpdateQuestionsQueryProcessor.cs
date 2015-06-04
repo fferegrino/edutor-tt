@@ -27,9 +27,9 @@ namespace Edutor.Data.SqlServer.QueryProcessors
 
         public void AnswerQuestion(Answer answer)
         {
-            answer.Student = _session.QueryOver<Student>().Where(s => s.StudentId == answer.StudentId).SingleOrDefault();
-            answer.Question = _session.QueryOver<Question>().Where(s => s.QuestionId == answer.QuestionId).SingleOrDefault();
-            answer.ActualAnswer = _session.QueryOver<PossibleAnswer>().Where(s => s.Question.QuestionId == answer.QuestionId && s.PossibleAnswerId == answer.ActualAnswerId).SingleOrDefault();
+            answer.Student = _session.QueryOver<Student>().Where(s => s.StudentId == answer.StudentId).List().FirstOrDefault();
+            answer.Question = _session.QueryOver<Question>().Where(s => s.QuestionId == answer.QuestionId).List().FirstOrDefault();
+            answer.ActualAnswer = _session.QueryOver<PossibleAnswer>().Where(s => s.Question.QuestionId == answer.QuestionId && s.PossibleAnswerId == answer.ActualAnswerId).List().FirstOrDefault();
             answer.AnswerDate = _dateTime.UtcNow;
             _session.Update(answer);
         }

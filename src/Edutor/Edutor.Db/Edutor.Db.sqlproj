@@ -88,6 +88,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Edutor.Db.local.publish.xml" />
-    <None Include="Edutor.Azure.publish.xml" />
+    <None Include="Edutor.Db.Azure.publish.xml" />
   </ItemGroup>
 </Project>

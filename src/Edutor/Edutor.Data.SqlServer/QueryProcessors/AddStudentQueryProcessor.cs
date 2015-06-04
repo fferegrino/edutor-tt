@@ -46,6 +46,10 @@ namespace Edutor.Data.SqlServer.QueryProcessors
         public Entities.Student ActivateStudent(string token)
         {
             var student = _session.QueryOver<Entities.Student>().Where(s => s.Token == token).SingleOrDefault();
+            if (student == null)
+            {
+                throw new Edutor.Data.Exceptions.ObjectNotFoundException("El estudiante con el token " + token + " no existe en el sistema");
+            }
             student.IsActive = true;
             _session.Update(student);
             return student;

@@ -26,8 +26,8 @@ namespace Edutor.Data.SqlServer.QueryProcessors
 
         public void AddEnrollment(Entities.Teaching teaching)
         {
-            teaching.SchoolUser = _session.QueryOver<Entities.User>().Where(x => x.UserId  == teaching.SchoolUserId).SingleOrDefault();
-            teaching.Group = _session.QueryOver<Entities.Group>().Where(x => x.GroupId == teaching.GroupId).SingleOrDefault();
+            teaching.SchoolUser = _session.QueryOver<Entities.User>().Where(x => x.UserId  == teaching.SchoolUserId).List().FirstOrDefault();
+            teaching.Group = _session.QueryOver<Entities.Group>().Where(x => x.GroupId == teaching.GroupId).List().FirstOrDefault();
             _session.SaveOrUpdate(teaching);
         }
     }

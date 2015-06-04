@@ -24,10 +24,10 @@ namespace Edutor.Data.SqlServer.QueryProcessors
         }
         public void AddEvent(Entities.Event ev)
         {
-            ev.SchoolUser = _session.QueryOver<Entities.User>().Where(x => x.UserId == ev.SchoolUserId).SingleOrDefault();
+            ev.SchoolUser = _session.QueryOver<Entities.User>().Where(x => x.UserId == ev.SchoolUserId).Take(1).List().FirstOrDefault();
             ev.CreationDate = _dateTime.UtcNow;
 
-            var group = _session.QueryOver<Entities.Group>().Where(g => g.GroupId == ev.GroupId).SingleOrDefault();
+            var group = _session.QueryOver<Entities.Group>().Where(g => g.GroupId == ev.GroupId).List().FirstOrDefault();
             ev.Group = group;
 
             //ev.Invitations = invitations.ToList();

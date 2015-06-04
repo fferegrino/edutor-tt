@@ -28,7 +28,7 @@ namespace Edutor.Data.SqlServer.QueryProcessors
         public void Delete(int userId)
         {
             int deletingUser = _userSession.UserId;
-            var userToDelete = _session.QueryOver<User>().Where(user => user.UserId == userId).SingleOrDefault();
+            var userToDelete = _session.QueryOver<User>().Where(user => user.UserId == userId).List().FirstOrDefault();
             if (userToDelete != null) // Allow idempotency
                 _session.Delete(userToDelete);
 

@@ -53,7 +53,7 @@ namespace Edutor.Data.SqlServer.QueryProcessors
 
             //var teachers = new List<Question>();
             //foreach (var t in selected)
-            //    teachers.Add(_session.QueryOver<Question>().Where(u => u.QuestionId == t.Question.QuestionId).SingleOrDefault());
+            //    teachers.Add(_session.QueryOver<Question>().Where(u => u.QuestionId == t.Question.QuestionId).List().FirstOrDefault());
 
             var qResult = new QueryResult<Answer>(selected, totalItemCount, requestInfo.PageSize);
 
@@ -63,7 +63,7 @@ namespace Edutor.Data.SqlServer.QueryProcessors
         public Question GetQuestion(int questionId)
         {
             return
-                _session.QueryOver<Question>().Where(n => n.QuestionId == questionId).SingleOrDefault();
+                _session.QueryOver<Question>().Where(n => n.QuestionId == questionId).List().FirstOrDefault();
         }
     }
 }

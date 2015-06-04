@@ -26,8 +26,8 @@ namespace Edutor.Data.SqlServer.QueryProcessors
         public void AddInvitation(Entities.Invitation invitation)
         {
 
-            var ev = _session.QueryOver<Entities.Event>().Where(g => g.EventId == invitation.EventId).SingleOrDefault();
-            var student = _session.QueryOver<Entities.Student>().Where(g => g.StudentId == invitation.StudentId).SingleOrDefault();
+            var ev = _session.QueryOver<Entities.Event>().Where(g => g.EventId == invitation.EventId).List().FirstOrDefault();
+            var student = _session.QueryOver<Entities.Student>().Where(g => g.StudentId == invitation.StudentId).List().FirstOrDefault();
             invitation.Student = student;
             invitation.Event = ev;
 
@@ -38,11 +38,11 @@ namespace Edutor.Data.SqlServer.QueryProcessors
         public void AddInvitations(IList<Entities.Invitation> invitations)
         {
             var x = invitations[0];
-            var ev = _session.QueryOver<Entities.Event>().Where(g => g.EventId == x.EventId).SingleOrDefault();
+            var ev = _session.QueryOver<Entities.Event>().Where(g => g.EventId == x.EventId).List().FirstOrDefault();
 
             foreach (var invitation in invitations)
             {
-                var student = _session.QueryOver<Entities.Student>().Where(g => g.StudentId == invitation.StudentId).SingleOrDefault();
+                var student = _session.QueryOver<Entities.Student>().Where(g => g.StudentId == invitation.StudentId).List().FirstOrDefault();
                 invitation.Student = student;
                 invitation.Event = ev;
                 _session.Save(invitation);
@@ -52,8 +52,8 @@ namespace Edutor.Data.SqlServer.QueryProcessors
 
         public void AddNotificationDetail(Entities.NotificationDetail notificationDetail)
         {
-            var notification = _session.QueryOver<Entities.Notification>().Where(g => g.NotificationId == notificationDetail.NotificationId).SingleOrDefault();
-            var student = _session.QueryOver<Entities.Student>().Where(g => g.StudentId == notificationDetail.StudentId).SingleOrDefault();
+            var notification = _session.QueryOver<Entities.Notification>().Where(g => g.NotificationId == notificationDetail.NotificationId).List().FirstOrDefault();
+            var student = _session.QueryOver<Entities.Student>().Where(g => g.StudentId == notificationDetail.StudentId).List().FirstOrDefault();
             notificationDetail.Student = student;
             notificationDetail.Notification = notification;
 
@@ -63,11 +63,11 @@ namespace Edutor.Data.SqlServer.QueryProcessors
         public void AddNotificationDetails(IList<Entities.NotificationDetail> notificationDetails)
         {
             var x = notificationDetails[0];
-            var notification = _session.QueryOver<Entities.Notification>().Where(g => g.NotificationId == x.NotificationId).SingleOrDefault();
+            var notification = _session.QueryOver<Entities.Notification>().Where(g => g.NotificationId == x.NotificationId).List().FirstOrDefault();
 
             foreach (var notificationDetail in notificationDetails)
             {
-                var student = _session.QueryOver<Entities.Student>().Where(g => g.StudentId == notificationDetail.StudentId).SingleOrDefault();
+                var student = _session.QueryOver<Entities.Student>().Where(g => g.StudentId == notificationDetail.StudentId).List().FirstOrDefault();
                 notificationDetail.Student = student;
                 notificationDetail.Notification = notification;
                 _session.Save(notificationDetail);

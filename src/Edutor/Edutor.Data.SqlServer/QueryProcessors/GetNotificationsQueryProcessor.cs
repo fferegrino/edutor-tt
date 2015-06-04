@@ -53,7 +53,7 @@ namespace Edutor.Data.SqlServer.QueryProcessors
 
             //var teachers = new List<Notification>();
             //foreach (var t in selected)
-            //    teachers.Add(_session.QueryOver<Notification>().Where(u => u.NotificationId == t.Notification.NotificationId).SingleOrDefault());
+            //    teachers.Add(_session.QueryOver<Notification>().Where(u => u.NotificationId == t.Notification.NotificationId).List().FirstOrDefault());
 
             var qResult = new QueryResult<NotificationDetail>(selected, totalItemCount, requestInfo.PageSize);
 
@@ -63,7 +63,7 @@ namespace Edutor.Data.SqlServer.QueryProcessors
         public Notification GetNotification(int notificationId)
         {
             return
-                _session.QueryOver<Notification>().Where(n => n.NotificationId == notificationId).SingleOrDefault();
+                _session.QueryOver<Notification>().Where(n => n.NotificationId == notificationId).List().FirstOrDefault();
         }
 
     }
