@@ -204,6 +204,7 @@ namespace Edutor.Web.Api
 #endif
                 // TODO: add new mappings
                 .Mappings(m => m.FluentMappings.AddFromAssemblyOf<Mapping.UserMap>())
+                .Mappings(m => m.FluentMappings.AddFromAssemblyOf<Mapping.TeacherForStudentMap>())
                 .Mappings(m => m.FluentMappings.AddFromAssemblyOf<Mapping.StudentMap>())
                 .Mappings(m => m.FluentMappings.AddFromAssemblyOf<Mapping.GroupMap>())
                 .Mappings(m => m.FluentMappings.AddFromAssemblyOf<Mapping.TeachingMap>())

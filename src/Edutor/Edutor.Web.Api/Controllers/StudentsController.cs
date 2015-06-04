@@ -23,12 +23,14 @@ namespace Edutor.Web.Api.Controllers
         private readonly IPatchStudentMaintenanceProcessor _patchStudent;
         private readonly IDeleteStudentMaintenanceProcessor _deleteStudent;
         private readonly IGetStudentsInquiryProcessor _getStudentsInquiryProcessor;
+        private readonly IGetSchoolUsersInquiryProcessor _getTeachers;
         private readonly IGetNotificationsInquiryProcessor _getNotifications;
         private readonly IPagedDataRequestFactory _pagedDataRequestFactory;
         private readonly IGetEventsInquiryProcessor _getEvents;
         private readonly IGetQuestionsInquiryProcessor _getQuestions;
 
         public StudentsController(IPostStudentMaintenanceProcessor addUserQueryProcessor,
+            IGetSchoolUsersInquiryProcessor getTeachers,
             IGetStudentsInquiryProcessor getStudents,
             IGetNotificationsInquiryProcessor getNotifications,
             IPagedDataRequestFactory pagedDataRequest,
@@ -37,6 +39,7 @@ namespace Edutor.Web.Api.Controllers
             IGetEventsInquiryProcessor getEvents,
             IGetQuestionsInquiryProcessor getQuestions)
         {
+            _getTeachers = getTeachers;
             _patchStudent = patchStudent;
             _addUserQueryProcessor = addUserQueryProcessor;
             _getStudentsInquiryProcessor = getStudents;
@@ -133,6 +136,22 @@ namespace Edutor.Web.Api.Controllers
         {
             var request = _pagedDataRequestFactory.Create(Request.RequestUri);
             var r = _getQuestions.GetQuestionsForStudent(studentId, request);
+            return r;
+        }
+
+
+        /// <summary>
+        /// Obtiene una lista paginada de los profesores que dan clase para el estudiante
+        /// </summary>
+        /// <param name="studentId">El identificador único del estudiante del que se desea conocer sus preguntas</param>
+        /// <returns>Una lista paginada de las preguntas para el estudiante</returns>
+        [HttpGet]
+        [Route("students/{studentId:int}/teachers")]
+        //[Authorize(Roles = Constants.RoleNames.Tutor)]
+        public PagedDataResponse<SchoolUser> GetTeachersForStudent(int studentId)
+        {
+            var request = _pagedDataRequestFactory.Create(Request.RequestUri);
+            var r = _getTeachers.GetTeachersForStudent(studentId, request); //_getQuestions.GetQuestionsForStudent(studentId, request);
             return r;
         }
 

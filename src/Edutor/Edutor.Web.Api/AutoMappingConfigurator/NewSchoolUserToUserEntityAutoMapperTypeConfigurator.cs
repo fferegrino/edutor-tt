@@ -34,6 +34,12 @@ namespace Edutor.Web.Api.AutoMappingConfigurator
                 .ForMember(x => x.UserId, opt => opt.MapFrom(s => s.UserId))
                 ;
 
+            Mapper.CreateMap<Ent.TeacherForStudent, Return.SchoolUser>()
+                .ForMember(x => x.Links, opt => opt.Ignore())
+                .ForMember(x => x.Type, opt => opt.MapFrom(s => s.Type))
+                .ForMember(x => x.UserId, opt => opt.MapFrom(s => s.UserId))
+                ;
+
 
             Mapper.CreateMap<Modifiable.ModifiableSchoolUser, Ent.User>()
                 //.ForMember(o => o.UserId, opt => opt.Ignore())

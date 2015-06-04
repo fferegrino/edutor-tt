@@ -18,6 +18,11 @@ namespace Edutor.Web.Api.InquiryProcessing
 
         PagedDataResponse<Return.Tutor> GetAllTutors(PagedDataRequest request);
 
+        PagedDataResponse<Return.Tutor> GetTutorsForTeacher(int teacherId, PagedDataRequest request);
+
+        PagedDataResponse<Return.Tutor> GetTutorsForGroup(string groupName, PagedDataRequest request);
+        PagedDataResponse<Return.Tutor> GetTutorsForGroup(int groupId, PagedDataRequest request);
+
         Return.Tutor GetTutor(int id);
 
         Return.Tutor GetTutor(string curp);
@@ -44,7 +49,7 @@ namespace Edutor.Web.Api.InquiryProcessing
         public PagedDataResponse<Return.Tutor> GetAllTutors(PagedDataRequest request)
         {
             var qresult = _queryProcessor.GetTutors(request);
-            var returnUsers = GetTutors(qresult);
+            var returnUsers = MapTutors(qresult);
             var inquiryResponse = new PagedDataResponse<Return.Tutor>
             {
                 Items = returnUsers,
@@ -58,14 +63,23 @@ namespace Edutor.Web.Api.InquiryProcessing
             return inquiryResponse;
         }
 
-        private List<Return.Tutor> GetTutors(QueryResult<Data.Entities.User> qresult)
+        private List<Return.Tutor> MapTutors(QueryResult<Data.Entities.User> qresult)
         {
             var x = qresult.QueriedItems.Select(r => _autoMapper.Map<Return.Tutor>(r)).ToList();
             x.ForEach(t => _tutorsLinkService.AddAllLinks(t));
             return x;
         }
 
-        public Return.Tutor GetTutor(int id) {
+
+        private List<Return.Tutor> MapTutors(QueryResult<Data.Entities.TutorForTeacher> qresult)
+        {
+            var x = qresult.QueriedItems.Select(r => _autoMapper.Map<Return.Tutor>(r)).ToList();
+            x.ForEach(t => _tutorsLinkService.AddAllLinks(t));
+            return x;
+        }
+
+        public Return.Tutor GetTutor(int id)
+        {
             var t = _autoMapper.Map<Return.Tutor>(_queryProcessor.GetTutor(id));
             _tutorsLinkService.AddAllLinks(t);
             return t;
@@ -78,5 +92,58 @@ namespace Edutor.Web.Api.InquiryProcessing
             return t;
         }
 
+
+
+        public Models.PagedDataResponse<Return.Tutor> GetTutorsForTeacher(int teacherId, PagedDataRequest request)
+        {
+            var qresult = _queryProcessor.GetTutorsForTeacher(teacherId, request);
+            var returnUsers = MapTutors(qresult);
+            var inquiryResponse = new PagedDataResponse<Return.Tutor>
+            {
+                Items = returnUsers,
+                PageCount = qresult.TotalPageCount,
+                PageNumber = request.PageNumber,
+                PageSize = request.PageSize
+            };
+
+            _commonLinkService.AddPageLinks(inquiryResponse);
+
+            return inquiryResponse;
+
+        }
+
+        public Models.PagedDataResponse<Return.Tutor> GetTutorsForGroup(string groupName, PagedDataRequest request)
+        {
+            var qresult = _queryProcessor.GetTutorsForGroup(groupName, request);
+            var returnUsers = MapTutors(qresult);
+            var inquiryResponse = new PagedDataResponse<Return.Tutor>
+            {
+                Items = returnUsers,
+                PageCount = qresult.TotalPageCount,
+                PageNumber = request.PageNumber,
+                PageSize = request.PageSize
+            };
+
+            _commonLinkService.AddPageLinks(inquiryResponse);
+
+            return inquiryResponse;
+        }
+
+        public Models.PagedDataResponse<Return.Tutor> GetTutorsForGroup(int groupId, PagedDataRequest request)
+        {
+            var qresult = _queryProcessor.GetTutorsForGroup(groupId, request);
+            var returnUsers = MapTutors(qresult);
+            var inquiryResponse = new PagedDataResponse<Return.Tutor>
+            {
+                Items = returnUsers,
+                PageCount = qresult.TotalPageCount,
+                PageNumber = request.PageNumber,
+                PageSize = request.PageSize
+            };
+
+            _commonLinkService.AddPageLinks(inquiryResponse);
+
+            return inquiryResponse;
+        }
     }
 }

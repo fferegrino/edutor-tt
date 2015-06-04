@@ -102,5 +102,78 @@ namespace Edutor.Data.SqlServer.QueryProcessors
             if (q == null) throw new Edutor.Data.Exceptions.ObjectNotFoundException("No existe un tutor con CURP " + curp);
             return q;
         }
+
+
+        public QueryResult<TeacherForStudent> GetTeachersForStudent(int studentId, PagedDataRequest requestInfo)
+        {
+
+            var teachings = _session.QueryOver<TeacherForStudent>().Where(t => t.StudentId == studentId);
+
+            //var groupsForStudent = _session.QueryOver<Group>().JoinQueryOver(e => e.Students).Where(f => f.Any(student => student.StudentId == studentId));
+            //var teachersForGroup = groupsForStudent.Inner.JoinQueryOver()
+
+
+            var totalItemCount = teachings.ToRowCountQuery().RowCount();
+
+            var startIndex = ResultsPagingUtility.CalculateStartIndex(requestInfo.PageNumber, requestInfo.PageSize);
+
+            var selected = teachings.Skip(startIndex).Take(requestInfo.PageSize).List();
+
+
+            var qResult = new QueryResult<TeacherForStudent>(selected, totalItemCount, requestInfo.PageSize);
+
+            return qResult;
+        }
+
+
+
+        public QueryResult<TutorForTeacher> GetTutorsForGroup(string groupName, PagedDataRequest requestInfo)
+        {
+            var teachings = _session.QueryOver<TutorForTeacher>().Where(t => t.GroupName == groupName);
+
+            var totalItemCount = teachings.ToRowCountQuery().RowCount();
+
+            var startIndex = ResultsPagingUtility.CalculateStartIndex(requestInfo.PageNumber, requestInfo.PageSize);
+
+            var selected = teachings.Skip(startIndex).Take(requestInfo.PageSize).List();
+
+
+            var qResult = new QueryResult<TutorForTeacher>(selected, totalItemCount, requestInfo.PageSize);
+
+            return qResult;
+        }
+
+
+        public QueryResult<TutorForTeacher> GetTutorsForGroup(int groupId, PagedDataRequest requestInfo)
+        {
+            var teachings = _session.QueryOver<TutorForTeacher>().Where(t => t.GroupId == groupId);
+
+            var totalItemCount = teachings.ToRowCountQuery().RowCount();
+
+            var startIndex = ResultsPagingUtility.CalculateStartIndex(requestInfo.PageNumber, requestInfo.PageSize);
+
+            var selected = teachings.Skip(startIndex).Take(requestInfo.PageSize).List();
+
+
+            var qResult = new QueryResult<TutorForTeacher>(selected, totalItemCount, requestInfo.PageSize);
+
+            return qResult;
+        }
+
+        public QueryResult<TutorForTeacher> GetTutorsForTeacher(int teacherId, PagedDataRequest requestInfo)
+        {
+            var teachings = _session.QueryOver<TutorForTeacher>().Where(t => t.TeacherId == teacherId);
+
+            var totalItemCount = teachings.ToRowCountQuery().RowCount();
+
+            var startIndex = ResultsPagingUtility.CalculateStartIndex(requestInfo.PageNumber, requestInfo.PageSize);
+
+            var selected = teachings.Skip(startIndex).Take(requestInfo.PageSize).List();
+
+
+            var qResult = new QueryResult<TutorForTeacher>(selected, totalItemCount, requestInfo.PageSize);
+
+            return qResult;
+        }
     }
 }

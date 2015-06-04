@@ -17,6 +17,7 @@ namespace Edutor.Web.Api.InquiryProcessing
 
         PagedDataResponse<Return.SchoolUser> GetAllSchoolUsers(PagedDataRequest request);
         PagedDataResponse<Return.SchoolUser> GetSchoolUsersForGroup(int groupId, PagedDataRequest request);
+        PagedDataResponse<Return.SchoolUser> GetTeachersForStudent(int studentId, PagedDataRequest request);
         Return.SchoolUser GetSchoolUser(int userId);
 
         Return.SchoolUser GetSchoolUser(string curp);
@@ -81,6 +82,14 @@ namespace Edutor.Web.Api.InquiryProcessing
         }
 
 
+        private List<Return.SchoolUser> GetSchoolUsers(QueryResult<Data.Entities.TeacherForStudent> qresult)
+        {
+            var x = qresult.QueriedItems.Select(r => _autoMapper.Map<Return.SchoolUser>(r)).ToList();
+            x.ForEach(t => _tutorsLinkService.AddAllLinks(t));
+            return x;
+        }
+
+
         public Return.SchoolUser GetSchoolUser(int userId)
         {
             var s = _queryProcessor.GetSchoolUser(userId);
@@ -95,6 +104,24 @@ namespace Edutor.Web.Api.InquiryProcessing
             var returnType = _autoMapper.Map<Return.SchoolUser>(s);
             _tutorsLinkService.AddAllLinks(returnType);
             return returnType;
+        }
+
+
+        public PagedDataResponse<Return.SchoolUser> GetTeachersForStudent(int studentId, PagedDataRequest request)
+        {
+            var qresult = _queryProcessor.GetTeachersForStudent(studentId, request);
+            var returnUsers = GetSchoolUsers(qresult);
+            var inquiryResponse = new PagedDataResponse<Return.SchoolUser>
+            {
+                Items = returnUsers,
+                PageCount = qresult.TotalPageCount,
+                PageNumber = request.PageNumber,
+                PageSize = request.PageSize
+            };
+
+            _commonLinkService.AddPageLinks(inquiryResponse);
+
+            return inquiryResponse;
         }
     }
 }

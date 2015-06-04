@@ -30,6 +30,7 @@ namespace Edutor.Web.Api.Controllers
         private readonly IGetNotificationsInquiryProcessor _getNotifications;
         private readonly IGetConversationsInquiryProcessor _getConversations;
         private readonly IGetEventsInquiryProcessor _getEvents;
+        private readonly IGetTutorsInquiryProcessor _getTutors;
         private readonly IDeleteUserMaintenanceProcessing _deleteSchoolUsers;
         private readonly IPatchSchoolUserMaintenanceProcessor _patchUsers;
         private readonly IGetQuestionsInquiryProcessor _getQuestions;
@@ -38,6 +39,7 @@ namespace Edutor.Web.Api.Controllers
         public SchoolUsersController(IPostSchoolUserMaintenanceProcessor addUserQueryProcessor,
             IGetSchoolUsersInquiryProcessor getQueryProcessor,
             IPagedDataRequestFactory pagedDataRequestFactory,
+            IGetTutorsInquiryProcessor getTutors,
             IGetNotificationsInquiryProcessor getNotifications,
             IPatchSchoolUserMaintenanceProcessor patchUsers,
             IDeleteUserMaintenanceProcessing deleteTutors,
@@ -46,6 +48,7 @@ namespace Edutor.Web.Api.Controllers
             IGetEventsInquiryProcessor getEvents,
             IGetQuestionsInquiryProcessor getQuestions)
         {
+            _getTutors = getTutors;
             _deleteSchoolUsers = deleteTutors;
             _patchUsers = patchUsers;
             _getSchoolUser = getQueryProcessor;
@@ -180,6 +183,21 @@ namespace Edutor.Web.Api.Controllers
         {
             var request = _pagedDataRequestFactory.Create(Request.RequestUri);
             var r = _getConversations.GetMessagesForUser(schoolUserid, request);
+            return r;
+        }
+
+        /// <summary>
+        /// Obtiene una lista de los tutores relacionados con el usuario escolar
+        /// </summary>
+        /// <param name="schoolUserid">El id del usuario escolar del que se desea conocer sus tutores relacionados</param>
+        /// <returns>Una lista con las preguntas creadas por el usuario escolar</returns>
+        [HttpGet]
+        [Route("schoolusers/{schoolUserId:int}/tutors")]
+        [Authorize(Roles = Constants.RoleNames.SchoolUser)]
+        public PagedDataResponse<Tutor> GetTutorsForSchoolUsers(int schoolUserid)
+        {
+            var request = _pagedDataRequestFactory.Create(Request.RequestUri);
+            var r = _getTutors.GetTutorsForTeacher(schoolUserid, request);
             return r;
         }
 

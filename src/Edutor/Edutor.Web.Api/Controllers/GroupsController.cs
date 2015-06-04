@@ -25,6 +25,7 @@ namespace Edutor.Web.Api.Controllers
         private readonly IPostTeachingMaintenanceProcessor _postTeachingMaintenanceProcessor;
         private readonly IGetSchoolUsersInquiryProcessor _schoolUsersIP;
         private readonly IGetStudentsInquiryProcessor _studentsIP;
+        private readonly IGetTutorsInquiryProcessor _getTutors;
         private readonly IPatchGroupMaintenanceProcessor _patchGroups;
         private readonly IDeleteGroupMaintenanceProcessor _deleteGroups;
         private readonly IGetGroupsInquiryProcessor _getGroups;
@@ -35,11 +36,13 @@ namespace Edutor.Web.Api.Controllers
            IPostTeachingMaintenanceProcessor postTeachingMaintenanceProcessor,
             IGetSchoolUsersInquiryProcessor schoolUsersIP,
             IGetStudentsInquiryProcessor studentsIP,
+            IGetTutorsInquiryProcessor getTutors,
             IPatchGroupMaintenanceProcessor patchGroups,
             IDeleteGroupMaintenanceProcessor deleteGroups,
             IPagedDataRequestFactory pagedDataRequestFactory,
             IGetGroupsInquiryProcessor getGroups)
         {
+            _getTutors = getTutors;
             _patchGroups = patchGroups;
             _addUserQueryProcessor = addUserQueryProcessor;
             _postEnrollmentMaintenanceProcessor = postEnrollmentMaintenanceProcessor;
@@ -120,6 +123,23 @@ namespace Edutor.Web.Api.Controllers
             var r = _schoolUsersIP.GetSchoolUsersForGroup(groupId, request);
             return r;
         }
+
+        /// <summary>
+        /// Obtiene una lista paginada con los tutores relacionados con el grupo indicado.
+        /// Este extremo es accesible únicamente para usuarios escolares.
+        /// </summary>
+        /// <param name="groupId">El identificador único del grupo del que se desea conocer los tutores.</param>
+        /// <returns>Una lista paginada con los tutores asignados al grupo indicado.</returns>
+        [Route("groups/{groupId:int}/tutors")]
+        [HttpGet]
+        [Authorize(Roles = Constants.RoleNames.SchoolUser)]
+        public PagedDataResponse<Tutor> GetTutorsForGroup(int groupId)
+        {
+            var request = _pagedDataRequestFactory.Create(Request.RequestUri);
+            var r = _getTutors.GetTutorsForGroup(groupId, request);
+            return r;
+        }
+
 
         /// <summary>
         /// Obtiene una lista paginada con los estudiantes relacionados con el grupo indicado.
@@ -232,7 +252,7 @@ namespace Edutor.Web.Api.Controllers
         /// <returns>Un código de estatus (No Content) si es que la acción se concluyó correctamente.</returns>
         [HttpDelete]
         [Route("groups/{groupId:int}/students/{studentId:int}")]
-        [Authorize(Roles =Constants.RoleNames.Administrator)]
+        [Authorize(Roles = Constants.RoleNames.Administrator)]
         public IHttpActionResult DeleteStudentFromGroup(int groupId, int studentId)
         {
             _deleteGroups.UnlinkStudent(groupId, studentId);
