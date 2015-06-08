@@ -159,6 +159,63 @@ namespace Edutor.Web.Api.Controllers
         }
 
 
+
+        /// <summary>
+        /// Obtiene una lista paginada con los estudiantes relacionados con el grupo indicado.
+        /// Este extremo es accesible únicamente para usuarios escolares,
+        /// un usuario administrador podrá consultar información de cualquier grupo, mientras que un profesor únicamente de los grupos a los que pertenence.
+        /// </summary>
+        /// <param name="groupId">El identificador único del grupo del que se desea conocer los estudiantes.</param>
+        /// <returns>Una lista paginada con los estudiantes pertenecientes al grupo indicado.</returns>
+        [HttpGet]
+        [Route("groups/{groupId:int}/events")]
+        [Authorize(Roles = Constants.RoleNames.SchoolUser)]
+        public PagedDataResponse<Event> GetEventsForGroup(int groupId)
+        {
+#error Fix this
+            var request = _pagedDataRequestFactory.Create(Request.RequestUri);
+            var r = _studentsIP.GetStudentsForGroup(groupId, request);
+            return r;
+        }
+
+
+
+        /// <summary>
+        /// Obtiene una lista paginada con los estudiantes relacionados con el grupo indicado.
+        /// Este extremo es accesible únicamente para usuarios escolares,
+        /// un usuario administrador podrá consultar información de cualquier grupo, mientras que un profesor únicamente de los grupos a los que pertenence.
+        /// </summary>
+        /// <param name="groupId">El identificador único del grupo del que se desea conocer los estudiantes.</param>
+        /// <returns>Una lista paginada con los estudiantes pertenecientes al grupo indicado.</returns>
+        [HttpGet]
+        [Route("groups/{groupId:int}/notifications")]
+        [Authorize(Roles = Constants.RoleNames.SchoolUser)]
+        public PagedDataResponse<Notification> GetNotificationsForGroup(int groupId)
+        {
+#error Fix this
+            var request = _pagedDataRequestFactory.Create(Request.RequestUri);
+            var r = _studentsIP.GetStudentsForGroup(groupId, request);
+            return r;
+        }
+
+        /// <summary>
+        /// Obtiene una lista paginada con los estudiantes relacionados con el grupo indicado.
+        /// Este extremo es accesible únicamente para usuarios escolares,
+        /// un usuario administrador podrá consultar información de cualquier grupo, mientras que un profesor únicamente de los grupos a los que pertenence.
+        /// </summary>
+        /// <param name="groupId">El identificador único del grupo del que se desea conocer los estudiantes.</param>
+        /// <returns>Una lista paginada con los estudiantes pertenecientes al grupo indicado.</returns>
+        [HttpGet]
+        [Route("groups/{groupId:int}/questions")]
+        [Authorize(Roles = Constants.RoleNames.SchoolUser)]
+        public PagedDataResponse<Question> GetQuestionsForGroup(int groupId)
+        {
+#error Fix this
+            var request = _pagedDataRequestFactory.Create(Request.RequestUri);
+            var r = _studentsIP.GetStudentsForGroup(groupId, request);
+            return r;
+        }
+
         /// <summary>
         /// Añade un nuevo grupo al sistema Edutor.
         /// Este extremo es accesible únicamente para usuarios administradores.
