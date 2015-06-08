@@ -18,6 +18,8 @@ namespace Edutor.Web.Api.InquiryProcessing
 
         PagedDataResponse<Return.Question> GetQuestionsForSchoolUser(int schoolUserId, PagedDataRequest request);
 
+        PagedDataResponse<Return.Question> GetQuestionsForSchoolUser(int schoolUserId, int groupId, PagedDataRequest request);
+
         PagedDataResponse<Return.StudentAnswer> GetQuestionsForStudent(int studentId, PagedDataRequest requestInfo);
 
         Return.Question GetQuestion(int questionId);
@@ -43,6 +45,25 @@ namespace Edutor.Web.Api.InquiryProcessing
             _notifLinkService = notifLinkService;
             _commonLinkService = commonLinkService;
             _basicLinksService = basicLinksService;
+        }
+
+
+
+        public Models.PagedDataResponse<Return.Question> GetQuestionsForSchoolUser(int schoolUserId, int groupId, PagedDataRequest request)
+        {
+            var qresult = _queryProcessor.GetQuestionsForSchoolUser(schoolUserId, groupId, request);
+
+            var inquiryResponse = new PagedDataResponse<Return.Question>
+            {
+                Items = CastCollection(qresult),
+                PageCount = qresult.TotalPageCount,
+                PageNumber = request.PageNumber,
+                PageSize = request.PageSize
+            };
+
+            _commonLinkService.AddPageLinks(inquiryResponse);
+
+            return inquiryResponse;
         }
 
         public Models.PagedDataResponse<Return.Question> GetQuestionsForSchoolUser(int schoolUserId, PagedDataRequest request)
@@ -102,6 +123,7 @@ namespace Edutor.Web.Api.InquiryProcessing
             _notifLinkService.AddAllLinks(t);
             return t;
         }
+
 
 
 

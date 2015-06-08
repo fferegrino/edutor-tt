@@ -13,6 +13,8 @@ namespace Edutor.Data.QueryProcessors
 
         QueryResult<Answer> GetQuestionsForStudent(int studentId, PagedDataRequest requestInfo);
 
+        QueryResult<Question> GetQuestionsForSchoolUser(int schoolUser, int groupId, PagedDataRequest requestInfo);
+
         Question GetQuestion(int questionId);
 
     }

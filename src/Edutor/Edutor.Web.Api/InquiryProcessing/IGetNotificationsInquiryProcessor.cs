@@ -18,6 +18,8 @@ namespace Edutor.Web.Api.InquiryProcessing
 
         PagedDataResponse<Return.Notification> GetNotificationsForSchoolUser(int schoolUserId, PagedDataRequest request);
 
+        PagedDataResponse<Return.Notification> GetNotificationsForSchoolUser(int schoolUserId, int groupId, PagedDataRequest request);
+
         PagedDataResponse<Return.StudentNotification> GetNotificationsForStudent(int studentId, PagedDataRequest requestInfo);
 
         Return.Notification GetNotification(int notificationId);
@@ -43,6 +45,22 @@ namespace Edutor.Web.Api.InquiryProcessing
             _queryProcessor = queryProcessor;
             _notifLinkService = notifLinkService;
             _commonLinkService = commonLinkService;
+        }
+        public Models.PagedDataResponse<Return.Notification> GetNotificationsForSchoolUser(int schoolUserId,int groupId, PagedDataRequest request)
+        {
+            var qresult = _queryProcessor.GetNotificationsForSchoolUser(schoolUserId, groupId, request);
+
+            var inquiryResponse = new PagedDataResponse<Return.Notification>
+            {
+                Items = CastCollection(qresult),
+                PageCount = qresult.TotalPageCount,
+                PageNumber = request.PageNumber,
+                PageSize = request.PageSize
+            };
+
+            _commonLinkService.AddPageLinks(inquiryResponse);
+
+            return inquiryResponse;
         }
 
         public Models.PagedDataResponse<Return.Notification> GetNotificationsForSchoolUser(int schoolUserId, PagedDataRequest request)
