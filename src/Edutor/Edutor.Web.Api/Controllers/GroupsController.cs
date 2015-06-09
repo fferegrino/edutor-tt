@@ -9,6 +9,7 @@ using System.Web.Http;
 using System.Web.Http.Description;
 using Edutor.Common;
 using Edutor.Web.Common.Filters;
+using Edutor.Common.Extensions;
 
 namespace Edutor.Web.Api.Controllers
 {
@@ -29,6 +30,9 @@ namespace Edutor.Web.Api.Controllers
         private readonly IPatchGroupMaintenanceProcessor _patchGroups;
         private readonly IDeleteGroupMaintenanceProcessor _deleteGroups;
         private readonly IGetGroupsInquiryProcessor _getGroups;
+        private readonly IGetEventsInquiryProcessor _getEvents;
+        private readonly IGetQuestionsInquiryProcessor _getQuestions;
+        private readonly IGetNotificationsInquiryProcessor _getNotifications;
         private readonly IPagedDataRequestFactory _pagedDataRequestFactory;
 
         public GroupsController(IPostGroupMaintenanceProcessor addUserQueryProcessor,
@@ -40,6 +44,9 @@ namespace Edutor.Web.Api.Controllers
             IPatchGroupMaintenanceProcessor patchGroups,
             IDeleteGroupMaintenanceProcessor deleteGroups,
             IPagedDataRequestFactory pagedDataRequestFactory,
+            IGetNotificationsInquiryProcessor getNotifications,
+            IGetEventsInquiryProcessor getEvents,
+            IGetQuestionsInquiryProcessor getQuestions,
             IGetGroupsInquiryProcessor getGroups)
         {
             _getTutors = getTutors;
@@ -52,6 +59,9 @@ namespace Edutor.Web.Api.Controllers
             _studentsIP = studentsIP;
             _getGroups = getGroups;
             _deleteGroups = deleteGroups;
+            _getEvents = getEvents;
+            _getNotifications = getNotifications;
+            _getQuestions = getQuestions;
         }
 
 
@@ -172,9 +182,9 @@ namespace Edutor.Web.Api.Controllers
         [Authorize(Roles = Constants.RoleNames.SchoolUser)]
         public PagedDataResponse<Event> GetEventsForGroup(int groupId)
         {
-#error Fix this
+            int tutorId = User.Identity.GetIdClaim(Edutor.Common.Constants.CustomClaimTypes.SchoolUserId);
             var request = _pagedDataRequestFactory.Create(Request.RequestUri);
-            var r = _studentsIP.GetStudentsForGroup(groupId, request);
+            var r = _getEvents.GetEventsForSchoolUser(tutorId, groupId, request);
             return r;
         }
 
@@ -189,12 +199,12 @@ namespace Edutor.Web.Api.Controllers
         /// <returns>Una lista paginada con los estudiantes pertenecientes al grupo indicado.</returns>
         [HttpGet]
         [Route("groups/{groupId:int}/notifications")]
-        [Authorize(Roles = Constants.RoleNames.SchoolUser)]
+        [Authorize(Roles = Constants.RoleNames.Teacher)]
         public PagedDataResponse<Notification> GetNotificationsForGroup(int groupId)
         {
-#error Fix this
+            int tutorId = User.Identity.GetIdClaim(Edutor.Common.Constants.CustomClaimTypes.SchoolUserId);
             var request = _pagedDataRequestFactory.Create(Request.RequestUri);
-            var r = _studentsIP.GetStudentsForGroup(groupId, request);
+            var r = _getNotifications.GetNotificationsForSchoolUser(tutorId, groupId, request);
             return r;
         }
 
@@ -210,9 +220,9 @@ namespace Edutor.Web.Api.Controllers
         [Authorize(Roles = Constants.RoleNames.SchoolUser)]
         public PagedDataResponse<Question> GetQuestionsForGroup(int groupId)
         {
-#error Fix this
+            int tutorId = User.Identity.GetIdClaim(Edutor.Common.Constants.CustomClaimTypes.SchoolUserId);
             var request = _pagedDataRequestFactory.Create(Request.RequestUri);
-            var r = _studentsIP.GetStudentsForGroup(groupId, request);
+            var r = _getQuestions.GetQuestionsForSchoolUser(tutorId, groupId, request);
             return r;
         }
 
