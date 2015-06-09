@@ -18,6 +18,8 @@ namespace Edutor.Web.Api.InquiryProcessing
 
         PagedDataResponse<Return.Event> GetEventsForSchoolUser(int schoolUserId, PagedDataRequest request);
 
+        PagedDataResponse<Return.Event> GetEventsForSchoolUser(int schoolUserId, int groupId, PagedDataRequest request);
+
         PagedDataResponse<Return.StudentInvitation> GetEventsForStudent(int studentId, PagedDataRequest requestInfo);
 
         Return.Event GetEvent(int eventId);
@@ -43,6 +45,22 @@ namespace Edutor.Web.Api.InquiryProcessing
             _queryProcessor = queryProcessor;
             _notifLinkService = notifLinkService;
             _commonLinkService = commonLinkService;
+        }
+        public Models.PagedDataResponse<Return.Event> GetEventsForSchoolUser(int schoolUserId, int groupId, PagedDataRequest request)
+        {
+            var qresult = _queryProcessor.GetEventsForSchoolUser(schoolUserId, groupId, request);
+
+            var inquiryResponse = new PagedDataResponse<Return.Event>
+            {
+                Items = CastCollection(qresult),
+                PageCount = qresult.TotalPageCount,
+                PageNumber = request.PageNumber,
+                PageSize = request.PageSize
+            };
+
+            _commonLinkService.AddPageLinks(inquiryResponse);
+
+            return inquiryResponse;
         }
 
         public Models.PagedDataResponse<Return.Event> GetEventsForSchoolUser(int schoolUserId, PagedDataRequest request)

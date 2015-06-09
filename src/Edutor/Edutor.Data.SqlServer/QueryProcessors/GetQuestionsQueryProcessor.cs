@@ -40,6 +40,23 @@ namespace Edutor.Data.SqlServer.QueryProcessors
             return qResult;
         }
 
+
+        public QueryResult<Question> GetQuestionsForSchoolUser(int schoolUser, int groupId, PagedDataRequest requestInfo)
+        {
+            var q = _session.QueryOver<Question>().Where(nn => nn.Group.GroupId == groupId).OrderBy(nn => nn.CreationDate).Desc.Where(not => not.SchoolUser.UserId == schoolUser);
+
+            var totalItemCount = q.ToRowCountQuery().RowCount();
+
+            var startIndex = ResultsPagingUtility.CalculateStartIndex(requestInfo.PageNumber, requestInfo.PageSize);
+
+            var users = q.Skip(startIndex).Take(requestInfo.PageSize).List();
+
+            var qResult = new QueryResult<Question>(users, totalItemCount, requestInfo.PageSize);
+
+            return qResult;
+        }
+
+
         public QueryResult<Answer> GetQuestionsForStudent(int studentId, PagedDataRequest requestInfo)
         {
 

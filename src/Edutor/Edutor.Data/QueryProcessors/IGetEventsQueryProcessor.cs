@@ -13,6 +13,8 @@ namespace Edutor.Data.QueryProcessors
 
         QueryResult<Invitation> GetEventsForStudent(int studentId, PagedDataRequest requestInfo);
 
+        QueryResult<Event> GetEventsForSchoolUser(int schoolUser, int groupId, PagedDataRequest requestInfo);
+
         Event GetEvent(int eventId);
 
     }

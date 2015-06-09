@@ -40,6 +40,21 @@ namespace Edutor.Data.SqlServer.QueryProcessors
             return qResult;
         }
 
+        public QueryResult<Notification> GetNotificationsForSchoolUser(int schoolUser, int groupId, PagedDataRequest requestInfo)
+        {
+            var q = _session.QueryOver<Notification>().Where(nn => nn.Group.GroupId == groupId).OrderBy(nn => nn.CreationDate).Asc.Where(not => not.SchoolUser.UserId == schoolUser);
+
+            var totalItemCount = q.ToRowCountQuery().RowCount();
+
+            var startIndex = ResultsPagingUtility.CalculateStartIndex(requestInfo.PageNumber, requestInfo.PageSize);
+
+            var users = q.Skip(startIndex).Take(requestInfo.PageSize).List();
+
+            var qResult = new QueryResult<Notification>(users, totalItemCount, requestInfo.PageSize);
+
+            return qResult;
+        }
+
         public QueryResult<NotificationDetail> GetNotificationsForStudent(int studentId, PagedDataRequest requestInfo)
         {
 
