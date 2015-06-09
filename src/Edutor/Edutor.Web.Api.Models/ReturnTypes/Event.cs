@@ -45,5 +45,12 @@ namespace Edutor.Web.Api.Models.ReturnTypes
         /// Una breve descripción de lo que tratará el evento
         /// </summary>
         public string Description { get; set; }
+
+
+        public int AttendeesComing { get; set; }
+
+        public int AttendeesNotComing { get; set; }
+
+        public int AttendeesNoAnswer { get; set; }
     }
 }

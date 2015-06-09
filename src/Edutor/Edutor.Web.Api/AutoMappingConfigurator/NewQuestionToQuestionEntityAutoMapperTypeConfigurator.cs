@@ -50,7 +50,9 @@ namespace Edutor.Web.Api.AutoMappingConfigurator
                 {
                     foreach (var pa in ob.Question.PossibleAnswers)
                     {
+                        var i = ob.Question.PossibleAnswers.Count(x => x.QuestionId == pa.QuestionId && pa.PossibleAnswerId == x.PossibleAnswerId);
                         var rrr = Mapper.Map<RetModels.PossibleAnswer>(pa);
+                        rrr.AnswerCount = i;
                         rrr.QuestionId = ob.QuestionId;
                         possobleAnswers.Add(rrr);
                     }
@@ -98,7 +100,7 @@ namespace Edutor.Web.Api.AutoMappingConfigurator
                 ;
 
             Mapper.CreateMap<Ent.PossibleAnswer, RetModels.PossibleAnswer>()
-                //.ForMember(x => x.Links, opt => opt.Ignore())
+                .ForMember(x => x.AnswerCount, opt => opt.Ignore())
                 ;
 
 

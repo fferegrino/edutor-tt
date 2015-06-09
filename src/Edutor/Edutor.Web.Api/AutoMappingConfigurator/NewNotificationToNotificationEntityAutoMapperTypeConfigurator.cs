@@ -1,4 +1,4 @@
-﻿﻿using AutoMapper;
+﻿using AutoMapper;
 using Edutor.Common.TypeMapping;
 using System;
 using System.Collections.Generic;
@@ -28,6 +28,8 @@ namespace Edutor.Web.Api.AutoMappingConfigurator
             Mapper.CreateMap<Ent.Notification, RetModels.Notification>()
                 .ForMember(x => x.Links, opt => opt.Ignore())
                  .ForMember(x => x.SchoolUserId, opt => opt.MapFrom(src => src.SchoolUser.UserId))
+                 .ForMember(x => x.TotalStudents, opt => opt.MapFrom(v => v.Details.Count()))
+                 .ForMember(x => x.SeenStudents, opt => opt.MapFrom(v => v.Details.Count(t => t.Seen)))
                 ;
 
             Mapper.CreateMap<Ent.NotificationDetail, RetModels.StudentNotification>()

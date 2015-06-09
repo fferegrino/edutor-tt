@@ -1,4 +1,4 @@
-﻿﻿using AutoMapper;
+﻿using AutoMapper;
 using Edutor.Common.TypeMapping;
 using System;
 using System.Collections.Generic;
@@ -28,13 +28,16 @@ namespace Edutor.Web.Api.AutoMappingConfigurator
             Mapper.CreateMap<Ent.Event, RetModels.Event>()
                 .ForMember(x => x.Links, opt => opt.Ignore())
                 .ForMember(x => x.SchoolUserId, opt => opt.MapFrom(src => src.SchoolUser.UserId))
+                .ForMember(x => x.AttendeesComing, opt => opt.MapFrom(src => src.Invitations.Count(i => i.Rsvp.GetValueOrDefault() == true)))
+                .ForMember(x => x.AttendeesNotComing, opt => opt.MapFrom(src => src.Invitations.Count(i => i.Rsvp != null && i.Rsvp.Value == false)))
+                .ForMember(x => x.AttendeesNoAnswer, opt => opt.MapFrom(src => src.Invitations.Count(i => i.Rsvp == null)))
                 ;
 
             Mapper.CreateMap<Ent.Invitation, RetModels.StudentInvitation>()
                 .ForMember(x => x.Links, opt => opt.Ignore())
                 .ForMember(d => d.EventName, x => x.MapFrom(s => s.Event.Name))
                 .ForMember(d => d.EventId, x => x.MapFrom(s => s.Event.EventId))
-                .ForMember(d => d.Date , x => x.MapFrom(s => s.Event.Date))
+                .ForMember(d => d.Date, x => x.MapFrom(s => s.Event.Date))
                 .ForMember(d => d.CreationDate, x => x.MapFrom(s => s.Event.CreationDate))
                 .ForMember(d => d.Description, x => x.MapFrom(s => s.Event.Description))
                 .ForMember(d => d.GroupId, x => x.MapFrom(s => s.Event.Group.GroupId))

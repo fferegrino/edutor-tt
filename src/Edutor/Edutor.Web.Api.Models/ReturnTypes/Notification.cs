@@ -30,5 +30,9 @@ namespace Edutor.Web.Api.Models.ReturnTypes
         /// El contenido de la notificación
         /// </summary>
         public string Text { get; set; }
+
+        public int TotalStudents { get; set; }
+
+        public int SeenStudents { get; set; }
     }
 }
