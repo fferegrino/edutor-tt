@@ -28,9 +28,9 @@ namespace Edutor.Web.Api.AutoMappingConfigurator
             Mapper.CreateMap<Ent.Event, RetModels.Event>()
                 .ForMember(x => x.Links, opt => opt.Ignore())
                 .ForMember(x => x.SchoolUserId, opt => opt.MapFrom(src => src.SchoolUser.UserId))
-                .ForMember(x => x.AttendeesComing, opt => opt.MapFrom(src => src.Invitations.Count(i => i.Rsvp.GetValueOrDefault() == true)))
-                .ForMember(x => x.AttendeesNotComing, opt => opt.MapFrom(src => src.Invitations.Count(i => i.Rsvp != null && i.Rsvp.Value == false)))
-                .ForMember(x => x.AttendeesNoAnswer, opt => opt.MapFrom(src => src.Invitations.Count(i => i.Rsvp == null)))
+                .ForMember(x => x.AttendeesComing, opt => opt.MapFrom(src => src.Invitations != null ? src.Invitations.Count(i => i.Rsvp.GetValueOrDefault() == true) : 0))
+                .ForMember(x => x.AttendeesNotComing, opt => opt.MapFrom(src => src.Invitations != null ? src.Invitations.Count(i => i.Rsvp != null && i.Rsvp.Value == false) : 0))
+                .ForMember(x => x.AttendeesNoAnswer, opt => opt.MapFrom(src => src.Invitations != null ? src.Invitations.Count(i => i.Rsvp == null) : 0))
                 ;
 
             Mapper.CreateMap<Ent.Invitation, RetModels.StudentInvitation>()
