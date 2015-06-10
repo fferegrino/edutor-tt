@@ -34,6 +34,8 @@ namespace Edutor.Web.Api.AutoMappingConfigurator
 
             Mapper.CreateMap<Ent.NotificationDetail, RetModels.StudentNotification>()
                 .ForMember(x => x.Links, opt => opt.Ignore())
+                .ForMember(d => d.SchoolUserName, x => x.MapFrom(s => s.Notification.SchoolUser.Name))
+                .ForMember(d => d.GroupName, x => x.MapFrom(s => s.Notification.Group.Name))
                 .ForMember(d => d.NotificationId, x => x.MapFrom(s => s.Notification.NotificationId))
                 .ForMember(d => d.Text, x => x.MapFrom(s => s.Notification.Text))
                 .ForMember(d => d.GroupId, x => x.MapFrom(s => s.Notification.Group.GroupId))

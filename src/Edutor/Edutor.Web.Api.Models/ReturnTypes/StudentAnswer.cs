@@ -17,6 +17,7 @@ namespace Edutor.Web.Api.Models.ReturnTypes
         /// </summary>
         public int SchoolUserId { get; set; }
 
+
         /// <summary>
         /// El identificador único de la pregunta dentro del sistema
         /// </summary>
@@ -26,6 +27,16 @@ namespace Edutor.Web.Api.Models.ReturnTypes
         /// El identificador único del grupo con el que está asociada la pregunta
         /// </summary>
         public int GroupId { get; set; }
+
+        /// <summary>
+        /// El nombre del usuario escolar que generó la pregunta
+        /// </summary>
+        public string SchoolUserName { get; set; }
+
+        /// <summary>
+        /// El nombre del grupo con el que está asociada la pregunta
+        /// </summary>
+        public string GroupName { get; set; }
 
         /// <summary>
         /// El texto de la pregunta

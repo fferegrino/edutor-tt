@@ -27,6 +27,16 @@ namespace Edutor.Web.Api.Models.ReturnTypes
         public int GroupId { get; set; }
 
         /// <summary>
+        /// El nombre del usuario escolar que generó la notificación
+        /// </summary>
+        public string SchoolUserName { get; set; }
+
+        /// <summary>
+        /// El nombre del grupo con el que está asociada la notificación
+        /// </summary>
+        public string GroupName { get; set; }
+
+        /// <summary>
         /// El texto de la notificación
         /// </summary>
         public string Text { get; set; }

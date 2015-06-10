@@ -86,6 +86,8 @@ namespace Edutor.Web.Api.AutoMappingConfigurator
 
             Mapper.CreateMap<Ent.Answer, RetModels.StudentAnswer>()
                 .ForMember(x => x.Links, opt => opt.Ignore())
+                .ForMember(d => d.SchoolUserName, x => x.MapFrom(s => s.Question.SchoolUser.Name))
+                .ForMember(d => d.GroupName, x => x.MapFrom(s => s.Question.Group.Name))
                 .ForMember(d => d.Text, x => x.MapFrom(s => s.Question.Text))
                 .ForMember(d => d.QuestionId, x => x.MapFrom(s => s.Question.QuestionId))
                 .ForMember(d => d.ExpirationDate, x => x.MapFrom(s => s.Question.ExpirationDate))

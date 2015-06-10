@@ -28,6 +28,16 @@ namespace Edutor.Web.Api.Models.ReturnTypes
         public int SchoolUserId { get; set; }
 
         /// <summary>
+        /// El nombre del usuario escolar que generó el evento
+        /// </summary>
+        public string SchoolUserName { get; set; }
+
+        /// <summary>
+        /// El nombre del grupo con el que está asociado el evento
+        /// </summary>
+        public string GroupName { get; set; }
+
+        /// <summary>
         /// El nombre del evento
         /// </summary>
         public string EventName { get; set; }
