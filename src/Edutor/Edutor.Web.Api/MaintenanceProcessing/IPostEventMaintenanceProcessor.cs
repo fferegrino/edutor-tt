@@ -34,12 +34,12 @@ namespace Edutor.Web.Api.MaintenanceProcessing
             IWebUserSession user,
             IGetStudentsQueryProcessor getStudents)
         {
+            _user = user;
+            _getStudents = getStudents;
             _autoMapper = autoMapper;
             _addEventQueryProcessor = addUserQueryProcessor;
             _linkServices = linkServices;
             _addInvitationsQueryProcessor = addInvitationsQueryProcessor;
-            _user = user;
-            _getStudents = getStudents;
         }
 
 

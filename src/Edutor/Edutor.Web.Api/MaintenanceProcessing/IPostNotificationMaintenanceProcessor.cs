@@ -8,6 +8,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Edutor.Common.Security;
+using Edutor.Common;
 
 namespace Edutor.Web.Api.MaintenanceProcessing
 {
@@ -22,12 +24,18 @@ namespace Edutor.Web.Api.MaintenanceProcessing
         private readonly IAddNotificationQueryProcessor _addNotificationQueryProcessor;
         private readonly IAddNotificationDetailQueryProcessor _addNotificationDetailQueryProcessor;
         private readonly INotificationsLinkService _linkServices;
+        private readonly IWebUserSession _user;
+        private readonly IGetStudentsQueryProcessor _getStudents;
 
         public PostNotificationMaintenanceProcessor(IAutoMapper autoMapper,
             IAddNotificationQueryProcessor addUserQueryProcessor,
             IAddNotificationDetailQueryProcessor addInvitationsQueryProcessor,
-            INotificationsLinkService linkServices)
+            INotificationsLinkService linkServices,
+            IWebUserSession user,
+            IGetStudentsQueryProcessor getStudents)
         {
+            _user = user;
+            _getStudents = getStudents;
             _autoMapper = autoMapper;
             _addNotificationQueryProcessor = addUserQueryProcessor;
             _linkServices = linkServices;
@@ -40,7 +48,15 @@ namespace Edutor.Web.Api.MaintenanceProcessing
             _addNotificationQueryProcessor.AddNotification(notificationEntity);
             var ret = _autoMapper.Map<Ret.Notification>(notificationEntity);
 
-            var students = notificationEntity.Group.Students;
+            IList<Data.Entities.Student> students = null;
+            if (_user.IsInRole(Constants.RoleNames.Administrator))
+            {
+                students = _getStudents.GetAllStudentsBrute();
+            }
+            else
+            {
+                students = notificationEntity.Group.Students;
+            }
 
             var invitations = from s in students
                               select new Data.Entities.NotificationDetail
