@@ -32,5 +32,7 @@ namespace Edutor.Data.QueryProcessors
         Answer GetStudentsForQuestion(int questionID, int studentId);
 
         NotificationDetail GetStudentsForNotification(int notificationId, int studentId);
+
+        IList<Student> GetAllStudentsBrute();
     }
 }

@@ -296,6 +296,7 @@
     <None Include="Properties\PublishProfiles\apiedutor - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\apiedutor.pubxml" />
     <None Include="Properties\PublishProfiles\Default Settings.pubxml" />
+    <None Include="Properties\PublishProfiles\localiis.pubxml" />
     <None Include="Properties\PublishProfiles\Publishing.pubxml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>

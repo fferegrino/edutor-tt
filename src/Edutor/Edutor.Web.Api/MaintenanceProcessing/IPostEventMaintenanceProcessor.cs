@@ -8,6 +8,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Edutor.Common.Security;
+using Edutor.Common;
 
 namespace Edutor.Web.Api.MaintenanceProcessing
 {
@@ -22,13 +24,22 @@ namespace Edutor.Web.Api.MaintenanceProcessing
         private readonly IAddEventQueryProcessor _addEventQueryProcessor;
         private readonly IAddInvitationQueryProcessor _addInvitationsQueryProcessor;
         private readonly IEventsLinkService _linkServices;
+        private readonly IWebUserSession _user;
+        private readonly IGetStudentsQueryProcessor _getStudents;
 
-        public PostEventMaintenanceProcessor(IAutoMapper autoMapper, IAddEventQueryProcessor addUserQueryProcessor, IAddInvitationQueryProcessor addInvitationsQueryProcessor, IEventsLinkService linkServices)
+        public PostEventMaintenanceProcessor(IAutoMapper autoMapper, 
+            IAddEventQueryProcessor addUserQueryProcessor, 
+            IAddInvitationQueryProcessor addInvitationsQueryProcessor, 
+            IEventsLinkService linkServices,
+            IWebUserSession user,
+            IGetStudentsQueryProcessor getStudents)
         {
             _autoMapper = autoMapper;
             _addEventQueryProcessor = addUserQueryProcessor;
             _linkServices = linkServices;
             _addInvitationsQueryProcessor = addInvitationsQueryProcessor;
+            _user = user;
+            _getStudents = getStudents;
         }
 
 
@@ -39,7 +50,15 @@ namespace Edutor.Web.Api.MaintenanceProcessing
             _addEventQueryProcessor.AddEvent(eventEntity);
             var ret = _autoMapper.Map<Ret.Event>(eventEntity);
 
-            var students = eventEntity.Group.Students;
+            IList<Data.Entities.Student> students = null;
+            if(_user.IsInRole(Constants.RoleNames.Administrator))
+            {
+                students = _getStudents.GetAllStudentsBrute();
+            }
+            else
+            {
+                students = eventEntity.Group.Students;
+            }
 
             var invitations = from s in students
                               select new Data.Entities.Invitation

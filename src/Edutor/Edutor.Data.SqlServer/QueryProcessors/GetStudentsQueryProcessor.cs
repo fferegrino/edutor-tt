@@ -184,5 +184,11 @@ namespace Edutor.Data.SqlServer.QueryProcessors
 
             return q;
         }
+
+
+        public IList<Student> GetAllStudentsBrute()
+        {
+            return _session.QueryOver<Student>().List();
+        }
     }
 }
