@@ -25,6 +25,9 @@ namespace Edutor.Web.Api.Models.ReturnTypes
         /// </summary>
         public string Text { get; set; }
 
+        /// <summary>
+        /// Número de estudiantes que han respondido con esta respuesta
+        /// </summary>
         public int AnswerCount { get; set; }
     }
 }

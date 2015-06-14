@@ -46,11 +46,19 @@ namespace Edutor.Web.Api.Models.ReturnTypes
         /// </summary>
         public string Description { get; set; }
 
-
+        /// <summary>
+        /// Número de estudiantes con asistencia confirmada
+        /// </summary>
         public int AttendeesComing { get; set; }
 
+        /// <summary>
+        /// Número de estudiantes que han negado su asistencia
+        /// </summary>
         public int AttendeesNotComing { get; set; }
 
+        /// <summary>
+        /// Número de estudiantes que no han respondido
+        /// </summary>
         public int AttendeesNoAnswer { get; set; }
     }
 }
