@@ -10,6 +10,7 @@ using Edutor.Data.QueryProcessors;
 using Edutor.Common.TypeMapping;
 using Edutor.Web.Api.LinkServices;
 using System.Web;
+using Edutor.Common.Security;
 
 namespace Edutor.Web.Api.InquiryProcessing
 {
@@ -32,12 +33,15 @@ namespace Edutor.Web.Api.InquiryProcessing
         private readonly IGetConversationsQueryProcessor _queryProcessor;
         private readonly IConversationsLinkService _linkServices;
         private readonly ICommonLinkService _commonLinkService;
+        private readonly IWebUserSession _session;
 
         public GetConversationsInquiryProcessor(IAutoMapper autoMapper,
             IConversationsLinkService tutorsLinkService,
             IGetConversationsQueryProcessor queryProcessor,
-            ICommonLinkService commonLinkService)
+            ICommonLinkService commonLinkService,
+            IWebUserSession session)
         {
+            _session = session;
             _autoMapper = autoMapper;
             _queryProcessor = queryProcessor;
             _commonLinkService = commonLinkService;
@@ -128,9 +132,21 @@ namespace Edutor.Web.Api.InquiryProcessing
         private List<Return.Conversation> MapConversations(List<Data.Entities.Conversation> list)
         {
             var l = new List<Return.Conversation>();
+            string aux = null;
+            int auxI = 0;
+            int thisUser = _session.UserId;
             foreach (var msg in list)
             {
                 var s = _autoMapper.Map<Return.Conversation>(msg);
+                auxI = s.RecipientId;
+                aux = s.RecipientName;
+                if(s.SenderId != thisUser)
+                {
+                    s.RecipientName = s.SenderName;
+                    s.RecipientId = s.SenderId;
+                    s.SenderId = auxI;
+                    s.SenderName = aux;
+                }
                 _linkServices.AddAllLinks(s);
                 l.Add(s);
             }

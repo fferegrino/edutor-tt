@@ -199,7 +199,8 @@ namespace Edutor.Web.Api
                 .CurrentSessionContext("web")
 #else
             var sessionFactory = Fluently.Configure()
-                .Database(MsSqlConfiguration.MsSql2012.ConnectionString(c => c.FromConnectionStringWithKey("edutorDb")))
+                //.Database(MsSqlConfiguration.MsSql2012.ConnectionString(c => c.FromConnectionStringWithKey("edutorDb")))
+                .Database(MsSqlConfiguration.MsSql2012.ConnectionString(c => c.FromConnectionStringWithKey("edutorDbReal")))
                 .CurrentSessionContext("web")
 #endif
                 // TODO: add new mappings
