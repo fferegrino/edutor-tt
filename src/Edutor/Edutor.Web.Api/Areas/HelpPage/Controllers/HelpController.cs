@@ -1,6 +1,7 @@
 using System;
 using System.Web.Http;
 using System.Web.Mvc;
+using System.Linq;
 using Edutor.Web.Api.Areas.HelpPage.ModelDescriptions;
 using Edutor.Web.Api.Areas.HelpPage.Models;
 
@@ -58,6 +59,28 @@ namespace Edutor.Web.Api.Areas.HelpPage.Controllers
                 ModelDescription modelDescription;
                 if (modelDescriptionGenerator.GeneratedModels.TryGetValue(modelName, out modelDescription))
                 {
+                    if (modelDescription.Name.StartsWith("PagedDataResponseOf"))
+                    {
+                        var t = modelDescription as ComplexTypeModelDescription;
+
+                        ParameterDescription param = t.Properties.Where(prp => prp.Name.Equals("Links")).FirstOrDefault();
+                        param.Documentation = "Enlaces HTTP a recursos relacionados con la consulta";
+
+                        param = t.Properties.Where(prp => prp.Name.Equals("Items")).FirstOrDefault();
+                        param.Documentation = "Colección de objetos pertenecientes a la consulta realizada";
+
+
+                        param = t.Properties.Where(prp => prp.Name.Equals("PageSize")).FirstOrDefault();
+                        param.Documentation = "Tamaño de la página en la que se encuentra actualmente";
+
+
+                        param = t.Properties.Where(prp => prp.Name.Equals("PageNumber")).FirstOrDefault();
+                        param.Documentation = "Número de página en la que se encuentra actualmente";
+
+
+                        param = t.Properties.Where(prp => prp.Name.Equals("PageCount")).FirstOrDefault();
+                        param.Documentation = "Cantidad de páginas en total de la respuesta";
+                    }
                     return View(modelDescription);
                 }
             }
