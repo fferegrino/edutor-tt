@@ -11,9 +11,47 @@
 </header>
 <div id="body" class="help-page">
     <div class="content-wrapper">
-        <h2>Autenticación</h2>
+        <h2>Autenticación y autoprización</h2>
         <section class="content-wrapper main-content clear-fix">
-            Para acceder a los recursos que ofrece Edutor es necesario que las peticiones contengan un encabezado de autorización.
+            La mayoría peticiones que se realizan a la API de Edutor deben ser autenticadas y autorizadas para poder ser procesadas por el servicio. De entrada se podría pensar que autenticación y autorización son lo mismo, pero no es así, en particular, para Edutor entenderemos lo siguiente:
+        </section>
+        <h3>Autenticación</h3>
+        <section>
+            El proceso d autenticación implica corroborar que el cliente que realiza la petición existe en los registros de la aplicación, es decir que está registrado en nuestra base de datos independientemente del rol o roles que el cliente posea.
+        </section>
+        <h3>Autorización</h3>
+        <section>
+            Este proceso ocurre una vez que el cliente es autenticado  e implica corroborar que el rol que tiene asignado es el necesario y suficiente para ejecutar la acción que solicita.
+        </section>
+        <h3>Roles</h3>
+        <section>
+            En Edutor existen tres roles que los usuarios pueden tomar, estos son fijos, no intercambiables y debe ser asignados antes e que el sistema inicie la operación. Los roles son los siguientes: 
+            <ul>
+                <li>Tutor: es el encargado de supervisar la educación de uno o varios estudiantes.</li>
+                <li>Profesor: es un tipo de usuario escolar que puede ser asignado a grupos, crear eventos, notificaciones, entre otras cosas.</li>
+                <li>Administrador: es un tipo de usuario escolar que cumple con el propósito de gestionar os datos de los dos anteriores tipos de usuarios y sus relaciones entre ellos.</li>
+            </ul>
+        </section>
+        <h3>Proceso de autenticación y autorización en el cliente</h3>
+        <section>
+            Como se ha mencionado antes, en el encabezado de la petición HTTP se debe incluir una llave básica de seguridad codificada en base 64, la cadena debe estar formada por: 
+            <ul>
+                <li>
+                    <p>Tutores: para que un cliente pueda realizar peticiones en nombre de un tutor debe contar con al menos un token de estudiante. Se toma la letra ‘T’ en mayúscula y se le concatena el símbolo de dos puntos ‘:’, al resultado e le concatena el token del alumno.</p>
+                    <h4>Ejemplo:</h4>
+                    Suponga que existe un estudiante cuyo token es Ed6cd0e500, el resultado de las credenciales antes de codificar en base 64 es T:Ed6cd0e500 que una vez codificado como cadena base 64 queda de la siguiente manera: VDpFZDZjZDBlNTAw valor con el que se puede formar ya un encabezado de autenticación válido.
+                </li>
+                <li>
+                    <p>Profesores y administradores (usuarios escolares): para que un cliente pueda realizar peticiones en nombre de un usuario escolar debe contar con el identificador de usuario y a contraseña del mismo. Se toma la letra ‘S’ y se le concatena el símbolo de dos puntos ‘:’, al resultado se le concatena la contraseña asignada al usuario y se le vuelve a concatenar el símbolo de dos puntos ‘:’, al resultado se le debe concatenar el identificador de usuario (que es un numero entero) sin ceros a la izquierda ni separadores de dígitos.</p>
+                    <h4>Ejemplo:</h4>
+                    Suponga que existe un usuario con contraseña AdminEdutor y con identifricador de usuario número 4, el resultado de seguir los pasos anteriores es el siguiente: S:AdminEdutor:4 que al codificarlo en base 64 queda UzpBZG1pbkVkdXRvcjo0Suponga que existe un usuario con contraseña AdminEdutor y con identifricador de usuario número 4, el resultado de seguir los pasos anteriores es el siguiente: S:AdminEdutor:4 que al codificarlo en base 64 queda UzpBZG1pbkVkdXRvcjo0.
+            </ul>
+        </section>
+        <h3>Proceso de autenticación y autorización en el servidor</h3>
+        <section>
+            <p>En cuanto una petición es enrutada hacia un recurso que está protegido, la aplicación realizará el proceso inverso al que realizan los clientes: toma el mensaje de petición HTTP y comprueba la existencia de un  encabezado de autorización del tipo básico en caso de no existir rechaza la petición con un error 401. Posteriormente lo toma y lo decodifica, obteniendo las credenciales enviadas por el cliente.</p>
+            <p>Una vez que cuenta con las credenciales, el token o la combinación  usuario-contraseña según  sea el caso, el Sistema busca en la base de datos, si existe alguna coincidencia procede al siguiente paso, en caso de que no, significa que el cliente no podrá ser autenticado y su petición debe ser rechazada.</p>
+            <p>Si algún registro coincidió, se recupera y se extrae de él la información necesaria para asignarle los roles  que determinan el nivel de autorización con el que se cuenta. Por último, si el nivel de autorización no es el suficiente, la petición es rechazada con un código de error 401.</p>
         </section>
     </div>
 </div>
