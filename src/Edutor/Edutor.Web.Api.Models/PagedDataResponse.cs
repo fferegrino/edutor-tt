@@ -6,6 +6,10 @@ using System.Threading.Tasks;
 
 namespace Edutor.Web.Api.Models
 {
+    /// <summary>
+    /// Paged data response of {T}
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
     public class PagedDataResponse<T> : IPageLinkContaining
     {
         private List<Link> _links;
