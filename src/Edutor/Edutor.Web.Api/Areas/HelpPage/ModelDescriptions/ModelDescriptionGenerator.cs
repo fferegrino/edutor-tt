@@ -63,9 +63,9 @@ namespace Edutor.Web.Api.Areas.HelpPage.ModelDescriptions
         // Modify this to add more default documentations.
         private readonly IDictionary<Type, string> DefaultTypeDocumentation = new Dictionary<Type, string>
         {
-            { typeof(Int16), "integer" },
-            { typeof(Int32), "integer" },
-            { typeof(Int64), "integer" },
+            { typeof(Int16), "entero" },
+            { typeof(Int32), "entero" },
+            { typeof(Int64), "entero" },
             { typeof(UInt16), "unsigned integer" },
             { typeof(UInt32), "unsigned integer" },
             { typeof(UInt64), "unsigned integer" },
@@ -76,12 +76,12 @@ namespace Edutor.Web.Api.Areas.HelpPage.ModelDescriptions
             { typeof(Single), "decimal number" },
             { typeof(Double), "decimal number" },
             { typeof(Decimal), "decimal number" },
-            { typeof(String), "string" },
+            { typeof(String), "cadena de caracteres" },
             { typeof(Guid), "globally unique identifier" },
             { typeof(TimeSpan), "time interval" },
-            { typeof(DateTime), "date" },
+            { typeof(DateTime), "fecha" },
             { typeof(DateTimeOffset), "date" },
-            { typeof(Boolean), "boolean" },
+            { typeof(Boolean), "booleano" },
         };
 
         private Lazy<IModelDocumentationProvider> _documentationProvider;
@@ -348,6 +348,29 @@ namespace Edutor.Web.Api.Areas.HelpPage.ModelDescriptions
                         propertyModel.Documentation = DocumentationProvider.GetDocumentation(property);
                     }
 
+                    if (String.IsNullOrEmpty(propertyModel.Documentation))
+                    {
+                        switch (propertyModel.Name)
+                        {
+                            case "Links":
+                                propertyModel.Documentation = "Enlaces HTTP a recursos relacionados con la consulta";
+                                break;
+                            case "Items":
+                                propertyModel.Documentation = "Colección de objetos pertenecientes a la consulta realizada";
+                                break;
+                            case "PageSize":
+                                propertyModel.Documentation = "Tamaño de la página en la que se encuentra actualmente";
+                                break;
+                            case "PageNumber":
+                                propertyModel.Documentation = "Número de página en la que se encuentra actualmente";
+                                break;
+                            case "PageCount":
+                                propertyModel.Documentation = "Cantidad de páginas en total de la respuesta";
+                                break;
+
+                        }
+                    }
+
                     GenerateAnnotations(property, propertyModel);
                     complexModelDescription.Properties.Add(propertyModel);
                     propertyModel.TypeDescription = GetOrCreateModelDescription(property.PropertyType);
@@ -367,6 +390,29 @@ namespace Edutor.Web.Api.Areas.HelpPage.ModelDescriptions
                     if (DocumentationProvider != null)
                     {
                         propertyModel.Documentation = DocumentationProvider.GetDocumentation(field);
+                    }
+
+                    if (String.IsNullOrEmpty(propertyModel.Documentation))
+                    {
+                        switch (propertyModel.Name)
+                        {
+                            case "Links":
+                                propertyModel.Documentation = "Enlaces HTTP a recursos relacionados con la consulta";
+                                break;
+                            case "Items":
+                                propertyModel.Documentation = "Colección de objetos pertenecientes a la consulta realizada";
+                                break;
+                            case "PageSize":
+                                propertyModel.Documentation = "Tamaño de la página en la que se encuentra actualmente";
+                                break;
+                            case "PageNumber":
+                                propertyModel.Documentation = "Número de página en la que se encuentra actualmente";
+                                break;
+                            case "PageCount":
+                                propertyModel.Documentation = "Cantidad de páginas en total de la respuesta";
+                                break;
+                                
+                        }
                     }
 
                     complexModelDescription.Properties.Add(propertyModel);
