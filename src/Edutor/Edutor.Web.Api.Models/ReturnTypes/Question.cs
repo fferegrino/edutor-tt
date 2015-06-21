@@ -42,6 +42,11 @@ namespace Edutor.Web.Api.Models.ReturnTypes
         /// Colección con respuestas posibles a la pregunta realizada
         /// </summary>
         public IList<PossibleAnswer> PossibleAnswers { get; set; }
+
+        /// <summary>
+        /// Total de respuestas esperadas
+        /// </summary>
+        public int TotalAnswerCount { get; set; }
         
     }
 }

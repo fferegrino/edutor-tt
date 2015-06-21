@@ -31,11 +31,13 @@ namespace Edutor.Web.Api.AutoMappingConfigurator
             Func<Ent.Question, object> questionsPossibleAnswersToReturnModels = (ob) =>
             {
                 var possobleAnswers = new List<RetModels.PossibleAnswer>();
-                if (ob.PossibleAnswers != null)
+                if (ob.PossibleAnswers != null && ob.Answers != null)
                 {
                     foreach (var pa in ob.PossibleAnswers)
                     {
+                        var i = ob.Answers.Count(x => pa.PossibleAnswerId == x.ActualAnswerId);
                         var rrr = Mapper.Map<RetModels.PossibleAnswer>(pa);
+                        rrr.AnswerCount = i;
                         rrr.QuestionId = ob.QuestionId;
                         possobleAnswers.Add(rrr);
                     }
@@ -50,7 +52,7 @@ namespace Edutor.Web.Api.AutoMappingConfigurator
                 {
                     foreach (var pa in ob.Question.PossibleAnswers)
                     {
-                        var i = ob.Question.PossibleAnswers.Count(x => x.QuestionId == pa.QuestionId && pa.PossibleAnswerId == x.PossibleAnswerId);
+                        var i = ob.Question.Answers.Count(x => pa.PossibleAnswerId == x.ActualAnswerId);
                         var rrr = Mapper.Map<RetModels.PossibleAnswer>(pa);
                         rrr.AnswerCount = i;
                         rrr.QuestionId = ob.QuestionId;
@@ -65,6 +67,7 @@ namespace Edutor.Web.Api.AutoMappingConfigurator
             Mapper.CreateMap<Ent.Question, RetModels.Question>()
                 .ForMember(x => x.Links, opt => opt.Ignore())
                 .ForMember(s => s.PossibleAnswers, x => x.ResolveUsing(questionsPossibleAnswersToReturnModels))
+                .ForMember(s => s.TotalAnswerCount, x => x.MapFrom(sr => sr.Answers != null ? sr.Answers.Count() : 0))
                  .ForMember(x => x.SchoolUserId, opt => opt.MapFrom(src => src.SchoolUser.UserId))
                 ;
 
