@@ -14,6 +14,7 @@ using System.Web.Http.Description;
 using Edutor.Web.Api.Areas.HelpPage.ModelDescriptions;
 using Edutor.Web.Api.Areas.HelpPage.Models;
 using System.Text;
+using Edutor.Common;
 
 namespace Edutor.Web.Api.Areas.HelpPage
 {
@@ -248,6 +249,12 @@ namespace Edutor.Web.Api.Areas.HelpPage
             return (HelpPageApiModel)model;
         }
 
+        private static Dictionary<String, String> roleTranslator = new Dictionary<string, string> {
+            { Constants.RoleNames.Administrator, "administrador" },
+            { Constants.RoleNames.Tutor, "tutor" },
+            { Constants.RoleNames.Teacher, "profesor" }
+        };
+
         private static HelpPageApiModel GenerateApiModel(ApiDescription apiDescription, HttpConfiguration config)
         {
             HelpPageApiModel apiModel = new HelpPageApiModel()
@@ -256,22 +263,33 @@ namespace Edutor.Web.Api.Areas.HelpPage
 
             };
 
+
             var auth = apiDescription.ActionDescriptor.GetCustomAttributes<AuthorizeAttribute>().SingleOrDefault();
             if (auth != null)
             {
                 StringBuilder sb = new StringBuilder("Este extremo requiere credenciales de ");
+                if (String.IsNullOrEmpty(auth.Roles))
+                    auth.Roles = Constants.RoleNames.All;
                 var roles = auth.Roles.Split(',');
                 int total;
-                int vomms = (total = roles.Count()) - 1;
+                int roleCountMinusOne = (total = roles.Count()) - 1;
                 for (int i = 0; i < total; i++)
                 {
-                    sb.Append(roles[i]);
-                    if (i != vomms)
-                        sb.Append(", ");
+
+                    sb.Append(roleTranslator[roles[i]]);
+                    if (total > 1 && i == total - 2)
+                    {
+                        sb.Append(" o ");
+                    }
                     else
-                        sb.Append(" ");
+                    {
+                        if (i != roleCountMinusOne)
+                            sb.Append(", ");
+                        else
+                            sb.Append(" ");
+                    }
                 }
-                sb.Append("para ser ejecutado");
+                sb.Append("para ser ejecutado.");
                 apiModel.AuthorizationMessage = sb.ToString();
                 apiModel.RequiresAuth = true;
             }
