@@ -166,7 +166,7 @@ namespace Edutor.Web.Api.Controllers
         [Route("tutors")]
         [Authorize(Roles = Constants.RoleNames.Administrator)]
         [ResponseType(typeof(Tutor))]
-        public IHttpActionResult UpdateGroup(ModifiableTutor tutor)
+        public IHttpActionResult UpdateTutor(ModifiableTutor tutor)
         {
             var m = _patchTutors.UpdateTutor(tutor);
             return new ModelUpdatedActionResult<Tutor>(Request, m);
