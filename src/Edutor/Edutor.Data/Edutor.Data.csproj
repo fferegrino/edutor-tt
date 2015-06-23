@@ -59,6 +59,7 @@
     <Compile Include="Exceptions\DuplicateEntityException.cs" />
     <Compile Include="Exceptions\ForeignKeyException.cs" />
     <Compile Include="Exceptions\ObjectNotFoundException.cs" />
+    <Compile Include="Exceptions\UnAuthorizedException.cs" />
     <Compile Include="PagedDataRequest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="QueryProcessors\IAddAnswerQueryProcessor.cs" />

@@ -49,7 +49,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Edutor\Data\Exceptions\UnAuthorizedException.cs" />
     <Compile Include="Mapping\MessageMap.cs" />
     <Compile Include="Mapping\ConversationsMap.cs" />
     <Compile Include="Mapping\NotificationDetailMap.cs" />
@@ -108,6 +107,9 @@
       <Project>{69d0e7fc-7a84-418e-9d2e-d92a4ee1d649}</Project>
       <Name>Edutor.Data</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Edutor\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
