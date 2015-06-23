@@ -5,6 +5,7 @@ using Edutor.Web.Api.Models;
 using Edutor.Web.Api.Models.NewModels;
 using Edutor.Web.Api.Models.ReturnTypes;
 using Edutor.Web.Api.UpdateProcessing;
+using Edutor.Web.Common.Filters;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -98,6 +99,7 @@ namespace Edutor.Web.Api.Controllers
         [HttpPost]
         [ResponseType(typeof(Notification))]
         [Route("notifications")]
+        [ValidationActionFilter]
         public IHttpActionResult AddNotification(NewNotification newNotification)
         {
             var user = _notificationMaintenanceProcessor.AddNotification(newNotification);

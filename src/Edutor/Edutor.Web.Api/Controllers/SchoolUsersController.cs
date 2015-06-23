@@ -19,7 +19,8 @@ using System.Web.Http.Description;
 namespace Edutor.Web.Api.Controllers
 {
     /// <summary>
-    /// Conjunto de extremos REST que permiten operar con los servicios de creación y manipulación de usuarios escolares que ofrece la plataforma
+    /// Los extremos de usuarios escolates proveen la capacidad de agregar, modificar y eliminar usuarios escolares dentro de Edutor.
+    /// Todos los extremos dentro de este conjunto requieren de algún nivel de autorización.
     /// </summary>
     [UnitOfWorkActionFilter]
     public class SchoolUsersController : ApiController
@@ -234,7 +235,9 @@ namespace Edutor.Web.Api.Controllers
         }
 
         /// <summary>
-        /// Elimina al usuario indicado del sistema siempre y cuando no existan conflictos
+        /// Elimina al usuario indicado del sistema.
+        /// Se deben eliminar los vínculos establecidos entre el usuario y grupos, primero dichos vínculos deberán ser eliminados. 
+        /// En caso de que existan otros vínculos, como con eventos o conversaciones, eliminar al usuario escolar también eliminará dichas entidades.
         /// </summary>
         /// <param name="schoolUserId">El identificador de el usuario a eliminar</param>
         /// <returns></returns>

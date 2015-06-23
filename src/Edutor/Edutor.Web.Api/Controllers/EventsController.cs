@@ -6,6 +6,7 @@ using Edutor.Web.Api.Models.NewModels;
 using Edutor.Web.Api.Models.ReturnTypes;
 using Edutor.Web.Api.UpdateProcessing;
 using Edutor.Web.Common;
+using Edutor.Web.Common.Exceptions;
 using Edutor.Web.Common.Filters;
 using System;
 using System.Collections.Generic;
@@ -128,6 +129,12 @@ namespace Edutor.Web.Api.Controllers
         [ValidationActionFilter]
         public IHttpActionResult AddEvent(NewEvent newEvent)
         {
+            var markedTime = DateTime.Now.AddMinutes(2);
+
+            if (newEvent.Date < markedTime)
+                throw new IncomingModelException("La fecha del evento no puede ser anterior a la hora de hoy");
+
+
             var user = _addQueryProcessor.AddEvent(newEvent);
             var result = new ModelPostedActionResult<Event>(Request, user);
             return result;

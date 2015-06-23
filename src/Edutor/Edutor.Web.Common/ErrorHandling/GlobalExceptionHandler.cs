@@ -52,6 +52,11 @@ namespace Edutor.Web.Common.ErrorHandling
                 context.Result = new SimpleErrorResult(context.Request, HttpStatusCode.Conflict, exception.Message);
                 return;
             }
+            if (exception is UnAuthorizedException)
+            {
+                context.Result = new SimpleErrorResult(context.Request, HttpStatusCode.Conflict, exception.Message);
+                return;
+            }
 
             context.Result = new SimpleErrorResult(context.Request, HttpStatusCode.InternalServerError, exception.Message);
         }

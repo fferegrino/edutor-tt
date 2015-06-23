@@ -49,6 +49,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Edutor\Data\Exceptions\UnAuthorizedException.cs" />
     <Compile Include="Mapping\MessageMap.cs" />
     <Compile Include="Mapping\ConversationsMap.cs" />
     <Compile Include="Mapping\NotificationDetailMap.cs" />

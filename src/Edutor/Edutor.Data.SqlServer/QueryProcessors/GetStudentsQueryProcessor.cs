@@ -1,6 +1,7 @@
 ﻿using Edutor.Common;
 using Edutor.Common.Security;
 using Edutor.Data.Entities;
+using Edutor.Common.Extensions;
 using Edutor.Data.QueryProcessors;
 using NHibernate;
 using System;
@@ -51,6 +52,7 @@ namespace Edutor.Data.SqlServer.QueryProcessors
 
         public QueryResult<Student> GetStudents(PagedDataRequest requestInfo)
         {
+
             var q = _session.QueryOver<Student>();
 
             var totalItemCount = q.ToRowCountQuery().RowCount();
@@ -141,8 +143,29 @@ namespace Edutor.Data.SqlServer.QueryProcessors
 
         public Student GetStudent(int studentId)
         {
+
+            var userId = _userSession.UserId;
+            bool allowQuery = true;
+            if (_userSession.IsInRole(Constants.RoleNames.Teacher))
+            {
+                allowQuery = _session.QueryOver<TeacherForStudent>().Where(te => te.StudentId == studentId && te.UserId == userId).List().Any();
+                if (!allowQuery)
+                {
+                    throw new Data.Exceptions.UnAuthorizedException("Como profesor solamente puedes acceder a los alumnos de tus grupos");
+                }
+            }
+            else if (_userSession.IsInRole(Constants.RoleNames.Tutor))
+            {
+                allowQuery = _session.QueryOver<Student>().Where(te => te.StudentId == studentId && te.TutorId == userId).List().Any();
+                if (!allowQuery)
+                {
+                    throw new Data.Exceptions.UnAuthorizedException("Como tutor solamente puedes acceder a tus tutorados");
+                }
+            }
+
+
             var q = _session.QueryOver<Student>().Where(user => user.StudentId == studentId).List().FirstOrDefault();
-            if (q == null) throw new Edutor.Data.Exceptions.ObjectNotFoundException("No existe un tutor con Id " + studentId);
+            if (q == null) throw new Edutor.Data.Exceptions.ObjectNotFoundException("No existe un estudiante con Id " + studentId);
             return q;
         }
 
@@ -151,7 +174,7 @@ namespace Edutor.Data.SqlServer.QueryProcessors
         {
             var q = _session.QueryOver<Student>().Where(user => user.Curp == (curp)).List().FirstOrDefault();
             if (q == null) throw new Edutor.Data.Exceptions.ObjectNotFoundException("No existe un estudiante con CURP " + curp);
-            return q;
+            return GetStudent(q.StudentId);
         }
 
         public Student GetStudentByToken(string token)

@@ -190,15 +190,15 @@ namespace Edutor.Web.Api.Controllers
         /// Modifica al tutor de acuerdo a lo enviado en el el cuerpo de la petición.
         /// <remarks>Cualquier propiedad faltante o cuyo valor sea nulo no será modificada</remarks>
         /// </summary>
-        /// <param name="tutor">Los nuevos valores a asignar</param>
+        /// <param name="student">Los nuevos valores a asignar</param>
         /// <returns></returns>
         [HttpPatch]
         [Route("students")]
         [Authorize(Roles = Constants.RoleNames.Administrator)]
         [ResponseType(typeof(Student))]
-        public IHttpActionResult UpdateGroup(ModifiableStudent tutor)
+        public IHttpActionResult UpdateStudent(ModifiableStudent student)
         {
-            var m = _patchStudent.UpdateStudent(tutor);
+            var m = _patchStudent.UpdateStudent(student);
             return new ModelUpdatedActionResult<Student>(Request, m);
         }
 
@@ -210,7 +210,7 @@ namespace Edutor.Web.Api.Controllers
         [HttpDelete]
         [Route("students/{studentId:int}")]
         [Authorize(Roles = Constants.RoleNames.Administrator)]
-        public IHttpActionResult DeleteGroup(int studentId)
+        public IHttpActionResult DeleteStudent(int studentId)
         {
             _deleteStudent.Delete(studentId);
             return new ModelDeletedActionResult(Request);
