@@ -29,13 +29,16 @@ namespace Edutor.Web.Api.Controllers
         private readonly IGetNotificationsInquiryProcessor _getNotifications;
         private readonly IGetStudentsInquiryProcessor _getStudents;
         private readonly IPagedDataRequestFactory _pagedDataRequestFactory;
+        private readonly IDeleteInteracionsMaintenanceProcessor _deleteInteractions;
 
         public NotificationsController(IPostNotificationMaintenanceProcessor notificationMaintenanceProcessor,
             IGetNotificationsInquiryProcessor getNotifications,
              IGetStudentsInquiryProcessor getStudents,
             IPutNotificationsUpdateProcessor updateNotifications,
-            IPagedDataRequestFactory pagedDataRequestFactory)
+            IPagedDataRequestFactory pagedDataRequestFactory,
+            IDeleteInteracionsMaintenanceProcessor deleteInteractions)
         {
+            _deleteInteractions = deleteInteractions;
             _notificationMaintenanceProcessor = notificationMaintenanceProcessor;
             _getNotifications = getNotifications;
             _getStudents = getStudents;
@@ -121,6 +124,24 @@ namespace Edutor.Web.Api.Controllers
         {
             _updateNotifications.MarkAsSeen(new NewSeenNotification { NotificationId = notificationId, StudentId = studentId });
             return new ModelDeletedActionResult(Request);
+        }
+
+
+        /// <summary>
+        /// Elimina la notificación del sistema, 
+        /// los detalles de notificación para los tutores también son eliminadas junto con la pregunta
+        /// Esta acción solamente puede ser llevada a cabo por usuarios escolares.
+        /// </summary>
+        /// <param name="notificationId">El identificador único de la pregunta a eliminar.</param>
+        /// <returns>Un código de estatus (No Content) si es que la acción se concluyó correctamente.</returns>
+        [HttpDelete]
+        [Authorize(Roles = Constants.RoleNames.SchoolUser)]
+        [Route("notifications/{notificationId:int}")]
+        public IHttpActionResult DeleteNotification(int notificationId)
+        {
+            _deleteInteractions.DeleteNotification(notificationId);
+            return new ModelDeletedActionResult(Request);
+
         }
     }
 }

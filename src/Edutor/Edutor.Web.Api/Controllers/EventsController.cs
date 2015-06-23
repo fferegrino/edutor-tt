@@ -31,13 +31,16 @@ namespace Edutor.Web.Api.Controllers
         private readonly IGetEventsInquiryProcessor _getEvents;
         private readonly IPutEventsUpdateProcessor _updateEvents;
         private readonly IPagedDataRequestFactory _pagedDataRequestFactory;
+        private readonly IDeleteInteracionsMaintenanceProcessor _deleteInteractions;
 
         public EventsController(IPostEventMaintenanceProcessor addQueryProcessor,
             IGetEventsInquiryProcessor getEvents,
             IPutEventsUpdateProcessor updateEvents,
             IPagedDataRequestFactory pagedDataRequestFactory,
-            IGetStudentsInquiryProcessor getStudents)
+            IGetStudentsInquiryProcessor getStudents,
+            IDeleteInteracionsMaintenanceProcessor deleteInteractions)
         {
+            _deleteInteractions = deleteInteractions;
             _getEvents = getEvents;
             _addQueryProcessor = addQueryProcessor;
             _pagedDataRequestFactory = pagedDataRequestFactory;
@@ -115,6 +118,7 @@ namespace Edutor.Web.Api.Controllers
             return new ModelDeletedActionResult(Request);
         }
 
+
         /// <summary>
         /// Añade un nuevo evento al sistema de Edutor, 
         /// al añadirlo crea las invitaciones para cada alumno según el grupo al que está dirigido el evento.
@@ -140,6 +144,22 @@ namespace Edutor.Web.Api.Controllers
             return result;
         }
 
+        /// <summary>
+        /// Elimina el evento del sistema, 
+        /// las invitaciones también son eliminadas para todos los usuarios
+        /// Esta acción solamente puede ser llevada a cabo por usuarios escolares.
+        /// </summary>
+        /// <param name="eventId">El identificador único del evento a eliminar.</param>
+        /// <returns>Un código de estatus (No Content) si es que la acción se concluyó correctamente.</returns>
+        [HttpDelete]
+        [Authorize(Roles = Constants.RoleNames.SchoolUser)]
+        [Route("events/{eventId:int}")]
+        public IHttpActionResult DeleteEvent(int eventId)
+        {
+            _deleteInteractions.DeleteEvent(eventId);
+            return new ModelDeletedActionResult(Request);
+
+        }
 
     }
 }

@@ -17,7 +17,7 @@ namespace Edutor.Data.SqlServer.Mapping
             Map(x => x.Date).Not.Nullable();
             Map(x => x.CreationDate).Not.Nullable();
             Map(x => x.Description).Not.Nullable();
-            HasMany<Invitation>(ev => ev.Invitations).KeyColumn("EventId");
+            HasMany<Invitation>(ev => ev.Invitations).KeyColumn("EventId").Cascade.AllDeleteOrphan().Inverse();
             References<User>(x => x.SchoolUser).Column("SchoolUserId");
             References<Group>(x => x.Group).Column("GroupId");
         }

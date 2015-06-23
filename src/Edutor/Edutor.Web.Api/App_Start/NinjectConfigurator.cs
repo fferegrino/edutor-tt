@@ -181,6 +181,9 @@ namespace Edutor.Web.Api
             container.Bind<QueryProcessors.IDeleteStudentQueryProcessor>().To<SqlProcessors.DeleteStudentQueryProcessor>().InRequestScope();
             container.Bind<AMP.IDeleteStudentMaintenanceProcessor>().To<AMP.DeleteStudentMaintenanceProcessor>().InRequestScope();
 
+            container.Bind<AMP.IDeleteInteracionsMaintenanceProcessor>().To<AMP.DeleteInteracionsMaintenanceProcessor>().InRequestScope();
+            container.Bind<QueryProcessors.IDeleteInteractionsQueryProcessor>().To<SqlProcessors.DeleteInteractionsQueryProcessor>().InRequestScope();
+
             #endregion
         }
 

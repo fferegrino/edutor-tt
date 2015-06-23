@@ -77,6 +77,7 @@
     <Compile Include="QueryProcessors\IAddUserQueryProcessor.cs" />
     <Compile Include="QueryProcessors\IDeleteStudentQueryProcessor.cs" />
     <Compile Include="QueryProcessors\IDeleteGroupQueryProcessor.cs" />
+    <Compile Include="QueryProcessors\IDeleteInteractionsQueryProcessor.cs" />
     <Compile Include="QueryProcessors\IDeleteUserQueryProcessor.cs" />
     <Compile Include="QueryProcessors\IGetConversationsQueryProcessor.cs" />
     <Compile Include="QueryProcessors\IUpdateStudentsQueryProcessor.cs" />

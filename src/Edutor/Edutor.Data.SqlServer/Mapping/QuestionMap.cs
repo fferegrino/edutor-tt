@@ -18,8 +18,8 @@ namespace Edutor.Data.SqlServer.Mapping
             Map(x => x.CreationDate).Not.Nullable();
             References<User>(x => x.SchoolUser).Column("SchoolUserId");
             References<Group>(x => x.Group).Column("GroupId");
-            HasMany<PossibleAnswer>(ev => ev.PossibleAnswers).KeyColumn("QuestionId");
-            HasMany<Answer>(ev => ev.Answers).KeyColumn("QuestionId");
+            HasMany<PossibleAnswer>(ev => ev.PossibleAnswers).KeyColumn("QuestionId").Cascade.AllDeleteOrphan().Inverse();
+            HasMany<Answer>(ev => ev.Answers).KeyColumn("QuestionId").Cascade.AllDeleteOrphan().Inverse();
         }
     }
 }

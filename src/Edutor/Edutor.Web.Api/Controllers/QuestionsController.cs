@@ -30,13 +30,16 @@ namespace Edutor.Web.Api.Controllers
         private readonly IGetQuestionsInquiryProcessor _getQuestions;
         private readonly IGetStudentsInquiryProcessor _getStudents;
         private readonly IPagedDataRequestFactory _pagedDataRequestFactory;
+        private readonly IDeleteInteracionsMaintenanceProcessor _deleteInteractions;
 
         public QuestionsController(IPostQuestionMaintenanceProcessor postQuestion,
             IGetQuestionsInquiryProcessor getQuestions,
             IGetStudentsInquiryProcessor getStudents,
             IPutQuestionsUpdateProcessor updateQuestion,
-            IPagedDataRequestFactory pagedDataRequestFactory)
+            IPagedDataRequestFactory pagedDataRequestFactory,
+            IDeleteInteracionsMaintenanceProcessor deleteInteractions)
         {
+            _deleteInteractions = deleteInteractions;
             _postQuestion = postQuestion;
             _getQuestions = getQuestions;
             _getStudents = getStudents;
@@ -128,6 +131,22 @@ namespace Edutor.Web.Api.Controllers
             answer.QuestionId = questionId;
             answer.StudentId = studentId;
             _updateQuestion.AnswerQuestion(answer);
+            return new ModelDeletedActionResult(Request);
+        }
+
+        /// <summary>
+        /// Elimina la pregunta del sistema, 
+        /// las respuestas de los tutores también son eliminadas junto con la pregunta
+        /// Esta acción solamente puede ser llevada a cabo por usuarios escolares.
+        /// </summary>
+        /// <param name="questionId">El identificador único de la pregunta a eliminar.</param>
+        /// <returns>Un código de estatus (No Content) si es que la acción se concluyó correctamente.</returns>
+        [HttpDelete]
+        [Authorize(Roles = Constants.RoleNames.SchoolUser)]
+        [Route("questions/{questionId:int}")]
+        public IHttpActionResult DeleteEvent(int questionId)
+        {
+            _deleteInteractions.DeleteQuestion(questionId);
             return new ModelDeletedActionResult(Request);
         }
 

@@ -221,6 +221,7 @@
     <Compile Include="LinkServices\ISchoolUsersLinkService.cs" />
     <Compile Include="MaintenanceProcessing\IDeleteStudentMaintenanceProcessor.cs" />
     <Compile Include="MaintenanceProcessing\IDeleteGroupMaintenanceProcessor.cs" />
+    <Compile Include="MaintenanceProcessing\IDeleteInteracionsMaintenanceProcessor.cs" />
     <Compile Include="MaintenanceProcessing\IDeleteUserMaintenanceProcessing.cs" />
     <Compile Include="MaintenanceProcessing\IPatchSchoolUserMaintenanceProcessor.cs" />
     <Compile Include="MaintenanceProcessing\IPatchTutorMaintenanceProcessor.cs" />
