@@ -14,3 +14,8 @@ from Enrollments T
 	inner join Groups G
 		on G.GroupId= T.GroupId
 order by T.StudentId
+
+select T.UserId, T.Name, S.StudentId,S.Name,S.Token
+from Users T
+	inner join Students S
+		ON T.UserId = S.TutorId
