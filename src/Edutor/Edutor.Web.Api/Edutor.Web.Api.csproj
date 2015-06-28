@@ -38,6 +38,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <DocumentationFile>bin\Edutor.Api.xml</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="AutoMapper">
@@ -298,6 +299,8 @@
     <None Include="Properties\PublishProfiles\apiedutor.pubxml" />
     <None Include="Properties\PublishProfiles\Default Settings.pubxml" />
     <None Include="Properties\PublishProfiles\localiis.pubxml" />
+    <None Include="Properties\PublishProfiles\presentacion-tt - FTP.pubxml" />
+    <None Include="Properties\PublishProfiles\presentacion-tt - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\Publishing.pubxml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
