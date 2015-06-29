@@ -24,14 +24,17 @@ namespace Edutor.Web.Api.Controllers
     {
         private readonly IPostConversationsMaintenanceProcessor _postConversations;
         private readonly IGetConversationsInquiryProcessor _getConversations;
+        private readonly IDeleteInteracionsMaintenanceProcessor _deleteConversations;
         private readonly IPagedDataRequestFactory _pagedFactory;
         public ConversationsController(IPostConversationsMaintenanceProcessor postConversations,
             IGetConversationsInquiryProcessor getConversations,
+            IDeleteInteracionsMaintenanceProcessor deleteConversations,
             IPagedDataRequestFactory pagedFactory)
         {
             _postConversations = postConversations;
             _getConversations = getConversations;
             _pagedFactory = pagedFactory;
+            _deleteConversations = deleteConversations;
         }
 
         /// <summary>
@@ -100,6 +103,20 @@ namespace Edutor.Web.Api.Controllers
             var x = _postConversations.AddNewMessage(message);
             var result = new ModelPostedActionResult<Message>(Request, x);
             return result;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="conversationId"></param>
+        /// <returns></returns>
+        [Route("conversations/{conversationId:int}")]
+        [HttpDelete]
+        [Authorize(Roles = Constants.RoleNames.Administrator)]
+        public IHttpActionResult DeleteConversations(int conversationId)
+        {
+            _deleteConversations.DeleteConversation(conversationId);
+            return new ModelDeletedActionResult(Request);
         }
     }
 }

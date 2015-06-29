@@ -19,3 +19,7 @@ select T.UserId, T.Name, S.StudentId,S.Name,S.Token
 from Users T
 	inner join Students S
 		ON T.UserId = S.TutorId
+
+select T.UserId, T.Name, 'S:'+T.Curp + ':' + CAST(T.UserId AS VARCHAR)
+from Users T
+where T.Position = 'P'

@@ -14,6 +14,8 @@ namespace Edutor.Web.Api.MaintenanceProcessing
         void DeleteEvent(int eventId);
 
         void DeleteNotification(int notificationId);
+
+        void DeleteConversation(int conversationId);
     }
 
     public class DeleteInteracionsMaintenanceProcessor : IDeleteInteracionsMaintenanceProcessor
@@ -39,6 +41,12 @@ namespace Edutor.Web.Api.MaintenanceProcessing
         public void DeleteNotification(int notificationId)
         {
             _deleteStuff.DeleteNotification(notificationId);
+        }
+
+
+        public void DeleteConversation(int conversationId)
+        {
+            _deleteStuff.DeleteConversation( conversationId);
         }
     }
 }

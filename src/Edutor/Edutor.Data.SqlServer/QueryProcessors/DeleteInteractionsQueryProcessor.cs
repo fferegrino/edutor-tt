@@ -70,5 +70,12 @@ namespace Edutor.Data.SqlServer.QueryProcessors
                     throw new Edutor.Data.Exceptions.UnAuthorizedException("Como profesor solamente puedes eliminar notificaciones que tu creaste");
                 }
         }
+
+
+        public void DeleteConversation(int conversationId)
+        {
+            var conversationToErase = _session.QueryOver<Conversation>().Where(c => c.ConversationId == conversationId).Take(1).SingleOrDefault();
+            _session.Delete(conversationToErase);
+        }
     }
 }

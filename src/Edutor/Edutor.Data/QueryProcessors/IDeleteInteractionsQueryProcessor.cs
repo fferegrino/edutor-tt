@@ -13,6 +13,8 @@ namespace Edutor.Data.QueryProcessors
         void DeleteEvent(int eventId);
 
         void DeleteNotification(int notificationId);
+
+        void DeleteConversation(int conversationId);
     }
 
 }
