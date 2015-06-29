@@ -86,4 +86,8 @@
   <ItemGroup>
     <PostDeploy Include="Scripts\Required.PostDeployment.sql" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="PresentacionTT.publish.xml" />
+    <None Include="Develop.publish.xml" />
+  </ItemGroup>
 </Project>

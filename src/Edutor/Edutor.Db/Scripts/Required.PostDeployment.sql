@@ -19,3 +19,13 @@ FROM Users
 SET IDENTITY_INSERT Groups ON
 INSERT INTO Groups([GroupId],[Name],[Subject],[FromDate]) VALUES(0,'Plantel','Grupo por default','01/01/2015')
 SET IDENTITY_INSERT Groups OFF
+GO
+
+
+--CREATE TRIGGER EnforceReferentialErasingUsersConversations
+--ON [dbo].[Users]
+--INSTEAD OF DELETE
+--AS
+--     DELETE Conversations WHERE User2Id = (SELECT TOP 1 UserId FROM DELETED)
+--	 DELETE [dbo].[Users] where UserId = (SELECT TOP 1 UserId FROM DELETED)
+--GO
