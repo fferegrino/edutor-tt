@@ -106,7 +106,8 @@ namespace Edutor.Web.Api.Controllers
         }
 
         /// <summary>
-        /// 
+        /// Elimina la conversación del sistema, también los mensajes son eliminados
+        /// Esta acción solamente puede ser llevada a cabo por administradores.
         /// </summary>
         /// <param name="conversationId"></param>
         /// <returns></returns>
