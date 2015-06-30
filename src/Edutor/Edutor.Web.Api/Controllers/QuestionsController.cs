@@ -6,6 +6,7 @@ using Edutor.Web.Api.Models.NewModels;
 using Edutor.Web.Api.Models.ReturnTypes;
 using Edutor.Web.Api.UpdateProcessing;
 using Edutor.Web.Common;
+using Edutor.Web.Common.Exceptions;
 using Edutor.Web.Common.Filters;
 using System;
 using System.Collections.Generic;
@@ -94,7 +95,7 @@ namespace Edutor.Web.Api.Controllers
         [Authorize(Roles = Constants.RoleNames.All)]
         public StudentAnswer GetAnswerers(int questionId, int studentId)
         {
-            var r = _getStudents.GetStudentsForQuestion(questionId,studentId);
+            var r = _getStudents.GetStudentsForQuestion(questionId, studentId);
             return r;
         }
 
@@ -110,12 +111,21 @@ namespace Edutor.Web.Api.Controllers
         [ValidationActionFilter]
         public IHttpActionResult AddQuestion(NewQuestion question)
         {
+            // Valida la cantidad y tamaño de las respuestas
+            if (question.PossibleAnswers.Count < 2)
+                throw new IncomingModelException("Debes asignar al menos dos respuestas posibles para tu pregunta");
+            int wrongPossibleAnswers = question.PossibleAnswers.Count(answer => answer == null || answer.Length == 0 || answer.Length > 100);
+            if (wrongPossibleAnswers > 0)
+                throw new IncomingModelException("Las posibles respuestas contienen información errónea");
+
+
+
             var ret = _postQuestion.AddQuestion(question);
             // Genera la respuesta con su correspondiente código de estatus HTTP
             var result = new ModelPostedActionResult<Question>(Request, ret);
             return result;
         }
-        
+
         /// <summary>
         /// Responde a la pregunta con la respuesta seleccionada
         /// </summary>

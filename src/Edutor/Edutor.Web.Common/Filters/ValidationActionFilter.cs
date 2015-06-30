@@ -19,14 +19,23 @@ namespace Edutor.Web.Common.Filters
             if (!modelState.IsValid)
             {
                 StringBuilder sb = new StringBuilder();
-                foreach (var s in modelState)
+                var modelList = modelState.ToList();
+                
+                for (int i = 0; i < modelList.Count; i++)
                 {
-                    sb.Append(s.Key).Append(": ");
-                    foreach (var error in s.Value.Errors)
+                    var s = modelList[i];
+                    
+                    for (int j = 0; j < s.Value.Errors.Count; j++ )
                     {
-                        sb.Append(error.ErrorMessage).Append("  ");
+                        var error = s.Value.Errors[j];
+                        sb.Append(error.ErrorMessage);
+
+                        if (i < s.Value.Errors.Count - 1)
+                            sb.Append(" ");
                     }
-                    sb.Append(";");
+                    if (i < modelList.Count - 1)
+                    sb.Append(" ");
+
                 }
                 throw new IncomingModelException(sb.ToString());
             }
