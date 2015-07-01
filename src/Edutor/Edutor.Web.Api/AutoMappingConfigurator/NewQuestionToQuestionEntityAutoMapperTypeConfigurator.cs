@@ -84,7 +84,7 @@ namespace Edutor.Web.Api.AutoMappingConfigurator
                 if (ob.ActualAnswer == null)
                     return 0;
                 else
-                    return ob.ActualAnswerId;
+                return ob.ActualAnswerId;
             };
 
             Mapper.CreateMap<Ent.Answer, RetModels.StudentAnswer>()

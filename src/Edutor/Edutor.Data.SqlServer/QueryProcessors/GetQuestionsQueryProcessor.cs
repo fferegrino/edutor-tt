@@ -69,8 +69,9 @@ namespace Edutor.Data.SqlServer.QueryProcessors
             var selected = teachings.Skip(startIndex).Take(requestInfo.PageSize).List();
 
             //var teachers = new List<Question>();
-            //foreach (var t in selected)
-            //    teachers.Add(_session.QueryOver<Question>().Where(u => u.QuestionId == t.Question.QuestionId).List().FirstOrDefault());
+            foreach (var t in selected)
+                t.ActualAnswer = _session.QueryOver<PossibleAnswer>().Where(possibleanswer => possibleanswer.Question.QuestionId == t.Question.QuestionId && possibleanswer.PossibleAnswerId == t.ActualAnswerId).Take(1).SingleOrDefault();
+                
 
             var qResult = new QueryResult<Answer>(selected, totalItemCount, requestInfo.PageSize);
 
